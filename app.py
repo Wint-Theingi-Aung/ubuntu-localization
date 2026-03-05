@@ -37,35 +37,46 @@ def get_ai_model():
 
 MODEL_ID = get_ai_model()
 
+import json
+
 def translate_engine(texts, target_lang):
     if not MODEL_ID: return []
     try:
         model = genai.GenerativeModel(MODEL_ID)
         
+        # JSON format နဲ့ ပြန်ပေးဖို့ Prompt ကို ပြင်ပါ
         prompt = f"""
         Task: Professional Software Localization for Ubuntu Linux OS.
         Target Language: {target_lang}
         
-        Context:
-        - These strings are for the Ubuntu OS interface.
-        - Use formal, professional, and user-friendly tone.
-        - IMPORTANT: Keep core technical terms in English: 'Kernel', 'Repository', 'GNOME', 'Shell', 'Terminal', 'Sudo', 'Root'.
-        - Keep all placeholders exactly: %s, %d, %g, {{}}, etc.
+        Return the translations in a JSON array of strings. 
+        The array MUST have exactly {len(texts)} elements.
         
         Rules:
-        - Output exactly {len(texts)} lines, one translation per line.
-        - Return ONLY translated text. No explanations.
+        - If a line has a command (e.g. 'set-port - '), ONLY translate the description after '-'.
+        - Keep placeholders like %s, %d.
         
-        STRINGS:
-        """ + "\n".join(texts)
+        Input Strings:
+        {json.dumps(texts)}
+        """
         
         response = model.generate_content(prompt)
+        
         if response and response.text:
-            lines = [l.strip() for l in response.text.strip().split('\n')]
-            return [l.replace('```text', '').replace('```', '').strip() for l in lines if l.strip()]
-    except:
+            # Markdown တွေကို ဖယ်ပြီး JSON parsing လုပ်ပါ
+            json_str = response.text.replace('```json', '').replace('```', '').strip()
+            translated_list = json.loads(json_str)
+            
+            # အရေအတွက် ကိုက်၊ မကိုက် စစ်ဆေးပါ
+            if len(translated_list) == len(texts):
+                return translated_list
+            else:
+                # မကိုက်ရင် error မတက်အောင် မူရင်းစာသားတွေပဲ ပြန်ထည့်ပေးထားမယ်
+                return [translated_list[i] if i < len(translated_list) else texts[i] for i in range(len(texts))]
+                
+    except Exception as e:
+        st.error(f"Error: {e}")
         return []
-    return []
 
 # --- Session Management ---
 if "df" not in st.session_state: st.session_state.df = None
@@ -148,14 +159,33 @@ if st.session_state.df is not None:
         ac1, ac2, ac3 = st.columns([2, 1, 1])
         with ac1:
             if st.button(f"Translate to {target_lang}", use_container_width=True, type="primary"):
+                # ၁။ targets ကို အရင် သတ်မှတ်ပေးရပါမယ်
                 batch = df.iloc[start_idx:end_idx]
                 targets = batch[batch["Translation"].str.strip() == ""]
+                
+                # ၂။ အကယ်၍ ဘာသာပြန်ရန် ကျန်နေသေးလျှင်
                 if not targets.empty:
                     with st.spinner(f"Gemini is translating for Ubuntu ({target_lang})..."):
-                        results = translate_engine(targets["Original"].tolist(), target_lang)
-                        for idx, val in zip(targets.index, results):
-                            st.session_state.df.at[idx, "Translation"] = val
+                        original_texts = targets["Original"].tolist()
+                        results = translate_engine(original_texts, target_lang)
+                        
+                        # ၃။ ရလာတဲ့ result တွေကို စစ်ဆေးပြီး DataFrame ထဲ ထည့်မယ်
+                        if results and len(results) == len(original_texts):
+                            for idx, val in zip(targets.index, results):
+                                st.session_state.df.at[idx, "Translation"] = val
+                            st.success(f"Successfully translated {len(results)} lines!")
+                        elif results:
+                            st.warning(f"Translation mismatch: Expected {len(original_texts)} but got {len(results)}.")
+                            for i, idx in enumerate(targets.index):
+                                if i < len(results):
+                                    st.session_state.df.at[idx, "Translation"] = results[i]
+                        else:
+                            st.error("AI returned no results.")
+                        
+                        # UI ကို Refresh လုပ်မယ်
                         st.rerun()
+                else:
+                    st.info("No untranslated strings on this page.")
         
         with ac2:
             if st.button("Previous", disabled=(st.session_state.page == 0), use_container_width=True):
