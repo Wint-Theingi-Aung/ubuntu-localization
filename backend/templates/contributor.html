@@ -1,0 +1,59 @@
+{% extends "base.html" %}
+{% block content %}
+
+<div class="top-bar">
+  <h1 class="page-title">🐧 <strong>{{ contrib.username }}</strong></h1>
+  <a href="/leaderboard/" class="btn btn-outline btn-sm">← Leaderboard</a>
+</div>
+
+<div class="card" style="max-width:600px">
+  <div class="profile-card">
+    <div class="profile-avatar">
+      {% if contrib.username and contrib.username[0] %}{{ contrib.username[0].upper() }}{% else %}🐧{% endif %}
+    </div>
+    <h2 class="profile-name">@{{ contrib.username }}</h2>
+    <div class="profile-meta">
+      {% if rank <= 3 %}
+      <span style="font-size:32px">
+        {% if rank == 1 %}🥇{% elif rank == 2 %}🥈{% else %}🥉{% endif %}
+      </span>
+      {% endif %}
+      Ranked <strong>#{{ rank }}</strong> of {{ total_contributors }} contributors
+      <br><span style="font-size:13px;color:var(--text-light)">{{ rank_pct }}</span>
+    </div>
+
+    <div class="stats-grid" style="width:100%">
+      <div class="stat">
+        <span class="stat-value">{{ contrib.total_strings|int|int }}</span>
+        <span class="stat-label">Strings Translated</span>
+      </div>
+      <div class="stat">
+        <span class="stat-value">{{ contrib.total_exports }}</span>
+        <span class="stat-label">Exports</span>
+      </div>
+    </div>
+  </div>
+</div>
+
+{% if contrib.by_language %}
+<div class="card" style="max-width:600px;margin-top:16px">
+  <h3 style="font-size:16px;margin-bottom:12px">📊 By Language</h3>
+  <table class="data-table">
+    <tr><th>Language</th><th style="text-align:right">Strings</th><th style="text-align:right">Exports</th></tr>
+    {% for lang in contrib.by_language %}
+    <tr>
+      <td><span class="lang-badge lang-{{ lang.language_code }}">{{ lang.language_code }}</span></td>
+      <td style="text-align:right;font-weight:700">{{ lang.total }}</td>
+      <td style="text-align:right">{{ lang.exports }}</td>
+    </tr>
+    {% endfor %}
+  </table>
+</div>
+{% endif %}
+
+<div style="max-width:600px;margin-top:20px">
+  <a href="/leaderboard/" class="btn btn-outline">← Back to Leaderboard</a>
+  <a href="/auth/profile/{{ contrib.username }}" class="btn btn-outline">🔍 Launchpad Profile</a>
+</div>
+
+{% endblock %}

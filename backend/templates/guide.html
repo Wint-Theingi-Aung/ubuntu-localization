@@ -1,0 +1,219 @@
+{% extends "base.html" %}
+{% block content %}
+
+<div class="top-bar">
+  <h1 class="page-title">📖 <strong>User Guide</strong></h1>
+  <a href="/guide/quickref" class="btn btn-outline btn-sm">⚡ Quick Reference</a>
+</div>
+
+<div class="guide-layout">
+  <div class="guide-toc">
+    {% for ch in chapters %}
+    <a href="/guide/?chapter={{ ch.id }}" class="guide-toc-item {% if active_chapter == ch.id %}active{% endif %}">
+      <span class="guide-toc-icon">{{ ch.icon }}</span>
+      <div>
+        <div style="font-weight:500;font-size:14px">{{ ch.title }}</div>
+        <div style="font-size:11px;color:var(--text-light)">{{ ch.desc }}</div>
+      </div>
+    </a>
+    {% endfor %}
+  </div>
+
+  <div class="guide-body">
+    {% macro chapter_1() %}
+    <h2>🚀 Getting Started</h2>
+
+    <h3>What You Need</h3>
+    <ul>
+      <li><strong>Python 3.10+</strong> with <code>uv</code> (fast package manager)</li>
+      <li><strong>Google Gemini API key</strong> for AI translation — get one at <a href="https://aistudio.google.com/apikey" target="_blank">aistudio.google.com</a></li>
+      <li><strong>Git</strong> configured with GitHub access</li>
+      <li><strong>Launchpad account</strong> (optional) for contribution tracking</li>
+    </ul>
+
+    <h3>Installation</h3>
+    <pre>git clone https://github.com/Wint-Theingi-Aung/ubuntu-localization.git
+cd ubuntu-localization
+
+# Using uv (recommended)
+uv sync
+
+# Or using pip
+pip install -r requirements.txt
+
+# Set your Gemini API key
+echo "GOOGLE_API_KEY=your_key_here" > .env
+
+# Start the server
+uv run uvicorn backend.main:app --reload</pre>
+
+    <h3>Supported Languages</h3>
+    <table class="data-table">
+      <tr><th>Language</th><th>Code</th><th>Script</th><th>Speakers</th></tr>
+      <tr><td>Burmese</td><td><span class="lang-badge lang-my">my</span></td><td>Myanmar Unicode</td><td>~33 million</td></tr>
+      <tr><td>Shan</td><td><span class="lang-badge lang-shn">shn</span></td><td>Shan Unicode</td><td>~5 million</td></tr>
+      <tr><td>Mon</td><td><span class="lang-badge lang-mnw">mnw</span></td><td>Mon Unicode</td><td>~1 million</td></tr>
+      <tr><td>S'gaw Karen</td><td><span class="lang-badge lang-ksw">ksw</span></td><td>Karen Unicode</td><td>~2 million</td></tr>
+    </table>
+    {% endmacro %}
+
+    {% macro chapter_2() %}
+    <h2>📥 Obtaining .po Files</h2>
+
+    <h3>From Launchpad (Ubuntu Translations)</h3>
+    <ol>
+      <li>Go to <a href="https://translations.launchpad.net/ubuntu" target="_blank">translations.launchpad.net/ubuntu</a></li>
+      <li>Select your language (e.g., Burmese)</li>
+      <li>Choose a package to translate (e.g., <code>update-manager</code>)</li>
+      <li>Click <strong>"Download translation"</strong> → choose <code>.po</code> format</li>
+      <li>Save the file and upload it here</li>
+    </ol>
+
+    <h3>From Ubuntu Archives</h3>
+    <pre># Download template .pot file
+wget https://translations.launchpad.net/ubuntu/noble/+translations-pots/update-manager/+export
+
+# Or clone a translation branch
+git clone https://git.launchpad.net/~ubuntu-translations/ubuntu/noble/update-manager</pre>
+
+    <h3>From Your Own Project</h3>
+    <pre># Generate .pot template from source code
+xgettext -o messages.pot src/*.py
+
+# Create a language-specific .po file
+msginit -i messages.pot -o burmese.po -l my</pre>
+    {% endmacro %}
+
+    {% macro chapter_3() %}
+    <h2>📤 Uploading Files</h2>
+
+    <h3>How to Upload</h3>
+    <ol>
+      <li>Click <strong>Upload</strong> in the sidebar or drag-and-drop a .po file</li>
+      <li>The file is parsed using <code>polib</code></li>
+      <li>All entries are extracted — both translated and untranslated</li>
+      <li>Untranslated strings (empty <code>msgstr</code>) are filtered into a structured queue</li>
+      <li>You see a summary: total strings, how many are translated, how many need work</li>
+    </ol>
+
+    <h3>What Gets Detected</h3>
+    <ul>
+      <li>🔴 <strong>Missing</strong>: Empty msgstr — needs translation</li>
+      <li>🟡 <strong>Fuzzy</strong>: Has a suggested translation — needs human review</li>
+      <li>🟢 <strong>Done</strong>: Non-empty msgstr — already translated</li>
+    </ul>
+
+    <h3>File Structure Convention</h3>
+    <pre>ubuntu-localization/
+├── data/             ← Input .po files
+│   ├── burmese_messages.po
+│   ├── shan_ui.po
+│   └── mon_desktop.po
+├── exports/          ← Translated output
+│   ├── translated_my_burmese_*.po
+│   └── manifest_*.json</pre>
+    {% endmacro %}
+
+    {% macro chapter_4() %}
+    <h2>🔍 Detecting Missing Strings</h2>
+
+    <p>After upload, the tool automatically detects and classifies every untranslated entry into priority tiers:</p>
+
+    <table class="data-table">
+      <tr><th>Priority</th><th>Category</th><th>Examples</th></tr>
+      <tr><td><strong>P1</strong></td><td>High-Visibility UI</td><td>Save, Cancel, OK, Apply, Settings, File, Edit</td></tr>
+      <tr><td><strong>P2</strong></td><td>System/OS Context</td><td>Kernel, Repository, GNOME, Network, Display, Driver</td></tr>
+      <tr><td><strong>P3</strong></td><td>Descriptive Text</td><td>Help text, descriptions, notifications, dialog messages</td></tr>
+      <tr><td><strong>P4</strong></td><td>Format Strings</td><td>Short technical strings, single words, format specifiers</td></tr>
+    </table>
+
+    <p><strong>Recommendation:</strong> Start with P1 (highest user impact), then work through P2-P4.</p>
+    {% endmacro %}
+
+    {% macro chapter_5() %}
+    <h2>🤖 Translating with AI</h2>
+
+    <h3>How AI Translation Works</h3>
+    <ol>
+      <li>Untranslated strings are split into batches of 15-20 for optimal AI performance</li>
+      <li>Each batch is sent to <strong>Google Gemini 2.5 Flash</strong> with an Ubuntu-specific system prompt</li>
+      <li>The AI preserves:
+        <ul>
+          <li>Placeholders: <code>%s</code>, <code>%d</code>, <code>{0}</code>, <code>$1</code></li>
+          <li>Technical terms: Kernel, GNOME, sudo, apt, GRUB, X11, Wayland</li>
+          <li>Brand names: Ubuntu, Canonical, Debian, Firefox</li>
+          <li>Whitespace and newlines character-for-character</li>
+        </ul>
+      </li>
+      <li>Three QA checks run automatically:
+        <ul>
+          <li><strong>Placeholder Integrity</strong>: Are all format specifiers preserved?</li>
+          <li><strong>Newline Count</strong>: Do newline counts match?</li>
+          <li><strong>Non-Empty</strong>: Is the translation non-empty?</li>
+          <li><strong>Length Ratio</strong>: Is it within 0.3x–4x of original length?</li>
+        </ul>
+      </li>
+    </ol>
+
+    <h3>Manual Translation</h3>
+    <p>You can also type translations manually in the side-by-side grid. Changes auto-save when you move to the next field.</p>
+
+    <h3>Language-Specific Notes</h3>
+    <ul>
+      <li><strong>Burmese</strong>: Unicode only (never Zawgyi), formal register</li>
+      <li><strong>Shan</strong>: Preserve tone marks</li>
+      <li><strong>Mon</strong>: Verb-final structure</li>
+      <li><strong>Karen</strong>: SVO word order</li>
+    </ul>
+    {% endmacro %}
+
+    {% macro chapter_6() %}
+    <h2>📦 Exporting & Publishing</h2>
+
+    <h3>What Export Does</h3>
+    <ol>
+      <li>Writes all translations back to a <code>.po</code> file</li>
+      <li>Generates a timestamped filename: <code>translated_my_burmese_messages_20260615_1430.po</code></li>
+      <li>Saves an export manifest for tracking</li>
+      <li>Optionally commits to git with a descriptive message</li>
+    </ol>
+
+    <h3>Git Integration</h3>
+    <p>Each export is automatically committed on the <code>ai-enhanced</code> branch:</p>
+    <pre>feat(my): +40 Burmese translations — 70.0% complete
+
+- Translated 40 strings
+- Language: Burmese (my)
+- Source: burmese_messages.po
+- Export: translated_my_burmese_20260615.po
+
+Co-Authored-By: Claude &lt;noreply@anthropic.com&gt;</pre>
+
+    <h3>After Export</h3>
+    <ul>
+      <li><strong>Push to GitHub</strong>: <code>git push origin ai-enhanced</code></li>
+      <li><strong>Upload to Launchpad</strong>: Submit your .po file on translations.launchpad.net</li>
+      <li><strong>Open a PR</strong>: Get your translations reviewed before merging</li>
+      <li><strong>Test in Ubuntu</strong>: Install the translated package and verify in-context</li>
+    </ul>
+    {% endmacro %}
+
+    {# Render active chapter #}
+    {% if active_chapter == 1 %}{{ chapter_1() }}{% endif %}
+    {% if active_chapter == 2 %}{{ chapter_2() }}{% endif %}
+    {% if active_chapter == 3 %}{{ chapter_3() }}{% endif %}
+    {% if active_chapter == 4 %}{{ chapter_4() }}{% endif %}
+    {% if active_chapter == 5 %}{{ chapter_5() }}{% endif %}
+    {% if active_chapter == 6 %}{{ chapter_6() }}{% endif %}
+    {% if active_chapter == 0 %}
+      {{ chapter_1() }}
+      {{ chapter_2() }}
+      {{ chapter_3() }}
+      {{ chapter_4() }}
+      {{ chapter_5() }}
+      {{ chapter_6() }}
+    {% endif %}
+  </div>
+</div>
+
+{% endblock %}

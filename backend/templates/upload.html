@@ -1,0 +1,62 @@
+{% extends "base.html" %}
+{% block content %}
+
+<div class="top-bar">
+  <h1 class="page-title"><strong>Upload</strong> .po File</h1>
+  <span style="font-size:14px;color:var(--text-light)">Step 1 of 4</span>
+</div>
+
+{% if error %}
+<div class="error-banner">
+  <span class="banner-icon">⚠️</span>
+  <span>{{ error }}</span>
+</div>
+{% endif %}
+
+<div class="card">
+  <form action="/upload/" method="post" enctype="multipart/form-data"
+        hx-post="/upload/" hx-target="#upload-result" hx-indicator="#upload-spinner">
+
+    <label class="form-file" id="drop-zone">
+      <input type="file" name="file" accept=".po" style="display:none"
+             onchange="this.closest('label').querySelector('.form-file-text').textContent = this.files[0]?.name || 'Drop .po file here or click to browse'">
+      <div class="form-file-icon">📤</div>
+      <div class="form-file-text">Drop .po file here or click to browse</div>
+      <div class="form-file-types">GNU gettext .po files only</div>
+    </label>
+
+    <div class="form-group" style="margin-top:16px">
+      <label class="form-label">Target Language (if not auto-detected)</label>
+      <select name="target_lang" class="form-select">
+        {% for code, name in language_choices %}
+        <option value="{{ code }}">{{ name }}</option>
+        {% endfor %}
+      </select>
+    </div>
+
+    <button type="submit" class="btn btn-primary btn-lg btn-block" style="margin-top:16px">
+      <span class="htmx-indicator"><span class="spinner"></span></span>
+      📤 Upload & Parse
+    </button>
+  </form>
+
+  <div id="upload-spinner" class="htmx-indicator" style="text-align:center;padding:20px">
+    <span class="spinner"></span> Parsing .po file...
+  </div>
+</div>
+
+<div id="upload-result"></div>
+
+<!-- Supported Languages Info -->
+<div class="card" style="margin-top:20px">
+  <h3 style="font-size:16px;margin-bottom:12px">📋 File Requirements</h3>
+  <ul style="margin-left:20px;font-size:14px;color:var(--text-light);line-height:1.8">
+    <li>Standard GNU gettext <code>.po</code> format</li>
+    <li>UTF-8 encoding required</li>
+    <li>Maximum file size: 50 MB</li>
+    <li>Language auto-detected from filename or PO headers</li>
+    <li>Example filename: <code>burmese_messages.po</code>, <code>shan_ui.po</code></li>
+  </ul>
+</div>
+
+{% endblock %}

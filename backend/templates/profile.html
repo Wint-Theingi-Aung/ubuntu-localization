@@ -1,0 +1,76 @@
+{% extends "base.html" %}
+{% block content %}
+
+<div class="top-bar">
+  <h1 class="page-title">🐧 <strong>Launchpad</strong> Profile</h1>
+  <span style="font-size:14px;color:var(--text-light)">{% if is_public %}Public View{% else %}Your Account{% endif %}</span>
+</div>
+
+{% if error %}
+<div class="error-banner">
+  <span class="banner-icon">⚠️</span>
+  <span>{{ error }}</span>
+</div>
+{% endif %}
+
+{% if profile %}
+<div class="card" style="max-width:600px">
+  <div class="profile-card">
+    <div class="profile-avatar">🐧</div>
+    <h2 class="profile-name">{{ profile.display_name }}</h2>
+    <div class="profile-username">@{{ profile.username }}</div>
+    <div class="profile-karma">{{ profile.karma|default(0, true) }} karma</div>
+
+    <div class="profile-meta">
+      <a href="{{ profile.web_link }}" target="_blank" style="color:var(--orange);text-decoration:none">
+        {{ profile.web_link }}
+      </a>
+      {% if profile.wiki_url %}
+      <br><a href="{{ profile.wiki_url }}" target="_blank" style="color:var(--text-light);text-decoration:none">Wiki</a>
+      {% endif %}
+    </div>
+
+    {% if rank %}
+    <div style="padding:8px 16px;background:rgba(233,84,32,0.08);border-radius:16px;font-size:14px;margin-bottom:16px">
+      🏆 Ranked <strong>#{{ rank }}</strong> among Ubuntu top contributors
+    </div>
+    {% endif %}
+  </div>
+</div>
+
+{% if teams %}
+<div class="card" style="max-width:600px;margin-top:16px">
+  <h3 style="font-size:16px;margin-bottom:12px">👥 Teams ({{ teams|length }})</h3>
+  <div class="team-list">
+    {% for t in teams %}
+    <span class="team-tag">{{ t.team_name }}</span>
+    {% endfor %}
+  </div>
+</div>
+{% endif %}
+
+{% if karma and karma.categories %}
+<div class="card" style="max-width:600px;margin-top:16px">
+  <h3 style="font-size:16px;margin-bottom:12px">⭐ Karma Breakdown</h3>
+  <table class="data-table">
+    <tr><th>Category</th><th>Action</th><th>Points</th></tr>
+    {% for c in karma.categories %}
+    <tr>
+      <td>{{ c.category }}</td>
+      <td>{{ c.action }}</td>
+      <td>{{ c.points }}</td>
+    </tr>
+    {% endfor %}
+  </table>
+</div>
+{% endif %}
+
+{% endif %}
+
+{% if not is_public and not authenticated %}
+<div style="max-width:600px">
+  <a href="/auth/" class="btn btn-primary">🔐 Login with Launchpad</a>
+</div>
+{% endif %}
+
+{% endblock %}

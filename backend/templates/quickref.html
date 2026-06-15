@@ -1,0 +1,46 @@
+{% extends "base.html" %}
+{% block content %}
+
+<div class="top-bar">
+  <h1 class="page-title">⚡ <strong>Quick Reference</strong></h1>
+  <a href="/guide/" class="btn btn-outline btn-sm">📖 Full Guide</a>
+</div>
+
+<div class="quickref-card">
+<pre>
+┌──────────────────────────────────────────────────────────────────┐
+│                Ubuntu Localization — Quick Reference              │
+├──────────────────────────────────────────────────────────────────┤
+│                                                                  │
+│  <span class="cmd">/po-upload</span> [file]   Import .po file(s)                    │
+│  <span class="cmd">/po-detect</span>          Find untranslated strings            │
+│  <span class="cmd">/po-translate</span>       AI translate (--priority, --all)      │
+│  <span class="cmd">/po-export</span>          Save, commit, and push               │
+│  <span class="cmd">/guide</span>              Show this user guide                 │
+│  <span class="cmd">/auth-status</span>        Launchpad profile & karma            │
+│                                                                  │
+│  <span class="comment"># Web UI:</span>                                              │
+│  uv run uvicorn backend.main:app --reload                       │
+│  → http://localhost:8501                                        │
+│                                                                  │
+│  Languages: <span class="cmd">my</span>(Burmese) <span class="cmd">shn</span>(Shan) <span class="cmd">mnw</span>(Mon) <span class="cmd">ksw</span>(Karen)       │
+│  AI:        Gemini 2.5 Flash                                     │
+│  QA:        3-reviewer adversarial majority vote                 │
+│  Git:       ai-enhanced branch → GitHub                          │
+│                                                                  │
+│  Files:     data/*.po → exports/translated_*.po                  │
+│  Sessions:  ~/.cache/ubuntu-localization/sessions/               │
+│                                                                  │
+└──────────────────────────────────────────────────────────────────┘
+</pre>
+</div>
+
+<div class="card" style="margin-top:20px">
+  <h3 style="font-size:16px;margin-bottom:12px">Setup Checklist</h3>
+  <table class="data-table">
+    <tr><td><input type="checkbox" checked> Clone repository</td><td><input type="checkbox" checked> Set GOOGLE_API_KEY in .env</td></tr>
+    <tr><td><input type="checkbox" checked> uv sync (install deps)</td><td><input type="checkbox"> Run Launchpad OAuth setup</td></tr>
+  </table>
+</div>
+
+{% endblock %}

@@ -1,0 +1,175 @@
+{% extends "base.html" %}
+{% block content %}
+
+<div class="top-bar">
+  <h1 class="page-title">Ubuntu <strong>Localization</strong> Dashboard</h1>
+  <div hx-get="/auth/status" hx-trigger="load" id="auth-widget"></div>
+</div>
+
+<!-- Status Cards -->
+<div class="stats-grid">
+  <div class="stat">
+    <span class="stat-value">4</span>
+    <span class="stat-label">Languages</span>
+  </div>
+  <div class="stat">
+    <span class="stat-value">{% if ai_available %}✓{% else %}✗{% endif %}</span>
+    <span class="stat-label">AI Ready</span>
+  </div>
+  <div class="stat">
+    <span class="stat-value">{{ sessions|length }}</span>
+    <span class="stat-label">Recent Sessions</span>
+  </div>
+  <div class="stat">
+    <span class="stat-value">v2.0</span>
+    <span class="stat-label">Version</span>
+  </div>
+</div>
+
+<!-- Language Cards -->
+<div style="margin-top:32px">
+  <h2 style="font-size:20px;font-weight:400;margin-bottom:16px">Supported Languages</h2>
+  <div style="display:grid;grid-template-columns:repeat(auto-fill,minmax(260px,1fr));gap:16px">
+    <div class="card">
+      <div style="display:flex;justify-content:space-between;align-items:start">
+        <div>
+          <span class="lang-badge lang-my">my</span>
+          <h3 style="font-size:16px;margin:8px 0 4px">Burmese</h3>
+          <div style="font-size:14px;color:var(--text-light)">မြန်မာဘာသာ</div>
+        </div>
+        <span style="font-size:12px;color:var(--text-light)">Myanmar Unicode</span>
+      </div>
+      <div style="margin-top:12px;font-size:12px;color:var(--text-light)">
+        Word order: SOV
+      </div>
+    </div>
+    <div class="card">
+      <div style="display:flex;justify-content:space-between;align-items:start">
+        <div>
+          <span class="lang-badge lang-shn">shn</span>
+          <h3 style="font-size:16px;margin:8px 0 4px">Shan</h3>
+          <div style="font-size:14px;color:var(--text-light)">ၽႃႇသႃႇတႆး</div>
+        </div>
+        <span style="font-size:12px;color:var(--text-light)">Shan Unicode</span>
+      </div>
+      <div style="margin-top:12px;font-size:12px;color:var(--text-light)">
+        Word order: SVO
+      </div>
+    </div>
+    <div class="card">
+      <div style="display:flex;justify-content:space-between;align-items:start">
+        <div>
+          <span class="lang-badge lang-mnw">mnw</span>
+          <h3 style="font-size:16px;margin:8px 0 4px">Mon</h3>
+          <div style="font-size:14px;color:var(--text-light)">ဘာသာမန်</div>
+        </div>
+        <span style="font-size:12px;color:var(--text-light)">Mon Unicode</span>
+      </div>
+      <div style="margin-top:12px;font-size:12px;color:var(--text-light)">
+        Word order: SVO
+      </div>
+    </div>
+    <div class="card">
+      <div style="display:flex;justify-content:space-between;align-items:start">
+        <div>
+          <span class="lang-badge lang-ksw">ksw</span>
+          <h3 style="font-size:16px;margin:8px 0 4px">S'gaw Karen</h3>
+          <div style="font-size:14px;color:var(--text-light)">ကညီကျိာ်</div>
+        </div>
+        <span style="font-size:12px;color:var(--text-light)">Karen Unicode</span>
+      </div>
+      <div style="margin-top:12px;font-size:12px;color:var(--text-light)">
+        Word order: SVO
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- Recent Sessions -->
+<div style="margin-top:32px">
+  <div class="card-header" style="margin-bottom:16px">
+    <h2 style="font-size:20px;font-weight:400">Recent Sessions</h2>
+    <a href="/export/history" class="btn btn-outline btn-sm">View All</a>
+  </div>
+
+  {% if sessions %}
+    {% for s in sessions %}
+    <div class="session-card">
+      <div class="session-header">
+        <span class="session-icon">📄</span>
+        <div style="flex:1">
+          <h3>{{ s.get('filename', 'Unknown') }}</h3>
+          <span class="lang-badge lang-{{ s.get('language_code', 'my') }}">{{ s.get('language', 'Unknown') }}</span>
+        </div>
+        <span style="font-size:12px;color:var(--text-light)">{{ s.get('updated_at', '')[:10] }}</span>
+      </div>
+      <div style="display:flex;gap:12px;margin-top:8px">
+        <a href="/translate/?session_id={{ s.session_id }}" class="btn btn-outline btn-sm">🤖 Resume</a>
+        <a href="/export/?session_id={{ s.session_id }}" class="btn btn-outline btn-sm">📦 Export</a>
+      </div>
+    </div>
+    {% endfor %}
+  {% else %}
+    <div class="empty-state">
+      <span class="empty-icon">📭</span>
+      <h3>No sessions yet</h3>
+      <p>Upload a .po file to start translating Ubuntu into indigenous languages.</p>
+      <a href="/upload/" class="btn btn-primary">📤 Upload .po File</a>
+    </div>
+  {% endif %}
+</div>
+
+<!-- Leaderboard & Stats Grid -->
+<div style="display:grid;grid-template-columns:1fr 1fr;gap:20px;margin-top:32px">
+  <div class="card">
+    <div hx-get="/leaderboard/widget?limit=5" hx-trigger="load" id="leaderboard-widget">
+      <div style="text-align:center;padding:20px"><span class="spinner"></span> Loading leaderboard...</div>
+    </div>
+  </div>
+  <div class="card">
+    <div hx-get="/leaderboard/stats-widget" hx-trigger="load" id="stats-widget-section">
+      <div style="text-align:center;padding:20px"><span class="spinner"></span> Loading stats...</div>
+    </div>
+  </div>
+</div>
+
+<!-- Quick Start -->
+<div class="card" style="margin-top:24px">
+  <h3 style="font-size:16px;margin-bottom:12px">🚀 Quick Start</h3>
+  <div style="display:flex;gap:10px;flex-wrap:wrap">
+    <div style="flex:1;min-width:160px;text-align:center;padding:16px;background:rgba(233,84,32,0.05);border-radius:var(--radius)">
+      <div style="font-size:28px;margin-bottom:8px">1</div>
+      <div style="font-weight:500;margin-bottom:4px">Upload</div>
+      <div style="font-size:12px;color:var(--text-light)">Import .po file</div>
+    </div>
+    <div style="flex:1;min-width:160px;text-align:center;padding:16px;background:rgba(119,41,83,0.05);border-radius:var(--radius)">
+      <div style="font-size:28px;margin-bottom:8px">2</div>
+      <div style="font-weight:500;margin-bottom:4px">Detect</div>
+      <div style="font-size:12px;color:var(--text-light)">Find missing strings</div>
+    </div>
+    <div style="flex:1;min-width:160px;text-align:center;padding:16px;background:rgba(14,132,32,0.05);border-radius:var(--radius)">
+      <div style="font-size:28px;margin-bottom:8px">3</div>
+      <div style="font-weight:500;margin-bottom:4px">Translate</div>
+      <div style="font-size:12px;color:var(--text-light)">AI + QA verification</div>
+    </div>
+    <div style="flex:1;min-width:160px;text-align:center;padding:16px;background:rgba(0,122,166,0.05);border-radius:var(--radius)">
+      <div style="font-size:28px;margin-bottom:8px">4</div>
+      <div style="font-weight:500;margin-bottom:4px">Export</div>
+      <div style="font-size:12px;color:var(--text-light)">Save & push to GitHub</div>
+    </div>
+  </div>
+</div>
+
+{% if not ai_available %}
+<div class="warning-banner" style="margin-top:24px">
+  <span class="banner-icon">⚠️</span>
+  <span>Google API key not configured. Set <code>GOOGLE_API_KEY</code> in <code>.env</code> to enable AI translation.</span>
+</div>
+{% endif %}
+
+<div class="app-footer">
+  <span>Ubuntu Localization Tool v2.0 · Powered by Gemini AI</span>
+  <span>github.com/Wint-Theingi-Aung/ubuntu-localization</span>
+</div>
+
+{% endblock %}

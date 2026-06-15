@@ -1,0 +1,73 @@
+{% extends "base.html" %}
+{% block content %}
+
+<div class="top-bar">
+  <h1 class="page-title">🔐 <strong>Login</strong> with Launchpad</h1>
+</div>
+
+{% if auth_status.authenticated %}
+<div class="success-banner">
+  <span class="banner-icon">✅</span>
+  <span>Already authenticated as <strong>{{ auth_status.display_name }}</strong></span>
+</div>
+<div style="margin-top:16px">
+  <a href="/auth/" class="btn btn-primary">View My Profile</a>
+</div>
+{% else %}
+
+<div class="card" style="max-width:560px">
+  <div class="profile-card">
+    <div class="profile-avatar">🔐</div>
+    <h2 style="margin-bottom:8px">Connect Your Launchpad Account</h2>
+    <p style="color:var(--text-light);margin-bottom:24px;max-width:400px">
+      Link your Launchpad profile to track your Ubuntu translation contributions,
+      view your karma, and see your team memberships.
+    </p>
+
+    <div style="background:rgba(233,84,32,0.05);padding:16px;border-radius:var(--radius);margin-bottom:20px;text-align:left;width:100%">
+      <div style="font-size:14px;margin-bottom:8px"><strong>What you'll get:</strong></div>
+      <ul style="margin-left:20px;font-size:14px;color:var(--text-light)">
+        <li>Your Launchpad profile & karma</li>
+        <li>Translation team memberships</li>
+        <li>Ubuntu contribution stats</li>
+        <li>Top contributor ranking</li>
+      </ul>
+    </div>
+
+    <div class="warning-banner" style="width:100%;text-align:left">
+      <span class="banner-icon">⚠️</span>
+      <span>Authentication requires running the setup script in your terminal:</span>
+    </div>
+
+    <pre style="width:100%;text-align:left;margin:12px 0">source venv/bin/activate
+python ~/.claude/mcp-servers/launchpad-bridge/setup_auth.py</pre>
+
+    <p style="font-size:13px;color:var(--text-light);margin-top:8px">
+      This opens your browser → you log into Launchpad → authorize the tool.
+      Credentials are stored securely on your machine only.
+    </p>
+
+    {% if not auth_status.setup_required and auth_status.error %}
+    <div class="error-banner" style="width:100%;text-align:left;margin-top:16px">
+      <span class="banner-icon">⚠️</span>
+      <span>{{ auth_status.error }}</span>
+    </div>
+    {% endif %}
+  </div>
+</div>
+
+<!-- Anonymous Lookup -->
+<div class="card" style="max-width:560px;margin-top:20px">
+  <h3 style="font-size:16px;margin-bottom:12px">🔍 Look Up a Launchpad User</h3>
+  <form action="/auth/profile/" method="get" style="display:flex;gap:8px">
+    <input type="text" name="username" class="form-input" placeholder="e.g., wint-theingi-aung" style="flex:1">
+    <button type="submit" class="btn btn-outline">Search</button>
+  </form>
+  <div style="font-size:12px;color:var(--text-light);margin-top:8px">
+    Anonymous lookup — no login required. Try: <code>wint-theingi-aung</code>
+  </div>
+</div>
+
+{% endif %}
+
+{% endblock %}
