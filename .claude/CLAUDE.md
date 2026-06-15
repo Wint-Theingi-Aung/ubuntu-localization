@@ -1,0 +1,85 @@
+# Ubuntu Localization Tool — AI-Enhanced
+
+## Project Overview
+A localization tool for translating Ubuntu `.po` files into indigenous languages using Google Gemini AI, Claude Code skills, MCP servers, and subagent orchestration.
+
+## Languages
+- Burmese (my), Shan (shn), Mon (mnw), S'gaw Karen (ksw)
+
+## Tech Stack
+- **Web UI**: FastAPI + Jinja2 + htmx (Ubuntu-themed)
+- **Legacy UI**: Streamlit (`app.py` — still available)
+- **AI**: Google Gemini 2.5 Flash
+- **Package Manager**: uv (available in requirements.txt)
+- **Git**: ai-enhanced branch → GitHub
+
+## Web UI (FastAPI)
+```
+uv run uvicorn backend.main:app --reload
+→ http://localhost:8501
+```
+
+| Route | Purpose |
+|-------|---------|
+| `/` | Dashboard — language overview, recent sessions |
+| `/upload/` | Upload .po files, drag-and-drop |
+| `/translate/` | AI batch translate + manual side-by-side editor |
+| `/export/` | Export .po, preview, git commit |
+| `/export/history` | Export history |
+| `/auth/` | Launchpad login + profile |
+| `/guide/` | 6-chapter interactive user guide |
+| `/guide/quickref` | Quick reference card |
+| `/leaderboard/` | Top contributors, per-language rankings |
+| `/leaderboard/contributor/{name}` | Individual contributor stats |
+| `/health` | Health check endpoint |
+
+## Skills (Claude Code Slash Commands)
+- `/po-upload` — Parse .po files, extract untranslated strings
+- `/po-detect` — Scan for missing/fuzzy translations, prioritize by importance
+- `/po-translate` — AI batch translation with 3-reviewer QA verification
+- `/po-export` — Write back to .po, commit, push to GitHub
+- `/guide` — Interactive user guide
+- `/auth-status` — Launchpad profile, karma, teams, translation progress
+
+## MCP Servers
+- **GitHub MCP** — Auto-commit/push via `~/.claude/mcp-servers/github-server.sh`
+- **Filesystem MCP** — Safe file I/O restricted to project directory
+- **Launchpad Bridge MCP** — Custom MCP server wrapping launchpadlib
+  - 8 tools: auth check, profile, karma, teams, translation groups, top contributors, search, progress
+  - Setup: `python ~/.claude/mcp-servers/launchpad-bridge/setup_auth.py`
+  - Source: `~/.claude/mcp-servers/launchpad-bridge/server.py` (392 lines)
+  - Anonymous read access works without setup
+  - Authenticated access enables `/auth-status` personal dashboard
+
+## Subagent Architecture ✅ ACTIVE
+- `translate-batch` — Gemini batch translator (`.claude/agents/translate-batch.md`)
+  - Input: JSON `{target_lang, lang_code, entries[{index, msgid, msgctxt}]}`
+  - Output: JSON `{translations[{index, msgid, translated}]}`
+  - Rules: placeholder preservation, technical term lock, language-specific scripts
+- `qa-reviewer` — 3-lens adversarial verifier (`.claude/agents/qa-reviewer.md`)
+  - Lens 1: Placeholder & format integrity
+  - Lens 2: Ubuntu context & semantic accuracy
+  - Lens 3: Structural & whitespace fidelity
+  - Majority vote: 2+/3 passes required per entry
+- `batch-translate-orchestrator` — Pipeline workflow (`.claude/workflows/batch-translate-orchestrator.js`)
+  - Phase 1: Load session data + translation queue
+  - Phase 2: Parallel translate-batch agents (schema-constrained JSON output)
+  - Phase 3: Triple qa-reviewer adversarial verification per entry
+  - Phase 4: Majority-vote merge (passed/failed split)
+  - Phase 5: Report with pass/fail stats and next-action links
+
+## Usage Example
+```
+/po-upload data/burmese_messages.po
+/po-detect
+/po-translate --priority=p1
+# This invokes batch-translate-orchestrator workflow internally:
+#   Load → Parallel Translate → Triple QA Verify → Merge → Report
+/po-export
+```
+
+## Quick Start
+1. `uv sync` or `pip install -r requirements.txt`
+2. Set `GOOGLE_API_KEY` in `.env`
+3. `streamlit run app.py`
+4. Or use skills: `/po-upload` → `/po-detect` → `/po-translate` → `/po-export`

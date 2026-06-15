@@ -1,0 +1,29 @@
+{
+  "mcpServers": {
+    "github": {
+      "command": "/home/wint/.claude/mcp-servers/github-server.sh",
+      "args": []
+    },
+    "filesystem": {
+      "command": "npx",
+      "args": [
+        "-y",
+        "@modelcontextprotocol/server-filesystem",
+        "/home/wint/ubuntu-localization",
+        "/tmp/ubuntu-localization"
+      ]
+    },
+    "launchpad-bridge": {
+      "command": "/home/wint/.claude/mcp-servers/launchpad-bridge/run.sh",
+      "args": []
+    },
+    "postgres": {
+      "command": "npx",
+      "args": [
+        "-y",
+        "@modelcontextprotocol/server-postgres",
+        "postgresql://localhost:5432/ubuntu_localization"
+      ]
+    }
+  }
+}

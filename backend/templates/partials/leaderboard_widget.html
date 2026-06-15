@@ -1,0 +1,30 @@
+<div id="leaderboard-widget">
+  <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:12px">
+    <h3 style="font-size:16px;font-weight:500">
+      🏆 Top Contributors
+      {% if lang %}<span class="lang-badge lang-{{ lang }}">{{ lang }}</span>{% endif %}
+    </h3>
+    <a href="/leaderboard/" class="btn btn-outline btn-sm">View All</a>
+  </div>
+
+  {% if leaderboard %}
+    {% for entry in leaderboard %}
+    <div style="display:flex;align-items:center;gap:12px;padding:8px 0;border-bottom:1px solid var(--border)">
+      <span style="width:28px;text-align:center;font-weight:700;color:var(--text-light)">
+        {% if entry.rank == 1 %}🥇{% elif entry.rank == 2 %}🥈{% elif entry.rank == 3 %}🥉{% else %}{{ entry.rank }}{% endif %}
+      </span>
+      <div style="flex:1">
+        <a href="/leaderboard/contributor/{{ entry.username }}" style="color:var(--text);text-decoration:none;font-weight:500">
+          {{ entry.display_name or entry.username }}
+        </a>
+      </div>
+      <span style="font-weight:700;color:var(--orange)">{{ entry.strings_translated or entry.total_strings|default(0)|int|int }}</span>
+      <span style="font-size:11px;color:var(--text-light)">strings</span>
+    </div>
+    {% endfor %}
+  {% else %}
+  <div style="text-align:center;padding:20px;color:var(--text-light);font-size:14px">
+    Export translations to build the leaderboard
+  </div>
+  {% endif %}
+</div>

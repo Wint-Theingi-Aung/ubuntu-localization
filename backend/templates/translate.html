@@ -1,0 +1,111 @@
+{% extends "base.html" %}
+{% block content %}
+
+<div class="top-bar">
+  <h1 class="page-title"><strong>Translate</strong> Strings</h1>
+  <span style="font-size:14px;color:var(--text-light)">Step 3 of 4</span>
+</div>
+
+{% if no_session %}
+<div class="empty-state">
+  <span class="empty-icon">📤</span>
+  <h3>No file loaded</h3>
+  <p>Upload a .po file first to start translating.</p>
+  <a href="/upload/" class="btn btn-primary">📤 Upload .po File</a>
+</div>
+{% else %}
+
+<!-- Progress Card -->
+<div class="card" hx-get="/upload/status/{{ session_id }}" hx-trigger="load, every 10s" id="session-status">
+  <div style="text-align:center;padding:20px">
+    <span class="spinner"></span> Loading session...
+  </div>
+</div>
+
+{% if entries %}
+<!-- Batch Translate -->
+<div class="card">
+  <div class="card-header">
+    <h3 class="card-title">AI Batch Translation</h3>
+    <span style="font-size:13px;color:var(--text-light)">Page {{ page }} of {{ total_pages }}</span>
+  </div>
+
+  {% if ai_available %}
+  <form hx-post="/translate/batch" hx-target="#translate-results" hx-indicator="#translate-spinner"
+        hx-swap="beforeend">
+    <input type="hidden" name="session_id" value="{{ session_id }}">
+    <input type="hidden" name="target_lang" value="{{ language_code }}">
+
+    <button type="submit" class="btn btn-primary btn-block">
+      <span class="htmx-indicator"><span class="spinner"></span></span>
+      🤖 Translate Page ({{ entries|length }} strings)
+    </button>
+  </form>
+
+  <div id="translate-spinner" class="htmx-indicator" style="text-align:center;padding:20px">
+    <span class="spinner"></span> Calling Gemini AI... this takes ~5-15 seconds per batch
+  </div>
+  {% else %}
+  <div class="warning-banner">
+    <span class="banner-icon">⚠️</span>
+    <span>AI translation not available. Set <code>GOOGLE_API_KEY</code> in <code>.env</code>.</span>
+  </div>
+  {% endif %}
+
+  <div id="translate-results" style="margin-top:16px"></div>
+</div>
+
+<!-- Manual Translation Grid -->
+<div class="card">
+  <h3 style="font-size:16px;margin-bottom:16px">Manual Translation — {{ total_untranslated }} untranslated</h3>
+
+  {% for entry in entries %}
+  <form class="translate-pair"
+        hx-post="/translate/save" hx-trigger="change from:textarea" hx-swap="none">
+    <input type="hidden" name="session_id" value="{{ session_id }}">
+    <input type="hidden" name="entry_index" value="{{ entry.index }}">
+
+    <div class="entry-source">
+      <code>{{ entry.msgid }}</code>
+      {% if entry.msgctxt %}
+      <div class="entry-context">Context: {{ entry.msgctxt }}</div>
+      {% endif %}
+    </div>
+    <div class="entry-target">
+      <textarea name="translated" class="auto-save" rows="3"
+                placeholder="Type translation or use AI above...">{{ entry.get('translated_inline', entry.msgstr) }}</textarea>
+      <span class="save-indicator" id="save-indicator-{{ entry.index }}"></span>
+    </div>
+  </form>
+  {% endfor %}
+
+  <!-- Pagination -->
+  {% if total_pages > 1 %}
+  <div class="pagination">
+    <a href="?session_id={{ session_id }}&page={{ page-1 }}" class="btn btn-outline btn-sm"
+       {% if page <= 1 %}disabled{% endif %}>← Previous</a>
+    <span>Page {{ page }} / {{ total_pages }}</span>
+    <a href="?session_id={{ session_id }}&page={{ page+1 }}" class="btn btn-outline btn-sm"
+       {% if page >= total_pages %}disabled{% endif %}>Next →</a>
+  </div>
+  {% endif %}
+</div>
+
+<!-- Progress polling endpoint -->
+<div hx-get="/translate/progress/{{ session_id }}" hx-trigger="every 15s" style="display:none"
+     hx-on::after-request="
+       const data = JSON.parse(event.detail.xhr.responseText);
+       if (data.completion_pct >= 100) {
+         showToast('🎉 All strings translated! Ready to export.', 'success');
+       }
+     "></div>
+{% else %}
+<div class="success-banner">
+  <span class="banner-icon">🎉</span>
+  <span>All strings are translated! <a href="/export/?session_id={{ session_id }}">Export now →</a></span>
+</div>
+{% endif %}
+
+{% endif %}
+
+{% endblock %}
