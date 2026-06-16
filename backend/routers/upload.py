@@ -23,12 +23,18 @@ async def upload_page(request: Request):
 @router.post("/", response_class=HTMLResponse)
 async def upload_file(
     request: Request,
-    file: UploadFile = File(...),
+    file: UploadFile = File(None),
     target_lang: str = Form("my"),
 ):
     """Handle .po file upload — parse, detect gaps, return results."""
+    # Validate file presence
+    if file is None or not file.filename:
+        return templates.TemplateResponse(request, "upload_error.html", {
+            "error": "No file selected. Please choose a .po file to upload.",
+        })
+
     # Validate file type
-    if not file.filename or not file.filename.endswith(".po"):
+    if not file.filename.endswith(".po"):
         return templates.TemplateResponse(request, "upload_error.html", {
             "error": "Only .po files are supported. Please upload a GNU gettext .po file.",
         })

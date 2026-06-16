@@ -19,7 +19,7 @@
         hx-target="#upload-result" hx-indicator="#upload-spinner">
 
     <label class="form-file" id="drop-zone">
-      <input type="file" name="file" accept=".po,.pot,text/x-gettext-translation,text/x-po" class="form-file-input" hx-preserve
+      <input type="file" name="file" accept=".po,.pot,text/x-gettext-translation,text/x-po" class="form-file-input"
              onchange="this.closest('label').querySelector('.form-file-text').textContent = this.files[0]?.name || 'Drop .po file here or click to browse'">
       <div class="form-file-icon">📤</div>
       <div class="form-file-text">Drop .po file here or click to browse</div>
