@@ -1,11 +1,9 @@
 """Upload router — .po file upload, parse, detect untranslated strings."""
 
-import json
-from pathlib import Path
 from fastapi import APIRouter, UploadFile, File, Form, Request
 from fastapi.responses import HTMLResponse
 
-from backend.config import config, PROJECT_ROOT, UPLOAD_DIR, LANGUAGE_CHOICES
+from backend.config import config, LANGUAGE_CHOICES
 from backend.services.po_parser import parse_po_file, generate_priority_report
 from backend.services.session import create_session
 from backend.services import db
@@ -17,8 +15,9 @@ router = APIRouter(prefix="/upload", tags=["upload"])
 @router.get("/", response_class=HTMLResponse)
 async def upload_page(request: Request):
     """Show the upload form page."""
-    return templates.TemplateResponse(request, "upload.html", {"languages": config.LANGUAGES if hasattr(config, 'LANGUAGES') else {},
-        "language_choices": LANGUAGE_CHOICES})
+    return templates.TemplateResponse(request, "upload.html", {
+        "language_choices": LANGUAGE_CHOICES,
+    })
 
 
 @router.post("/", response_class=HTMLResponse)
@@ -30,14 +29,16 @@ async def upload_file(
     """Handle .po file upload — parse, detect gaps, return results."""
     # Validate file type
     if not file.filename or not file.filename.endswith(".po"):
-        return templates.TemplateResponse(request, "upload.html", {"error": "Only .po files are supported. Please upload a GNU gettext .po file.",
-            "language_choices": LANGUAGE_CHOICES})
+        return templates.TemplateResponse(request, "upload_error.html", {
+            "error": "Only .po files are supported. Please upload a GNU gettext .po file.",
+        })
 
     # Read and validate size
     content = await file.read()
     if len(content) > config.max_upload_size_mb * 1024 * 1024:
-        return templates.TemplateResponse(request, "upload.html", {"error": f"File too large. Maximum size is {config.max_upload_size_mb} MB.",
-            "language_choices": LANGUAGE_CHOICES})
+        return templates.TemplateResponse(request, "upload_error.html", {
+            "error": f"File too large. Maximum size is {config.max_upload_size_mb} MB.",
+        })
 
     text = content.decode("utf-8", errors="replace")
 
@@ -45,8 +46,9 @@ async def upload_file(
     try:
         parsed = parse_po_file(text, file.filename)
     except Exception as e:
-        return templates.TemplateResponse(request, "upload.html", {"error": f"Failed to parse .po file: {e}",
-            "language_choices": LANGUAGE_CHOICES})
+        return templates.TemplateResponse(request, "upload_error.html", {
+            "error": f"Failed to parse .po file: {e}",
+        })
 
     # If no language detected, use the user's selection
     if not parsed.get("detected_language"):
