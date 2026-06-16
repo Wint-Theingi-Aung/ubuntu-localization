@@ -20,7 +20,10 @@ from backend.config import PROJECT_ROOT
 
 # ── Configuration ─────────────────────────────────────────────────────
 
-DB_DIR = Path.home() / ".local" / "share" / "ubuntu-localization"
+if os.getenv("VERCEL") or os.getenv("RAILWAY_ENVIRONMENT"):
+    DB_DIR = Path("/tmp") / "ubuntu-localization" / "db"
+else:
+    DB_DIR = Path.home() / ".local" / "share" / "ubuntu-localization"
 DB_DIR.mkdir(parents=True, exist_ok=True)
 SQLITE_PATH = DB_DIR / "localization.db"
 

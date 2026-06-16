@@ -22,14 +22,18 @@ LANGUAGE_CHOICES = [(code, f"{info['name']} ({info['native']})") for code, info 
 # ── Paths ─────────────────────────────────────────────────────────────
 
 PROJECT_ROOT = Path(__file__).resolve().parent.parent
-DATA_DIR = PROJECT_ROOT / "data"
-EXPORTS_DIR = PROJECT_ROOT / "exports"
 
 # On Vercel/cloud, use /tmp (the only writable dir). Locally, use ~/.cache.
-if os.getenv("VERCEL") or os.getenv("RAILWAY_ENVIRONMENT"):
+_is_cloud = bool(os.getenv("VERCEL") or os.getenv("RAILWAY_ENVIRONMENT"))
+
+if _is_cloud:
+    DATA_DIR = Path("/tmp") / "ubuntu-localization" / "data"
+    EXPORTS_DIR = Path("/tmp") / "ubuntu-localization" / "exports"
     SESSION_DIR = Path("/tmp") / "ubuntu-localization" / "sessions"
     UPLOAD_DIR = Path("/tmp") / "ubuntu-localization" / "uploads"
 else:
+    DATA_DIR = PROJECT_ROOT / "data"
+    EXPORTS_DIR = PROJECT_ROOT / "exports"
     SESSION_DIR = Path.home() / ".cache" / "ubuntu-localization" / "sessions"
     UPLOAD_DIR = Path.home() / ".cache" / "ubuntu-localization" / "uploads"
 
