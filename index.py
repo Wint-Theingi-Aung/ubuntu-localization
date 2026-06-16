@@ -1,27 +1,9 @@
 """Vercel entry point — FastAPI app for Ubuntu Localization Tool."""
 
 import sys
-import traceback
 from pathlib import Path
 
+# Ensure project root is on sys.path for Vercel runtime
 sys.path.insert(0, str(Path(__file__).resolve().parent))
 
-from fastapi import FastAPI
-from fastapi.responses import HTMLResponse
-
-def _build_app():
-    try:
-        from backend.main import app as _app
-        return _app
-    except Exception:
-        tb = traceback.format_exc()
-        _app = FastAPI()
-        @_app.get("/{path:path}")
-        async def catchall(path: str = ""):
-            return HTMLResponse(
-                f"<h2>Import Error</h2><pre>{tb}</pre>",
-                status_code=500,
-            )
-        return _app
-
-app = _build_app()
+from backend.main import app
