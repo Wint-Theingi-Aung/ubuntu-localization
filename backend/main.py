@@ -13,7 +13,7 @@ from fastapi import FastAPI, Request
 from fastapi.responses import HTMLResponse, FileResponse
 from fastapi.staticfiles import StaticFiles
 
-from backend.config import config, PROJECT_ROOT, LANGUAGES, LANGUAGE_CHOICES
+from backend.config import config, PROJECT_ROOT, EXPORTS_DIR, LANGUAGES, LANGUAGE_CHOICES
 from backend.routers import upload, translate, export, guide, leaderboard
 from backend.services.translator import check_available
 from backend.services.session import list_recent_sessions
@@ -33,12 +33,18 @@ app = FastAPI(
 # ── Static Files ───────────────────────────────────────────────────────
 
 static_dir = PROJECT_ROOT / "backend" / "static"
-static_dir.mkdir(parents=True, exist_ok=True)
+try:
+    static_dir.mkdir(parents=True, exist_ok=True)
+except OSError:
+    pass  # read-only filesystem (Vercel)
 app.mount("/static", StaticFiles(directory=str(static_dir)), name="static")
 
 # Export downloads
-exports_dir = PROJECT_ROOT / "exports"
-exports_dir.mkdir(parents=True, exist_ok=True)
+exports_dir = EXPORTS_DIR
+try:
+    exports_dir.mkdir(parents=True, exist_ok=True)
+except OSError:
+    pass  # read-only filesystem — config.py already set it to /tmp
 app.mount("/exports", StaticFiles(directory=str(exports_dir)), name="exports")
 
 
