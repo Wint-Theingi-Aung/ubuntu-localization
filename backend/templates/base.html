@@ -401,7 +401,7 @@ body {
 
 /* ── Status Banners ──────────────────────────────────────────────── */
 
-.success-banner, .error-banner, .warning-banner, .info-banner {
+.success-banner, .error-banner, .warning-banner, .info-banner, .rate-limit-banner {
   padding: 14px 18px;
   border-radius: var(--radius);
   margin-bottom: 16px;
@@ -415,6 +415,7 @@ body {
 .error-banner { background: #C7162B20; color: var(--error); border: 1px solid #C7162B40; }
 .warning-banner { background: #F99B1120; color: var(--warning); border: 1px solid #F99B1140; }
 .info-banner { background: #007AA620; color: var(--info); border: 1px solid #007AA640; }
+.rate-limit-banner { background: #77295320; color: var(--aubergine); border: 1px solid #77295340; }
 
 .banner-icon { font-size: 20px; flex-shrink: 0; }
 
@@ -855,9 +856,6 @@ pre {
       <div class="nav-section-title">More</div>
       <a href="/leaderboard/" class="nav-item {% if request.url.path == '/leaderboard/' %}active{% endif %}">
         <span class="nav-icon">🏆</span> Leaderboard
-      </a>
-      <a href="/auth/" class="nav-item {% if request.url.path == '/auth/' %}active{% endif %}">
-        <span class="nav-icon">🔐</span> Profile
       </a>
       <a href="/guide/" class="nav-item {% if request.url.path == '/guide/' %}active{% endif %}">
         <span class="nav-icon">📖</span> User Guide

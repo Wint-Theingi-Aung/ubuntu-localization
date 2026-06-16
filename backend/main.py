@@ -14,7 +14,7 @@ from fastapi.responses import HTMLResponse, FileResponse
 from fastapi.staticfiles import StaticFiles
 
 from backend.config import config, PROJECT_ROOT, LANGUAGES, LANGUAGE_CHOICES
-from backend.routers import upload, translate, export, auth, guide, leaderboard
+from backend.routers import upload, translate, export, guide, leaderboard
 from backend.services.translator import check_available
 from backend.services.session import list_recent_sessions
 from backend.services import db
@@ -47,7 +47,6 @@ app.mount("/exports", StaticFiles(directory=str(exports_dir)), name="exports")
 app.include_router(upload.router)
 app.include_router(translate.router)
 app.include_router(export.router)
-app.include_router(auth.router)
 app.include_router(guide.router)
 app.include_router(leaderboard.router)
 

@@ -36,7 +36,7 @@ for d in [DATA_DIR, EXPORTS_DIR, SESSION_DIR, UPLOAD_DIR]:
 class Config:
     """Application configuration."""
     google_api_key: str = field(default_factory=lambda: os.getenv("GOOGLE_API_KEY", ""))
-    gemini_model: str = "gemini-2.5-flash"
+    gemini_model: str = os.getenv("GEMINI_MODEL", "gemini-2.5-flash")
     gemini_temperature: float = 0.2
     batch_size: int = 15
     items_per_page: int = 10
