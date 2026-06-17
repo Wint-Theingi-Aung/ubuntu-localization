@@ -1,5 +1,6 @@
 """Translate router — AI batch translation with QA verification."""
 
+import html
 import json
 from fastapi import APIRouter, Request, Form
 from fastapi.responses import HTMLResponse, JSONResponse
@@ -14,7 +15,7 @@ router = APIRouter(prefix="/translate", tags=["translate"])
 
 
 @router.get("/", response_class=HTMLResponse)
-async def translate_page(request: Request, session_id: str = ""):
+async def translate_page(request: Request, session_id: str = "", auto: bool = False, page: int = 1):
     """Show the translation workspace."""
     session = create_session(session_id) if session_id else None
     parsed = session.load_parsed() if session else None
@@ -30,7 +31,8 @@ async def translate_page(request: Request, session_id: str = ""):
             "entries": [],
             "total_untranslated": 0,
             "page": 1,
-            "total_pages": 1})
+            "total_pages": 1,
+            "auto_translate": False})
 
     untranslated = parsed.get("untranslated", [])
     # Apply any existing translations
@@ -40,10 +42,10 @@ async def translate_page(request: Request, session_id: str = ""):
             e["msgstr"] = translations[key]
             e["translated_inline"] = translations[key]
 
-    # Pagination
-    page = 1
+    # Pagination — clamp page to valid range
     per_page = config.items_per_page
     total_pages = max(1, (len(untranslated) + per_page - 1) // per_page)
+    page = max(1, min(page, total_pages))
     start = (page - 1) * per_page
     end = min(start + per_page, len(untranslated))
     page_entries = untranslated[start:end]
@@ -57,6 +59,7 @@ async def translate_page(request: Request, session_id: str = ""):
         "total_untranslated": len(untranslated),
         "page": page,
         "total_pages": total_pages,
+        "auto_translate": auto,
         "languages": LANGUAGES,
     })
 
@@ -94,9 +97,52 @@ async def translate_entries(
     try:
         results = translate_batch(msgids, lang_name, lang_code)
     except RuntimeError as e:
+        error_msg = str(e)
+        # Extract retry delay if rate-limited, return special response for auto-retry
+        import re as _re
+        m = _re.search(r'Wait ~?(\d+)s', error_msg)
+        if m:
+            wait_secs = int(m.group(1))
+            safe_session = html.escape(session_id)
+            safe_lang = html.escape(target_lang)
+            return HTMLResponse(f"""
+<div class="rate-limit-banner" id="rate-limit-notice">
+  <span class="banner-icon">⏳</span>
+  <span>Rate limit hit — retrying in <strong id="rl-countdown">{wait_secs}</strong>s automatically...</span>
+  <button class="btn btn-outline btn-sm" onclick="cancelRetry()" style="margin-left:auto">Cancel</button>
+</div>
+<script>
+(function() {{
+  let secs = {wait_secs};
+  let cancelled = false;
+  window._rlTimer = setInterval(() => {{
+    if (cancelled) return;
+    secs--;
+    const el = document.getElementById('rl-countdown');
+    if (el) el.textContent = secs;
+    if (secs <= 0) {{
+      clearInterval(window._rlTimer);
+      const notice = document.getElementById('rate-limit-notice');
+      if (notice) notice.innerHTML = '<span class="banner-icon">🔄</span> Retrying...';
+      // re-submit the batch form
+      htmx.ajax('POST', '/translate/batch', {{
+        target: '#translate-results',
+        swap: 'beforeend',
+        values: {{ session_id: '{safe_session}', target_lang: '{safe_lang}' }}
+      }});
+    }}
+  }}, 1000);
+  window.cancelRetry = function() {{
+    cancelled = true;
+    clearInterval(window._rlTimer);
+    const notice = document.getElementById('rate-limit-notice');
+    if (notice) notice.remove();
+  }};
+}})();
+</script>""")
         return HTMLResponse(f"""<div class="error-banner">
             <span class="banner-icon">⚠️</span>
-            <span>Translation failed: {e}</span>
+            <span>Translation failed: {html.escape(error_msg)}</span>
         </div>""")
 
     # Save results
@@ -121,22 +167,41 @@ async def translate_entries(
 
     # Render results
     items_html = ""
+    textarea_updates = ""
+    indicator_updates = ""
     for r in qa_results:
         status_icon = "✅" if r["passed"] else "⚠️"
         status_class = "qa-pass" if r["passed"] else "qa-fail"
+        entry_index = r["index"]
+        translated_text = html.escape(r["translated"], quote=False)
+        msgid_preview = html.escape(r["msgid"][:120])
+        translated_preview = html.escape(r["translated"][:120])
+        checks_html = "".join(
+            f'<span class="check-tag {"pass" if c["passed"] else "fail"}">'
+            f'{html.escape(c["name"])}: {html.escape(c["detail"])}</span>'
+            for c in r["checks"]
+        )
+
+        textarea_updates += f"""
+        <textarea id="translation-box-{entry_index}" name="translated" class="auto-save" rows="3"
+                  placeholder="Type translation or use AI above..." hx-swap-oob="true">{translated_text}</textarea>"""
+        indicator_updates += f"""
+        <span class="save-indicator saved" id="save-indicator-{entry_index}" hx-swap-oob="true">✓ Saved</span>"""
         items_html += f"""
-        <div class="translate-result {status_class}" id="entry-{r['index']}">
+        <div class="translate-result {status_class}" id="entry-{entry_index}">
             <div class="result-status">{status_icon}</div>
             <div class="result-body">
-                <div class="result-source">{r['msgid'][:120]}</div>
-                <div class="result-target">{r['translated'][:120]}</div>
+                <div class="result-source">{msgid_preview}</div>
+                <div class="result-target">{translated_preview}</div>
                 <div class="result-checks">
-                    {''.join(f'<span class="check-tag {"pass" if c["passed"] else "fail"}">{c["name"]}: {c["detail"]}</span>' for c in r['checks'])}
+                    {checks_html}
                 </div>
             </div>
         </div>"""
 
-    return HTMLResponse(f"""<div id="translate-results">
+    return HTMLResponse(f"""{textarea_updates}
+    {indicator_updates}
+    <div id="translate-results">
         <div class="batch-summary">
             <span class="batch-stat">📝 Translated: {len(results)}</span>
             <span class="batch-stat">✅ Passed: {passed}</span>

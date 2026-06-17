@@ -13,6 +13,20 @@ from backend.config import config, LANGUAGES
 
 _client: Optional[genai.Client] = None
 
+# ── Rate limiter — stay safely under free-tier 15 RPM limit ──────────
+_last_request_time: float = 0.0
+_MIN_REQUEST_INTERVAL = 5.0  # seconds between requests (15 RPM = 4s gap, use 5s to be safe)
+
+
+def _rate_limit_wait() -> None:
+    """Sleep just enough to stay under the free-tier rate limit."""
+    global _last_request_time
+    elapsed = time.monotonic() - _last_request_time
+    wait = _MIN_REQUEST_INTERVAL - elapsed
+    if wait > 0:
+        time.sleep(wait)
+    _last_request_time = time.monotonic()
+
 
 def get_client() -> Optional[genai.Client]:
     """Get or create the Gemini client. Returns None if not configured."""
@@ -59,6 +73,17 @@ Rules:
 Input is a JSON array of msgid strings to translate."""
 
 
+def _format_gemini_error(error: Exception) -> str:
+    message = str(error)
+    if "User location is not supported" in message or "FAILED_PRECONDITION" in message:
+        return (
+            "Google Gemini blocked this request because the current API location is not supported. "
+            "Use the app from a Gemini API supported region, run the backend on a server in a supported region, "
+            "or switch to another translation provider."
+        )
+    return f"Gemini translation failed: {message}"
+
+
 # ── Translation Engine ────────────────────────────────────────────────
 
 def translate_batch(
@@ -88,6 +113,7 @@ def translate_batch(
 
     for attempt in range(retries + 1):
         try:
+            _rate_limit_wait()  # enforce minimum gap between requests
             response = client.models.generate_content(
                 model=config.gemini_model,
                 contents=f"{prompt}\n\nInput:\n{input_json}",
@@ -114,12 +140,25 @@ def translate_batch(
             return result
 
         except Exception as e:
+            if "User location is not supported" in str(e) or "FAILED_PRECONDITION" in str(e):
+                raise RuntimeError(_format_gemini_error(e)) from e
+            # 429 rate-limit: respect the retry-delay the API returns, else backoff
+            if "429" in str(e) or "RESOURCE_EXHAUSTED" in str(e):
+                import re as _re
+                m = _re.search(r'retry.*?(\d+(?:\.\d+)?)s', str(e), _re.I)
+                wait = float(m.group(1)) + 1 if m else 30
+                if attempt < retries:
+                    time.sleep(wait)
+                    continue
+                raise RuntimeError(
+                    f"Rate limit reached (free tier quota). "
+                    f"Wait ~{int(wait)}s and try again, or upgrade your Gemini API plan at https://ai.dev/rate-limit"
+                ) from e
             if attempt < retries:
                 wait = 2 ** attempt  # exponential backoff: 1s, 2s
                 time.sleep(wait)
                 continue
-            # Last attempt failed — return originals
-            return list(texts)
+            raise RuntimeError(_format_gemini_error(e)) from e
 
     return list(texts)
 

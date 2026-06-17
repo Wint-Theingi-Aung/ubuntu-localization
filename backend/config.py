@@ -11,10 +11,10 @@ load_dotenv(Path(__file__).resolve().parent.parent / ".env")
 # ── Language definitions ──────────────────────────────────────────────
 
 LANGUAGES = {
-    "my":  {"name": "Burmese",     "native": "မြန်မာဘာသာ",    "script": "Myanmar Unicode", "word_order": "SOV"},
-    "shn": {"name": "Shan",        "native": "ၽႃႇသႃႇတႆး",     "script": "Shan Unicode",    "word_order": "SVO"},
-    "mnw": {"name": "Mon",         "native": "ဘာသာမန်",       "script": "Mon Unicode",      "word_order": "SVO"},
-    "ksw": {"name": "S'gaw Karen", "native": "ကညီကျိာ်",      "script": "S'gaw Karen Unicode", "word_order": "SVO"},
+    "my":  {"name": "Burmese",     "native": "ဗမာ",    "script": "Myanmar Unicode", "word_order": "SOV"},
+    "shn": {"name": "Shan",        "native": "ရှမ်း",     "script": "Shan Unicode",    "word_order": "SVO"},
+    "mnw": {"name": "Mon",         "native": "မွန်",       "script": "Mon Unicode",      "word_order": "SVO"},
+    "ksw": {"name": "S'gaw Karen", "native": "စကောကရင်",      "script": "S'gaw Karen Unicode", "word_order": "SVO"},
 }
 
 LANGUAGE_CHOICES = [(code, f"{info['name']} ({info['native']})") for code, info in LANGUAGES.items()]
