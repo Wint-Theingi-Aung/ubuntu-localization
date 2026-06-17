@@ -840,14 +840,15 @@ pre {
     <div class="nav-section">
       <div class="nav-section-title">Workflow</div>
       <a href="/" class="nav-item {% if request.url.path == '/' %}active{% endif %}">
-        <span class="nav-icon">📊</span> Dashboard
-      </a>
-      <a href="/translate/" class="nav-item {% if request.url.path == '/translate/' %}active{% endif %}">
-        <span class="nav-icon">🤖</span> Translate
+        <span class="nav-icon">📊</span> ပင်မစာမျက်နှာ
       </a>
       <a href="/guide/" class="nav-item {% if request.url.path == '/guide/' %}active{% endif %}">
-        <span class="nav-icon">📖</span> User Guide
+        <span class="nav-icon">📖</span> လမ်းညွှန်
       </a>
+      <a href="/translate/" class="nav-item {% if request.url.path == '/translate/' %}active{% endif %}">
+        <span class="nav-icon">🤖</span> ဘာသာပြန်ရန်
+      </a>
+      
     </div>
     <div class="nav-section">
       <div class="nav-section-title">More</div>
@@ -855,17 +856,17 @@ pre {
         <span class="nav-icon">🏆</span> Leaderboard
       </a>
       <a href="/export/history" class="nav-item {% if request.url.path == '/export/history' %}active{% endif %}">
-        <span class="nav-icon">📚</span> History
+        <span class="nav-icon">📚</span> မှတ်တမ်း
       </a>
     </div>
   </nav>
   <div class="sidebar-footer">
-    <div style="margin-bottom:4px">Languages:</div>
+    <div style="margin-bottom:4px">ဘာသာစကား-</div>
     <div style="display:flex;flex-wrap:wrap;gap:4px">
-      <span class="lang-badge lang-my">Burmese</span>
-      <span class="lang-badge lang-shn">Shan</span>
-      <span class="lang-badge lang-mnw">Mon</span>
-      <span class="lang-badge lang-ksw">Karen</span>
+      <span class="lang-badge lang-my">ဗမာ</span>
+      <span class="lang-badge lang-shn">ရှမ်း</span>
+      <span class="lang-badge lang-mnw">မွန်</span>
+      <span class="lang-badge lang-ksw">စကောကရင်</span>
     </div>
     <div style="margin-top:12px">
       v2.0.0 · <a href="https://github.com/Wint-Theingi-Aung/ubuntu-localization">GitHub</a>
