@@ -34,7 +34,7 @@
         <div>
           <span class="lang-badge lang-my">my</span>
           <h3 style="font-size:16px;margin:8px 0 4px">Burmese</h3>
-          <div style="font-size:14px;color:var(--text-light)">မြန်မာဘာသာ</div>
+          <div style="font-size:14px;color:var(--text-light)">ဗမာ</div>
         </div>
         <span style="font-size:12px;color:var(--text-light)">Myanmar Unicode</span>
       </div>
@@ -47,7 +47,7 @@
         <div>
           <span class="lang-badge lang-shn">shn</span>
           <h3 style="font-size:16px;margin:8px 0 4px">Shan</h3>
-          <div style="font-size:14px;color:var(--text-light)">ၽႃႇသႃႇတႆး</div>
+          <div style="font-size:14px;color:var(--text-light)">ရှမ်း</div>
         </div>
         <span style="font-size:12px;color:var(--text-light)">Shan Unicode</span>
       </div>
@@ -60,7 +60,7 @@
         <div>
           <span class="lang-badge lang-mnw">mnw</span>
           <h3 style="font-size:16px;margin:8px 0 4px">Mon</h3>
-          <div style="font-size:14px;color:var(--text-light)">ဘာသာမန်</div>
+          <div style="font-size:14px;color:var(--text-light)">မွန်</div>
         </div>
         <span style="font-size:12px;color:var(--text-light)">Mon Unicode</span>
       </div>
@@ -73,7 +73,7 @@
         <div>
           <span class="lang-badge lang-ksw">ksw</span>
           <h3 style="font-size:16px;margin:8px 0 4px">S'gaw Karen</h3>
-          <div style="font-size:14px;color:var(--text-light)">ကညီကျိာ်</div>
+          <div style="font-size:14px;color:var(--text-light)">စကောကရင်</div>
         </div>
         <span style="font-size:12px;color:var(--text-light)">Karen Unicode</span>
       </div>
@@ -104,7 +104,6 @@
       </div>
       <div style="display:flex;gap:12px;margin-top:8px">
         <a href="/translate/?session_id={{ s.session_id }}" class="btn btn-outline btn-sm">🤖 Resume</a>
-        <a href="/export/?session_id={{ s.session_id }}" class="btn btn-outline btn-sm">📦 Export</a>
       </div>
     </div>
     {% endfor %}
@@ -113,7 +112,7 @@
       <span class="empty-icon">📭</span>
       <h3>No sessions yet</h3>
       <p>Upload a .po file to start translating Ubuntu into indigenous languages.</p>
-      <a href="/upload/" class="btn btn-primary">📤 Upload .po File</a>
+      <a href="/translate/" class="btn btn-primary">📤 Upload .po File</a>
     </div>
   {% endif %}
 </div>
@@ -136,25 +135,20 @@
 <div class="card" style="margin-top:24px">
   <h3 style="font-size:16px;margin-bottom:12px">🚀 Quick Start</h3>
   <div style="display:flex;gap:10px;flex-wrap:wrap">
-    <div style="flex:1;min-width:160px;text-align:center;padding:16px;background:rgba(233,84,32,0.05);border-radius:var(--radius)">
-      <div style="font-size:28px;margin-bottom:8px">1</div>
-      <div style="font-weight:500;margin-bottom:4px">Upload</div>
-      <div style="font-size:12px;color:var(--text-light)">Import .po file</div>
+    <div style="flex:1;min-width:160px;text-align:center;padding:16px;background:rgba(233,84,32,0.08);border-radius:var(--radius)">
+    <div style="font-size:28px;margin-bottom:8px">📤</div>
+    <div style="font-weight:500;margin-bottom:4px">Upload</div>
+    <div style="font-size:12px;color:var(--text-light)">Drop your .po file</div>
     </div>
-    <div style="flex:1;min-width:160px;text-align:center;padding:16px;background:rgba(119,41,83,0.05);border-radius:var(--radius)">
-      <div style="font-size:28px;margin-bottom:8px">2</div>
-      <div style="font-weight:500;margin-bottom:4px">Detect</div>
-      <div style="font-size:12px;color:var(--text-light)">Find missing strings</div>
+    <div style="flex:1;min-width:160px;text-align:center;padding:16px;background:rgba(14,132,32,0.08);border-radius:var(--radius)">
+    <div style="font-size:28px;margin-bottom:8px">🤖</div>
+    <div style="font-weight:500;margin-bottom:4px">Translate</div>
+    <div style="font-size:12px;color:var(--text-light)">AI + manual editor</div>
     </div>
-    <div style="flex:1;min-width:160px;text-align:center;padding:16px;background:rgba(14,132,32,0.05);border-radius:var(--radius)">
-      <div style="font-size:28px;margin-bottom:8px">3</div>
-      <div style="font-weight:500;margin-bottom:4px">Translate</div>
-      <div style="font-size:12px;color:var(--text-light)">AI + QA verification</div>
-    </div>
-    <div style="flex:1;min-width:160px;text-align:center;padding:16px;background:rgba(0,122,166,0.05);border-radius:var(--radius)">
-      <div style="font-size:28px;margin-bottom:8px">4</div>
-      <div style="font-weight:500;margin-bottom:4px">Export</div>
-      <div style="font-size:12px;color:var(--text-light)">Save & push to GitHub</div>
+    <div style="flex:1;min-width:160px;text-align:center;padding:16px;background:rgba(0,122,166,0.08);border-radius:var(--radius)">
+    <div style="font-size:28px;margin-bottom:8px">📦</div>
+    <div style="font-weight:500;margin-bottom:4px">Export</div>
+    <div style="font-size:12px;color:var(--text-light)">Save & commit to Git</div>
     </div>
   </div>
 </div>

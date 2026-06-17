@@ -2,7 +2,14 @@
 
 Orchestrates the full .po translation pipeline: loads untranslated strings from the queue, dispatches them in batches to the translate-batch agent (Gemini-powered), then runs triple-lens adversarial QA verification via the qa-reviewer agent. Merges majority-vote results (2+/3 lenses must pass per entry). Writes approved translations back and reports pass/fail stats.
 
-## Usage
+## Web UI
+Go to `/translate/` — the unified pipeline page handles everything:
+1. Upload your .po file on the same page
+2. AI batch translate with one click (or type translations manually)
+3. QA results shown inline — pass/fail per entry
+4. Export section appears when translations are ready
+
+## Usage (CLI)
 ```
 /po-translate --priority=p1
 ```

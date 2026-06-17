@@ -1,11 +1,22 @@
-"""Translate router — AI batch translation with QA verification."""
+"""Translate router — unified upload + translate + export pipeline.
+
+All three workflow steps consolidated into a single /translate/ page:
+  1. Upload  — drag-and-drop .po file, language detection
+  2. Translate — AI batch + manual side-by-side editor
+  3. Export   — write .po, preview, optional git commit
+"""
 
 import html
 import json
-from fastapi import APIRouter, Request, Form
-from fastapi.responses import HTMLResponse, JSONResponse
+import subprocess
+from pathlib import PurePath
+from datetime import datetime
 
-from backend.config import config, LANGUAGES
+from fastapi import APIRouter, UploadFile, File, Form, Request
+from fastapi.responses import HTMLResponse, JSONResponse, FileResponse, RedirectResponse
+
+from backend.config import config, PROJECT_ROOT, EXPORTS_DIR, LANGUAGES, LANGUAGE_CHOICES
+from backend.services.po_parser import parse_po_file, generate_priority_report, write_po_file, generate_export_filename
 from backend.services.translator import translate_batch, qa_verify_batch, check_available
 from backend.services.session import create_session
 from backend.services import db
@@ -13,17 +24,40 @@ from backend.templates_engine import templates
 
 router = APIRouter(prefix="/translate", tags=["translate"])
 
+SUPPORTED_PO_SUFFIXES = {".po", ".pot"}
+
+
+# ── Helpers ──────────────────────────────────────────────────────────
+
+def _is_htmx(request: Request) -> bool:
+    """Check if the request was made by htmx."""
+    return bool(request.headers.get("HX-Request"))
+
+
+def _clean_upload_filename(filename: str) -> str:
+    """Return the basename browsers may send, without surrounding whitespace."""
+    return PurePath(filename.strip().replace("\\", "/")).name
+
+
+def _is_supported_po_file(filename: str) -> bool:
+    return PurePath(filename).suffix.lower() in SUPPORTED_PO_SUFFIXES
+
+
+# ── Main Unified Page ────────────────────────────────────────────────
 
 @router.get("/", response_class=HTMLResponse)
 async def translate_page(request: Request, session_id: str = "", auto: bool = False, page: int = 1):
-    """Show the translation workspace."""
+    """Unified translate page: upload form (no session) or workspace (with session)."""
     session = create_session(session_id) if session_id else None
     parsed = session.load_parsed() if session else None
     report = session.load_report() if session else None
     translations = session.load_translations() if session else {}
+    meta = session.get_metadata() if session else {}
 
     if not parsed:
-        return templates.TemplateResponse(request, "translate.html", {"ai_available": check_available(),
+        return templates.TemplateResponse(request, "translate.html", {
+            "ai_available": check_available(),
+            "language_choices": LANGUAGE_CHOICES,
             "no_session": True,
             "session_id": "",
             "language": "",
@@ -32,17 +66,23 @@ async def translate_page(request: Request, session_id: str = "", auto: bool = Fa
             "total_untranslated": 0,
             "page": 1,
             "total_pages": 1,
-            "auto_translate": False})
+            "auto_translate": False,
+            "preview": None,
+            "git_branch": "ai-enhanced",
+            "git_clean": True,
+        })
 
+    lang_code = parsed.get("language_code", "my")
+    lang_name = parsed.get("detected_language", {}).get("name", LANGUAGES.get(lang_code, {}).get("name", "Unknown"))
+
+    # ── Build translation workspace ──
     untranslated = parsed.get("untranslated", [])
-    # Apply any existing translations
     for e in untranslated:
         key = str(e["index"])
         if key in translations:
             e["msgstr"] = translations[key]
             e["translated_inline"] = translations[key]
 
-    # Pagination — clamp page to valid range
     per_page = config.items_per_page
     total_pages = max(1, (len(untranslated) + per_page - 1) // per_page)
     page = max(1, min(page, total_pages))
@@ -50,19 +90,208 @@ async def translate_page(request: Request, session_id: str = "", auto: bool = Fa
     end = min(start + per_page, len(untranslated))
     page_entries = untranslated[start:end]
 
-    return templates.TemplateResponse(request, "translate.html", {"ai_available": check_available(),
+    # ── Build export preview ──
+    total_done = parsed["metadata"]["translated"] + len(translations)
+    total = parsed["metadata"]["total_entries"]
+    new = len(translations)
+
+    preview = None
+    if new > 0:
+        preview = {
+            "language": lang_name,
+            "language_code": lang_code,
+            "filename": generate_export_filename(meta.get("filename", "messages.po"), lang_code),
+            "source_file": meta.get("filename", "unknown.po"),
+            "total_entries": total,
+            "previously_translated": parsed["metadata"]["translated"],
+            "newly_translated": new,
+            "qa_passed": new,
+            "qa_failed": 0,
+            "completion_pct": round(total_done / total * 100, 1) if total > 0 else 100,
+            "completion_before": parsed["metadata"]["completion_pct"],
+        }
+
+    # ── Git status ──
+    git_branch = "ai-enhanced"
+    git_clean = True
+    try:
+        result = subprocess.run(
+            ["git", "-C", str(PROJECT_ROOT), "status", "--porcelain"],
+            capture_output=True, text=True, timeout=5
+        )
+        git_clean = not result.stdout.strip()
+        branch = subprocess.run(
+            ["git", "-C", str(PROJECT_ROOT), "branch", "--show-current"],
+            capture_output=True, text=True, timeout=5
+        )
+        git_branch = branch.stdout.strip()
+    except Exception:
+        pass
+
+    return templates.TemplateResponse(request, "translate.html", {
+        "ai_available": check_available(),
+        "language_choices": LANGUAGE_CHOICES,
         "no_session": False,
         "session_id": session.session_id,
-        "language": parsed.get("detected_language", {}).get("name", "Unknown"),
-        "language_code": parsed.get("language_code", "my"),
+        "language": lang_name,
+        "language_code": lang_code,
         "entries": page_entries,
         "total_untranslated": len(untranslated),
         "page": page,
         "total_pages": total_pages,
         "auto_translate": auto,
         "languages": LANGUAGES,
+        "preview": preview,
+        "git_branch": git_branch,
+        "git_clean": git_clean,
     })
 
+
+# ── Upload ───────────────────────────────────────────────────────────
+
+@router.post("/upload", response_class=HTMLResponse)
+async def upload_file(
+    request: Request,
+    file: UploadFile = File(None),
+    target_lang: str = Form("my"),
+):
+    """Handle .po file upload — parse, detect gaps, store session, return fragment."""
+    # Validate file presence
+    if file is None or not file.filename:
+        if _is_htmx(request):
+            return HTMLResponse(f"""<div class="error-banner">
+                <span class="banner-icon">⚠️</span>
+                <span>No file selected. Please choose a .po file to upload.</span>
+            </div>""")
+        return RedirectResponse(url="/translate/", status_code=303)
+
+    filename = _clean_upload_filename(file.filename)
+
+    # Validate file type
+    if not _is_supported_po_file(filename):
+        error_msg = "Only .po and .pot files are supported."
+        if _is_htmx(request):
+            return HTMLResponse(f"""<div class="error-banner">
+                <span class="banner-icon">⚠️</span>
+                <span>{error_msg}</span>
+            </div>""")
+        return RedirectResponse(url="/translate/", status_code=303)
+
+    # Read and validate size
+    content = await file.read()
+    if len(content) > config.max_upload_size_mb * 1024 * 1024:
+        error_msg = f"File too large. Maximum size is {config.max_upload_size_mb} MB."
+        if _is_htmx(request):
+            return HTMLResponse(f"""<div class="error-banner">
+                <span class="banner-icon">⚠️</span>
+                <span>{error_msg}</span>
+            </div>""")
+        return RedirectResponse(url="/translate/", status_code=303)
+
+    text = content.decode("utf-8", errors="replace")
+
+    # Parse
+    try:
+        parsed = parse_po_file(text, filename)
+    except Exception as e:
+        error_msg = f"Failed to parse .po file: {e}"
+        if _is_htmx(request):
+            return HTMLResponse(f"""<div class="error-banner">
+                <span class="banner-icon">⚠️</span>
+                <span>{error_msg}</span>
+            </div>""")
+        return RedirectResponse(url="/translate/", status_code=303)
+
+    # If no language detected, use the user's selection
+    if not parsed.get("detected_language"):
+        lang_info = LANGUAGES.get(target_lang, LANGUAGES["my"])
+        parsed["detected_language"] = {"code": target_lang, **lang_info}
+        parsed["language_code"] = target_lang
+
+    # Generate priority report
+    report = generate_priority_report(parsed)
+
+    # Save session
+    session = create_session()
+    session.save_parsed(parsed)
+    session.save_report(report)
+    session.set_metadata(
+        filename=filename,
+        language=parsed.get("detected_language", {}).get("name", "Unknown"),
+        language_code=parsed.get("language_code", target_lang),
+        total_entries=parsed["metadata"]["total_entries"],
+        translated_count=parsed["metadata"]["translated"],
+    )
+
+    # Persist to database
+    lang_code = parsed.get("language_code", target_lang)
+    lang_name = parsed.get("detected_language", {}).get("name", "Unknown")
+    db.create_session(
+        session_key=session.session_id,
+        filename=filename,
+        language_code=lang_code,
+        language_name=lang_name,
+        total_entries=parsed["metadata"]["total_entries"],
+        translated_before=parsed["metadata"]["translated"],
+    )
+
+    # htmx AJAX request → redirect to the same page with session via HX-Redirect
+    if _is_htmx(request):
+        redirect_url = f"/translate/?session_id={session.session_id}&auto=1"
+        return HTMLResponse(
+            content="",
+            status_code=200,
+            headers={"HX-Redirect": redirect_url},
+        )
+
+    # Regular browser POST → redirect
+    return RedirectResponse(
+        url=f"/translate/?session_id={session.session_id}&auto=1",
+        status_code=303,
+    )
+
+
+@router.get("/upload-status/{session_id}", response_class=HTMLResponse)
+async def upload_status(request: Request, session_id: str):
+    """Show session status for htmx polling."""
+    session = create_session(session_id)
+    if not session.has_data:
+        return HTMLResponse("""<div class="empty-state">
+            <span class="empty-icon">📭</span>
+            <h3>Session not found</h3>
+            <p>Upload a .po file to get started.</p>
+        </div>""")
+
+    parsed = session.load_parsed()
+    meta = session.get_metadata()
+    if not parsed:
+        return HTMLResponse("<p>No data yet.</p>")
+
+    md = parsed["metadata"]
+    pct = md["completion_pct"]
+
+    return HTMLResponse(f"""<div class="session-card" hx-swap-oob="true" id="session-status">
+        <div class="session-header">
+            <span class="session-icon">📄</span>
+            <div>
+                <h3>{html.escape(str(meta.get('filename', 'Unknown')))}</h3>
+                <span class="lang-badge lang-{html.escape(str(parsed.get('language_code', 'my')))}">{html.escape(str(meta.get('language', 'Unknown')))}</span>
+            </div>
+        </div>
+        <div class="progress-bar-container">
+            <div class="progress-bar" style="width:{pct}%"></div>
+            <span class="progress-label">{pct}% complete</span>
+        </div>
+        <div class="session-stats">
+            <div class="stat"><span class="stat-value">{md['total_entries']:,}</span><span class="stat-label">Total</span></div>
+            <div class="stat"><span class="stat-value">{md['translated']:,}</span><span class="stat-label">Done</span></div>
+            <div class="stat"><span class="stat-value">{md['untranslated']:,}</span><span class="stat-label">Missing</span></div>
+            <div class="stat"><span class="stat-value">{md.get('fuzzy', 0)}</span><span class="stat-label">Fuzzy</span></div>
+        </div>
+    </div>""")
+
+
+# ── Translate ────────────────────────────────────────────────────────
 
 @router.post("/batch", response_class=HTMLResponse)
 async def translate_entries(
@@ -98,7 +327,6 @@ async def translate_entries(
         results = translate_batch(msgids, lang_name, lang_code)
     except RuntimeError as e:
         error_msg = str(e)
-        # Extract retry delay if rate-limited, return special response for auto-retry
         import re as _re
         m = _re.search(r'Wait ~?(\d+)s', error_msg)
         if m:
@@ -124,7 +352,6 @@ async def translate_entries(
       clearInterval(window._rlTimer);
       const notice = document.getElementById('rate-limit-notice');
       if (notice) notice.innerHTML = '<span class="banner-icon">🔄</span> Retrying...';
-      // re-submit the batch form
       htmx.ajax('POST', '/translate/batch', {{
         target: '#translate-results',
         swap: 'beforeend',
@@ -148,7 +375,6 @@ async def translate_entries(
     # Save results
     for entry, translated in zip(batch, results):
         session.save_translation(entry["index"], translated)
-        # Persist to database
         db.save_translation(
             session_key=session_id,
             entry_index=entry["index"],
@@ -165,7 +391,7 @@ async def translate_entries(
     passed = sum(1 for r in qa_results if r["passed"])
     failed = len(qa_results) - passed
 
-    # Render results
+    # Render results + export section refresh trigger
     items_html = ""
     textarea_updates = ""
     indicator_updates = ""
@@ -193,14 +419,20 @@ async def translate_entries(
             <div class="result-body">
                 <div class="result-source">{msgid_preview}</div>
                 <div class="result-target">{translated_preview}</div>
-                <div class="result-checks">
-                    {checks_html}
-                </div>
+                <div class="result-checks">{checks_html}</div>
             </div>
         </div>"""
 
+    # Refresh export section to show newly available export
+    export_refresh = ""
+    if len(session.load_translations()) > 0:
+        export_refresh = f"""
+        <div hx-swap-oob="true" id="export-section" hx-get="/translate/?session_id={html.escape(session_id)}"
+             hx-trigger="load" hx-select="#export-section" hx-swap="outerHTML"></div>"""
+
     return HTMLResponse(f"""{textarea_updates}
     {indicator_updates}
+    {export_refresh}
     <div id="translate-results">
         <div class="batch-summary">
             <span class="batch-stat">📝 Translated: {len(results)}</span>
@@ -246,3 +478,149 @@ async def save_translation(
     return HTMLResponse(f"""<span class="save-indicator saved" id="save-indicator-{entry_index}">
         ✓ Saved
     </span>""")
+
+
+# ── Export ───────────────────────────────────────────────────────────
+
+@router.post("/export", response_class=HTMLResponse)
+async def export_file(
+    request: Request,
+    session_id: str = Form(...),
+    commit: bool = Form(False),
+):
+    """Export translated .po file — optionally commit to git."""
+    session = create_session(session_id)
+    parsed = session.load_parsed()
+    translations = session.load_translations()
+    meta = session.get_metadata()
+
+    if not parsed or not translations:
+        return HTMLResponse("""<div class="error-banner">
+            <span class="banner-icon">⚠️</span>
+            <span>Nothing to export. Translate some strings first.</span>
+        </div>""")
+
+    lang_code = meta.get("language_code", "my")
+    filename = generate_export_filename(meta.get("filename", "messages.po"), lang_code)
+    output_path = EXPORTS_DIR / filename
+
+    # Build full translations dict from all sources
+    full_translations = {}
+    for entry in parsed.get("all_entries", []):
+        idx = entry["index"]
+        key = str(idx)
+        if key in translations:
+            full_translations[idx] = translations[key]
+        else:
+            full_translations[idx] = entry["msgstr"]
+
+    # Write .po file
+    write_po_file(parsed, full_translations, output_path, lang_code)
+
+    # Write manifest
+    new_count = len(translations)
+    manifest = {
+        "export_id": f"exp_{datetime.now().strftime('%Y%m%d_%H%M')}_{lang_code}",
+        "timestamp": datetime.utcnow().isoformat(),
+        "language": meta.get("language", "Unknown"),
+        "language_code": lang_code,
+        "source_file": meta.get("filename", "unknown.po"),
+        "export_file": filename,
+        "stats": {
+            "total_entries": parsed["metadata"]["total_entries"],
+            "newly_translated": new_count,
+            "qa_passed": new_count,
+            "qa_failed": 0,
+            "completion_before": str(parsed["metadata"]["completion_pct"]) + "%",
+            "completion_after": str(round(
+                (parsed["metadata"]["translated"] + new_count) / parsed["metadata"]["total_entries"] * 100, 1
+            )) + "%",
+        },
+    }
+    manifest_path = EXPORTS_DIR / f"manifest_{manifest['export_id']}.json"
+    manifest_path.write_text(json.dumps(manifest, indent=2, ensure_ascii=False))
+
+    # Persist to database
+    completion_after = round(
+        (parsed["metadata"]["translated"] + new_count) / parsed["metadata"]["total_entries"] * 100, 1
+    )
+    db.log_export(
+        session_key=session_id,
+        export_file=filename,
+        source_file=meta.get("filename", "unknown.po"),
+        language_code=lang_code,
+        language_name=meta.get("language", "Unknown"),
+        strings_added=new_count,
+        qa_passed=new_count,
+        qa_failed=0,
+        completion_before=parsed["metadata"]["completion_pct"],
+        completion_after=completion_after,
+    )
+
+    # Git integration
+    git_info = ""
+    if commit:
+        try:
+            subprocess.run(
+                ["git", "-C", str(PROJECT_ROOT), "add",
+                 str(output_path.relative_to(PROJECT_ROOT)),
+                 str(manifest_path.relative_to(PROJECT_ROOT))],
+                capture_output=True, text=True, timeout=10
+            )
+            subprocess.run(
+                ["git", "-C", str(PROJECT_ROOT), "commit", "-m",
+                 f"feat({lang_code}): +{new_count} {meta.get('language', '')} translations — {manifest['stats']['completion_after']} complete\n\n"
+                 f"- Translated {new_count} strings\n"
+                 f"- Language: {meta.get('language', 'Unknown')} ({lang_code})\n"
+                 f"- Source: {meta.get('filename', 'unknown.po')}\n"
+                 f"- Export: {filename}\n\n"
+                 f"Co-Authored-By: Claude <noreply@anthropic.com>"],
+                capture_output=True, text=True, timeout=10
+            )
+            git_info = f"""<div class="git-info success">
+                <span class="git-icon">📦</span>
+                <span>Committed to {html.escape(str(meta.get('git_branch', 'ai-enhanced')))}</span>
+            </div>"""
+        except Exception as e:
+            git_info = f"""<div class="git-info warning">
+                <span class="git-icon">⚠️</span>
+                <span>Commit failed: {html.escape(str(e))}. File saved locally.</span>
+            </div>"""
+
+    return HTMLResponse(f"""<div id="export-result">
+        <div class="success-banner">
+            <span class="banner-icon">✅</span>
+            <span>Export complete!</span>
+        </div>
+        {git_info}
+        <div class="export-details">
+            <div class="export-detail">
+                <span class="detail-label">File</span>
+                <code class="detail-value">exports/{html.escape(filename)}</code>
+            </div>
+            <div class="export-detail">
+                <span class="detail-label">Strings</span>
+                <span class="detail-value">+{new_count} new translations</span>
+            </div>
+            <div class="export-detail">
+                <span class="detail-label">Completion</span>
+                <span class="detail-value">{html.escape(str(manifest['stats']['completion_before']))} → {html.escape(str(manifest['stats']['completion_after']))}</span>
+            </div>
+        </div>
+        <div class="export-actions">
+            <a href="/translate/download/{html.escape(filename)}" class="btn btn-primary" download>📥 Download .po file</a>
+        </div>
+    </div>""")
+
+
+@router.get("/download/{filename}")
+async def download_export(filename: str):
+    """Download an exported .po file."""
+    path = EXPORTS_DIR / filename
+    if not path.exists():
+        return JSONResponse({"error": "File not found"}, status_code=404)
+    return FileResponse(
+        path=str(path),
+        filename=filename,
+        media_type="text/x-gettext-translation",
+    )

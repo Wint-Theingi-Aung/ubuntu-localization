@@ -22,11 +22,8 @@ uv run uvicorn backend.main:app --reload
 | Route | Purpose |
 |-------|---------|
 | `/` | Dashboard — language overview, recent sessions |
-| `/upload/` | Upload .po files, drag-and-drop |
-| `/translate/` | AI batch translate + manual side-by-side editor |
-| `/export/` | Export .po, preview, git commit |
+| `/translate/` | Unified pipeline: upload .po → AI + manual translate → export |
 | `/export/history` | Export history |
-| `/auth/` | Launchpad login + profile |
 | `/guide/` | 6-chapter interactive user guide |
 | `/guide/quickref` | Quick reference card |
 | `/leaderboard/` | Top contributors, per-language rankings |
@@ -81,5 +78,5 @@ uv run uvicorn backend.main:app --reload
 ## Quick Start
 1. `uv sync` or `pip install -r requirements.txt`
 2. Set `GOOGLE_API_KEY` in `.env`
-3. `streamlit run app.py`
-4. Or use skills: `/po-upload` → `/po-detect` → `/po-translate` → `/po-export`
+3. `uv run uvicorn backend.main:app --reload`
+4. Open http://localhost:8501/translate/ — upload, translate, and export all in one page

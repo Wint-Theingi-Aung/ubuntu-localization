@@ -2,34 +2,76 @@
 {% block content %}
 
 <div class="top-bar">
-  <h1 class="page-title"><strong>Translate</strong> Strings</h1>
-  <span style="font-size:14px;color:var(--text-light)">Step 3 of 4</span>
+  <h1 class="page-title"><strong>Translate</strong> .po Pipeline</h1>
+  <span style="font-size:14px;color:var(--text-light)">Upload · Translate · Export — all in one place</span>
 </div>
 
+{# ═══════════════════════════════════════════════════════════════════
+   SECTION 1: Upload (shown when no session)
+   ═══════════════════════════════════════════════════════════════════ #}
 {% if no_session %}
-<div class="empty-state">
-  <span class="empty-icon">📤</span>
-  <h3>No file loaded</h3>
-  <p>Upload a .po file first to start translating.</p>
-  <a href="/upload/" class="btn btn-primary">📤 Upload .po File</a>
-</div>
-{% else %}
+<div class="card" id="upload-section">
+  <div class="card-header">
+    <h3 class="card-title">📤 Upload .po File</h3>
+  </div>
 
-<!-- Progress Card -->
-<div class="card" hx-get="/upload/status/{{ session_id }}" hx-trigger="load, every 10s" id="session-status">
+  <form action="/translate/upload" method="post" enctype="multipart/form-data">
+    <label class="form-file" id="drop-zone">
+      <input type="file" name="file" accept=".po,.pot,text/x-gettext-translation,text/x-po" class="form-file-input" required
+             onchange="this.closest('label').querySelector('.form-file-text').textContent = this.files[0]?.name || 'Drop .po or .pot file here or click to browse'">
+      <div class="form-file-icon">📤</div>
+      <div class="form-file-text">Drop .po or .pot file here or click to browse</div>
+      <div class="form-file-types">GNU gettext .po and .pot files only · Max 50 MB</div>
+    </label>
+
+    <div class="form-group" style="margin-top:16px">
+      <label class="form-label">Target Language (if not auto-detected)</label>
+      <select name="target_lang" class="form-select">
+        {% for code, name in language_choices %}
+        <option value="{{ code }}">{{ name }}</option>
+        {% endfor %}
+      </select>
+    </div>
+
+    <button type="submit" class="btn btn-primary btn-lg btn-block" style="margin-top:16px">
+      📤 Upload & Parse
+    </button>
+  </form>
+</div>
+
+<!-- File Requirements -->
+<div class="card" style="margin-top:20px">
+  <h3 style="font-size:16px;margin-bottom:12px">📋 File Requirements</h3>
+  <ul style="margin-left:20px;font-size:14px;color:var(--text-light);line-height:1.8">
+    <li>Standard GNU gettext <code>.po</code> or <code>.pot</code> format</li>
+    <li>UTF-8 encoding required</li>
+    <li>Maximum file size: 50 MB</li>
+    <li>Language auto-detected from filename or PO headers</li>
+    <li>Example filename: <code>burmese_messages.po</code>, <code>shan_ui.po</code></li>
+  </ul>
+</div>
+
+{% else %}
+{# ═══════════════════════════════════════════════════════════════════
+   SECTION 2: Session Status (always shown when session exists)
+   ═══════════════════════════════════════════════════════════════════ #}
+<div class="card" hx-get="/translate/upload-status/{{ session_id }}" hx-trigger="load, every 10s" id="session-status">
   <div style="text-align:center;padding:20px">
     <span class="spinner"></span> Loading session...
   </div>
 </div>
 
+{# ═══════════════════════════════════════════════════════════════════
+   SECTION 3: Translation Workspace (shown when untranslated strings exist)
+   ═══════════════════════════════════════════════════════════════════ #}
 {% if entries %}
-<!-- Manual Translation Grid -->
-<div class="card">
+<div class="card" id="translate-workspace">
   <div class="card-header">
-    <h3 class="card-title">Strings — page {{ page }} of {{ total_pages }}</h3>
+    <h3 class="card-title">📝 Translate Strings — page {{ page }} of {{ total_pages }}</h3>
     <span style="font-size:13px;color:var(--text-light)">{{ total_untranslated }} untranslated total</span>
   </div>
 
+  <!-- Manual Translation Grid -->
   {% for entry in entries %}
   <form class="translate-pair"
         hx-post="/translate/save" hx-trigger="change from:textarea" hx-swap="none">
@@ -50,25 +92,20 @@
   </form>
   {% endfor %}
 
-  <!-- Pagination + partial export -->
+  <!-- Pagination -->
   <div class="pagination" style="flex-wrap:wrap;gap:8px;margin-top:16px">
     <a href="?session_id={{ session_id }}&page={{ page-1 }}" class="btn btn-outline btn-sm"
        {% if page <= 1 %}style="pointer-events:none;opacity:.4"{% endif %}>← Previous</a>
     <span style="align-self:center">Page {{ page }} / {{ total_pages }}</span>
     <a href="?session_id={{ session_id }}&page={{ page+1 }}" class="btn btn-outline btn-sm"
        {% if page >= total_pages %}style="pointer-events:none;opacity:.4"{% endif %}>Next →</a>
-    <a href="/export/?session_id={{ session_id }}" class="btn btn-outline btn-sm"
-       style="margin-left:auto;color:var(--orange);border-color:var(--orange)"
-       title="Export all translations saved so far — you can stop any time">
-      💾 Save &amp; Export partial
-    </a>
   </div>
 </div>
 
 <!-- AI Batch Translate -->
-<div class="card">
+<div class="card" id="batch-translate-section">
   <div class="card-header">
-    <h3 class="card-title">AI Batch Translation</h3>
+    <h3 class="card-title">🤖 AI Batch Translation</h3>
     <span style="font-size:13px;color:var(--text-light)">Page {{ page }} of {{ total_pages }}</span>
   </div>
 
@@ -96,21 +133,97 @@
 
   <div id="translate-results" style="margin-top:16px"></div>
 </div>
-
-<!-- Progress polling endpoint -->
-<div hx-get="/translate/progress/{{ session_id }}" hx-trigger="every 15s" style="display:none"
-     hx-on::after-request="
-       const data = JSON.parse(event.detail.xhr.responseText);
-       if (data.completion_pct >= 100) {
-         showToast('🎉 All strings translated! Ready to export.', 'success');
-       }
-     "></div>
 {% else %}
+<!-- All translated state -->
 <div class="success-banner">
   <span class="banner-icon">🎉</span>
-  <span>All strings are translated! <a href="/export/?session_id={{ session_id }}">Export now →</a></span>
+  <span>All strings are translated! You're ready to export.</span>
 </div>
 {% endif %}
+
+{# ═══════════════════════════════════════════════════════════════════
+   SECTION 4: Export (shown when translations exist)
+   ═══════════════════════════════════════════════════════════════════ #}
+{% if preview %}
+<div class="card" id="export-section">
+  <div class="card-header">
+    <h3 class="card-title">📋 Export Preview</h3>
+    <span class="lang-badge lang-{{ preview.language_code }}">{{ preview.language }}</span>
+  </div>
+
+  <div class="progress-bar-container">
+    <div class="progress-bar" style="width:{{ preview.completion_pct }}%"></div>
+    <span class="progress-label">{{ preview.completion_before }}% → {{ preview.completion_pct }}%</span>
+  </div>
+
+  <div class="stats-grid">
+    <div class="stat">
+      <span class="stat-value">{{ preview.total_entries }}</span>
+      <span class="stat-label">Total</span>
+    </div>
+    <div class="stat">
+      <span class="stat-value">{{ preview.previously_translated }}</span>
+      <span class="stat-label">Existing</span>
+    </div>
+    <div class="stat">
+      <span class="stat-value">+{{ preview.newly_translated }}</span>
+      <span class="stat-label">New</span>
+    </div>
+    <div class="stat">
+      <span class="stat-value">{{ preview.qa_passed }}/{{ preview.qa_passed + preview.qa_failed }}</span>
+      <span class="stat-label">QA Passed</span>
+    </div>
+  </div>
+
+  <div class="export-details" style="margin-top:16px">
+    <div class="export-detail">
+      <span class="detail-label">Output File</span>
+      <code class="detail-value">exports/{{ preview.filename }}</code>
+    </div>
+    <div class="export-detail">
+      <span class="detail-label">Source</span>
+      <span class="detail-value">{{ preview.source_file }}</span>
+    </div>
+    <div class="export-detail">
+      <span class="detail-label">Git Branch</span>
+      <span class="detail-value">{{ git_branch }}{% if git_clean %} ✓ clean{% endif %}</span>
+    </div>
+  </div>
+
+  <form hx-post="/translate/export" hx-target="#export-result" hx-indicator="#export-spinner">
+    <input type="hidden" name="session_id" value="{{ session_id }}">
+    <input type="hidden" name="commit" value="true">
+
+    <div class="export-actions">
+      <button type="submit" class="btn btn-primary btn-lg">
+        <span class="htmx-indicator"><span class="spinner"></span></span>
+        📦 Export & Commit
+      </button>
+      <button type="submit" class="btn btn-outline btn-lg"
+              onclick="this.form.commit.value='false'">
+        📥 Export Only
+      </button>
+    </div>
+  </form>
+
+  <div id="export-spinner" class="htmx-indicator" style="text-align:center;padding:20px">
+    <span class="spinner"></span> Writing .po file and committing...
+  </div>
+
+  <div id="export-result"></div>
+</div>
+{% endif %}
+
+<!-- Progress polling (silent) -->
+<div hx-get="/translate/progress/{{ session_id }}" hx-trigger="every 15s" style="display:none"
+     hx-on::after-request="
+       try {
+         const data = JSON.parse(event.detail.xhr.responseText);
+         if (data.completion_pct >= 100) {
+           showToast('🎉 All strings translated! Ready to export.', 'success');
+         }
+       } catch(e) {}
+     "></div>
 
 {% endif %}
 

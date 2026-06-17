@@ -2,7 +2,14 @@
 
 Parses uploaded .po files, extracts msgid/msgstr pairs, msgctxt context metadata, and translator comments. Detects untranslated entries and fuzzy translations. Loads them into the translation queue for batch processing by po-translate.
 
-## Usage
+## Web UI
+Go to `/translate/` — the unified pipeline page handles upload, translation, and export all in one place:
+1. Drag-and-drop your .po file on the upload section
+2. Language is auto-detected from file metadata
+3. Priority report is generated automatically
+4. Translation workspace opens immediately after upload
+
+## Usage (CLI)
 ```
 /po-upload path/to/file.po
 ```
