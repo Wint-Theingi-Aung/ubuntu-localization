@@ -12,24 +12,30 @@
 │                Ubuntu Localization — Quick Reference              │
 ├──────────────────────────────────────────────────────────────────┤
 │                                                                  │
-│  <span class="cmd">/po-upload</span> [file]   Import .po file(s)                    │
-│  <span class="cmd">/po-detect</span>          Find untranslated strings            │
-│  <span class="cmd">/po-translate</span>       AI translate (--priority, --all)      │
-│  <span class="cmd">/po-export</span>          Save, commit, and push               │
-│  <span class="cmd">/guide</span>              Show this user guide                 │
-│  <span class="cmd">/auth-status</span>        Launchpad profile & karma            │
+│  <span class="comment"># Web UI (one page for everything):</span>                          │
+│  <span class="cmd">/translate/</span>    Upload → AI translate → manual edit → export    │
+│  <span class="cmd">/</span>              Dashboard — overview and recent sessions        │
+│  <span class="cmd">/guide/</span>        User guide — how to use the tool               │
+│  <span class="cmd">/export/history</span>  List of all past exports                     │
+│  <span class="cmd">/leaderboard/</span>  Top contributors per language                  │
 │                                                                  │
-│  <span class="comment"># Web UI:</span>                                              │
-│  uv run uvicorn backend.main:app --reload                       │
-│  → http://localhost:8501                                        │
+│  <span class="comment"># CLI Skills (also available):</span>                                │
+│  <span class="cmd">/po-upload</span> [file]   Parse .po file(s)                         │
+│  <span class="cmd">/po-translate</span>       AI batch translate with QA                  │
+│  <span class="cmd">/po-export</span>          Write .po, commit, push                    │
+│                                                                  │
+│  <span class="comment"># Start the server:</span>                                          │
+│  uv run uvicorn backend.main:app --reload                        │
+│  → http://localhost:8501                                         │
 │                                                                  │
 │  Languages: <span class="cmd">my</span>(Burmese) <span class="cmd">shn</span>(Shan) <span class="cmd">mnw</span>(Mon) <span class="cmd">ksw</span>(Karen)       │
 │  AI:        Gemini 2.5 Flash                                     │
-│  QA:        3-reviewer adversarial majority vote                 │
+│  QA:        Placeholder + newline + length checks                │
 │  Git:       ai-enhanced branch → GitHub                          │
-│                                                                  │
-│  Files:     data/*.po → exports/translated_*.po                  │
 │  Sessions:  ~/.cache/ubuntu-localization/sessions/               │
+│                                                                  │
+│  <span class="comment"># File structure:</span>                                            │
+│  data/*.po → upload → translate → exports/translated_*.po        │
 │                                                                  │
 └──────────────────────────────────────────────────────────────────┘
 </pre>
@@ -38,8 +44,9 @@
 <div class="card" style="margin-top:20px">
   <h3 style="font-size:16px;margin-bottom:12px">Setup Checklist</h3>
   <table class="data-table">
-    <tr><td><input type="checkbox" checked> Clone repository</td><td><input type="checkbox" checked> Set GOOGLE_API_KEY in .env</td></tr>
-    <tr><td><input type="checkbox" checked> uv sync (install deps)</td><td><input type="checkbox"> Run Launchpad OAuth setup</td></tr>
+    <tr><td><input type="checkbox" checked disabled> Install with uv sync</td><td><input type="checkbox" checked disabled> Set GOOGLE_API_KEY in .env</td></tr>
+    <tr><td><input type="checkbox"> Upload a .po file on /translate/</td><td><input type="checkbox"> Click 🤖 Translate Page</td></tr>
+    <tr><td><input type="checkbox"> Review flagged translations</td><td><input type="checkbox"> Export &amp; download .po file</td></tr>
   </table>
 </div>
 
