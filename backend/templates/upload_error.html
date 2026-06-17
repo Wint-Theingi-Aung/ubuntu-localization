@@ -1,0 +1,14 @@
+{# Error fragment returned on upload failure — htmx replaces #upload-result #}
+<div class="error-banner">
+  <span class="banner-icon">⚠️</span>
+  <span>{{ error }}</span>
+</div>
+
+<div style="margin-top:16px;font-size:14px;color:var(--text-light)">
+  <p>Try uploading a valid GNU gettext <code>.po</code> file with UTF-8 encoding.</p>
+  <ul style="margin:8px 0 0 20px">
+    <li>Make sure the file has a <code>.po</code> extension</li>
+    <li>Verify the file is not empty or corrupted</li>
+    <li>Maximum file size: 50 MB</li>
+  </ul>
+</div>

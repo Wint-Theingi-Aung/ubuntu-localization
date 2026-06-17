@@ -20,7 +20,10 @@ from backend.config import PROJECT_ROOT
 
 # ── Configuration ─────────────────────────────────────────────────────
 
-DB_DIR = Path.home() / ".local" / "share" / "ubuntu-localization"
+if os.getenv("VERCEL") or os.getenv("RAILWAY_ENVIRONMENT"):
+    DB_DIR = Path("/tmp") / "ubuntu-localization" / "db"
+else:
+    DB_DIR = Path.home() / ".local" / "share" / "ubuntu-localization"
 DB_DIR.mkdir(parents=True, exist_ok=True)
 SQLITE_PATH = DB_DIR / "localization.db"
 
@@ -201,38 +204,48 @@ def _transaction():
 # ── Initialization ────────────────────────────────────────────────────
 
 _initialized = False
+DB_AVAILABLE = False
 
 
 def init_db():
-    """Create tables if they don't exist. Idempotent — safe to call repeatedly."""
-    global _initialized
+    """Create tables if they don't exist. Idempotent — safe to call repeatedly.
+
+    Sets DB_AVAILABLE=True on success, DB_AVAILABLE=False on failure.
+    When False, all query functions return empty/None gracefully.
+    """
+    global _initialized, DB_AVAILABLE
     if _initialized:
         return
 
-    if _is_pg():
-        conn = _get_pg_conn()
-        with conn.cursor() as cur:
-            cur.execute(SCHEMA_SQL)
-        conn.commit()
-    else:
-        conn = _get_sqlite_conn()
-        # Execute each top-level SQL statement separately
-        # Split on semicolons but preserve multi-line statements
-        statements = _split_sql(SQLITE_SCHEMA)
-        for stmt in statements:
-            stmt = stmt.strip()
-            if stmt and not stmt.startswith("--"):
-                try:
-                    conn.execute(stmt)
-                except sqlite3.OperationalError as e:
-                    err = str(e).lower()
-                    if "already exists" in err or "duplicate" in err:
-                        pass
-                    else:
-                        raise
-        conn.commit()
+    try:
+        if _is_pg():
+            conn = _get_pg_conn()
+            with conn.cursor() as cur:
+                cur.execute(SCHEMA_SQL)
+            conn.commit()
+        else:
+            conn = _get_sqlite_conn()
+            # Execute each top-level SQL statement separately
+            # Split on semicolons but preserve multi-line statements
+            statements = _split_sql(SQLITE_SCHEMA)
+            for stmt in statements:
+                stmt = stmt.strip()
+                if stmt and not stmt.startswith("--"):
+                    try:
+                        conn.execute(stmt)
+                    except sqlite3.OperationalError as e:
+                        err = str(e).lower()
+                        if "already exists" in err or "duplicate" in err:
+                            pass
+                        else:
+                            raise
+            conn.commit()
 
-    _initialized = True
+        DB_AVAILABLE = True
+    except Exception:
+        DB_AVAILABLE = False
+    finally:
+        _initialized = True
 
 
 def _split_sql(sql: str) -> list[str]:
@@ -262,6 +275,8 @@ def _split_sql(sql: str) -> list[str]:
 
 def upsert_user(username: str, display_name: str = "", karma: int = 0, web_link: str = "") -> int:
     """Insert or update a user, return their ID."""
+    if not DB_AVAILABLE:
+        return 0
     with _transaction() as conn:
         cur = conn.cursor()
         if _is_pg():
@@ -292,6 +307,8 @@ def upsert_user(username: str, display_name: str = "", karma: int = 0, web_link:
 
 def get_user(username: str) -> Optional[dict]:
     """Get a user by username."""
+    if not DB_AVAILABLE:
+        return None
     conn = _get_conn()
     cur = conn.cursor()
     cur.execute("SELECT * FROM users WHERE username = ?" if not _is_pg() else
@@ -309,6 +326,8 @@ def get_user(username: str) -> Optional[dict]:
 
 def list_users(limit: int = 50) -> list[dict]:
     """List users ordered by karma."""
+    if not DB_AVAILABLE:
+        return []
     conn = _get_conn()
     cur = conn.cursor()
     cur.execute(
@@ -324,6 +343,8 @@ def create_session(session_key: str, filename: str = "", language_code: str = "m
                    language_name: str = "", total_entries: int = 0,
                    translated_before: int = 0, username: str = "") -> int:
     """Create a new translation session."""
+    if not DB_AVAILABLE:
+        return 0
     user_id = None
     if username:
         user = get_user(username)
@@ -351,6 +372,8 @@ def create_session(session_key: str, filename: str = "", language_code: str = "m
 
 def get_session(session_key: str) -> Optional[dict]:
     """Get a session by key."""
+    if not DB_AVAILABLE:
+        return None
     conn = _get_conn()
     cur = conn.cursor()
     cur.execute("SELECT * FROM sessions WHERE session_key = ?" if not _is_pg() else
@@ -361,6 +384,8 @@ def get_session(session_key: str) -> Optional[dict]:
 
 def list_sessions(limit: int = 20) -> list[dict]:
     """List recent sessions."""
+    if not DB_AVAILABLE:
+        return []
     conn = _get_conn()
     cur = conn.cursor()
     cur.execute(
@@ -386,6 +411,8 @@ def save_translation(session_key: str, entry_index: int, msgid: str, msgstr: str
                      msgctxt: str = "", qa_passed: bool = True, qa_checks: list = None,
                      translated_by: str = "ai"):
     """Save a single translation."""
+    if not DB_AVAILABLE:
+        return
     session = get_session(session_key)
     if not session:
         return None
@@ -407,6 +434,8 @@ def save_translation(session_key: str, entry_index: int, msgid: str, msgstr: str
 
 def get_session_translations(session_key: str) -> list[dict]:
     """Get all translations for a session."""
+    if not DB_AVAILABLE:
+        return []
     conn = _get_conn()
     cur = conn.cursor()
     cur.execute("""
@@ -430,6 +459,8 @@ def log_export(session_key: str, export_file: str, source_file: str, language_co
                completion_before: float, completion_after: float,
                git_commit: str = "", username: str = "") -> int:
     """Log an export event."""
+    if not DB_AVAILABLE:
+        return 0
     user_id = None
     if username:
         user = get_user(username)
@@ -474,6 +505,8 @@ def log_export(session_key: str, export_file: str, source_file: str, language_co
 
 def list_exports(limit: int = 50) -> list[dict]:
     """List recent exports."""
+    if not DB_AVAILABLE:
+        return []
     conn = _get_conn()
     cur = conn.cursor()
     cur.execute(
@@ -485,6 +518,8 @@ def list_exports(limit: int = 50) -> list[dict]:
 
 def get_language_stats(language_code: str = "") -> dict:
     """Get aggregate stats for a language or all languages."""
+    if not DB_AVAILABLE:
+        return {"languages": []}
     conn = _get_conn()
     cur = conn.cursor()
 
@@ -549,6 +584,8 @@ def _log_karma(conn, username: str, language_code: str, strings_count: int):
 
 def get_leaderboard(language_code: str = "", limit: int = 50) -> list[dict]:
     """Get the leaderboard, optionally filtered by language."""
+    if not DB_AVAILABLE:
+        return []
     conn = _get_conn()
     cur = conn.cursor()
 
@@ -573,6 +610,8 @@ def get_leaderboard(language_code: str = "", limit: int = 50) -> list[dict]:
 
 def get_contributor_stats(username: str) -> Optional[dict]:
     """Get detailed stats for a single contributor."""
+    if not DB_AVAILABLE:
+        return None
     conn = _get_conn()
     cur = conn.cursor()
 
@@ -622,6 +661,9 @@ def get_contributor_stats(username: str) -> Optional[dict]:
 
 def get_app_stats() -> dict:
     """Get overall application statistics for the dashboard."""
+    if not DB_AVAILABLE:
+        return {"total_translations": 0, "total_strings_exported": 0,
+                "total_exports": 0, "contributors": 0, "sessions": 0}
     conn = _get_conn()
     cur = conn.cursor()
 

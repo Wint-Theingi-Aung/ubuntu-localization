@@ -1,7 +1,10 @@
 """PO file parsing service using polib."""
 
+import io
 import json
 import polib
+import tempfile
+import os
 from pathlib import Path
 from datetime import datetime
 from typing import Optional
@@ -18,7 +21,17 @@ def parse_po_file(file_content: str, filename: str) -> dict:
     - all entries with index, msgid, msgstr, msgctxt, flags, occurrences
     - untranslated subset (entries with empty msgstr)
     """
-    po = polib.pofile(file_content)
+    # polib.pofile() requires a file path, not a string — write to a temp file
+    with tempfile.NamedTemporaryFile(
+        mode="w", suffix=".po", encoding="utf-8", delete=False
+    ) as tmp:
+        tmp.write(file_content)
+        tmp_path = tmp.name
+
+    try:
+        po = polib.pofile(tmp_path)
+    finally:
+        os.unlink(tmp_path)
 
     total = len(po)
     translated = sum(1 for e in po if e.msgstr.strip() and "fuzzy" not in e.flags)
