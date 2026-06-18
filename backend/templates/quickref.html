@@ -41,13 +41,15 @@
 </pre>
 </div>
 
-<div class="card" style="margin-top:20px">
-  <h3 style="font-size:16px;margin-bottom:12px">Setup Checklist</h3>
-  <table class="data-table">
-    <tr><td><input type="checkbox" checked disabled> Install with uv sync</td><td><input type="checkbox" checked disabled> Set GOOGLE_API_KEY in .env</td></tr>
-    <tr><td><input type="checkbox"> Upload a .po file on /translate/</td><td><input type="checkbox"> Click 🤖 Translate Page</td></tr>
-    <tr><td><input type="checkbox"> Review flagged translations</td><td><input type="checkbox"> Export &amp; download .po file</td></tr>
-  </table>
+<div class="card" style="margin-top:var(--space-lg)">
+  <h3 style="font-size:var(--text-base);margin-bottom:var(--space-sm)">Setup Checklist</h3>
+  <div class="table-wrapper">
+    <table class="data-table">
+      <tr><td><input type="checkbox" checked disabled> Install with uv sync</td><td><input type="checkbox" checked disabled> Set GOOGLE_API_KEY in .env</td></tr>
+      <tr><td><input type="checkbox"> Upload a .po file on /translate/</td><td><input type="checkbox"> Click 🤖 Translate Page</td></tr>
+      <tr><td><input type="checkbox"> Review flagged translations</td><td><input type="checkbox"> Export &amp; download .po file</td></tr>
+    </table>
+  </div>
 </div>
 
 {% endblock %}
