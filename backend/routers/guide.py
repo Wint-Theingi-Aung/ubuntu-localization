@@ -3,7 +3,7 @@
 from fastapi import APIRouter, Request
 from fastapi.responses import HTMLResponse
 
-from backend.services.ui_translations import get_ui_lang
+from backend.services.ui_translations import get_ui_lang, t
 from backend.templates_engine import templates
 
 router = APIRouter(prefix="/guide", tags=["guide"])
@@ -81,6 +81,25 @@ async def guide_page(request: Request, chapter: int = 0):
     ui_lang = get_ui_lang(request)
     meta = GUIDE_META.get(ui_lang, GUIDE_META["my"])
 
+    # Build guide chapter headings from centralized translations
+    heading_keys = [
+        "guide.what_tool_does",
+        "guide.uploading_po",
+        "guide.how_translation_works",
+        "guide.editing_translations",
+        "guide.exporting_work",
+        "guide.tips_best_results",
+    ]
+    short_names = [
+        "what_tool_does",
+        "uploading_po",
+        "how_translation_works",
+        "editing_translations",
+        "exporting_work",
+        "tips_best_results",
+    ]
+    guide_headings = {short: t(full, ui_lang) for short, full in zip(short_names, heading_keys)}
+
     return templates.TemplateResponse(
         request,
         "guide.html",
@@ -89,6 +108,7 @@ async def guide_page(request: Request, chapter: int = 0):
             "guide_quickref": meta["guide_quickref"],
             "chapters": meta["chapters"],
             "active_chapter": chapter,
+            "guide_headings": guide_headings,
         },
     )
 

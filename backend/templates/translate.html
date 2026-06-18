@@ -159,9 +159,9 @@
 {% endif %}
 
 {# ═══════════════════════════════════════════════════════════════════
-   SECTION 4: Export (shown when translations exist)
+   SECTION 4: Export (always shown when session exists — even 1–3 strings)
    ═══════════════════════════════════════════════════════════════════ #}
-{% if preview %}
+{% if not no_session %}
 <div class="card" id="export-section">
   <div class="card-header">
     <h3 class="card-title">{{ t('export.title') }}</h3>
