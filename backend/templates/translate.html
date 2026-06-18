@@ -29,7 +29,7 @@
       <label class="form-label">{{ t('translate.target_lang') }}</label>
       <select name="target_lang" class="form-select">
         {% for code, name in language_choices %}
-        <option value="{{ code }}">{{ name }}</option>
+        <option value="{{ code }}" {% if code == 'my' %}selected{% endif %}>{{ name }}</option>
         {% endfor %}
       </select>
     </div>
@@ -58,7 +58,7 @@
       <label class="form-label">{{ t('translate.target_lang') }}</label>
       <select name="target_lang" class="form-select">
         {% for code, name in language_choices %}
-        <option value="{{ code }}">{{ name }}</option>
+        <option value="{{ code }}" {% if code == 'my' %}selected{% endif %}>{{ name }}</option>
         {% endfor %}
       </select>
     </div>
