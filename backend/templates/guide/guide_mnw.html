@@ -1,0 +1,186 @@
+{# Guide content — Mon (မန်) #}
+
+{# ═══════════════════════════════════════════════════════════════════
+   Chapter 1 — ပရူကပေါတ်ကရိယာဏံ
+   ═══════════════════════════════════════════════════════════════════ #}
+{% macro chapter_1() %}
+<h2>📖 ကရိယာဏံ ကၠောန်မာန်မု</h2>
+
+<p>
+  ကရိယာဏံ ထံက်ပၚ <strong>Ubuntu</strong> သွက်ပြန်ဘာသာသွံရ။
+  ဍေဟ်စကာ <strong>Google Gemini AI</strong> သွက်ပြန်လိက်ဟွံပြန်ဏီ ပ္ဍဲဝှာင် <code>.po</code> —
+  မဒှ်ဗီုပြၚ်ကောန်ပရဝ်ဂရာမ် Linux တံ။
+</p>
+
+<p>နကဵုကရိယာဏံ ဗှ်ေကၠောန်မာန်:</p>
+<ul>
+  <li>ပၠောပ် <code>.po</code> ဟွံသေၚ် <code>.pot</code> နူ Ubuntu ဟွံသေၚ် GNOME</li>
+  <li>ရံၚ်မာန် လိက်လဵုပြန်တုဲ လဵုပြန်ဟွံတုဲဏီ</li>
+  <li>စကာ AI Gemini 2.5 Flash ပြန်ဘာသာ</li>
+  <li>ပလေဝ်လိက်ပြန် ပ္ဍဲဗီုရံၚ်လ္ပာ်ၜါ</li>
+  <li>စမ်ရံၚ်ကဵု quality checks (QA)</li>
+  <li>တိတ်ဝှာင် <code>.po</code> သွက်ဒေါင်လုဒ်</li>
+</ul>
+
+<p>သီုဖအိုတ် ကၠောန်ပ္ဍဲမုက်လိက်မွဲ — <a href="/translate/"><strong>မုက်လိက်ပြန်ဘာသာ</strong></a>။</p>
+
+<h3>ဘာသာမထံက်ပၚ</h3>
+<table class="data-table">
+  <tr><th>ဘာသာ</th><th>ကုဒ်</th><th>လိက်</th><th>ဗီုပြၚ်ဝါကျ</th></tr>
+  <tr><td>ဗၟာ</td><td><span class="lang-badge lang-my">my</span></td><td>Myanmar Unicode</td><td>SOV</td></tr>
+  <tr><td>သေံ</td><td><span class="lang-badge lang-shn">shn</span></td><td>Shan Unicode</td><td>SVO</td></tr>
+  <tr><td>မန်</td><td><span class="lang-badge lang-mnw">mnw</span></td><td>Mon Unicode</td><td>SVO</td></tr>
+  <tr><td>ကရေၚ်</td><td><span class="lang-badge lang-ksw">ksw</span></td><td>Karen Unicode</td><td>SVO</td></tr>
+</table>
+
+<h3>နွံပၟိက်</h3>
+<ul>
+  <li>ဝှာင် <code>.po</code> ဟွံသေၚ် <code>.pot</code></li>
+  <li>Google Gemini API key (စုတ်ပ္ဍဲ <code>.env</code>)</li>
+  <li>ဟွံဒးပ္တိုန် — ကၠောန်ပ္ဍဲ browser ဂှ်ရ</li>
+</ul>
+{% endmacro %}
+
+
+{# ═══════════════════════════════════════════════════════════════════
+   Chapter 2 — ပၠောပ်ဝှာင် .po
+   ═══════════════════════════════════════════════════════════════════ #}
+{% macro chapter_2() %}
+<h2>📤 ပၠောပ်ဝှာင် .po</h2>
+
+<h3>ဂွံဝှာင် .po နူလဵု</h3>
+<p>ဗှ်ေဂွံဝှာင် <code>.po</code> နူ:</p>
+<ul>
+  <li><strong>Launchpad Translations</strong> — <a href="https://translations.launchpad.net/ubuntu" target="_blank">translations.launchpad.net/ubuntu</a></li>
+  <li><strong>ဝှာင်ဇကု</strong> — စကာ <code>xgettext -o messages.pot src/*.py</code></li>
+  <li><strong>Ubuntu package source</strong> — ဝှာင် .po နွံပ္ဍဲဖိုဒါ <code>po/</code></li>
+</ul>
+
+<h3>လၟေၚ်ကမၠောန်</h3>
+<ol>
+  <li>အာပ္ဍဲ <a href="/translate/"><strong>မုက်လိက်ပြန်ဘာသာ</strong></a></li>
+  <li>ဓဟောတ်ဝှာင် <code>.po</code> ပ္ဍဲဒၞာဲပၠောပ်ဝှာင်</li>
+  <li>ယဝ်ဟွံတီဘာသာ — ရုဲပ္ဍဲ dropdown</li>
+  <li>ဍဵု <strong>Upload &amp; Parse</strong></li>
+</ol>
+
+<h3>ဂကူဝှာင်မထံက်ပၚ</h3>
+<ul>
+  <li><code>.po</code> — GNU gettext</li>
+  <li><code>.pot</code> — gettext template</li>
+  <li>ဇမၞော်အိုတ်: <strong>50 MB</strong></li>
+  <li>ဒးဒှ် UTF-8</li>
+</ul>
+{% endmacro %}
+
+
+{# ═══════════════════════════════════════════════════════════════════
+   Chapter 3 — ဗီုပြန်ဘာသာကၠောန်
+   ═══════════════════════════════════════════════════════════════════ #}
+{% macro chapter_3() %}
+<h2>🤖 ဗီုပြန်ဘာသာကၠောန်</h2>
+
+<p>
+  ကရိယာဏံစကာ <strong>Google Gemini 2.5 Flash</strong> ပြန်လိက်အၚ်လိက်ပ္ဍဲဘာသာဗှ်ေ။
+  Gemini ကၠိုဟ်လဝ် Ubuntu ကဵု Linux၊ ပြန်ဂၠာဲလိက်ခိုဟ်။
+</p>
+
+<h3>လၟေၚ်ကမၠောန်</h3>
+<ol>
+  <li><strong>ပရေင်ပလံၚ် 15:</strong> လိက်ဟွံပြန်ဏီ ပံၚ်နကဵု 15</li>
+  <li>
+    <strong>AI ပြန်:</strong> ပလံၚ်ကဵု Gemini နကဵုကဵုလဝ်:
+    <ul>
+      <li>စွံ <code>%s</code>, <code>%d</code>, <code>{0}</code></li>
+      <li>လ္ပပြန် Kernel, GNOME, sudo, apt</li>
+      <li>စွံ Ubuntu, Canonical, Debian, Firefox</li>
+    </ul>
+  </li>
+  <li>
+    <strong>စမ်ရံၚ် QA:</strong>
+    <ul>
+      <li>✅ Placeholder နွံသီုဖအိုတ်ဟာ?</li>
+      <li>✅ လၟိဟ် newline တုပ်ဟာ?</li>
+      <li>✅ ပြန်လဝ်ဟာ?</li>
+      <li>✅ ဇမၞော်လိက်ဗဗွဲဟာ?</li>
+    </ul>
+  </li>
+</ol>
+
+<h3>ဍဵုကောန်ဒကုတ် Translate</h3>
+<p>နွံကောန်ဒကုတ် <strong>"🤖 Translate Page"</strong> — ဍဵုတုဲ ပြန်လိက်သီုဖအိုတ်ပ္ဍဲမုက်လိက်။</p>
+{% endmacro %}
+
+
+{# ═══════════════════════════════════════════════════════════════════
+   Chapter 4 — ပလေဝ်လိက်ပြန်
+   ═══════════════════════════════════════════════════════════════════ #}
+{% macro chapter_4() %}
+<h2>✏️ ပလေဝ်လိက်ပြန်</h2>
+
+<p>လိက်ပြန် AI ခိုဟ်ဆဂး လ္ၚဵုဒးပလေဝ်။ ကရိယာဏံကဵုဒၞာဲပလေဝ်လ္ပာ်ၜါ။</p>
+
+<h3>ဗီုပြၚ်ဒၞာဲပလေဝ်</h3>
+<ul>
+  <li><strong>လ္ပာ်ပါဲ:</strong> လိက်တမ် အၚ်လိက်</li>
+  <li><strong>လ္ပာ်ပုၚ်:</strong> ချူ/ပလေဝ်လိက်ပြန်</li>
+</ul>
+
+<h3>ဂိုၚ်အလဵုအလဵု</h3>
+<p>ပလေဝ်တုဲ ဂိုၚ်အလဵုအလဵု — <strong>"✓ Saved"</strong> မံက်။ ဟွံဒးဍဵုကောန်ဒကုတ်ဂိုၚ်။</p>
+
+<h3>စမ်ရံၚ်လိက်ပြန် AI</h3>
+<ul>
+  <li><span style="color:var(--success)">✅ Passed</span> — အောင်သီုဖအိုတ်</li>
+  <li><span style="color:var(--error)">⚠️ Flagged</span> — ဒးစမ်ရံၚ်</li>
+</ul>
+{% endmacro %}
+
+
+{# ═══════════════════════════════════════════════════════════════════
+   Chapter 5 — တိတ်ဝှာင်
+   ═══════════════════════════════════════════════════════════════════ #}
+{% macro chapter_5() %}
+<h2>📦 တိတ်ဝှာင်</h2>
+
+<p>ကာလပြန်တုဲ တိတ်ပ္ဍဲဝှာင် <code>.po</code> မာန်။</p>
+
+<h3>ဗှ်ေကလိဂွံ</h3>
+<ul>
+  <li><strong>ဝှာင် .po</strong> မပံၚ်လိက်ပြန်တၟိကဵုတြေံ</li>
+  <li>ယၟုဝှာင်: <code>translated_&lt;lang&gt;_&lt;source&gt;_&lt;YYYYMMDD&gt;.po</code></li>
+</ul>
+
+<h3>ဗီုတိတ်</h3>
+<p>ဍဵု <strong>"📥 Export .po File"</strong> — ဒေါင်လုဒ်ဝှာင်။</p>
+
+<h3>ဆက်ကၠောန်မု</h3>
+<ul>
+  <li><strong>ပလံၚ် Launchpad:</strong> အာ translations.launchpad.net</li>
+  <li><strong>စမ်ပ္ဍဲ Ubuntu:</strong> ပြံၚ်ဝှာင် .po ပ္ဍဲ package</li>
+</ul>
+{% endmacro %}
+
+
+{# ═══════════════════════════════════════════════════════════════════
+   Chapter 6 — ကသပ်ဂၞန်
+   ═══════════════════════════════════════════════════════════════════ #}
+{% macro chapter_6() %}
+<h2>💡 ကသပ်ဂၞန် သွက်ကလိဂွံရလဒ်ခိုဟ်အိုတ်</h2>
+
+<h3>ကသပ်ဂၞန်ယေဘုယျ</h3>
+<ul>
+  <li><strong>စကဵုဝှာင်ဍောတ်။</strong> စမ်ကဵုဝှာင်နွံ 20–30 လိက်ကၠာ</li>
+  <li><strong>ပြန်အတိုၚ်လၟေၚ်။</strong> P1 (menu, button) စကၠာ</li>
+  <li><strong>စမ်ရံၚ်လိက်ပြန်။</strong> AI ဟွံကၠောန်ဂွံသီု — ရံၚ် ⚠️</li>
+  <li><strong>လ္ပပြံၚ် placeholder။</strong> <code>%s</code>, <code>%d</code> ဒးစွံ</li>
+  <li><strong>ဂိုၚ်ဒေပ်လဝ်။</strong> ဟွံဒးကၠောန်တုဲသီု — တိတ်ထဝ် တုဲကလေၚ်ကၠုၚ်ဆက်ကၠောန်</li>
+</ul>
+
+<h3>ဘာသာမန်</h3>
+<ul>
+  <li>မန်နွံကြိယာလက်ကရဴ — လ္ပကူဗီုပြၚ်ဝါကျအၚ်လိက်</li>
+  <li>လိက်မန်တုပ်ကဵုလိက်ဗၟာလ္ၚဵု — ပါ်ခြာအာ</li>
+  <li>ဝါကျဝါတ်ဂှ် စမ်ရံၚ်လိက်ပြန် AI ဗွဲမဂၠိုၚ်</li>
+</ul>
+{% endmacro %}

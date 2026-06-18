@@ -1,0 +1,186 @@
+{# Guide content — Shan (တႆး) #}
+
+{# ═══════════════════════════════════════════════════════════════════
+   Chapter 1 — လွင်ႈႁဵတ်းၵၢၼ် ၶိူင်ႈၼႆႉ
+   ═══════════════════════════════════════════════════════════════════ #}
+{% macro chapter_1() %}
+<h2>📖 ၶိူင်ႈၼႆႉ ႁဵတ်းသင်လႆႈ</h2>
+
+<p>
+  ၶိူင်ႈၼႆႉ ၸွႆႈထႅမ် <strong>Ubuntu</strong> သွပ်ႉဝႄးလ်သေ ပိၼ်ႇၽႃႇသႃႇၸူး ၽႃႇသႃႇတႆး။
+  မၼ်းၸႂ်ႉ <strong>Google Gemini AI</strong> တႃႇပိၼ်ႇၶေႃႈၵႂၢမ်း ဢၼ်ပႆႇပိၼ်ႇ ၼႂ်းၾၢႆႇ <code>.po</code> —
+  ဢၼ်ပဵၼ် ပိူင်မႆၢ Linux သွပ်ႉဝႄးလ်။
+</p>
+
+<p>တင်းၶိူင်ႈၼႆႉ သူႁဵတ်းလႆႈ:</p>
+<ul>
+  <li>လူတ်ႇၶိုၼ်ႈ ၾၢႆႇ <code>.po</code> ဢမ်ႇၼၼ် <code>.pot</code> တီႈ Ubuntu ဢမ်ႇၼၼ် GNOME</li>
+  <li>တူၺ်းလႆႈဝႃႈ ၶေႃႈလႂ်ပိၼ်ႇယဝ်ႉ၊ ၶေႃႈလႂ်ပႆႇပိၼ်ႇ</li>
+  <li>ၸႂ်ႉ AI Gemini 2.5 Flash ပိၼ်ႇၽႃႇသႃႇ</li>
+  <li>မႄးထတ်းၶေႃႈပိၼ်ႇ တီႈၼႃႈလိၵ်ႈၶၢင်းၵၼ်</li>
+  <li>ၸႂ်ႉ လွင်ႈၸွတ်ႇတူၺ်းၸၼ်ႉၸၢဝ်ႈ (QA) ႁင်းမၼ်း</li>
+  <li>ဢွၵ်ႇၾၢႆႇ <code>.po</code> တႃႇလူတ်ႇလူင်း</li>
+</ul>
+
+<p>တင်းသဵင်ႈ ႁဵတ်းၼႃႈလိၵ်ႈလဵဝ် — <a href="/translate/"><strong>ၼႃႈလိၵ်ႈပိၼ်ႇ</strong></a>။</p>
+
+<h3>ၽႃႇသႃႇဢၼ်ၸွႆႈထႅမ်</h3>
+<table class="data-table">
+  <tr><th>ၽႃႇသႃႇ</th><th>ၶူတ်ႉ</th><th>လိၵ်ႈ</th><th>ပိူင်ၶေႃႈ</th></tr>
+  <tr><td>မၢၼ်ႈ</td><td><span class="lang-badge lang-my">my</span></td><td>Myanmar Unicode</td><td>SOV</td></tr>
+  <tr><td>တႆး</td><td><span class="lang-badge lang-shn">shn</span></td><td>Shan Unicode</td><td>SVO</td></tr>
+  <tr><td>မွၼ်း</td><td><span class="lang-badge lang-mnw">mnw</span></td><td>Mon Unicode</td><td>SVO</td></tr>
+  <tr><td>ယၢင်း</td><td><span class="lang-badge lang-ksw">ksw</span></td><td>Karen Unicode</td><td>SVO</td></tr>
+</table>
+
+<h3>လွင်ႈတုၵ်းယွၼ်း</h3>
+<ul>
+  <li>ၾၢႆႇ <code>.po</code> ဢမ်ႇၼၼ် <code>.pot</code></li>
+  <li>Google Gemini API key (တႅမ်ႈဝႆႉ ၼႂ်း <code>.env</code>)</li>
+  <li>ဢမ်ႇလူဝ်ႇတင်ႇ — ႁဵတ်းၵၢၼ်ၼႂ်း browser ၵမ်းလဵဝ်</li>
+</ul>
+{% endmacro %}
+
+
+{# ═══════════════════════════════════════════════════════════════════
+   Chapter 2 — လူတ်ႇၶိုၼ်ႈ ၾၢႆႇ .po
+   ═══════════════════════════════════════════════════════════════════ #}
+{% macro chapter_2() %}
+<h2>📤 လူတ်ႇၶိုၼ်ႈ ၾၢႆႇ .po</h2>
+
+<h3>ႁႃလႆႈ ၾၢႆႇ .po တီႈလႂ်</h3>
+<p>သူႁႃလႆႈ ၾၢႆႇ <code>.po</code> တီႈ:</p>
+<ul>
+  <li><strong>Launchpad Translations</strong> — <a href="https://translations.launchpad.net/ubuntu" target="_blank">translations.launchpad.net/ubuntu</a></li>
+  <li><strong>ၾၢႆႇၸဝ်ႈၵဝ်ႇ</strong> — ၸႂ်ႉ <code>xgettext -o messages.pot src/*.py</code></li>
+  <li><strong>Ubuntu package source</strong> — ၾၢႆႇ .po မီးၼႂ်း ၾူဝ်ႇတႃႇ <code>po/</code></li>
+</ul>
+
+<h3>လၢႆးႁဵတ်း</h3>
+<ol>
+  <li>ၵႂႃႇတီႈ <a href="/translate/"><strong>ၼႃႈလိၵ်ႈပိၼ်ႇ</strong></a></li>
+  <li>တူၵ်းၾၢႆႇ <code>.po</code> သူၼႂ်း ဢွင်ႈလူတ်ႇၶိုၼ်ႈ</li>
+  <li>သင်ဢမ်ႇႁူႉၽႃႇသႃႇ — လိူၵ်ႈတီႈ dropdown</li>
+  <li>ၵျိပ်ႉ <strong>Upload &amp; Parse</strong></li>
+</ol>
+
+<h3>ပိူင်ၾၢႆႇဢၼ်ၸွႆႈထႅမ်</h3>
+<ul>
+  <li><code>.po</code> — GNU gettext</li>
+  <li><code>.pot</code> — gettext template</li>
+  <li>ၼမ်ႉသုင်: <strong>50 MB</strong></li>
+  <li>တေလႆႈပဵၼ် UTF-8</li>
+</ul>
+{% endmacro %}
+
+
+{# ═══════════════════════════════════════════════════════════════════
+   Chapter 3 — လွင်ႈပိၼ်ႇၽႃႇသႃႇ
+   ═══════════════════════════════════════════════════════════════════ #}
+{% macro chapter_3() %}
+<h2>🤖 လွင်ႈပိၼ်ႇၽႃႇသႃႇ ႁဵတ်းသင်မၼ်း</h2>
+
+<p>
+  ၶိူင်ႈၼႆႉၸႂ်ႉ <strong>Google Gemini 2.5 Flash</strong> ပိၼ်ႇၶေႃႈၵႂၢမ်းဢင်းၵိတ်းပဵၼ်ၽႃႇသႃႇသူ။
+  Gemini ပွင်ႇၸႂ်လွင်ႈ Ubuntu လႄႈ Linux၊ ပိၼ်ႇလႆႈၸွမ်းၼင်ႇသဘာဝ။
+</p>
+
+<h3>လၢႆးႁဵတ်း</h3>
+<ol>
+  <li><strong>ႁွင်ႉဢဝ် 15 ၶေႃႈ:</strong> ၶေႃႈပႆႇပိၼ်ႇ ၸႅၵ်ႇပဵၼ် 15 ၶေႃႈ</li>
+  <li>
+    <strong>AI ပိၼ်ႇ:</strong> သူင်ႇၸူး Gemini တင်းၶေႃႈသင်ႇ:
+    <ul>
+      <li>ဝႆႉ <code>%s</code>, <code>%d</code>, <code>{0}</code></li>
+      <li>ယႃႇပိၼ်ႇ Kernel, GNOME, sudo, apt</li>
+      <li>ဝႆႉ Ubuntu, Canonical, Debian, Firefox</li>
+    </ul>
+  </li>
+  <li>
+    <strong>ၸွတ်ႇတူၺ်းၸၼ်ႉၸၢဝ်ႈ:</strong>
+    <ul>
+      <li>✅ Placeholder မီးၶျၢင်းယဝ်ႉႁိုဝ်?</li>
+      <li>✅ တူဝ်မႆၢ newline ၼမ်မိူၼ်ၵၼ်ႁိုဝ်?</li>
+      <li>✅ ပိၼ်ႇယဝ်ႉႁိုဝ်?</li>
+      <li>✅ တူဝ်လိၵ်ႈယၢဝ်း ၼမ်သင်မၼ်း?</li>
+    </ul>
+  </li>
+</ol>
+
+<h3>ၵျိပ်ႉပုၼ်း Translate</h3>
+<p>မီးပုၼ်း <strong>"🤖 Translate Page"</strong> — ၵျိပ်ႉၸီးပိၼ်ႇၶေႃႈတင်းသဵင်ႈၼႂ်းၼႃႈလိၵ်ႈ။</p>
+{% endmacro %}
+
+
+{# ═══════════════════════════════════════════════════════════════════
+   Chapter 4 — မႄးထတ်းၶေႃႈပိၼ်ႇ
+   ═══════════════════════════════════════════════════════════════════ #}
+{% macro chapter_4() %}
+<h2>✏️ မႄးထတ်းၶေႃႈပိၼ်ႇ</h2>
+
+<p>ၶေႃႈပိၼ်ႇ AI ၶႅမ်ႉသေတ မၢင်ၶေႃႈတေလူဝ်ႇမႄး။ ၶိူင်ႈၼႆႉပၼ် ႁူင်းမႄးထတ်းၽၢႆႇၶၢင်ႈ။</p>
+
+<h3>ပိူင်ႁူင်းမႄးထတ်း</h3>
+<ul>
+  <li><strong>ၽၢႆႇသၢႆႉ:</strong> ၶေႃႈငဝ်ႈ ဢင်းၵိတ်း</li>
+  <li><strong>ၽၢႆႇၶႂႃ:</strong> သွၼ်ႉတႅမ်ႈ/မႄးၶေႃႈပိၼ်ႇ</li>
+</ul>
+
+<h3>သိမ်းႁင်းၶေႃ</h3>
+<p>မႄးယဝ်ႉ သိမ်းႁင်းၶေႃ — <strong>"✓ Saved"</strong> ပေႃႇ။ ဢမ်ႇလူဝ်ႇၵျိပ်ႉပုၼ်းသိမ်း။</p>
+
+<h3>တူၺ်းၶိုၼ်းၶေႃႈပိၼ်ႇ AI</h3>
+<ul>
+  <li><span style="color:var(--success)">✅ Passed</span> — ၶိုင်မႃးတင်းသဵင်ႈ</li>
+  <li><span style="color:var(--error)">⚠️ Flagged</span> — လူဝ်ႇတူၺ်းၶိုၼ်း</li>
+</ul>
+{% endmacro %}
+
+
+{# ═══════════════════════════════════════════════════════════════════
+   Chapter 5 — ဢွၵ်ႇၾၢႆႇ
+   ═══════════════════════════════════════════════════════════════════ #}
+{% macro chapter_5() %}
+<h2>📦 ဢွၵ်ႇၾၢႆႇ</h2>
+
+<p>မိူဝ်ႈပိၼ်ႇယဝ်ႉယဝ်ႉ ဢွၵ်ႇပဵၼ်ၾၢႆႇ <code>.po</code> လႆႈ။</p>
+
+<h3>သူလႆႈသင်</h3>
+<ul>
+  <li><strong>ၾၢႆႇ .po</strong> ဢၼ်ႁူမ်ႈၶေႃႈပိၼ်ႇမႂ်ႇတင်းၵဝ်ႇ</li>
+  <li>ၸိုဝ်ႈၾၢႆႇ: <code>translated_&lt;lang&gt;_&lt;source&gt;_&lt;YYYYMMDD&gt;.po</code></li>
+</ul>
+
+<h3>လၢႆးဢွၵ်ႇ</h3>
+<p>ၵျိပ်ႉ <strong>"📥 Export .po File"</strong> — လူတ်ႇလူင်းၾၢႆႇ။</p>
+
+<h3>ႁဵတ်းသင်ၵွႆႈ</h3>
+<ul>
+  <li><strong>သူင်ႇ Launchpad:</strong> ၵႂႃႇ translations.launchpad.net</li>
+  <li><strong>ၸၢမ်းတူၺ်း Ubuntu:</strong> ပိၼ်ႇၾၢႆႇ .po ၼႂ်း package</li>
+</ul>
+{% endmacro %}
+
+
+{# ═══════════════════════════════════════════════════════════════════
+   Chapter 6 — ၶေႃႈၸီႉသင်ႇ
+   ═══════════════════════════════════════════════════════════════════ #}
+{% macro chapter_6() %}
+<h2>💡 ၶေႃႈၸီႉသင်ႇ တႃႇလႆႈၼမ်ႉၸႂ်ႉၶႅမ်ႉသုတ်း</h2>
+
+<h3>ၶေႃႈၸီႉသင်ႇယူဝ်းယူဝ်း</h3>
+<ul>
+  <li><strong>တႄႇတင်းၾၢႆႇဢွၼ်ႇ။</strong> ၸၢမ်းတူၺ်းၾၢႆႇမီး 20–30 ၶေႃႈ ဢွၼ်တၢင်း</li>
+  <li><strong>ပိၼ်ႇၸွမ်းၸၼ်ႉလမ်း။</strong> P1 (menu, button) တႄႇဢွၼ်တၢင်း</li>
+  <li><strong>တူၺ်းၶိုၼ်းၶေႃႈပိၼ်ႇ။</strong> AI ဢမ်ႇၸွတ်ႇတင်းသဵင်ႈ — တူၺ်း ⚠️</li>
+  <li><strong>ယႃႇမႄး placeholder။</strong> <code>%s</code>, <code>%d</code> တေလႆႈဝႆႉ</li>
+  <li><strong>သိမ်းဝႆႉၸွမ်း။</strong> ဢမ်ႇလူဝ်ႇႁဵတ်းယဝ်ႉတင်းမူတ်း — ဢွၵ်ႇဝႆႉ ၸင်ႇၶိုၼ်းမႃးသိုပ်ႇ</li>
+</ul>
+
+<h3>ၽႃႇသႃႇတႆး</h3>
+<ul>
+  <li>ဝႆႉတူဝ်မႆၢသဵင် — မၼ်းမေႃလႅၵ်ႈလၢႆတီႈပွင်ႇ</li>
+  <li>ၸၢမ်းတူၺ်း Ubuntu ႁႂ်ႈပေႃႇထၢင်ႇ</li>
+  <li>တႆးပဵၼ် SVO — မိူၼ်ဢင်းၵိတ်း</li>
+</ul>
+{% endmacro %}

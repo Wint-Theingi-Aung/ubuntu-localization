@@ -1,0 +1,186 @@
+{# Guide content — S'gaw Karen (ကညီ) #}
+
+{# ═══════════════════════════════════════════════════════════════════
+   Chapter 1 — တၢ်မၤအါထီၣ် ပှၤကွဲးကျဲၤ
+   ═══════════════════════════════════════════════════════════════════ #}
+{% macro chapter_1() %}
+<h2>📖 ပှၤကွဲးကျဲၤအံၤ မၤတၢ်မနုၤလဲၣ်</h2>
+
+<p>
+  ပှၤကွဲးကျဲၤအံၤ မၤစၢၤ <strong>Ubuntu</strong> လၢတၢ်ကွဲးကျဲၤဆူကျိာ်ဒူၣ်ဖိလၢအဒိၣ်ထီၣ်ဆူညါန့ၣ်လီၤ။
+  အဝဲစိးထီၣ် <strong>Google Gemini AI</strong> ဒ်သိးကကွဲးကျဲၤလံာ်တကွဲးကျဲၤဘၣ်လၢ <code>.po</code> လံာ် —
+  လၢအမ့ၢ် Linux ပှၤမၤပီၢ်ယၢ်လၢတၢ်ကွဲးကျဲၤန့ၣ်လီၤ။
+</p>
+
+<p>ဒီးပှၤကွဲးကျဲၤအံၤ နမၤန့ၢ်တၢ်အါအါကလဲာ်လီၤ:</p>
+<ul>
+  <li>ဒီထံ <code>.po</code> မ့တမ့ၢ် <code>.pot</code> လံာ်လၢ Ubuntu မ့တမ့ၢ် GNOME</li>
+  <li>ထံၣ်ဝဲလံာ်ဖိလၢအကွဲးကျဲၤဝဲဒၣ် ဒီးလၢတကွဲးကျဲၤဘၣ်န့ၣ်</li>
+  <li>ဟံးဃာ် AI Gemini 2.5 Flash တၢ်ကွဲးကျဲၤ</li>
+  <li>သီထီၣ်တၢ်ကွဲးကျဲၤလၢတၢ်ကွၢ်လၢ်ၦဲၤခံဖျၢၣ်</li>
+  <li>မၤ QA တၢ်ဃံၤဃဲၤလၢကဘျံကဘျံ</li>
+  <li>ဟဲထ <code>.po</code> လံာ်ဒ်သိးကဒေါင်းလုဒ်</li>
+</ul>
+
+<p>တၢ်ခဲလၢၢ်မၤဝဲလၢလံာ်ကဘျံတဘ့ၣ် — <a href="/translate/"><strong>လံာ်ကဘျံကွဲးကျဲၤ</strong></a>။</p>
+
+<h3>ကျိာ်လၢအမၤစၢၤ</h3>
+<table class="data-table">
+  <tr><th>ကျိာ်</th><th>ကုဒ်</th><th>လံာ်ကွဲး</th><th>တၢ်ကွဲးကလံာ်</th></tr>
+  <tr><td>မျန်</td><td><span class="lang-badge lang-my">my</span></td><td>Myanmar Unicode</td><td>SOV</td></tr>
+  <tr><td>ရှမ်း</td><td><span class="lang-badge lang-shn">shn</span></td><td>Shan Unicode</td><td>SVO</td></tr>
+  <tr><td>မွန်</td><td><span class="lang-badge lang-mnw">mnw</span></td><td>Mon Unicode</td><td>SVO</td></tr>
+  <tr><td>ကညီ</td><td><span class="lang-badge lang-ksw">ksw</span></td><td>Karen Unicode</td><td>SVO</td></tr>
+</table>
+
+<h3>တၢ်လိၣ်ဘၣ်</h3>
+<ul>
+  <li>လံာ် <code>.po</code> မ့တမ့ၢ် <code>.pot</code></li>
+  <li>Google Gemini API key (ပာ်ဝဲလၢ <code>.env</code>)</li>
+  <li>တလိၣ်ဘၣ်တၢ်ဒီထံဘၣ် — မၤတၢ်လၢ browser ဒီကတီၢ်ညါလီၤ</li>
+</ul>
+{% endmacro %}
+
+
+{# ═══════════════════════════════════════════════════════════════════
+   Chapter 2 — ဒီထံ .po လံာ်
+   ═══════════════════════════════════════════════════════════════════ #}
+{% macro chapter_2() %}
+<h2>📤 ဒီထံ .po လံာ်</h2>
+
+<h3>ထံဃာ် .po လံာ်လၢအလဲၢ်လဲၢ်</h3>
+<p>နထံဃာ် <code>.po</code> လံာ်လၢ:</p>
+<ul>
+  <li><strong>Launchpad Translations</strong> — <a href="https://translations.launchpad.net/ubuntu" target="_blank">translations.launchpad.net/ubuntu</a></li>
+  <li><strong>နလံာ်နၤ</strong> — သူ <code>xgettext -o messages.pot src/*.py</code></li>
+  <li><strong>Ubuntu package source</strong> — .po လံာ်အိၣ်ဝဲလၢ <code>po/</code> ဖိုဒါ</li>
+</ul>
+
+<h3>တၢ်မၤအဒိအတဲာ်</h3>
+<ol>
+  <li>လဲၤလၢ <a href="/translate/"><strong>လံာ်ကဘျံကွဲးကျဲၤ</strong></a></li>
+  <li>ဟဲထ .po လံာ်လၢတၢ်ဒီထံလံာ်</li>
+  <li>တသ့ၣ်ညါဘၣ်ကျိာ် — ဃုထၢလၢ dropdown</li>
+  <li>နဲၣ်ကွဲး <strong>Upload &amp; Parse</strong></li>
+</ol>
+
+<h3>လံာ်အါဂာ်လၢအမၤစၢၤ</h3>
+<ul>
+  <li><code>.po</code> — GNU gettext</li>
+  <li><code>.pot</code> — gettext template</li>
+  <li>အါနီၢ်အိၣ်: <strong>50 MB</strong></li>
+  <li>ကဘၣ်မ့ၢ် UTF-8</li>
+</ul>
+{% endmacro %}
+
+
+{# ═══════════════════════════════════════════════════════════════════
+   Chapter 3 — တၢ်ကွဲးကျဲၤအံၤ မၤဝဲဒ်လဲၣ်
+   ═══════════════════════════════════════════════════════════════════ #}
+{% macro chapter_3() %}
+<h2>🤖 တၢ်ကွဲးကျဲၤအံၤ မၤဝဲဒ်လဲၣ်</h2>
+
+<p>
+  ပှၤကွဲးကျဲၤအံၤ သူ <strong>Google Gemini 2.5 Flash</strong> ကွဲးကျဲၤလံာ်အံကလံလၢနကျိာ်နၤ။
+  Gemini နၢ်ပၢၢ် Ubuntu ဒီး Linux၊ ကွဲးကျဲၤထီဒါလံာ်ဂ့ၤဂ့ၤလီၤ။
+</p>
+
+<h3>တၢ်မၤအဒိအတဲာ်</h3>
+<ol>
+  <li><strong>တၢ်ကွဲးကျဲၤဖိလၢအ 15:</strong> လံာ်တကွဲးကျဲၤဘၣ် ဟ့ၣ်ဝဲလၢ 15</li>
+  <li>
+    <strong>AI ကွဲးကျဲၤ:</strong> ဆဲးက့ၤ Gemini ဒီး:
+    <ul>
+      <li>ပာ်ဝဲ <code>%s</code>, <code>%d</code>, <code>{0}</code></li>
+      <li>တကွဲးကျဲၤ Kernel, GNOME, sudo, apt တဂ့ၤ</li>
+      <li>ပာ်ဝဲ Ubuntu, Canonical, Debian, Firefox</li>
+    </ul>
+  </li>
+  <li>
+    <strong>မၤတၢ်ဃံၤဃဲၤ QA:</strong>
+    <ul>
+      <li>✅ Placeholder အိၣ်ဝဲခဲလၢၢ်လဲၣ်?</li>
+      <li>✅ newline အိၣ်ဝဲဒ်လဲၣ်?</li>
+      <li>✅ ကွဲးကျဲၤဝဲလဲၣ်?</li>
+      <li>✅ တၢ်အူလံာ်ဂ့ၤဒ်လဲၣ်?</li>
+    </ul>
+  </li>
+</ol>
+
+<h3>နဲၣ်ကွဲး Translate ဒုး</h3>
+<p>အိၣ်ဒုး <strong>"🤖 Translate Page"</strong> — နဲၣ်ကွဲးတၢ်ကွဲးကျဲၤလံာ်ခဲလၢၢ်လၢကဘျံနၤ။</p>
+{% endmacro %}
+
+
+{# ═══════════════════════════════════════════════════════════════════
+   Chapter 4 — သီထီၣ်လံာ်ကွဲးကျဲၤ
+   ═══════════════════════════════════════════════════════════════════ #}
+{% macro chapter_4() %}
+<h2>✏️ သီထီၣ်လံာ်ကွဲးကျဲၤ</h2>
+
+<p>လံာ်ကွဲးကျဲၤ AI ဂ့ၤလီၤဆီဒ်မ့ၢ်အါနီၢ်ဂ့ၤဘၣ်။ ပှၤကွဲးကျဲၤအံၤ ဟ့ၣ်တၢ်သီထီၣ်လၢ်ခံဖျၢၣ်လီၤ။</p>
+
+<h3>တၢ်ကွၢ်တၢ်သီ</h3>
+<ul>
+  <li><strong>ဖျၢၣ်စဲး:</strong> လံာ်အံကလံအလီၢ်အိၣ်</li>
+  <li><strong>ဖျၢၣ်ထီၣ်:</strong> ကွဲး/သီထီၣ်လံာ်ကွဲးကျဲၤ</li>
+</ul>
+
+<h3>တၢ်သွဝဲအလီၢ်အိၣ်</h3>
+<p>သီထီၣ်ဝဲဒီး သွလီၤအလီၢ်အိၣ် — <strong>"✓ Saved"</strong> ဟဲထီၣ်။ တလိၣ်ဘၣ်နဲၣ်ကွဲးဒုးသွဝဲဘၣ်။</p>
+
+<h3>ကွၢ်ကဒါလံာ်ကွဲးကျဲၤ AI</h3>
+<ul>
+  <li><span style="color:var(--success)">✅ Passed</span> — ဟဲဝဲခဲလၢၢ်</li>
+  <li><span style="color:var(--error)">⚠️ Flagged</span> — လိၣ်ကွၢ်ကဒါ</li>
+</ul>
+{% endmacro %}
+
+
+{# ═══════════════════════════════════════════════════════════════════
+   Chapter 5 — ဟဲထလံာ်
+   ═══════════════════════════════════════════════════════════════════ #}
+{% macro chapter_5() %}
+<h2>📦 ဟဲထလံာ်</h2>
+
+<p>ဖဲကွဲးကျဲၤဝဲဒီး ဟဲထလၢ <code>.po</code> လံာ်န့ၣ်လီၤ။</p>
+
+<h3>နထံဃာ်တၢ်မနုၤ</h3>
+<ul>
+  <li><strong>.po လံာ်</strong> လၢအပှ့ၤထီၣ်လံာ်ကွဲးကျဲၤသီဒီးအပျဲၢ်</li>
+  <li>လံာ်မံၤ: <code>translated_&lt;lang&gt;_&lt;source&gt;_&lt;YYYYMMDD&gt;.po</code></li>
+</ul>
+
+<h3>ဒ်သိးကဟဲထ</h3>
+<p>နဲၣ်ကွဲး <strong>"📥 Export .po File"</strong> — ဒေါင်းလုဒ်လံာ်။</p>
+
+<h3>မၤတၢ်မနုၤဆူညါ</h3>
+<ul>
+  <li><strong>ဆဲးက့ၤ Launchpad:</strong> လဲၤ translations.launchpad.net</li>
+  <li><strong>မၤသး Ubuntu:</strong> ဆီတ့ၢ်လံာ် .po လၢ package</li>
+</ul>
+{% endmacro %}
+
+
+{# ═══════════════════════════════════════════════════════════════════
+   Chapter 6 — တၢ်ကူစါဂ့ၤဂ့ၤ
+   ═══════════════════════════════════════════════════════════════════ #}
+{% macro chapter_6() %}
+<h2>💡 တၢ်ကူစါဂ့ၤဂ့ၤ</h2>
+
+<h3>တၢ်ကူစါအါဂာ်</h3>
+<ul>
+  <li><strong>စမၤဒီးလံာ်ဆံးဆံး။</strong> မၤသးဒီးလံာ်အိၣ် 20–30 ကွၢ်ကွၢ်</li>
+  <li><strong>ကွဲးကျဲၤဒ်အတၢ်ပာ်ဖျၢၣ်။</strong> P1 (menu, button) စမၤတၢ်အါနီၢ်ကွၢ်ကွၢ်</li>
+  <li><strong>ကွၢ်ကဒါလံာ်ကွဲးကျဲၤ။</strong> AI တဂ့ၤဝဲဒ်လဲၣ်ခဲလၢၢ်ဘၣ် — ကွၢ် ⚠️</li>
+  <li><strong>တဆီတ့ၢ် placeholder တဂ့ၤ။</strong> <code>%s</code>, <code>%d</code> ကဘၣ်ပာ်ဝဲ</li>
+  <li><strong>သွဝဲလၢအလီၢ်အိၣ်။</strong> တလိၣ်မၤတၢ်ဝဲဒၣ်ခဲလၢၢ်ဘၣ် — ဟဲထဝဲ ဒီးက့ၤဟဲမၤတၢ်ဆူညါ</li>
+</ul>
+
+<h3>ကညီကျိာ်</h3>
+<ul>
+  <li>ကညီကျိာ် SVO ဒ်အံကလံ — AI ကွဲးကျဲၤဂ့ၤဂ့ၤ</li>
+  <li>ကွၢ်တၢ်ကွဲးသီဒီးတၢ်ကွဲး — ကမၤလီၤပျံၤလၢ copy-paste</li>
+  <li>တၢ်ကွဲးကျဲၤအါနီၢ်တအိၣ်ဘၣ်ဒီး — ကွဲးကျဲၤလၢအဖုၣ်ကွဲးပာ်ဖျါတၢ်ခဲအံၤလီၤ</li>
+</ul>
+{% endmacro %}
