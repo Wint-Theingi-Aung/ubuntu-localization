@@ -14,7 +14,7 @@
 {% endif %}
 
 <!-- Language Filter -->
-<div style="display:flex;gap:8px;margin-bottom:24px;flex-wrap:wrap">
+<div class="lang-filter-bar">
   <a href="/leaderboard/" class="btn btn-sm {% if not active_lang %}btn-primary{% else %}btn-outline{% endif %}">🌐 All</a>
   <a href="/leaderboard/?lang=my" class="btn btn-sm {% if active_lang == 'my' %}btn-primary{% else %}btn-outline{% endif %}"><span class="lang-badge lang-my">my</span> Burmese</a>
   <a href="/leaderboard/?lang=shn" class="btn btn-sm {% if active_lang == 'shn' %}btn-primary{% else %}btn-outline{% endif %}"><span class="lang-badge lang-shn">shn</span> Shan</a>
@@ -23,7 +23,7 @@
 </div>
 
 <!-- Stats -->
-<div class="stats-grid" style="margin-bottom:24px">
+<div class="stats-grid" style="margin-bottom:var(--space-lg)">
   <div class="stat">
     <span class="stat-value">{{ stats.total_strings_exported|default(0)|int|int }}</span>
     <span class="stat-label">Strings Exported</span>
@@ -46,21 +46,23 @@
 {% if lang_stats and lang_stats.languages %}
 <div class="card" style="margin-bottom:20px">
   <h3 style="font-size:16px;margin-bottom:12px">📊 By Language</h3>
-  <table class="data-table">
-    <tr><th>Language</th><th>Strings Exported</th><th>Exports</th><th>Progress</th></tr>
-    {% for lang in lang_stats.languages %}
-    <tr>
-      <td><span class="lang-badge lang-{{ lang.language_code }}">{{ lang.language_code }}</span></td>
-      <td><strong>{{ lang.total_strings }}</strong></td>
-      <td>{{ lang.total_exports }}</td>
-      <td>
-        <div class="progress-bar-container" style="margin:0;width:120px">
-          <div class="progress-bar" style="width:{{ (lang.total_strings / [1, (lang_stats.languages | map(attribute='total_strings') | max) or 1] | max) * 100 if lang.total_strings else 0 }}%"></div>
-        </div>
-      </td>
-    </tr>
-    {% endfor %}
-  </table>
+  <div class="table-wrapper">
+    <table class="data-table">
+      <tr><th>Language</th><th>Strings Exported</th><th>Exports</th><th>Progress</th></tr>
+      {% for lang in lang_stats.languages %}
+      <tr>
+        <td><span class="lang-badge lang-{{ lang.language_code }}">{{ lang.language_code }}</span></td>
+        <td><strong>{{ lang.total_strings }}</strong></td>
+        <td>{{ lang.total_exports }}</td>
+        <td>
+          <div class="progress-bar-container" style="margin:0;min-width:100px">
+            <div class="progress-bar" style="width:{{ (lang.total_strings / [1, (lang_stats.languages | map(attribute='total_strings') | max) or 1] | max) * 100 if lang.total_strings else 0 }}%"></div>
+          </div>
+        </td>
+      </tr>
+      {% endfor %}
+    </table>
+  </div>
 </div>
 {% endif %}
 
@@ -71,36 +73,38 @@
   </h3>
 
   {% if leaderboard %}
-  <table class="data-table">
-    <tr>
-      <th style="width:50px">#</th>
-      <th>Contributor</th>
-      <th style="text-align:right">Strings</th>
-      <th style="text-align:right">Exports</th>
-      <th>Last Active</th>
-    </tr>
-    {% for entry in leaderboard %}
-    <tr>
-      <td>
-        {% if entry.rank == 1 %}<span style="font-size:22px">🥇</span>
-        {% elif entry.rank == 2 %}<span style="font-size:22px">🥈</span>
-        {% elif entry.rank == 3 %}<span style="font-size:22px">🥉</span>
-        {% else %}<span style="color:var(--text-light);font-weight:700">{{ entry.rank }}</span>{% endif %}
-      </td>
-      <td>
-        <a href="/leaderboard/contributor/{{ entry.username }}" style="color:var(--text);text-decoration:none;font-weight:500">
-          {{ entry.display_name or entry.username }}
-        </a>
-        {% if entry.username %}<div style="font-size:11px;color:var(--text-light)">@{{ entry.username }}</div>{% endif %}
-      </td>
-      <td style="text-align:right;font-weight:700">{{ entry.strings_translated or entry.total_strings|default(0)|int|int }}</td>
-      <td style="text-align:right">{{ entry.exports_count or entry.total_exports|default(0)|int|int }}</td>
-      <td style="font-size:12px;color:var(--text-light)">
-        {% if entry.last_contribution %}{{ entry.last_contribution[:10] }}{% elif entry.last_seen %}{{ entry.last_seen[:10] }}{% else %}—{% endif %}
-      </td>
-    </tr>
-    {% endfor %}
-  </table>
+  <div class="table-wrapper">
+    <table class="data-table">
+      <tr>
+        <th style="width:50px">#</th>
+        <th>Contributor</th>
+        <th style="text-align:right">Strings</th>
+        <th style="text-align:right">Exports</th>
+        <th>Last Active</th>
+      </tr>
+      {% for entry in leaderboard %}
+      <tr>
+        <td>
+          {% if entry.rank == 1 %}<span style="font-size:22px">🥇</span>
+          {% elif entry.rank == 2 %}<span style="font-size:22px">🥈</span>
+          {% elif entry.rank == 3 %}<span style="font-size:22px">🥉</span>
+          {% else %}<span style="color:var(--text-light);font-weight:700">{{ entry.rank }}</span>{% endif %}
+        </td>
+        <td>
+          <a href="/leaderboard/contributor/{{ entry.username }}" style="color:var(--text);text-decoration:none;font-weight:500">
+            {{ entry.display_name or entry.username }}
+          </a>
+          {% if entry.username %}<div style="font-size:11px;color:var(--text-light)">@{{ entry.username }}</div>{% endif %}
+        </td>
+        <td style="text-align:right;font-weight:700">{{ entry.strings_translated or entry.total_strings|default(0)|int|int }}</td>
+        <td style="text-align:right">{{ entry.exports_count or entry.total_exports|default(0)|int|int }}</td>
+        <td style="font-size:12px;color:var(--text-light);white-space:nowrap">
+          {% if entry.last_contribution %}{{ entry.last_contribution[:10] }}{% elif entry.last_seen %}{{ entry.last_seen[:10] }}{% else %}—{% endif %}
+        </td>
+      </tr>
+      {% endfor %}
+    </table>
+  </div>
   {% else %}
   <div class="empty-state">
     <span class="empty-icon">📊</span>

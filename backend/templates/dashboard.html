@@ -26,9 +26,9 @@
 </div>
 
 <!-- Language Cards -->
-<div style="margin-top:32px">
-  <h2 style="font-size:20px;font-weight:400;margin-bottom:16px">{{ t('dashboard.languages') }}</h2>
-  <div style="display:grid;grid-template-columns:repeat(auto-fill,minmax(260px,1fr));gap:16px">
+<div style="margin-top:var(--space-2xl)">
+  <h2 style="font-size:var(--text-xl);font-weight:400;margin-bottom:var(--space-md)">{{ t('dashboard.languages') }}</h2>
+  <div style="display:grid;grid-template-columns:repeat(auto-fill,minmax(min(260px,100%),1fr));gap:var(--space-md)">
     <div class="card">
       <div style="display:flex;justify-content:space-between;align-items:start">
         <div>
@@ -85,7 +85,7 @@
 </div>
 
 {% if not ai_available %}
-<div class="warning-banner" style="margin-top:24px">
+<div class="warning-banner" style="margin-top:var(--space-xl)">
   <span class="banner-icon">⚠️</span>
   <span>{{ t('dashboard.ai_warning')|safe }}</span>
 </div>

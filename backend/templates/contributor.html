@@ -6,7 +6,7 @@
   <a href="/leaderboard/" class="btn btn-outline btn-sm">← Leaderboard</a>
 </div>
 
-<div class="card" style="max-width:600px">
+<div class="card" style="max-width:640px">
   <div class="profile-card">
     <div class="profile-avatar">
       {% if contrib.username and contrib.username[0] %}{{ contrib.username[0].upper() }}{% else %}🐧{% endif %}
@@ -36,22 +36,24 @@
 </div>
 
 {% if contrib.by_language %}
-<div class="card" style="max-width:600px;margin-top:16px">
-  <h3 style="font-size:16px;margin-bottom:12px">📊 By Language</h3>
-  <table class="data-table">
-    <tr><th>Language</th><th style="text-align:right">Strings</th><th style="text-align:right">Exports</th></tr>
-    {% for lang in contrib.by_language %}
-    <tr>
-      <td><span class="lang-badge lang-{{ lang.language_code }}">{{ lang.language_code }}</span></td>
-      <td style="text-align:right;font-weight:700">{{ lang.total }}</td>
-      <td style="text-align:right">{{ lang.exports }}</td>
-    </tr>
-    {% endfor %}
-  </table>
+<div class="card" style="max-width:600px;margin-top:var(--space-md)">
+  <h3 style="font-size:var(--text-base);margin-bottom:var(--space-sm)">📊 By Language</h3>
+  <div class="table-wrapper">
+    <table class="data-table">
+      <tr><th>Language</th><th style="text-align:right">Strings</th><th style="text-align:right">Exports</th></tr>
+      {% for lang in contrib.by_language %}
+      <tr>
+        <td><span class="lang-badge lang-{{ lang.language_code }}">{{ lang.language_code }}</span></td>
+        <td style="text-align:right;font-weight:700">{{ lang.total }}</td>
+        <td style="text-align:right">{{ lang.exports }}</td>
+      </tr>
+      {% endfor %}
+    </table>
+  </div>
 </div>
 {% endif %}
 
-<div style="max-width:600px;margin-top:20px">
+<div style="max-width:640px;margin-top:var(--space-lg)">
   <a href="/leaderboard/" class="btn btn-outline">← Back to Leaderboard</a>
   <a href="/auth/profile/{{ contrib.username }}" class="btn btn-outline">🔍 Launchpad Profile</a>
 </div>
