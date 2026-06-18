@@ -100,13 +100,21 @@ async def guide_page(request: Request, chapter: int = 0):
     ]
     guide_headings = {short: t(full, ui_lang) for short, full in zip(short_names, heading_keys)}
 
+    # Inject translated chapter titles into the TOC sidebar
+    chapters = []
+    for ch in meta["chapters"]:
+        ch_copy = dict(ch)
+        key = short_names[ch["id"] - 1]
+        ch_copy["title"] = guide_headings.get(key, ch["title"])
+        chapters.append(ch_copy)
+
     return templates.TemplateResponse(
         request,
         "guide.html",
         {
             "guide_title": meta["guide_title"],
             "guide_quickref": meta["guide_quickref"],
-            "chapters": meta["chapters"],
+            "chapters": chapters,
             "active_chapter": chapter,
             "guide_headings": guide_headings,
         },
