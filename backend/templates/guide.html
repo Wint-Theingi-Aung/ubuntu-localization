@@ -27,19 +27,19 @@
   <div class="guide-body">
 
     {# ── Render active chapter(s) ── #}
-    {% if active_chapter == 1 %}{{ chapter_1() }}{% endif %}
-    {% if active_chapter == 2 %}{{ chapter_2() }}{% endif %}
-    {% if active_chapter == 3 %}{{ chapter_3() }}{% endif %}
-    {% if active_chapter == 4 %}{{ chapter_4() }}{% endif %}
-    {% if active_chapter == 5 %}{{ chapter_5() }}{% endif %}
-    {% if active_chapter == 6 %}{{ chapter_6() }}{% endif %}
+    {% if active_chapter == 1 %}{{ chapter_1(guide_headings) }}{% endif %}
+    {% if active_chapter == 2 %}{{ chapter_2(guide_headings) }}{% endif %}
+    {% if active_chapter == 3 %}{{ chapter_3(guide_headings) }}{% endif %}
+    {% if active_chapter == 4 %}{{ chapter_4(guide_headings) }}{% endif %}
+    {% if active_chapter == 5 %}{{ chapter_5(guide_headings) }}{% endif %}
+    {% if active_chapter == 6 %}{{ chapter_6(guide_headings) }}{% endif %}
     {% if active_chapter == 0 %}
-      {{ chapter_1() }}
-      {{ chapter_2() }}
-      {{ chapter_3() }}
-      {{ chapter_4() }}
-      {{ chapter_5() }}
-      {{ chapter_6() }}
+      {{ chapter_1(guide_headings) }}
+      {{ chapter_2(guide_headings) }}
+      {{ chapter_3(guide_headings) }}
+      {{ chapter_4(guide_headings) }}
+      {{ chapter_5(guide_headings) }}
+      {{ chapter_6(guide_headings) }}
     {% endif %}
   </div>
 </div>
