@@ -8,7 +8,15 @@ venv/
 __pycache__/
 *.pyc
 
+# Exports (generated at runtime)
+exports/
+
+# Vercel
+.vercel
+
+# Session data (generated at runtime)
+.claude/session/
+
 # OS files
 .DS_Store
 Thumbs.db
-.vercel

@@ -8,7 +8,7 @@ A localization tool for translating Ubuntu `.po` files into indigenous languages
 
 ## Tech Stack
 - **Web UI**: FastAPI + Jinja2 + htmx (Ubuntu-themed)
-- **Legacy UI**: Streamlit (`app.py` — still available)
+- **Legacy UI**: Streamlit (`streamlit_app.py` — still available)
 - **AI**: Google Gemini 2.5 Flash
 - **Package Manager**: uv (available in requirements.txt)
 - **Git**: ai-enhanced branch → GitHub
@@ -34,12 +34,12 @@ uv run uvicorn backend.main:app --reload
 - `/po-upload` — Parse .po files, extract untranslated strings
 - `/po-detect` — Scan for missing/fuzzy translations, prioritize by importance
 - `/po-translate` — AI batch translation with 3-reviewer QA verification
-- `/po-export` — Write back to .po file for download, no git integration
+- `/po-export` — Write back to .po file for download from the unified translate page
 - `/guide` — Interactive user guide
 - `/auth-status` — Launchpad profile, karma, teams, translation progress
 
 ## MCP Servers
-- **GitHub MCP** — Repository read access for file browsing and branch management
+- **GitHub MCP** — Repository access for file browsing, branch management, and PR creation
 - **Filesystem MCP** — Safe file I/O restricted to project directory
 - **Launchpad Bridge MCP** — Custom MCP server wrapping launchpadlib
   - 8 tools: auth check, profile, karma, teams, translation groups, top contributors, search, progress
@@ -74,6 +74,11 @@ uv run uvicorn backend.main:app --reload
 #   Load → Parallel Translate → Triple QA Verify → Merge → Report
 /po-export  # Pure file generation, downloadable .po
 ```
+
+## Deployment (Vercel)
+- Entry point: `index.py` — imports the FastAPI app from `backend.main`
+- Set `GOOGLE_API_KEY` and `SECRET_KEY` as environment variables in Vercel dashboard
+- Exports and sessions auto-store in `/tmp` (the only writable directory on Vercel)
 
 ## Quick Start
 1. `uv sync` or `pip install -r requirements.txt`

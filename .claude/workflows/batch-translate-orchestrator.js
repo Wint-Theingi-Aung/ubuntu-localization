@@ -18,7 +18,7 @@ const LANGUAGES = {
   'Burmese':    { code: 'my',  family: 'Sino-Tibetan', script: 'Myanmar',      wordOrder: 'SOV' },
   'Shan':       { code: 'shn', family: 'Tai-Kadai',    script: 'Shan',          wordOrder: 'SVO' },
   'Mon':        { code: 'mnw', family: 'Austroasiatic',script: 'Mon',           wordOrder: 'SVO' },
-  'Sgaw Karen': { code: 'ksw', family: 'Sino-Tibetan', script: 'Sgaw Karen',    wordOrder: 'SVO' }
+  "S'gaw Karen": { code: 'ksw', family: 'Sino-Tibetan', script: "S'gaw Karen",  wordOrder: 'SVO' }
 }
 
 const BATCH_SIZE = 15  // Optimal for Gemini token limits and QA throughput
@@ -321,7 +321,7 @@ if (failures.length > 0) {
 }
 
 if (results.length > 0) {
-  report.actions.push(`/po-export to commit and push ${results.length} QA-passed translations`)
+  report.actions.push(`/po-export to generate downloadable .po for ${results.length} QA-passed translations`)
 }
 
 // Write report

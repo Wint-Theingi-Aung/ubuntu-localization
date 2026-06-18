@@ -13,7 +13,7 @@ google-api-python-client==2.195.0
 # PO file parsing
 polib==1.2.0
 
-# Git integration (optional, auto-commit on export)
+# Version control (optional — used by export's git commit feature)
 GitPython==3.1.50
 
 # Database (optional — SQLite on disk, Postgres with DATABASE_URL)
