@@ -90,25 +90,24 @@ async def translate_page(request: Request, session_id: str = "", auto: bool = Fa
     page_entries = untranslated[start:end]
 
     # ── Build export preview ──
+    # Always computed when session exists so Export button is always visible
     total_done = parsed["metadata"]["translated"] + len(translations)
     total = parsed["metadata"]["total_entries"]
     new = len(translations)
 
-    preview = None
-    if new > 0:
-        preview = {
-            "language": lang_name,
-            "language_code": lang_code,
-            "filename": generate_export_filename(meta.get("filename", "messages.po"), lang_code),
-            "source_file": meta.get("filename", "unknown.po"),
-            "total_entries": total,
-            "previously_translated": parsed["metadata"]["translated"],
-            "newly_translated": new,
-            "qa_passed": new,
-            "qa_failed": 0,
-            "completion_pct": round(total_done / total * 100, 1) if total > 0 else 100,
-            "completion_before": parsed["metadata"]["completion_pct"],
-        }
+    preview = {
+        "language": lang_name,
+        "language_code": lang_code,
+        "filename": generate_export_filename(meta.get("filename", "messages.po"), lang_code),
+        "source_file": meta.get("filename", "unknown.po"),
+        "total_entries": total,
+        "previously_translated": parsed["metadata"]["translated"],
+        "newly_translated": new,
+        "qa_passed": new,
+        "qa_failed": 0,
+        "completion_pct": round(total_done / total * 100, 1) if total > 0 else 100,
+        "completion_before": parsed["metadata"]["completion_pct"],
+    }
 
     return templates.TemplateResponse(request, "translate.html", {
         "ai_available": check_available(),
@@ -511,9 +510,15 @@ async def save_translation(
     session = create_session(session_id)
     session.save_translation(entry_index, translated)
 
+    # Always refresh export section so Export button surfaces after manual saves
+    safe_sid = html.escape(session_id)
+    export_refresh = f"""
+        <div hx-swap-oob="true" id="export-section" hx-get="/translate/?session_id={safe_sid}"
+             hx-trigger="load" hx-select="#export-section" hx-swap="outerHTML"></div>"""
+
     return HTMLResponse(f"""<span class="save-indicator saved" id="save-indicator-{entry_index}">
         ✓ Saved
-    </span>""")
+    </span>{export_refresh}""")
 
 
 # ── Export ───────────────────────────────────────────────────────────
