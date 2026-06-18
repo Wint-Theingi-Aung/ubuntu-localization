@@ -10,6 +10,7 @@ from starlette.requests import Request
 from starlette.responses import HTMLResponse
 
 from backend.config import PROJECT_ROOT
+from backend.services.ui_translations import get_ui_lang, t as translate
 
 TEMPLATE_DIR = PROJECT_ROOT / "backend" / "templates"
 
@@ -34,6 +35,15 @@ class Templates:
 
         self.env.globals["url_for"] = url_for
 
+        # ── Translation helper ────────────────────────────────────────
+        @pass_context
+        def t(context, key: str, **kwargs):
+            """Translate a UI key to the current UI language."""
+            lang = context.get("ui_lang", "my")
+            return translate(key, lang, **kwargs)
+
+        self.env.globals["t"] = t
+
     def render(self, template_name: str, context: dict[str, Any]) -> str:
         """Render a template with context."""
         template = self.env.get_template(template_name)
@@ -52,6 +62,11 @@ class Templates:
         """Return an HTML response from a rendered Jinja2 template."""
         ctx = dict(context or {})
         ctx.setdefault("request", request)
+
+        # Auto-inject UI language from cookie
+        ui_lang = get_ui_lang(request)
+        ctx.setdefault("ui_lang", ui_lang)
+
         content = self.render(name, ctx)
         return HTMLResponse(
             content,

@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en" data-theme="dark">
+<html lang="my">
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -824,6 +824,38 @@ pre {
 }
 
 @keyframes slideIn { from { transform: translateX(100%); opacity: 0; } to { transform: translateX(0); opacity: 1; } }
+
+/* ── Language Switcher ─────────────────────────────────────────────── */
+
+.lang-switcher { margin-bottom: 12px; }
+
+.lang-switcher-label {
+  font-size: 11px;
+  text-transform: uppercase;
+  letter-spacing: 1.5px;
+  color: var(--text-light);
+  margin-bottom: 6px;
+  font-weight: 500;
+}
+
+.lang-select {
+  width: 100%;
+  padding: 8px 10px;
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  background: var(--card-bg);
+  color: var(--text);
+  font-family: var(--font);
+  font-size: 13px;
+  cursor: pointer;
+  transition: border-color 0.15s;
+}
+
+.lang-select:focus {
+  outline: none;
+  border-color: var(--orange);
+  box-shadow: 0 0 0 3px rgba(233,84,32,0.15);
+}
 </style>
 </head>
 <body>
@@ -838,35 +870,45 @@ pre {
   </div>
   <nav class="sidebar-nav">
     <div class="nav-section">
-      <div class="nav-section-title">Workflow</div>
+      <div class="nav-section-title">{{ t('sidebar.workflow') }}</div>
       <a href="/" class="nav-item {% if request.url.path == '/' %}active{% endif %}">
-        <span class="nav-icon">📊</span> ပင်မစာမျက်နှာ
+        <span class="nav-icon">📊</span> {{ t('sidebar.home') }}
       </a>
       <a href="/guide/" class="nav-item {% if request.url.path == '/guide/' %}active{% endif %}">
-        <span class="nav-icon">📖</span> လမ်းညွှန်
+        <span class="nav-icon">📖</span> {{ t('sidebar.guide') }}
       </a>
       <a href="/translate/" class="nav-item {% if request.url.path == '/translate/' %}active{% endif %}">
-        <span class="nav-icon">🤖</span> ဘာသာပြန်ရန်
+        <span class="nav-icon">🤖</span> {{ t('sidebar.translate') }}
       </a>
-      
+
     </div>
     <div class="nav-section">
-      <div class="nav-section-title">More</div>
+      <div class="nav-section-title">{{ t('sidebar.more') }}</div>
       <a href="/leaderboard/" class="nav-item {% if request.url.path == '/leaderboard/' %}active{% endif %}">
-        <span class="nav-icon">🏆</span> Leaderboard
+        <span class="nav-icon">🏆</span> {{ t('sidebar.leaderboard') }}
       </a>
       <a href="/export/history" class="nav-item {% if request.url.path == '/export/history' %}active{% endif %}">
-        <span class="nav-icon">📚</span> မှတ်တမ်း
+        <span class="nav-icon">📚</span> {{ t('sidebar.history') }}
       </a>
     </div>
   </nav>
   <div class="sidebar-footer">
-    <div style="margin-bottom:4px">ဘာသာစကား-</div>
-    <div style="display:flex;flex-wrap:wrap;gap:4px">
-      <span class="lang-badge lang-my">ဗမာ</span>
-      <span class="lang-badge lang-shn">ရှမ်း</span>
-      <span class="lang-badge lang-mnw">မွန်</span>
-      <span class="lang-badge lang-ksw">စကောကရင်</span>
+    <!-- Language Switcher -->
+    <div class="lang-switcher">
+      <div class="lang-switcher-label">{{ t('lang.switcher') }}</div>
+      <select class="lang-select" onchange="switchLang(this.value)" autocomplete="off">
+        <option value="my" {% if ui_lang == 'my' %}selected{% endif %}>{{ t('lang.my') }}</option>
+        <option value="en" {% if ui_lang == 'en' %}selected{% endif %}>{{ t('lang.en') }}</option>
+        <option value="shn" {% if ui_lang == 'shn' %}selected{% endif %}>{{ t('lang.shn') }}</option>
+        <option value="mnw" {% if ui_lang == 'mnw' %}selected{% endif %}>{{ t('lang.mnw') }}</option>
+        <option value="ksw" {% if ui_lang == 'ksw' %}selected{% endif %}>{{ t('lang.ksw') }}</option>
+      </select>
+    </div>
+    <div style="display:flex;flex-wrap:wrap;gap:4px;margin-top:12px">
+      <span class="lang-badge lang-my">မြန်မာ</span>
+      <span class="lang-badge lang-shn">တႆး</span>
+      <span class="lang-badge lang-mnw">မန်</span>
+      <span class="lang-badge lang-ksw">ကညီ</span>
     </div>
     <div style="margin-top:12px">
       v2.0.0 · <a href="https://github.com/Wint-Theingi-Aung/ubuntu-localization">GitHub</a>
@@ -883,6 +925,12 @@ pre {
 <div class="toast-container" id="toast-container"></div>
 
 <script>
+// ── Language Switcher ──────────────────────────────────────────────
+function switchLang(lang) {
+  document.cookie = "ui_lang=" + lang + ";path=/;max-age=31536000;SameSite=Lax";
+  window.location.reload();
+}
+
 // ── File drag-and-drop ─────────────────────────────────────────────
 document.addEventListener('DOMContentLoaded', () => {
   const dropZones = document.querySelectorAll('.form-file');

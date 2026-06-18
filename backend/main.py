@@ -13,11 +13,9 @@ from fastapi import FastAPI, Request
 from fastapi.responses import HTMLResponse, FileResponse
 from fastapi.staticfiles import StaticFiles
 
-from backend.config import config, PROJECT_ROOT, EXPORTS_DIR, LANGUAGES, LANGUAGE_CHOICES
+from backend.config import config, PROJECT_ROOT, EXPORTS_DIR, LANGUAGES
 from backend.routers import upload, translate, export, guide, leaderboard
 from backend.services.translator import check_available
-from backend.services.session import list_recent_sessions
-from backend.services import db
 from backend.templates_engine import templates
 
 # ── App Factory ────────────────────────────────────────────────────────
@@ -60,10 +58,8 @@ app.include_router(leaderboard.router)
 
 @app.get("/", response_class=HTMLResponse)
 async def dashboard(request: Request):
-    """Main dashboard — language overview and recent sessions."""
-    sessions = list_recent_sessions(limit=5)
+    """Main landing page — language cards, CTA to translate."""
     return templates.TemplateResponse(request, "dashboard.html", {
-        "sessions": sessions,
         "ai_available": check_available(),
     })
 

@@ -2,32 +2,32 @@
 {% block content %}
 
 <div class="top-bar">
-  <h1 class="page-title">Ubuntu <strong>Localization</strong> Dashboard</h1>
+  <h1 class="page-title">Ubuntu <strong>{{ t('dashboard.title') }}</strong></h1>
 </div>
 
 <!-- Status Cards -->
 <div class="stats-grid">
   <div class="stat">
     <span class="stat-value">4</span>
-    <span class="stat-label">Languages</span>
+    <span class="stat-label">{{ t('dashboard.lang_count') }}</span>
   </div>
   <div class="stat">
     <span class="stat-value">{% if ai_available %}✓{% else %}✗{% endif %}</span>
-    <span class="stat-label">AI Ready</span>
+    <span class="stat-label">{{ t('dashboard.ai_ready') }}</span>
   </div>
   <div class="stat">
-    <span class="stat-value">{{ sessions|length }}</span>
-    <span class="stat-label">Recent Sessions</span>
+    <span class="stat-value">4</span>
+    <span class="stat-label">{{ t('dashboard.lang_count') }}</span>
   </div>
   <div class="stat">
     <span class="stat-value">v2.0</span>
-    <span class="stat-label">Version</span>
+    <span class="stat-label">{{ t('dashboard.version') }}</span>
   </div>
 </div>
 
 <!-- Language Cards -->
 <div style="margin-top:32px">
-  <h2 style="font-size:20px;font-weight:400;margin-bottom:16px">Supported Languages</h2>
+  <h2 style="font-size:20px;font-weight:400;margin-bottom:16px">{{ t('dashboard.languages') }}</h2>
   <div style="display:grid;grid-template-columns:repeat(auto-fill,minmax(260px,1fr));gap:16px">
     <div class="card">
       <div style="display:flex;justify-content:space-between;align-items:start">
@@ -84,55 +84,15 @@
   </div>
 </div>
 
-<!-- Recent Sessions -->
-<div style="margin-top:32px">
-  <div class="card-header" style="margin-bottom:16px">
-    <h2 style="font-size:20px;font-weight:400">Recent Sessions</h2>
-    <a href="/export/history" class="btn btn-outline btn-sm">View All</a>
-  </div>
-
-  {% if sessions %}
-    {% for s in sessions %}
-    <div class="session-card">
-      <div class="session-header">
-        <span class="session-icon">📄</span>
-        <div style="flex:1">
-          <h3>{{ s.get('filename', 'Unknown') }}</h3>
-          <span class="lang-badge lang-{{ s.get('language_code', 'my') }}">{{ s.get('language', 'Unknown') }}</span>
-        </div>
-        <span style="font-size:12px;color:var(--text-light)">{{ s.get('updated_at', '')[:10] }}</span>
-      </div>
-      <div style="display:flex;gap:12px;margin-top:8px">
-        <a href="/translate/?session_id={{ s.session_id }}" class="btn btn-outline btn-sm">🤖 Resume</a>
-      </div>
-    </div>
-    {% endfor %}
-  {% else %}
-    <div class="empty-state">
-      <span class="empty-icon">📭</span>
-      <h3>No sessions yet</h3>
-      <p>Upload a .po file to start translating Ubuntu into indigenous languages.</p>
-      <a href="/translate/" class="btn btn-primary">📤 Upload .po File</a>
-    </div>
-  {% endif %}
-</div>
-
-<!-- CTA -->
-<div class="card" style="margin-top:24px;text-align:center">
-  <h3 style="font-size:18px;margin-bottom:8px">Ready to translate?</h3>
-  <p style="color:var(--text-light);margin-bottom:16px">Upload .po files, translate with AI, and export in minutes.</p>
-  <a href="/translate/" class="btn btn-primary btn-lg">📤 Start Translating</a>
-</div>
-
 {% if not ai_available %}
 <div class="warning-banner" style="margin-top:24px">
   <span class="banner-icon">⚠️</span>
-  <span>Google API key not configured. Set <code>GOOGLE_API_KEY</code> in <code>.env</code> to enable AI translation.</span>
+  <span>{{ t('dashboard.ai_warning')|safe }}</span>
 </div>
 {% endif %}
 
 <div class="app-footer">
-  <span>Ubuntu Localization Tool v2.0 · Powered by Gemini AI</span>
+  <span>{{ t('footer.tagline') }}</span>
   <span>github.com/Wint-Theingi-Aung/ubuntu-localization</span>
 </div>
 
