@@ -60,18 +60,10 @@ app.include_router(leaderboard.router)
 
 @app.get("/", response_class=HTMLResponse)
 async def dashboard(request: Request):
-    """Main dashboard — overview of all languages and recent sessions."""
+    """Main dashboard — language overview and recent sessions."""
     sessions = list_recent_sessions(limit=5)
-    db_sessions = db.list_sessions(limit=5)
-    stats = db.get_app_stats()
-    leaderboard = db.get_leaderboard(limit=5)
-    lang_stats = db.get_language_stats()
     return templates.TemplateResponse(request, "dashboard.html", {
         "sessions": sessions,
-        "db_sessions": db_sessions,
-        "stats": stats,
-        "leaderboard": leaderboard,
-        "lang_stats": lang_stats,
         "ai_available": check_available(),
     })
 

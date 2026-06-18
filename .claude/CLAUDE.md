@@ -21,7 +21,7 @@ uv run uvicorn backend.main:app --reload
 
 | Route | Purpose |
 |-------|---------|
-| `/` | Dashboard — language overview, recent sessions |
+| `/` | Landing page — language cards, recent sessions, CTA to translate |
 | `/translate/` | Unified pipeline: upload .po → AI + manual translate → export |
 | `/export/history` | Export history |
 | `/guide/` | 6-chapter interactive user guide |
@@ -34,12 +34,12 @@ uv run uvicorn backend.main:app --reload
 - `/po-upload` — Parse .po files, extract untranslated strings
 - `/po-detect` — Scan for missing/fuzzy translations, prioritize by importance
 - `/po-translate` — AI batch translation with 3-reviewer QA verification
-- `/po-export` — Write back to .po, commit, push to GitHub
+- `/po-export` — Write back to .po file for download, no git integration
 - `/guide` — Interactive user guide
 - `/auth-status` — Launchpad profile, karma, teams, translation progress
 
 ## MCP Servers
-- **GitHub MCP** — Auto-commit/push via `~/.claude/mcp-servers/github-server.sh`
+- **GitHub MCP** — Repository read access for file browsing and branch management
 - **Filesystem MCP** — Safe file I/O restricted to project directory
 - **Launchpad Bridge MCP** — Custom MCP server wrapping launchpadlib
   - 8 tools: auth check, profile, karma, teams, translation groups, top contributors, search, progress
@@ -72,11 +72,11 @@ uv run uvicorn backend.main:app --reload
 /po-translate --priority=p1
 # This invokes batch-translate-orchestrator workflow internally:
 #   Load → Parallel Translate → Triple QA Verify → Merge → Report
-/po-export
+/po-export  # Pure file generation, downloadable .po
 ```
 
 ## Quick Start
 1. `uv sync` or `pip install -r requirements.txt`
 2. Set `GOOGLE_API_KEY` in `.env`
 3. `uv run uvicorn backend.main:app --reload`
-4. Open http://localhost:8501/translate/ — upload, translate, and export all in one page
+4. Open http://localhost:8501/translate/ — upload, translate, and download exported .po

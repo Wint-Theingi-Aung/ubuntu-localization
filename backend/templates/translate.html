@@ -8,6 +8,7 @@
 
 {# ═══════════════════════════════════════════════════════════════════
    SECTION 1: Upload (shown when no session)
+   TOP SECTION — Main Workflow
    ═══════════════════════════════════════════════════════════════════ #}
 {% if no_session %}
 <div class="card" id="upload-section">
@@ -39,16 +40,35 @@
   </form>
 </div>
 
-<!-- File Requirements -->
-<div class="card" style="margin-top:20px">
-  <h3 style="font-size:16px;margin-bottom:12px">📋 File Requirements</h3>
-  <ul style="margin-left:20px;font-size:14px;color:var(--text-light);line-height:1.8">
-    <li>Standard GNU gettext <code>.po</code> or <code>.pot</code> format</li>
-    <li>UTF-8 encoding required</li>
-    <li>Maximum file size: 50 MB</li>
-    <li>Language auto-detected from filename or PO headers</li>
-    <li>Example filename: <code>burmese_messages.po</code>, <code>shan_ui.po</code></li>
-  </ul>
+<!-- Minimal hint -->
+<p style="font-size:12px;color:var(--text-light);margin-top:8px;text-align:center">
+  Supports standard GNU gettext <code>.po</code> / <code>.pot</code> files · UTF-8 · Max 50 MB
+</p>
+
+{# ═══════════════════════════════════════════════════════════════════
+   BOTTOM SECTION — Demo Mode
+   ═══════════════════════════════════════════════════════════════════ #}
+<div class="card" style="margin-top:24px" id="demo-section">
+  <div class="card-header">
+    <h3 class="card-title">🧪 Try with Sample File</h3>
+    <span style="font-size:13px;color:var(--text-light)">No .po file? Test with a sample.</span>
+  </div>
+  <p style="font-size:14px;color:var(--text-light);margin-bottom:12px">
+    Load a small sample .po file with 3 demo strings: <strong>Hello</strong>, <strong>Settings</strong>, <strong>Shutdown</strong>
+  </p>
+  <form action="/translate/demo" method="post">
+    <div class="form-group">
+      <label class="form-label">Target Language</label>
+      <select name="target_lang" class="form-select">
+        {% for code, name in language_choices %}
+        <option value="{{ code }}">{{ name }}</option>
+        {% endfor %}
+      </select>
+    </div>
+    <button type="submit" class="btn btn-outline btn-lg btn-block">
+      🧪 Load Demo Strings
+    </button>
+  </form>
 </div>
 
 {% else %}
@@ -111,7 +131,7 @@
 
   {% if ai_available %}
   <form hx-post="/translate/batch" hx-target="#translate-results" hx-indicator="#translate-spinner"
-        hx-swap="beforeend" hx-trigger="{% if auto_translate %}load, submit{% else %}submit{% endif %}">
+        hx-swap="innerHTML" hx-trigger="{% if auto_translate %}load, submit{% else %}submit{% endif %}">
     <input type="hidden" name="session_id" value="{{ session_id }}">
     <input type="hidden" name="target_lang" value="{{ language_code }}">
 
@@ -147,7 +167,7 @@
 {% if preview %}
 <div class="card" id="export-section">
   <div class="card-header">
-    <h3 class="card-title">📋 Export Preview</h3>
+    <h3 class="card-title">📥 Export Translations</h3>
     <span class="lang-badge lang-{{ preview.language_code }}">{{ preview.language }}</span>
   </div>
 
@@ -184,30 +204,21 @@
       <span class="detail-label">Source</span>
       <span class="detail-value">{{ preview.source_file }}</span>
     </div>
-    <div class="export-detail">
-      <span class="detail-label">Git Branch</span>
-      <span class="detail-value">{{ git_branch }}{% if git_clean %} ✓ clean{% endif %}</span>
-    </div>
   </div>
 
   <form hx-post="/translate/export" hx-target="#export-result" hx-indicator="#export-spinner">
     <input type="hidden" name="session_id" value="{{ session_id }}">
-    <input type="hidden" name="commit" value="true">
 
     <div class="export-actions">
       <button type="submit" class="btn btn-primary btn-lg">
         <span class="htmx-indicator"><span class="spinner"></span></span>
-        📦 Export & Commit
-      </button>
-      <button type="submit" class="btn btn-outline btn-lg"
-              onclick="this.form.commit.value='false'">
-        📥 Export Only
+        📥 Export .po File
       </button>
     </div>
   </form>
 
   <div id="export-spinner" class="htmx-indicator" style="text-align:center;padding:20px">
-    <span class="spinner"></span> Writing .po file and committing...
+    <span class="spinner"></span> Generating .po file...
   </div>
 
   <div id="export-result"></div>

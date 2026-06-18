@@ -2,20 +2,19 @@
 
 All three workflow steps consolidated into a single /translate/ page:
   1. Upload  — drag-and-drop .po file, language detection
-  2. Translate — AI batch + manual side-by-side editor
-  3. Export   — write .po, preview, optional git commit
+  2. Translate — AI batch + manual side-by-side editor (10 strings/page)
+  3. Export   — write .po file for download (pure file generation, no git)
 """
 
 import html
 import json
-import subprocess
 from pathlib import PurePath
 from datetime import datetime
 
 from fastapi import APIRouter, UploadFile, File, Form, Request
 from fastapi.responses import HTMLResponse, JSONResponse, FileResponse, RedirectResponse
 
-from backend.config import config, PROJECT_ROOT, EXPORTS_DIR, LANGUAGES, LANGUAGE_CHOICES
+from backend.config import config, EXPORTS_DIR, LANGUAGES, LANGUAGE_CHOICES
 from backend.services.po_parser import parse_po_file, generate_priority_report, write_po_file, generate_export_filename
 from backend.services.translator import translate_batch, qa_verify_batch, check_available
 from backend.services.session import create_session
@@ -111,23 +110,6 @@ async def translate_page(request: Request, session_id: str = "", auto: bool = Fa
             "completion_before": parsed["metadata"]["completion_pct"],
         }
 
-    # ── Git status ──
-    git_branch = "ai-enhanced"
-    git_clean = True
-    try:
-        result = subprocess.run(
-            ["git", "-C", str(PROJECT_ROOT), "status", "--porcelain"],
-            capture_output=True, text=True, timeout=5
-        )
-        git_clean = not result.stdout.strip()
-        branch = subprocess.run(
-            ["git", "-C", str(PROJECT_ROOT), "branch", "--show-current"],
-            capture_output=True, text=True, timeout=5
-        )
-        git_branch = branch.stdout.strip()
-    except Exception:
-        pass
-
     return templates.TemplateResponse(request, "translate.html", {
         "ai_available": check_available(),
         "language_choices": LANGUAGE_CHOICES,
@@ -142,8 +124,6 @@ async def translate_page(request: Request, session_id: str = "", auto: bool = Fa
         "auto_translate": auto,
         "languages": LANGUAGES,
         "preview": preview,
-        "git_branch": git_branch,
-        "git_clean": git_clean,
     })
 
 
@@ -247,6 +227,74 @@ async def upload_file(
     # Regular browser POST → redirect
     return RedirectResponse(
         url=f"/translate/?session_id={session.session_id}&auto=1",
+        status_code=303,
+    )
+
+
+# ── Demo Session ──────────────────────────────────────────────────────
+
+@router.post("/demo", response_class=HTMLResponse)
+async def demo_session(
+    request: Request,
+    target_lang: str = Form("my"),
+):
+    """Create a demo session with 3 sample strings for testing."""
+    lang_info = LANGUAGES.get(target_lang, LANGUAGES["my"])
+
+    # Build synthetic parsed data with 3 demo strings
+    demo_entries = [
+        {"index": 0, "msgid": "Hello", "msgstr": "",
+         "msgctxt": "Greeting", "flags": [], "occurrences": [("demo.po", "1")], "tcomment": ""},
+        {"index": 1, "msgid": "Settings", "msgstr": "",
+         "msgctxt": "Menu item", "flags": [], "occurrences": [("demo.po", "2")], "tcomment": ""},
+        {"index": 2, "msgid": "Shutdown", "msgstr": "",
+         "msgctxt": "System action", "flags": [], "occurrences": [("demo.po", "3")], "tcomment": ""},
+    ]
+
+    parsed = {
+        "filename": "demo.po",
+        "detected_language": {"code": target_lang, **lang_info},
+        "language_code": target_lang,
+        "metadata": {
+            "total_entries": 3,
+            "translated": 0,
+            "untranslated": 3,
+            "fuzzy": 0,
+            "completion_pct": 0.0,
+        },
+        "all_entries": demo_entries,
+        "untranslated": demo_entries,
+        "po_headers": {},
+        "parsed_at": datetime.utcnow().isoformat(),
+    }
+
+    # Generate priority report
+    report = generate_priority_report(parsed)
+
+    # Save session
+    session = create_session()
+    session.save_parsed(parsed)
+    session.save_report(report)
+    session.set_metadata(
+        filename="demo.po",
+        language=lang_info["name"],
+        language_code=target_lang,
+        total_entries=3,
+        translated_count=0,
+    )
+
+    # Persist to database
+    db.create_session(
+        session_key=session.session_id,
+        filename="demo.po",
+        language_code=target_lang,
+        language_name=lang_info["name"],
+        total_entries=3,
+        translated_before=0,
+    )
+
+    return RedirectResponse(
+        url=f"/translate/?session_id={session.session_id}",
         status_code=303,
     )
 
@@ -391,37 +439,18 @@ async def translate_entries(
     passed = sum(1 for r in qa_results if r["passed"])
     failed = len(qa_results) - passed
 
-    # Render results + export section refresh trigger
-    items_html = ""
+    # Render results — batch-level summary only, no per-entry QA noise
     textarea_updates = ""
     indicator_updates = ""
     for r in qa_results:
-        status_icon = "✅" if r["passed"] else "⚠️"
-        status_class = "qa-pass" if r["passed"] else "qa-fail"
         entry_index = r["index"]
         translated_text = html.escape(r["translated"], quote=False)
-        msgid_preview = html.escape(r["msgid"][:120])
-        translated_preview = html.escape(r["translated"][:120])
-        checks_html = "".join(
-            f'<span class="check-tag {"pass" if c["passed"] else "fail"}">'
-            f'{html.escape(c["name"])}: {html.escape(c["detail"])}</span>'
-            for c in r["checks"]
-        )
 
         textarea_updates += f"""
         <textarea id="translation-box-{entry_index}" name="translated" class="auto-save" rows="3"
                   placeholder="Type translation or use AI above..." hx-swap-oob="true">{translated_text}</textarea>"""
         indicator_updates += f"""
         <span class="save-indicator saved" id="save-indicator-{entry_index}" hx-swap-oob="true">✓ Saved</span>"""
-        items_html += f"""
-        <div class="translate-result {status_class}" id="entry-{entry_index}">
-            <div class="result-status">{status_icon}</div>
-            <div class="result-body">
-                <div class="result-source">{msgid_preview}</div>
-                <div class="result-target">{translated_preview}</div>
-                <div class="result-checks">{checks_html}</div>
-            </div>
-        </div>"""
 
     # Refresh export section to show newly available export
     export_refresh = ""
@@ -430,16 +459,23 @@ async def translate_entries(
         <div hx-swap-oob="true" id="export-section" hx-get="/translate/?session_id={html.escape(session_id)}"
              hx-trigger="load" hx-select="#export-section" hx-swap="outerHTML"></div>"""
 
+    # Build clean batch summary
+    error_text = ""
+    if failed > 0:
+        error_text = f"""<span class="batch-stat" style="color:var(--warning)">⚠️ {failed} flagged</span>"""
+    else:
+        error_text = """<span class="batch-stat" style="color:var(--success)">✔ 0 errors</span>"""
+
     return HTMLResponse(f"""{textarea_updates}
     {indicator_updates}
     {export_refresh}
     <div id="translate-results">
         <div class="batch-summary">
-            <span class="batch-stat">📝 Translated: {len(results)}</span>
-            <span class="batch-stat">✅ Passed: {passed}</span>
-            <span class="batch-stat">{'⚠️ Flagged: ' + str(failed) if failed else '🎉 All clean!'}</span>
+            <span class="batch-stat">📝 {len(results)} strings translated</span>
+            <span class="batch-stat" style="color:var(--success)">✔ Passed</span>
+            {error_text}
         </div>
-        <div class="result-list">{items_html}</div>
+        <p style="font-size:13px;color:var(--text-light);margin-top:8px">Ready to export</p>
     </div>""")
 
 
@@ -486,18 +522,17 @@ async def save_translation(
 async def export_file(
     request: Request,
     session_id: str = Form(...),
-    commit: bool = Form(False),
 ):
-    """Export translated .po file — optionally commit to git."""
+    """Export translated .po file — pure file generation, no git integration."""
     session = create_session(session_id)
     parsed = session.load_parsed()
     translations = session.load_translations()
     meta = session.get_metadata()
 
-    if not parsed or not translations:
+    if not parsed:
         return HTMLResponse("""<div class="error-banner">
             <span class="banner-icon">⚠️</span>
-            <span>Nothing to export. Translate some strings first.</span>
+            <span>No session data found. Upload a .po file first.</span>
         </div>""")
 
     lang_code = meta.get("language_code", "my")
@@ -514,36 +549,15 @@ async def export_file(
         else:
             full_translations[idx] = entry["msgstr"]
 
-    # Write .po file
+    # Write .po file (always available, even for 1-3 strings)
     write_po_file(parsed, full_translations, output_path, lang_code)
 
-    # Write manifest
     new_count = len(translations)
-    manifest = {
-        "export_id": f"exp_{datetime.now().strftime('%Y%m%d_%H%M')}_{lang_code}",
-        "timestamp": datetime.utcnow().isoformat(),
-        "language": meta.get("language", "Unknown"),
-        "language_code": lang_code,
-        "source_file": meta.get("filename", "unknown.po"),
-        "export_file": filename,
-        "stats": {
-            "total_entries": parsed["metadata"]["total_entries"],
-            "newly_translated": new_count,
-            "qa_passed": new_count,
-            "qa_failed": 0,
-            "completion_before": str(parsed["metadata"]["completion_pct"]) + "%",
-            "completion_after": str(round(
-                (parsed["metadata"]["translated"] + new_count) / parsed["metadata"]["total_entries"] * 100, 1
-            )) + "%",
-        },
-    }
-    manifest_path = EXPORTS_DIR / f"manifest_{manifest['export_id']}.json"
-    manifest_path.write_text(json.dumps(manifest, indent=2, ensure_ascii=False))
+    total = parsed["metadata"]["total_entries"]
+    existing_count = parsed["metadata"]["translated"]
+    completion_after = round((existing_count + new_count) / total * 100, 1) if total > 0 else 100
 
     # Persist to database
-    completion_after = round(
-        (parsed["metadata"]["translated"] + new_count) / parsed["metadata"]["total_entries"] * 100, 1
-    )
     db.log_export(
         session_key=session_id,
         export_file=filename,
@@ -557,46 +571,15 @@ async def export_file(
         completion_after=completion_after,
     )
 
-    # Git integration
-    git_info = ""
-    if commit:
-        try:
-            subprocess.run(
-                ["git", "-C", str(PROJECT_ROOT), "add",
-                 str(output_path.relative_to(PROJECT_ROOT)),
-                 str(manifest_path.relative_to(PROJECT_ROOT))],
-                capture_output=True, text=True, timeout=10
-            )
-            subprocess.run(
-                ["git", "-C", str(PROJECT_ROOT), "commit", "-m",
-                 f"feat({lang_code}): +{new_count} {meta.get('language', '')} translations — {manifest['stats']['completion_after']} complete\n\n"
-                 f"- Translated {new_count} strings\n"
-                 f"- Language: {meta.get('language', 'Unknown')} ({lang_code})\n"
-                 f"- Source: {meta.get('filename', 'unknown.po')}\n"
-                 f"- Export: {filename}\n\n"
-                 f"Co-Authored-By: Claude <noreply@anthropic.com>"],
-                capture_output=True, text=True, timeout=10
-            )
-            git_info = f"""<div class="git-info success">
-                <span class="git-icon">📦</span>
-                <span>Committed to {html.escape(str(meta.get('git_branch', 'ai-enhanced')))}</span>
-            </div>"""
-        except Exception as e:
-            git_info = f"""<div class="git-info warning">
-                <span class="git-icon">⚠️</span>
-                <span>Commit failed: {html.escape(str(e))}. File saved locally.</span>
-            </div>"""
-
     return HTMLResponse(f"""<div id="export-result">
         <div class="success-banner">
             <span class="banner-icon">✅</span>
             <span>Export complete!</span>
         </div>
-        {git_info}
         <div class="export-details">
             <div class="export-detail">
                 <span class="detail-label">File</span>
-                <code class="detail-value">exports/{html.escape(filename)}</code>
+                <code class="detail-value">{html.escape(filename)}</code>
             </div>
             <div class="export-detail">
                 <span class="detail-label">Strings</span>
@@ -604,7 +587,7 @@ async def export_file(
             </div>
             <div class="export-detail">
                 <span class="detail-label">Completion</span>
-                <span class="detail-value">{html.escape(str(manifest['stats']['completion_before']))} → {html.escape(str(manifest['stats']['completion_after']))}</span>
+                <span class="detail-value">{parsed["metadata"]["completion_pct"]}% → {completion_after}%</span>
             </div>
         </div>
         <div class="export-actions">

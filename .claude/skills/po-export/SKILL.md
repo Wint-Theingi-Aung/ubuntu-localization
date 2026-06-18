@@ -1,13 +1,12 @@
 # po-export
 
-Writes QA-verified translations back into .po format with proper headers, language tags, and timestamps. Auto-generates filenames like `translated_shan_messages_20260212.po`. Optionally auto-commits and pushes to GitHub via the GitHub MCP server.
+Writes QA-verified translations back into .po format with proper headers, language tags, and timestamps. Auto-generates filenames like `translated_shan_messages_20260212.po`. Returns a downloadable file — no side effects.
 
 ## Web UI
 Go to `/translate/` — the export section appears at the bottom of the page once you have translations:
 1. Preview shows output filename, new string count, completion percentage
-2. Click "Export & Commit" to write .po and commit to git
-3. Or click "Export Only" to save locally without committing
-4. Download link appears after export
+2. Click "Export .po File" to generate and download the .po file
+3. Download link appears after export
 
 ## Usage (CLI)
 ```
@@ -20,8 +19,7 @@ Go to `/translate/` — the export section appears at the bottom of the page onc
 3. Preserve original msgctxt, translator comments, and source references
 4. Name file: `translated_{language}_{source}_{YYYYMMDD}.po`
 5. Write to `exports/` directory
-6. If GitHub MCP is configured: auto-commit with message `feat: export {language} translations ({N} strings)` and push
+6. Return downloadable file
 
 ## Options
-- `--no-commit`: Skip git commit/push step
 - `--lang=<code>`: Export only a specific language (e.g. `--lang=shn`)
