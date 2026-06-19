@@ -67,8 +67,6 @@ async def translate_page(request: Request, session_id: str = "", auto: bool = Fa
             "total_pages": 1,
             "auto_translate": False,
             "preview": None,
-            "git_branch": "ai-enhanced",
-            "git_clean": True,
         })
 
     lang_code = parsed.get("language_code", "my")
