@@ -20,6 +20,14 @@ An AI-powered localization tool for translating Ubuntu `.po` files into indigeno
 - **Export** — download the translated `.po` file directly from the browser
 - **Single-page workflow** — upload, translate, and export all on one unified page
 
+## Screenshots
+
+![Homepage UI](assets/homepage.png)
+*Homepage — language cards, recent sessions, and quick access to translate*
+
+![Translate UI](assets/translate.png)
+*Translate — unified upload, AI/manual translation, and export pipeline*
+
 ## Tech Stack
 
 - **Web UI**: FastAPI + Jinja2 + htmx (Ubuntu-themed)
