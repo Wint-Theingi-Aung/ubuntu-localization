@@ -59,7 +59,9 @@ Translating Ubuntu .po files by hand is slow and error-prone:
 
 -  **Triple-lens adversarial QA agent** (placeholders, context, structure) — 2/3 majority required per entry
 
-- Export with auto-commit via GitHub MCP, Launchpad contributor dashboards
+- One-click browser download of translated `.po` file — pure file generation, no git required
+
+- Web UI leaderboard tracking contributions across all 4 languages, per-contributor stats pages
 
 **Ubuntu Localization Tool** — စစ်ဆေးရေး QA စနစ် အပြန်အလှန်ပါဝင်သည့် AI အခြေပြု `.po` ဘာသာပြန်စနစ် (Pipeline) တစ်ခု ဖြစ်ပါသည် -
 
@@ -69,22 +71,26 @@ Translating Ubuntu .po files by hand is slow and error-prone:
 
 -  **ရှုထောင့်သုံးမျိုးပါ စစ်ဆေးရေးစနစ် (Triple-lens Adversarial QA Agent)** (နေရာယူစာသား၊ ရှေ့နောက်အကြောင်းအရာ၊ တည်ဆောက်ပုံ) ဖြင့် ဘာသာပြန်စာသားများကို စနစ်တကျ မဲခွဲဆုံးဖြတ် စစ်ဆေးခြင်း။
 
-- GitHub MCP မှတစ်ဆင့် အလိုအလျောက် တိုက်ရိုက်သိမ်းဆည်း (Auto-commit) နိုင်ခြင်းနှင့် Launchpad ကူညီပံ့ပိုးသူများအတွက် Dashboard များ ပါဝင်ခြင်း။
+- ဘရောက်ဆာမှတစ်ဆင့် တစ်ချက်တည်းနှိပ်၍ `.po` ဖိုင်ကို ဒေါင်းလုဒ်ဆွဲနိုင်ခြင်းနှင့် Launchpad ကူညီပံ့ပိုးသူများအတွက် Dashboard များ ပါဝင်ခြင်း။
 
 ---
 <!-- slide 4 -->
 
 # How I built it | ဘယ်လိုတည်ဆောက်ခဲ့သလဲ
  
--  **MCP**: GitHub MCP (auto-commit/push), Filesystem MCP (sandboxed I/O), Launchpad Bridge MCP (custom launchpadlib wrapper — 392 lines, 8 tools), Postgres MCP (schema inspection)
+-  **MCP**: Launchpad Bridge MCP (custom launchpadlib wrapper — 392 lines, 8 tools for profiles, karma, teams, progress), GitHub MCP (repo, branch, PR management), Filesystem MCP (sandboxed file I/O)
 
--  **Skill**: 6 Claude Code skills — `po-upload`, `po-detect`, `po-translate`, `po-export`, `po-description`, `pr-description` — each a focused slash command
+-  **Web UI**: FastAPI + Jinja2 + htmx — single-page translate pipeline (upload → AI/manual edit → browser download), multi-language user guide, leaderboard with contributor stats
+
+-  **Skill**: 4 translation pipeline skills — `po-upload`, `po-detect`, `po-translate`, `po-export` — plus `po-description` (file summaries) and `pr-description` (PR generation) as developer tools
 
 -  **Agent**: `translate-batch` (Gemini-powered batch translator with language-specific rules) and `qa-reviewer` (adversarial 3-lens verifier requiring majority vote)
 
--  **MCP**: GitHub MCP (auto-commit/push)၊ Filesystem MCP (sandboxed I/O)၊ Launchpad Bridge MCP (စိတ်ကြိုက်ပြင်ဆင်ထားသော launchpadlib wrapper — စာကြောင်းရေ ၃၉၂ ကြောင်း၊ ကိရိယာ ၈ ခု) နှင့် Postgres MCP (Schema Inspection) တို့ကို စုစည်းအသုံးပြုထားပါသည်။
+-  **MCP**: Launchpad Bridge MCP (စိတ်ကြိုက်ပြင်ဆင်ထားသော launchpadlib wrapper — စာကြောင်းရေ ၃၉၂ ကြောင်း၊ ကိရိယာ ၈ ခု)၊ GitHub MCP (repo, branch, PR management)၊ Filesystem MCP (sandboxed I/O) တို့ကို စုစည်းအသုံးပြုထားပါသည်။
 
--  **Skill**: Claude Code စွမ်းဆောင်ရည် ၆ ခု ဖြစ်သည့် — `po-upload`၊ `po-detect`၊ `po-translate`၊ `po-export`၊ `po-description`၊ `pr-description` တို့ကို တိကျသည့် Slash Command တစ်ခုချင်းစီအဖြစ် ဖန်တီးထားပါသည်။
+-  **Web UI**: FastAPI + Jinja2 + htmx — စာမျက်နှာတစ်ခုတည်းမှာပင် ဖိုင်တင်ခြင်းမှ AI ဘာသာပြန်ခြင်း၊ ကိုယ်တိုင်တည်းဖြတ်ခြင်း၊ ဒေါင်းလုဒ်ဆွဲခြင်းအထိ ပြုလုပ်နိုင်သည့် စနစ်။ ဘာသာစကားပေါင်းစုံ လမ်းညွှန်နှင့် Leaderboard ပါဝင်သည်။
+
+-  **Skill**: ဘာသာပြန် Pipeline အတွက် စွမ်းဆောင်ရည် ၄ ခု — `po-upload`၊ `po-detect`၊ `po-translate`၊ `po-export` — နှင့် developer tools အဖြစ် `po-description`၊ `pr-description` တို့ ဖြစ်ကြပါသည်။
 
 -  **Agent**: `translate-batch` (ဘာသာစကားအလိုက် စည်းမျဉ်းများပါဝင်သော Gemini အခြေပြု Batch Translator) နှင့် `qa-reviewer` (ရှုထောင့်သုံးမျိုးဖြင့် အပြန်အလှန်စစ်ဆေးပေးသည့် စနစ်) တို့ ဖြစ်ကြပါသည်။
 

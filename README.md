@@ -53,6 +53,7 @@ Open **http://localhost:8501/translate/** — upload a `.po` file, translate wit
 | `/translate/` | Unified pipeline: upload → AI/manual translate → export |
 | `/guide/` | 6-chapter interactive user guide |
 | `/leaderboard/` | Top contributors per language |
+| `/leaderboard/contributor/{name}` | Individual contributor stats |
 | `/export/history` | Export history |
 | `/health` | Health check endpoint |
 
@@ -61,9 +62,11 @@ Open **http://localhost:8501/translate/** — upload a `.po` file, translate wit
 | Command | Purpose |
 |---------|---------|
 | `/po-upload` | Parse .po files, extract untranslated strings |
-| `/po-detect` | Scan for missing/fuzzy translations |
-| `/po-translate` | AI batch translation with QA verification |
-| `/po-export` | Write back to .po file for download |
+| `/po-detect` | Scan for missing/fuzzy translations, prioritize by visibility |
+| `/po-translate` | AI batch translation with 3-reviewer QA verification |
+| `/po-export` | Write back to .po file for browser download |
+| `/po-description` | Generate human-readable .po file summaries and stats |
+| `/pr-description` | Auto-generate structured pull request descriptions |
 
 ## Deployment (Vercel)
 
