@@ -78,15 +78,15 @@ Translating Ubuntu .po files by hand is slow and error-prone:
 
 # How I built it | ဘယ်လိုတည်ဆောက်ခဲ့သလဲ
  
--  **MCP**: Launchpad Bridge MCP (custom launchpadlib wrapper — 392 lines, 8 tools for profiles, karma, teams, progress), GitHub MCP (repo, branch, PR management), Filesystem MCP (sandboxed file I/O)
+-  **MCP**: Launchpad Bridge MCP (custom launchpadlib wrapper — 392 lines, 8 tools for profiles, karma, teams, progress), Filesystem MCP (sandboxed file I/O)
 
 -  **Web UI**: FastAPI + Jinja2 + htmx — single-page translate pipeline (upload → AI/manual edit → browser download), multi-language user guide, leaderboard with contributor stats
 
--  **Skill**: 4 translation pipeline skills — `po-upload`, `po-detect`, `po-translate`, `po-export` — plus `po-description` (file summaries) and `pr-description` (PR generation) as developer tools
+-  **Skill**: 4 translation pipeline skills — `po-upload`, `po-detect`, `po-translate`, `po-export` — plus `po-description` (file summaries) and `pr-description` (PR description generation) as developer tools
 
 -  **Agent**: `translate-batch` (Gemini-powered batch translator with language-specific rules) and `qa-reviewer` (adversarial 3-lens verifier requiring majority vote)
 
--  **MCP**: Launchpad Bridge MCP (စိတ်ကြိုက်ပြင်ဆင်ထားသော launchpadlib wrapper — စာကြောင်းရေ ၃၉၂ ကြောင်း၊ ကိရိယာ ၈ ခု)၊ GitHub MCP (repo, branch, PR management)၊ Filesystem MCP (sandboxed I/O) တို့ကို စုစည်းအသုံးပြုထားပါသည်။
+-  **MCP**: Launchpad Bridge MCP (စိတ်ကြိုက်ပြင်ဆင်ထားသော launchpadlib wrapper — စာကြောင်းရေ ၃၉၂ ကြောင်း၊ ကိရိယာ ၈ ခု)၊ Filesystem MCP (sandboxed I/O) တို့ကို စုစည်းအသုံးပြုထားပါသည်။
 
 -  **Web UI**: FastAPI + Jinja2 + htmx — စာမျက်နှာတစ်ခုတည်းမှာပင် ဖိုင်တင်ခြင်းမှ AI ဘာသာပြန်ခြင်း၊ ကိုယ်တိုင်တည်းဖြတ်ခြင်း၊ ဒေါင်းလုဒ်ဆွဲခြင်းအထိ ပြုလုပ်နိုင်သည့် စနစ်။ ဘာသာစကားပေါင်းစုံ လမ်းညွှန်နှင့် Leaderboard ပါဝင်သည်။
 

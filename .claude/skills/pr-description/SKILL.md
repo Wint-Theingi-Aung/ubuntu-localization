@@ -1,6 +1,6 @@
 # pr-description
 
-Auto-generates structured pull request descriptions for translation contributions. Lists languages touched, string counts, QA pass rates, and a summary of changes. Ensures every PR into `ai-enhanced` (or `main`) has consistent, review-ready context.
+Generates structured pull request descriptions for translation contributions. Analyzes export history, session data, and translation records to produce consistent, review-ready PR bodies for manual submission to GitHub.
 
 ## Usage
 ```
@@ -8,30 +8,39 @@ Auto-generates structured pull request descriptions for translation contribution
 ```
 
 ## Steps
-1. Diff current branch against base branch (ai-enhanced or main)
-2. Identify all changed .po files and export artifacts
-3. For each language: count added translations, modified translations, QA pass rate
-4. Generate PR body with:
-   - Language summary table
-   - QA stats (pass rate per language)
-   - List of files changed
-   - Notes on any rejected/fuzzy entries left for manual review
-5. Output markdown ready for paste into GitHub PR description
+1. Scan recent export history from `exports/` and database records
+2. For each language: count newly translated strings, QA pass rate
+3. Generate PR body with:
+   - Language summary table (strings per language)
+   - QA stats (pass rate, any flagged entries)
+   - List of exported files
+   - Notes on any entries needing human review
+4. Output markdown ready for paste into GitHub PR description
 
 ## Output Format (Markdown)
 ```markdown
 ## Summary
 - Languages: Burmese (+42), Shan (+18), Mon (+5)
 - QA pass rate: 97.3%
-- Files changed: 3
+- Files exported: 3
 
 ## QA Results
-| Language | Translated | Passed | Failed | Rate |
-|----------|-----------|--------|--------|------|
-| Burmese  | 42        | 41     | 1      | 97.6%|
-| Shan     | 18        | 18     | 0      | 100% |
-| Mon      | 5         | 5      | 0      | 100% |
+| Language | Translated | QA Passed | QA Flagged | Pass Rate |
+|----------|-----------|-----------|------------|-----------|
+| Burmese  | 42        | 41        | 1          | 97.6%     |
+| Shan     | 18        | 18        | 0          | 100%      |
+| Mon      | 5         | 5         | 0          | 100%      |
 
-## Flagged for Review
-- burmese_messages.po: entry #23 — %s placeholder case mismatch
+## Files
+- `translated_my_burmese_messages_20260619.po`
+- `translated_shn_shan_system_20260619.po`
+- `translated_mnw_mon_ui_20260619.po`
+
+## Notes
+- 1 Burmese entry flagged for manual review — `%s` placeholder case mismatch
 ```
+
+## Notes
+- This skill generates markdown for manual paste into GitHub — it does NOT auto-create PRs
+- All export data comes from the local database and export manifests
+- QA stats are drawn from the translator's built-in verification checks
