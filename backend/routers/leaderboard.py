@@ -11,7 +11,7 @@ router = APIRouter(prefix="/leaderboard", tags=["leaderboard"])
 
 
 @router.get("/", response_class=HTMLResponse)
-async def leaderboard_page(request: Request, lang: str = ""):
+async def leaderboard_page(request: Request, lang: str = "my"):
     """Show the leaderboard page with top contributors."""
     leaderboard = db.get_leaderboard(language_code=lang, limit=50)
     stats = db.get_app_stats()

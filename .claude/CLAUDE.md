@@ -11,7 +11,6 @@ A localization tool for translating Ubuntu `.po` files into indigenous languages
 - **Legacy UI**: Streamlit (`streamlit_app.py` — still available)
 - **AI**: Google Gemini 2.5 Flash
 - **Package Manager**: uv (available in requirements.txt)
-- **Git**: ai-enhanced branch → GitHub
 
 ## Web UI (FastAPI)
 ```
@@ -35,6 +34,8 @@ uv run uvicorn backend.main:app --reload
 - `/po-detect` — Scan for missing/fuzzy translations, prioritize by importance
 - `/po-translate` — AI batch translation with 3-reviewer QA verification
 - `/po-export` — Write back to .po file for download from the unified translate page
+- `/po-description` — Generate human-readable .po file summaries and priority breakdowns
+- `/pr-description` — Auto-generate structured pull request descriptions for translation contributions
 - `/guide` — Interactive user guide
 - `/auth-status` — Launchpad profile, karma, teams, translation progress
 
