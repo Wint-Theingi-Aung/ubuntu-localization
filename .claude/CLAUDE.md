@@ -27,6 +27,7 @@ uv run uvicorn backend.main:app --reload
 | `/guide/quickref` | Quick reference card |
 | `/leaderboard/` | Top contributors, per-language rankings |
 | `/leaderboard/contributor/{name}` | Individual contributor stats |
+| `/auth/` | Launchpad login, profile, karma, teams |
 | `/health` | Health check endpoint |
 
 ## Skills (Claude Code Slash Commands)
@@ -36,18 +37,16 @@ uv run uvicorn backend.main:app --reload
 - `/po-export` — Write back to .po file for download from the unified translate page
 - `/po-description` — Generate human-readable .po file summaries and priority breakdowns
 - `/pr-description` — Auto-generate structured pull request descriptions for translation contributions
-- `/guide` — Interactive user guide
-- `/auth-status` — Launchpad profile, karma, teams, translation progress
 
 ## MCP Servers
-- **GitHub MCP** — Repository access for file browsing, branch management, and PR creation
+- **GitHub MCP** — Repository access for file browsing (read-only)
 - **Filesystem MCP** — Safe file I/O restricted to project directory
 - **Launchpad Bridge MCP** — Custom MCP server wrapping launchpadlib
   - 8 tools: auth check, profile, karma, teams, translation groups, top contributors, search, progress
   - Setup: `python ~/.claude/mcp-servers/launchpad-bridge/setup_auth.py`
   - Source: `~/.claude/mcp-servers/launchpad-bridge/server.py` (392 lines)
   - Anonymous read access works without setup
-  - Authenticated access enables `/auth-status` personal dashboard
+  - Authenticated access enables Launchpad profile dashboard at `/auth/`
 
 ## Subagent Architecture ✅ ACTIVE
 - `translate-batch` — Gemini batch translator (`.claude/agents/translate-batch.md`)

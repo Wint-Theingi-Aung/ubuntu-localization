@@ -90,7 +90,6 @@ CREATE TABLE IF NOT EXISTS exports (
     qa_failed       INTEGER NOT NULL DEFAULT 0,
     completion_before REAL NOT NULL DEFAULT 0,
     completion_after  REAL NOT NULL DEFAULT 0,
-    git_commit      TEXT DEFAULT '',
     created_at      TIMESTAMP DEFAULT CURRENT_TIMESTAMP
 );
 CREATE INDEX IF NOT EXISTS idx_exports_lang ON exports(language_code);
@@ -457,7 +456,7 @@ def get_session_translations(session_key: str) -> list[dict]:
 def log_export(session_key: str, export_file: str, source_file: str, language_code: str,
                language_name: str, strings_added: int, qa_passed: int, qa_failed: int,
                completion_before: float, completion_after: float,
-               git_commit: str = "", username: str = "") -> int:
+               username: str = "") -> int:
     """Log an export event."""
     if not DB_AVAILABLE:
         return 0
@@ -476,20 +475,20 @@ def log_export(session_key: str, export_file: str, source_file: str, language_co
             cur.execute("""
                 INSERT INTO exports (session_id, user_id, export_file, source_file, language_code,
                     language_name, strings_added, qa_passed, qa_failed, completion_before,
-                    completion_after, git_commit)
-                VALUES (%s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s)
+                    completion_after)
+                VALUES (%s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s)
                 RETURNING id
             """, (session_id, user_id, export_file, source_file, language_code, language_name,
-                  strings_added, qa_passed, qa_failed, completion_before, completion_after, git_commit))
+                  strings_added, qa_passed, qa_failed, completion_before, completion_after))
             export_id = cur.fetchone()[0]
         else:
             cur.execute("""
                 INSERT INTO exports (session_id, user_id, export_file, source_file, language_code,
                     language_name, strings_added, qa_passed, qa_failed, completion_before,
-                    completion_after, git_commit)
-                VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
+                    completion_after)
+                VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
             """, (session_id, user_id, export_file, source_file, language_code, language_name,
-                  strings_added, qa_passed, qa_failed, completion_before, completion_after, git_commit))
+                  strings_added, qa_passed, qa_failed, completion_before, completion_after))
             export_id = cur.lastrowid
 
         # Update leaderboard
@@ -510,8 +509,8 @@ def list_exports(limit: int = 50) -> list[dict]:
     conn = _get_conn()
     cur = conn.cursor()
     cur.execute(
-        "SELECT export_file, source_file, language_code, language_name, strings_added, qa_passed, qa_failed, completion_before, completion_after, git_commit, created_at FROM exports ORDER BY created_at DESC LIMIT ?" if not _is_pg() else
-        "SELECT export_file, source_file, language_code, language_name, strings_added, qa_passed, qa_failed, completion_before, completion_after, git_commit, created_at FROM exports ORDER BY created_at DESC LIMIT %s",
+        "SELECT export_file, source_file, language_code, language_name, strings_added, qa_passed, qa_failed, completion_before, completion_after, created_at FROM exports ORDER BY created_at DESC LIMIT ?" if not _is_pg() else
+        "SELECT export_file, source_file, language_code, language_name, strings_added, qa_passed, qa_failed, completion_before, completion_after, created_at FROM exports ORDER BY created_at DESC LIMIT %s",
         (limit,))
     return [_row_to_dict(row) for row in cur.fetchall()]
 

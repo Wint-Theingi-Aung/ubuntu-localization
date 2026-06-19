@@ -88,8 +88,11 @@ const QA_SCHEMA = {
 
 phase('Load')
 
-// The session data path is standard for this project
-const SESSION_DIR = '/home/wint/.claude/projects/-home-wint-ubuntu-localization/session'
+// Session data — stored in the Claude project session directory.
+// This matches where /po-upload and /po-detect write their output.
+// Path follows the Claude Code convention: ~/.claude/projects/<project-slug>/session/
+const HOME = "/home/wint"
+const SESSION_DIR = `${HOME}/.claude/projects/-home-wint-ubuntu-localization/session`
 const QUEUE_FILE = `${SESSION_DIR}/translation_queue.json`
 const SESSION_FILE = `${SESSION_DIR}/current_translation.json`
 
