@@ -676,6 +676,9 @@ pre {
   min-height: var(--touch-target);
   -webkit-tap-highlight-color: transparent;
   transition: background 0.15s;
+  overflow-wrap: break-word;
+  word-break: break-word;
+  box-sizing: border-box;
 }
 
 .guide-accordion-header:hover {
@@ -689,6 +692,9 @@ pre {
 
 .guide-accordion-title {
   flex: 1;
+  min-width: 0;
+  overflow-wrap: break-word;
+  word-break: break-word;
 }
 
 .guide-accordion-arrow {
