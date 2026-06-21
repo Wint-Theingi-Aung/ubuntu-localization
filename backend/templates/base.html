@@ -112,6 +112,7 @@ body {
   display: flex;
   min-height: 100vh;
   line-height: 1.6;
+  overflow-x: hidden;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
 }
@@ -296,7 +297,6 @@ body {
   padding: var(--space-lg);
   margin-bottom: var(--space-lg);
   box-shadow: var(--shadow-sm);
-  overflow: hidden;
 }
 
 .card-header {
@@ -533,7 +533,7 @@ body {
 
 .data-table {
   width: 100%;
-  min-width: 500px;
+  min-width: 400px;
   border-collapse: collapse;
   font-size: var(--text-sm);
 }
@@ -644,6 +644,7 @@ pre {
 .guide-body p { margin-bottom: 14px; line-height: 1.7; }
 .guide-body ul, .guide-body ol { margin: 12px 0 12px 24px; }
 .guide-body li { margin-bottom: 6px; }
+.guide-body a { overflow-wrap: break-word; word-break: break-word; }
 
 /* ── Profile Card ─────────────────────────────────────────────────── */
 
