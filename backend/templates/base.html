@@ -265,8 +265,6 @@ body {
   padding: var(--space-lg);
   max-width: 1200px;
   width: 100%;
-  overflow-x: hidden;
-  overflow-y: auto;
 }
 
 /* ── Top Bar ──────────────────────────────────────────────────────── */
@@ -642,9 +640,9 @@ pre {
 
 .guide-body h2:first-child { margin-top: 0; }
 .guide-body h3 { font-size: var(--text-lg); margin: var(--space-lg) 0 var(--space-sm); }
-.guide-body p { margin-bottom: 14px; line-height: 1.7; }
+.guide-body p { margin-bottom: 14px; line-height: 1.7; overflow-wrap: break-word; word-break: break-word; }
 .guide-body ul, .guide-body ol { margin: 12px 0 12px 24px; }
-.guide-body li { margin-bottom: 6px; }
+.guide-body li { margin-bottom: 6px; overflow-wrap: break-word; word-break: break-word; }
 .guide-body a { overflow-wrap: break-word; word-break: break-word; }
 
 /* ── Profile Card ─────────────────────────────────────────────────── */
