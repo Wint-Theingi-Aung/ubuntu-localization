@@ -952,13 +952,14 @@ pre {
 .toast-container {
   position: fixed;
   top: 16px;
-  right: 16px;
-  left: 16px;
+  right: var(--space-md);
+  left: var(--space-md);
   z-index: 9999;
   display: flex;
   flex-direction: column;
   gap: var(--space-sm);
   pointer-events: none;
+  max-width: 420px;
 }
 
 .toast {
@@ -968,8 +969,8 @@ pre {
   box-shadow: var(--shadow-lg);
   animation: slideIn 0.3s ease;
   pointer-events: auto;
-  max-width: 420px;
-  align-self: flex-end;
+  max-width: 100%;
+  word-break: break-word;
 }
 
 @keyframes slideIn { from { transform: translateX(100%); opacity: 0; } to { transform: translateX(0); opacity: 1; } }
@@ -1032,6 +1033,32 @@ pre {
 
 .theme-toggle-label { font-size: var(--text-xs); color: var(--text-light); }
 
+/* ── Responsive Utility Classes ────────────────────────────────────── */
+
+/* Priority breakdown grid — 2-col on mobile, 4-col on ≥640px */
+.priority-grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: var(--space-sm);
+  font-size: var(--text-sm);
+}
+
+/* Action buttons — wrap on mobile */
+.action-buttons {
+  display: flex;
+  gap: 10px;
+  flex-wrap: wrap;
+  margin-top: var(--space-md);
+}
+
+/* Two-column info grid — stacks on mobile */
+.info-grid-2col {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: var(--space-md);
+  font-size: var(--text-sm);
+}
+
 /* ═══════════════════════════════════════════════════════════════════
    RESPONSIVE BREAKPOINTS (mobile-first)
    ═══════════════════════════════════════════════════════════════════ */
@@ -1053,6 +1080,8 @@ pre {
   .top-bar { flex-wrap: nowrap; align-items: center; }
   .translate-pair { grid-template-columns: 1fr 1fr; }
   .pagination { flex-wrap: nowrap; }
+  .priority-grid { grid-template-columns: repeat(4, 1fr); }
+  .info-grid-2col { grid-template-columns: 1fr 1fr; }
 }
 
 /* ── ≥ 768px — Tablets ───────────────────────────────────────────── */

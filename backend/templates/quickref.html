@@ -43,12 +43,25 @@
 
 <div class="card" style="margin-top:var(--space-lg)">
   <h3 style="font-size:var(--text-base);margin-bottom:var(--space-sm)">Setup Checklist</h3>
-  <div class="table-wrapper">
-    <table class="data-table">
-      <tr><td><input type="checkbox" checked disabled> Install with uv sync</td><td><input type="checkbox" checked disabled> Set GOOGLE_API_KEY in .env</td></tr>
-      <tr><td><input type="checkbox"> Upload a .po file on /translate/</td><td><input type="checkbox"> Click 🤖 Translate Page</td></tr>
-      <tr><td><input type="checkbox"> Review flagged translations</td><td><input type="checkbox"> Export &amp; download .po file</td></tr>
-    </table>
+  <div style="display:grid;gap:var(--space-sm)">
+    <label style="display:flex;align-items:center;gap:var(--space-sm);font-size:var(--text-sm)">
+      <input type="checkbox" checked disabled> Install with uv sync
+    </label>
+    <label style="display:flex;align-items:center;gap:var(--space-sm);font-size:var(--text-sm)">
+      <input type="checkbox" checked disabled> Set GOOGLE_API_KEY in .env
+    </label>
+    <label style="display:flex;align-items:center;gap:var(--space-sm);font-size:var(--text-sm)">
+      <input type="checkbox"> Upload a .po file on /translate/
+    </label>
+    <label style="display:flex;align-items:center;gap:var(--space-sm);font-size:var(--text-sm)">
+      <input type="checkbox"> Click 🤖 Translate Page
+    </label>
+    <label style="display:flex;align-items:center;gap:var(--space-sm);font-size:var(--text-sm)">
+      <input type="checkbox"> Review flagged translations
+    </label>
+    <label style="display:flex;align-items:center;gap:var(--space-sm);font-size:var(--text-sm)">
+      <input type="checkbox"> Export &amp; download .po file
+    </label>
   </div>
 </div>
 

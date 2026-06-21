@@ -53,9 +53,11 @@
 </div>
 {% endif %}
 
-<div style="max-width:640px;margin-top:var(--space-lg)">
-  <a href="/leaderboard/" class="btn btn-outline">← Back to Leaderboard</a>
-  <a href="/auth/profile/{{ contrib.username }}" class="btn btn-outline">🔍 Launchpad Profile</a>
+<div style="margin-top:var(--space-lg)">
+  <div class="action-buttons">
+    <a href="/leaderboard/" class="btn btn-outline">← Back to Leaderboard</a>
+    <a href="/auth/profile/{{ contrib.username }}" class="btn btn-outline">🔍 Launchpad Profile</a>
+  </div>
 </div>
 
 {% endblock %}
