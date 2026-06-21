@@ -1418,18 +1418,6 @@ function toggleAccordion(btn) {
   }
 }
 
-// Auto-expand active chapter on load
-document.addEventListener('DOMContentLoaded', function() {
-  var accordion = document.getElementById('guide-accordion');
-  if (!accordion) return;
-  // If no item has .open class (all-chapters view), open the first one
-  var openItem = accordion.querySelector('.guide-accordion-item.open');
-  if (!openItem) {
-    var first = accordion.querySelector('.guide-accordion-item');
-    if (first) first.classList.add('open');
-  }
-});
-
 // ── File drag-and-drop ─────────────────────────────────────────────
 document.addEventListener('DOMContentLoaded', () => {
   const dropZones = document.querySelectorAll('.form-file');
