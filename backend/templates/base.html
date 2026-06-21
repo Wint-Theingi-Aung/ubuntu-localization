@@ -644,6 +644,81 @@ pre {
 .guide-body li { margin-bottom: 6px; overflow-wrap: break-word; text-align: justify; }
 .guide-body a { overflow-wrap: break-word; word-break: break-all; }
 
+/* ── Guide Accordion (mobile) ─────────────────────────────────────── */
+
+.guide-accordion {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-sm);
+}
+
+.guide-accordion-item {
+  border: 1px solid var(--border);
+  border-radius: var(--radius-lg);
+  overflow: hidden;
+  background: var(--card-bg);
+}
+
+.guide-accordion-header {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  width: 100%;
+  padding: 14px 16px;
+  background: var(--card-bg);
+  border: none;
+  cursor: pointer;
+  font-family: var(--font);
+  font-size: var(--text-base);
+  font-weight: 500;
+  color: var(--text);
+  text-align: left;
+  min-height: var(--touch-target);
+  -webkit-tap-highlight-color: transparent;
+  transition: background 0.15s;
+}
+
+.guide-accordion-header:hover {
+  background: rgba(233, 84, 32, 0.04);
+}
+
+.guide-accordion-icon {
+  font-size: 18px;
+  flex-shrink: 0;
+}
+
+.guide-accordion-title {
+  flex: 1;
+}
+
+.guide-accordion-arrow {
+  font-size: 12px;
+  color: var(--text-light);
+  transition: transform 0.25s ease;
+  flex-shrink: 0;
+}
+
+.guide-accordion-item.open .guide-accordion-arrow {
+  transform: rotate(180deg);
+}
+
+.guide-accordion-content {
+  max-height: 0;
+  overflow: hidden;
+  transition: max-height 0.35s ease;
+  padding: 0 16px;
+}
+
+.guide-accordion-item.open .guide-accordion-content {
+  max-height: 999999px;
+  padding: 0 16px 16px;
+}
+
+/* Reset guide-body spacing inside accordion */
+.guide-accordion-content .guide-body h2:first-child {
+  margin-top: 0;
+}
+
 /* ── Profile Card ─────────────────────────────────────────────────── */
 
 .profile-card {
@@ -1139,6 +1214,16 @@ pre {
     border: none;
   }
 
+  /* Disable accordion on desktop — show normal flow */
+  .guide-accordion { display: contents; }
+  .guide-accordion-item { border: none; background: none; overflow: visible; }
+  .guide-accordion-header { display: none; }
+  .guide-accordion-content {
+    max-height: none !important;
+    overflow: visible !important;
+    padding: 0 !important;
+  }
+
   .translate-grid { grid-template-columns: 1fr 1fr; }
 }
 
@@ -1315,6 +1400,34 @@ function switchLang(lang) {
   document.cookie = "ui_lang=" + lang + ";path=/;max-age=31536000;SameSite=Lax";
   window.location.reload();
 }
+
+// ── Guide Accordion (mobile) ───────────────────────────────────────
+function toggleAccordion(btn) {
+  const item = btn.closest('.guide-accordion-item');
+  const wasOpen = item.classList.contains('open');
+  // Close all siblings (single-open mode)
+  item.closest('.guide-accordion').querySelectorAll('.guide-accordion-item.open').forEach(function(el) {
+    if (el !== item) el.classList.remove('open');
+  });
+  // Toggle clicked item
+  if (wasOpen) {
+    item.classList.remove('open');
+  } else {
+    item.classList.add('open');
+  }
+}
+
+// Auto-expand active chapter on load
+document.addEventListener('DOMContentLoaded', function() {
+  var accordion = document.getElementById('guide-accordion');
+  if (!accordion) return;
+  // If no item has .open class (all-chapters view), open the first one
+  var openItem = accordion.querySelector('.guide-accordion-item.open');
+  if (!openItem) {
+    var first = accordion.querySelector('.guide-accordion-item');
+    if (first) first.classList.add('open');
+  }
+});
 
 // ── File drag-and-drop ─────────────────────────────────────────────
 document.addEventListener('DOMContentLoaded', () => {

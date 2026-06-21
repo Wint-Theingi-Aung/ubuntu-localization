@@ -26,21 +26,125 @@
   <!-- ── Guide Body ─────────────────────────────────────────────────── -->
   <div class="guide-body">
 
-    {# ── Render active chapter(s) ── #}
-    {% if active_chapter == 1 %}{{ chapter_1(guide_headings) }}{% endif %}
-    {% if active_chapter == 2 %}{{ chapter_2(guide_headings) }}{% endif %}
-    {% if active_chapter == 3 %}{{ chapter_3(guide_headings) }}{% endif %}
-    {% if active_chapter == 4 %}{{ chapter_4(guide_headings) }}{% endif %}
-    {% if active_chapter == 5 %}{{ chapter_5(guide_headings) }}{% endif %}
-    {% if active_chapter == 6 %}{{ chapter_6(guide_headings) }}{% endif %}
     {% if active_chapter == 0 %}
-      {{ chapter_1(guide_headings) }}
-      {{ chapter_2(guide_headings) }}
-      {{ chapter_3(guide_headings) }}
-      {{ chapter_4(guide_headings) }}
-      {{ chapter_5(guide_headings) }}
-      {{ chapter_6(guide_headings) }}
+    {# ── All chapters view — accordion on mobile ── #}
+    <div class="guide-accordion" id="guide-accordion">
+      <div class="guide-accordion-item" data-chapter="1">
+        <button class="guide-accordion-header" onclick="toggleAccordion(this)">
+          <span class="guide-accordion-icon">{{ chapters[0].icon }}</span>
+          <span class="guide-accordion-title">{{ chapters[0].title }}</span>
+          <span class="guide-accordion-arrow">▼</span>
+        </button>
+        <div class="guide-accordion-content">{{ chapter_1(guide_headings) }}</div>
+      </div>
+      <div class="guide-accordion-item" data-chapter="2">
+        <button class="guide-accordion-header" onclick="toggleAccordion(this)">
+          <span class="guide-accordion-icon">{{ chapters[1].icon }}</span>
+          <span class="guide-accordion-title">{{ chapters[1].title }}</span>
+          <span class="guide-accordion-arrow">▼</span>
+        </button>
+        <div class="guide-accordion-content">{{ chapter_2(guide_headings) }}</div>
+      </div>
+      <div class="guide-accordion-item" data-chapter="3">
+        <button class="guide-accordion-header" onclick="toggleAccordion(this)">
+          <span class="guide-accordion-icon">{{ chapters[2].icon }}</span>
+          <span class="guide-accordion-title">{{ chapters[2].title }}</span>
+          <span class="guide-accordion-arrow">▼</span>
+        </button>
+        <div class="guide-accordion-content">{{ chapter_3(guide_headings) }}</div>
+      </div>
+      <div class="guide-accordion-item" data-chapter="4">
+        <button class="guide-accordion-header" onclick="toggleAccordion(this)">
+          <span class="guide-accordion-icon">{{ chapters[3].icon }}</span>
+          <span class="guide-accordion-title">{{ chapters[3].title }}</span>
+          <span class="guide-accordion-arrow">▼</span>
+        </button>
+        <div class="guide-accordion-content">{{ chapter_4(guide_headings) }}</div>
+      </div>
+      <div class="guide-accordion-item" data-chapter="5">
+        <button class="guide-accordion-header" onclick="toggleAccordion(this)">
+          <span class="guide-accordion-icon">{{ chapters[4].icon }}</span>
+          <span class="guide-accordion-title">{{ chapters[4].title }}</span>
+          <span class="guide-accordion-arrow">▼</span>
+        </button>
+        <div class="guide-accordion-content">{{ chapter_5(guide_headings) }}</div>
+      </div>
+      <div class="guide-accordion-item" data-chapter="6">
+        <button class="guide-accordion-header" onclick="toggleAccordion(this)">
+          <span class="guide-accordion-icon">{{ chapters[5].icon }}</span>
+          <span class="guide-accordion-title">{{ chapters[5].title }}</span>
+          <span class="guide-accordion-arrow">▼</span>
+        </button>
+        <div class="guide-accordion-content">{{ chapter_6(guide_headings) }}</div>
+      </div>
+    </div>
+
+    {% else %}
+    {# ── Single chapter view — still wrapped for mobile accordion ── #}
+    <div class="guide-accordion" id="guide-accordion">
+      {% if active_chapter == 1 %}
+      <div class="guide-accordion-item open" data-chapter="1">
+        <button class="guide-accordion-header" onclick="toggleAccordion(this)">
+          <span class="guide-accordion-icon">{{ chapters[0].icon }}</span>
+          <span class="guide-accordion-title">{{ chapters[0].title }}</span>
+          <span class="guide-accordion-arrow">▼</span>
+        </button>
+        <div class="guide-accordion-content">{{ chapter_1(guide_headings) }}</div>
+      </div>
+      {% endif %}
+      {% if active_chapter == 2 %}
+      <div class="guide-accordion-item open" data-chapter="2">
+        <button class="guide-accordion-header" onclick="toggleAccordion(this)">
+          <span class="guide-accordion-icon">{{ chapters[1].icon }}</span>
+          <span class="guide-accordion-title">{{ chapters[1].title }}</span>
+          <span class="guide-accordion-arrow">▼</span>
+        </button>
+        <div class="guide-accordion-content">{{ chapter_2(guide_headings) }}</div>
+      </div>
+      {% endif %}
+      {% if active_chapter == 3 %}
+      <div class="guide-accordion-item open" data-chapter="3">
+        <button class="guide-accordion-header" onclick="toggleAccordion(this)">
+          <span class="guide-accordion-icon">{{ chapters[2].icon }}</span>
+          <span class="guide-accordion-title">{{ chapters[2].title }}</span>
+          <span class="guide-accordion-arrow">▼</span>
+        </button>
+        <div class="guide-accordion-content">{{ chapter_3(guide_headings) }}</div>
+      </div>
+      {% endif %}
+      {% if active_chapter == 4 %}
+      <div class="guide-accordion-item open" data-chapter="4">
+        <button class="guide-accordion-header" onclick="toggleAccordion(this)">
+          <span class="guide-accordion-icon">{{ chapters[3].icon }}</span>
+          <span class="guide-accordion-title">{{ chapters[3].title }}</span>
+          <span class="guide-accordion-arrow">▼</span>
+        </button>
+        <div class="guide-accordion-content">{{ chapter_4(guide_headings) }}</div>
+      </div>
+      {% endif %}
+      {% if active_chapter == 5 %}
+      <div class="guide-accordion-item open" data-chapter="5">
+        <button class="guide-accordion-header" onclick="toggleAccordion(this)">
+          <span class="guide-accordion-icon">{{ chapters[4].icon }}</span>
+          <span class="guide-accordion-title">{{ chapters[4].title }}</span>
+          <span class="guide-accordion-arrow">▼</span>
+        </button>
+        <div class="guide-accordion-content">{{ chapter_5(guide_headings) }}</div>
+      </div>
+      {% endif %}
+      {% if active_chapter == 6 %}
+      <div class="guide-accordion-item open" data-chapter="6">
+        <button class="guide-accordion-header" onclick="toggleAccordion(this)">
+          <span class="guide-accordion-icon">{{ chapters[5].icon }}</span>
+          <span class="guide-accordion-title">{{ chapters[5].title }}</span>
+          <span class="guide-accordion-arrow">▼</span>
+        </button>
+        <div class="guide-accordion-content">{{ chapter_6(guide_headings) }}</div>
+      </div>
+      {% endif %}
+    </div>
     {% endif %}
+
   </div>
 </div>
 
