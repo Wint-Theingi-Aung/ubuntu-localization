@@ -640,7 +640,7 @@ pre {
 
 .guide-body h2:first-child { margin-top: 0; }
 .guide-body h3 { font-size: var(--text-lg); margin: var(--space-lg) 0 var(--space-sm); }
-.guide-body p { margin-bottom: 14px; line-height: 1.7; overflow-wrap: break-word; word-break: break-word; }
+.guide-body p { margin-bottom: 14px; line-height: 1.7; overflow-wrap: break-word; word-break: break-word; text-align: justify; }
 .guide-body ul, .guide-body ol { margin: 12px 0 12px 24px; }
 .guide-body li { margin-bottom: 6px; overflow-wrap: break-word; word-break: break-word; }
 .guide-body a { overflow-wrap: break-word; word-break: break-word; }
@@ -1188,6 +1188,7 @@ pre {
   /* Push content past the fixed hamburger button (44px wide at left:12px) */
   .main-content {
     padding-left: calc(var(--touch-target) + var(--space-md) + var(--space-xs));
+    overflow-x: hidden;
   }
 }
 </style>
