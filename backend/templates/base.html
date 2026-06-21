@@ -260,6 +260,7 @@ body {
 
 .main-content {
   flex: 1;
+  min-width: 0;
   padding: var(--space-lg);
   max-width: 1200px;
   width: 100%;
@@ -295,6 +296,7 @@ body {
   padding: var(--space-lg);
   margin-bottom: var(--space-lg);
   box-shadow: var(--shadow-sm);
+  overflow: hidden;
 }
 
 .card-header {
@@ -1181,6 +1183,11 @@ pre {
 
   body.sidebar-open .main-content {
     pointer-events: none;
+  }
+
+  /* Push content past the fixed hamburger button (44px wide at left:12px) */
+  .main-content {
+    padding-left: calc(var(--touch-target) + var(--space-md) + var(--space-xs));
   }
 }
 </style>
