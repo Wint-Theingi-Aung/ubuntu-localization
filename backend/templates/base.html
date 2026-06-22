@@ -1286,7 +1286,7 @@ pre {
 <body>
 
 <!-- Hamburger Button (mobile only) -->
-<button class="hamburger-btn" id="hamburger-btn" onclick="openSidebar()" aria-label="Open menu">
+<button class="hamburger-btn" id="hamburger-btn" onclick="toggleSidebar()" aria-label="Toggle menu">
   ☰
 </button>
 
@@ -1387,6 +1387,10 @@ function updateThemeUI(theme) {
 }
 
 // ── Sidebar Drawer (mobile) ────────────────────────────────────────
+function toggleSidebar() {
+  document.body.classList.toggle('sidebar-open');
+}
+
 function openSidebar() {
   document.body.classList.add('sidebar-open');
 }
