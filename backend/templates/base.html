@@ -143,6 +143,12 @@ body {
 .hamburger-btn:hover { border-color: var(--orange); color: var(--orange); }
 .hamburger-btn:active { background: rgba(233,84,32,0.08); }
 
+/* Hide hamburger when sidebar is open (mobile drawer) */
+body.sidebar-open .hamburger-btn {
+  opacity: 0;
+  pointer-events: none;
+}
+
 /* ── Sidebar ──────────────────────────────────────────────────────── */
 
 .sidebar {
