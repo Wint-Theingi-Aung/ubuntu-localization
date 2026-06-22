@@ -1,6 +1,35 @@
 {% extends "base.html" %}
 {% block content %}
 
+<style>
+/* ── Screenshot Showcase ──────────────────────────────────────────── */
+.showcase-grid {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: var(--space-lg);
+}
+@media (min-width: 768px) {
+  .showcase-grid { grid-template-columns: 1fr 1fr; }
+}
+.showcase-item {
+  text-align: center;
+}
+.showcase-item img {
+  max-width: 100%;
+  height: auto;
+  border-radius: var(--radius);
+  border: 1px solid var(--border);
+  box-shadow: var(--shadow);
+}
+.showcase-label {
+  display: inline-block;
+  margin-top: var(--space-sm);
+  font-size: var(--text-sm);
+  font-weight: 500;
+  color: var(--text-secondary);
+}
+</style>
+
 <div class="top-bar">
   <h1 class="page-title"><strong>{{ t('translate.title') }}</strong></h1>
   <span style="font-size:var(--text-sm);color:var(--text-light)">{{ t('translate.subtitle') }}</span>
@@ -219,6 +248,27 @@
   </div>
 
   <div id="export-result"></div>
+</div>
+
+{# ═══════════════════════════════════════════════════════════════════
+   SECTION 5: Real-World Translation Showcase
+   ═══════════════════════════════════════════════════════════════════ #}
+<div class="card" id="showcase-section">
+  <div class="card-header">
+    <h3 class="card-title">🖼️ Real-World Translation Preview</h3>
+    <span style="font-size:var(--text-sm);color:var(--text-light)">See how the translation appears in a real Ubuntu GNOME Power Off menu.</span>
+  </div>
+
+  <div class="showcase-grid">
+    <div class="showcase-item">
+      <img src="/assets/en.png" alt="Ubuntu GNOME Power Off menu — English" loading="lazy">
+      <div class="showcase-label">Before (English)</div>
+    </div>
+    <div class="showcase-item">
+      <img src="/assets/my.png" alt="Ubuntu GNOME Power Off menu — Myanmar" loading="lazy">
+      <div class="showcase-label">After (Myanmar)</div>
+    </div>
+  </div>
 </div>
 {% endif %}
 

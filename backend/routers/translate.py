@@ -238,14 +238,18 @@ async def demo_session(
     """Create a demo session with 3 sample strings for testing."""
     lang_info = LANGUAGES.get(target_lang, LANGUAGES["my"])
 
-    # Build synthetic parsed data with 3 demo strings
+    # Build synthetic parsed data with Ubuntu GNOME Power Off menu strings
     demo_entries = [
-        {"index": 0, "msgid": "Hello", "msgstr": "",
-         "msgctxt": "Greeting", "flags": [], "occurrences": [("demo.po", "1")], "tcomment": ""},
-        {"index": 1, "msgid": "Settings", "msgstr": "",
-         "msgctxt": "Menu item", "flags": [], "occurrences": [("demo.po", "2")], "tcomment": ""},
-        {"index": 2, "msgid": "Shutdown", "msgstr": "",
-         "msgctxt": "System action", "flags": [], "occurrences": [("demo.po", "3")], "tcomment": ""},
+        {"index": 0, "msgid": "Power Off", "msgstr": "",
+         "msgctxt": "Power Off dialog", "flags": [], "occurrences": [("demo.po", "1")], "tcomment": ""},
+        {"index": 1, "msgid": "Suspend", "msgstr": "",
+         "msgctxt": "Power Off dialog", "flags": [], "occurrences": [("demo.po", "2")], "tcomment": ""},
+        {"index": 2, "msgid": "Restart...", "msgstr": "",
+         "msgctxt": "Power Off dialog", "flags": [], "occurrences": [("demo.po", "3")], "tcomment": ""},
+        {"index": 3, "msgid": "Power Off...", "msgstr": "",
+         "msgctxt": "Power Off dialog", "flags": [], "occurrences": [("demo.po", "4")], "tcomment": ""},
+        {"index": 4, "msgid": "Log Out...", "msgstr": "",
+         "msgctxt": "Power Off dialog", "flags": [], "occurrences": [("demo.po", "5")], "tcomment": ""},
     ]
 
     parsed = {
@@ -253,9 +257,9 @@ async def demo_session(
         "detected_language": {"code": target_lang, **lang_info},
         "language_code": target_lang,
         "metadata": {
-            "total_entries": 3,
+            "total_entries": 5,
             "translated": 0,
-            "untranslated": 3,
+            "untranslated": 5,
             "fuzzy": 0,
             "completion_pct": 0.0,
         },
@@ -276,7 +280,7 @@ async def demo_session(
         filename="demo.po",
         language=lang_info["name"],
         language_code=target_lang,
-        total_entries=3,
+        total_entries=5,
         translated_count=0,
     )
 
@@ -286,7 +290,7 @@ async def demo_session(
         filename="demo.po",
         language_code=target_lang,
         language_name=lang_info["name"],
-        total_entries=3,
+        total_entries=5,
         translated_before=0,
     )
 

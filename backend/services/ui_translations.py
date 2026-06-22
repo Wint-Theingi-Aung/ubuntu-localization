@@ -174,11 +174,11 @@ TRANSLATIONS = {
         "ksw": "🧪 မၤသးဒီးလံာ်နမူနာ",
     },
     "translate.demo_desc": {
-        "my": ".po ဖိုင် မရှိပါက နမူနာဖြင့် စမ်းသပ်ပါ။ <strong>Hello</strong>, <strong>Settings</strong>, <strong>Shutdown</strong> စာကြောင်း ၃ ကြောင်း ပါဝင်ပါသည်။",
-        "en": "No .po file? Test with a sample. 3 demo strings: <strong>Hello</strong>, <strong>Settings</strong>, <strong>Shutdown</strong>",
-        "shn": "ဢမ်ႇမီး .po ၾၢႆႇ? ၸၢမ်းတူၺ်းတင်းၾၢႆႇတႅမ်ႈဝႆႉ။ <strong>Hello</strong>, <strong>Settings</strong>, <strong>Shutdown</strong>",
-        "mnw": "ဟွံမဲ .po ဖိုင်? စမ်နကဵုနမူနာ။ <strong>Hello</strong>, <strong>Settings</strong>, <strong>Shutdown</strong>",
-        "ksw": "တမဲ .po လံာ်? မၤသးဒီးနမူနာ။ <strong>Hello</strong>, <strong>Settings</strong>, <strong>Shutdown</strong>",
+        "my": ".po ဖိုင် မရှိပါက နမူနာဖြင့် စမ်းသပ်ပါ။ Ubuntu GNOME Power Off menu မှ စာကြောင်း ၅ ကြောင်း: <strong>Power Off</strong>, <strong>Suspend</strong>, <strong>Restart...</strong>, <strong>Power Off...</strong>, <strong>Log Out...</strong>",
+        "en": "No .po file? Test with a sample. 5 strings from Ubuntu GNOME Power Off menu: <strong>Power Off</strong>, <strong>Suspend</strong>, <strong>Restart...</strong>, <strong>Power Off...</strong>, <strong>Log Out...</strong>",
+        "shn": "ဢမ်ႇမီး .po ၾၢႆႇ? ၸၢမ်းတူၺ်းတင်းၾၢႆႇတႅမ်ႈဝႆႉ။ Ubuntu GNOME Power Off menu ၼႃႈ ၵေႃႈ 5: <strong>Power Off</strong>, <strong>Suspend</strong>, <strong>Restart...</strong>, <strong>Power Off...</strong>, <strong>Log Out...</strong>",
+        "mnw": "ဟွံမဲ .po ဖိုင်? စမ်နကဵုနမူနာ။ Ubuntu GNOME Power Off menu ကေ စာကြောင်း 5: <strong>Power Off</strong>, <strong>Suspend</strong>, <strong>Restart...</strong>, <strong>Power Off...</strong>, <strong>Log Out...</strong>",
+        "ksw": "တမဲ .po လံာ်? မၤသးဒီးနမူနာ။ Ubuntu GNOME Power Off menu ဖဲ စာကြောင်း 5: <strong>Power Off</strong>, <strong>Suspend</strong>, <strong>Restart...</strong>, <strong>Power Off...</strong>, <strong>Log Out...</strong>",
     },
     "translate.demo_btn": {
         "my": "🧪 နမူနာ စာကြောင်းများ တင်ရန်",
