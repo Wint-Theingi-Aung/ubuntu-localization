@@ -410,7 +410,8 @@
     </div>
   </div>
 
-  <form hx-post="/translate/export" hx-target="#export-result" hx-indicator="#export-spinner">
+  <form hx-post="/translate/export" hx-target="#export-result" hx-indicator="#export-spinner"
+        hx-on::before-request="flushPendingSaves()">
     <input type="hidden" name="session_id" value="{{ session_id }}">
 
     <div class="export-actions">
@@ -433,8 +434,8 @@
    ═══════════════════════════════════════════════════════════════════ #}
 <div class="card" id="showcase-section">
   <div class="showcase-header">
-    <h3>Real-World Translation Preview</h3>
-    <p>See how Ubuntu GNOME menus become localized for Myanmar users.</p>
+    <h3>{{ t('showcase.title') }}</h3>
+    <p>{{ t('showcase.subtitle', target_lang=preview.language) }}</p>
   </div>
 
   <div class="showcase-grid">
@@ -444,15 +445,15 @@
         <span class="showcase-titlebar-dot showcase-titlebar-dot--close"></span>
         <span class="showcase-titlebar-dot showcase-titlebar-dot--min"></span>
         <span class="showcase-titlebar-dot showcase-titlebar-dot--max"></span>
-        <span class="showcase-titlebar-label">Power Off — English</span>
+        <span class="showcase-titlebar-label">{{ t('showcase.titlebar_en') }}</span>
         <span style="width:34px"></span>
       </div>
       <div class="showcase-viewport">
-        <img src="/assets/en.png" alt="Ubuntu GNOME Power Off menu — English" loading="lazy">
+        <img src="/assets/en.png" alt="{{ t('showcase.english_interface') }}" loading="lazy">
       </div>
       <div class="showcase-card-foot">
-        <span class="showcase-badge showcase-badge--before">Before</span>
-        <span class="showcase-card-label">English Interface</span>
+        <span class="showcase-badge showcase-badge--before">{{ t('showcase.before') }}</span>
+        <span class="showcase-card-label">{{ t('showcase.english_interface') }}</span>
       </div>
     </div>
 
@@ -461,28 +462,28 @@
       <div class="showcase-flow-arrow">→</div>
     </div>
 
-    <!-- After: Myanmar Interface -->
+    <!-- After: Target Language Interface -->
     <div class="showcase-window">
       <div class="showcase-titlebar">
         <span class="showcase-titlebar-dot showcase-titlebar-dot--close"></span>
         <span class="showcase-titlebar-dot showcase-titlebar-dot--min"></span>
         <span class="showcase-titlebar-dot showcase-titlebar-dot--max"></span>
-        <span class="showcase-titlebar-label">Power Off — Myanmar</span>
+        <span class="showcase-titlebar-label">{{ t('showcase.titlebar_target', target_lang=preview.language) }}</span>
         <span style="width:34px"></span>
       </div>
       <div class="showcase-viewport">
-        <img src="/assets/my.png" alt="Ubuntu GNOME Power Off menu — Myanmar" loading="lazy">
+        <img src="/assets/my.png" alt="{{ t('showcase.target_interface', target_lang=preview.language) }}" loading="lazy">
       </div>
       <div class="showcase-card-foot">
-        <span class="showcase-badge showcase-badge--after">After</span>
-        <span class="showcase-card-label">Myanmar Interface</span>
+        <span class="showcase-badge showcase-badge--after">{{ t('showcase.after') }}</span>
+        <span class="showcase-card-label">{{ t('showcase.target_interface', target_lang=preview.language) }}</span>
       </div>
     </div>
   </div>
 
   <div class="showcase-footer">
-    <div class="showcase-footer-label">English → Myanmar</div>
-    <div class="showcase-footer-sub">Real Ubuntu GNOME menu localization example</div>
+    <div class="showcase-footer-label">{{ t('showcase.footer_label', target_lang=preview.language) }}</div>
+    <div class="showcase-footer-sub">{{ t('showcase.footer_sub') }}</div>
   </div>
 </div>
 {% endif %}

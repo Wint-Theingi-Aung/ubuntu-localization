@@ -339,6 +339,78 @@ TRANSLATIONS = {
         "ksw": "ဝဲဒၣ်",
     },
 
+    # ── Showcase ──
+    "showcase.title": {
+        "my": "လက်တွေ့ ဘာသာပြန် အကျဉ်းချုပ်",
+        "en": "Real-World Translation Preview",
+        "shn": "ပိၼ်ႇၽႃႇသႃႇ လႆႈၵေႃႈႁဝ်း",
+        "mnw": "ပြန်လိက် လက်တွေ့",
+        "ksw": "ကွဲးကျဲၤ လက်တွေ့",
+    },
+    "showcase.subtitle": {
+        "my": "Ubuntu GNOME menu များကို {target_lang} အသုံးပြုသူများအတွက် ဘာသာပြန်ပုံကို ကြည့်ပါ။",
+        "en": "See how Ubuntu GNOME menus become localized for {target_lang} users.",
+        "shn": "Ubuntu GNOME menu ၼႃႈ {target_lang} ၸႂ်ႉတိုၵ်းၸိူဝ်း။",
+        "mnw": "Ubuntu GNOME menu ကေ {target_lang} သုင်ကေ ပြန်ဘာသာ။",
+        "ksw": "Ubuntu GNOME menu ၶောမ် {target_lang} သုံၤကွဲးကျဲၤ။",
+    },
+    "showcase.before": {
+        "my": "မတိုင်မီ",
+        "en": "Before",
+        "shn": "ၼိူင်ႁိမ်း",
+        "mnw": "အရိ",
+        "ksw": "မဲစိၣ်",
+    },
+    "showcase.after": {
+        "my": "ပြီးနောက်",
+        "en": "After",
+        "shn": "ယဝ်ႉတီႈ",
+        "mnw": "ဒှ်မဲ",
+        "ksw": "ဒှဲ",
+    },
+    "showcase.english_interface": {
+        "my": "အင်္ဂလိပ် Interface",
+        "en": "English Interface",
+        "shn": "အင်္ဂလိပ် Interface",
+        "mnw": "အင်္ဂလိပ် Interface",
+        "ksw": "အင်္ဂလိပ် Interface",
+    },
+    "showcase.target_interface": {
+        "my": "{target_lang} Interface",
+        "en": "{target_lang} Interface",
+        "shn": "{target_lang} Interface",
+        "mnw": "{target_lang} Interface",
+        "ksw": "{target_lang} Interface",
+    },
+    "showcase.titlebar_en": {
+        "my": "Power Off — အင်္ဂလိပ်",
+        "en": "Power Off — English",
+        "shn": "Power Off — အင်္ဂလိပ်",
+        "mnw": "Power Off — အင်္ဂလိပ်",
+        "ksw": "Power Off — အင်္ဂလိပ်",
+    },
+    "showcase.titlebar_target": {
+        "my": "Power Off — {target_lang}",
+        "en": "Power Off — {target_lang}",
+        "shn": "Power Off — {target_lang}",
+        "mnw": "Power Off — {target_lang}",
+        "ksw": "Power Off — {target_lang}",
+    },
+    "showcase.footer_label": {
+        "my": "အင်္ဂလိပ် → {target_lang}",
+        "en": "English → {target_lang}",
+        "shn": "အင်္ဂလိပ် → {target_lang}",
+        "mnw": "အင်္ဂလိပ် → {target_lang}",
+        "ksw": "အင်္ဂလိပ် → {target_lang}",
+    },
+    "showcase.footer_sub": {
+        "my": "လက်တွေ့ Ubuntu GNOME menu ဘာသာပြန် နမူနာ",
+        "en": "Real Ubuntu GNOME menu localization example",
+        "shn": "Ubuntu GNOME menu ပိၼ်ႇၽႃႇသႃႇ ၸၢမ်း",
+        "mnw": "Ubuntu GNOME menu ပြန်လိက် နမူနာ",
+        "ksw": "Ubuntu GNOME menu ကွဲးကျဲၤ နမူနာ",
+    },
+
     # ── Batch Results ──
     "batch.translated": {
         "my": "{count} ခု ဘာသာပြန်ပြီး",

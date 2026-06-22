@@ -1453,19 +1453,49 @@ function showToast(msg, type='info') {
   setTimeout(() => { toast.style.opacity = '0'; setTimeout(() => toast.remove(), 300); }, 3000);
 }
 
-// ── Auto-save translations on input blur ───────────────────────────
-document.addEventListener('blur', e => {
-  if (!e.target.classList.contains('auto-save')) return;
-  const form = e.target.closest('form');
+// ── Auto-save translations (debounced on input + immediate on blur) ──
+const _saveTimers = new Map();
+
+function _saveTextarea(textarea) {
+  const form = textarea.closest('form');
   if (!form) return;
+  const indicator = form.querySelector('.save-indicator');
+  if (indicator) { indicator.textContent = 'Saving…'; indicator.className = 'save-indicator'; }
   const data = new FormData(form);
   fetch(form.action, { method: 'POST', body: data })
     .then(r => r.text())
-    .then(html => {
-      const indicator = form.querySelector('.save-indicator');
+    .then(() => {
       if (indicator) { indicator.textContent = '✓ Saved'; indicator.className = 'save-indicator saved'; }
+    })
+    .catch(() => {
+      if (indicator) { indicator.textContent = '⚠ Save failed'; indicator.className = 'save-indicator'; }
     });
+}
+
+// Debounced save on input (fires 800ms after user stops typing)
+document.addEventListener('input', e => {
+  if (!e.target.classList.contains('auto-save')) return;
+  const ta = e.target;
+  clearTimeout(_saveTimers.get(ta));
+  _saveTimers.set(ta, setTimeout(() => { _saveTextarea(ta); _saveTimers.delete(ta); }, 800));
+});
+
+// Immediate save on blur
+document.addEventListener('blur', e => {
+  if (!e.target.classList.contains('auto-save')) return;
+  clearTimeout(_saveTimers.get(e.target));
+  _saveTimers.delete(e.target);
+  _saveTextarea(e.target);
 }, true);
+
+// Flush all pending saves (called before export)
+function flushPendingSaves() {
+  document.querySelectorAll('textarea.auto-save').forEach(ta => {
+    clearTimeout(_saveTimers.get(ta));
+    _saveTimers.delete(ta);
+    _saveTextarea(ta);
+  });
+}
 </script>
 </body>
 </html>
