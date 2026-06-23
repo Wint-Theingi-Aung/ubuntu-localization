@@ -37,10 +37,10 @@ except OSError:
     pass  # read-only filesystem (Vercel)
 app.mount("/static", StaticFiles(directory=str(static_dir)), name="static")
 
-# Screenshot assets (en.png, my.png, etc.)
-assets_dir = PROJECT_ROOT / "assets"
-if assets_dir.is_dir():
-    app.mount("/assets", StaticFiles(directory=str(assets_dir)), name="assets")
+# Screenshots (en.png, my.png, etc.)
+screenshots_dir = PROJECT_ROOT / "screenshots"
+if screenshots_dir.is_dir():
+    app.mount("/screenshots", StaticFiles(directory=str(screenshots_dir)), name="screenshots")
 
 # Export downloads
 exports_dir = EXPORTS_DIR
