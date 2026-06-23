@@ -98,3 +98,7 @@ vercel --prod
 ```
 
 Entry point: `index.py` — imports the FastAPI app from `backend.main`.
+
+## License
+
+MIT
