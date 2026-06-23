@@ -22,10 +22,10 @@ An AI-powered localization tool for translating Ubuntu `.po` files into indigeno
 
 ## Screenshots
 
-![Homepage UI](screenshots/homepage.png)
+![Homepage UI](screenshots/desktop-1280x800.png)
 *Homepage — language cards, recent sessions, and quick access to translate*
 
-![Translate UI](screenshots/translate.png)
+![Translate UI](screenshots/translate-desktop.png)
 *Translate — unified upload, AI/manual translation, and export pipeline*
 
 ### Real-World Translation Example
