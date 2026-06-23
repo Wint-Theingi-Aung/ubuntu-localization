@@ -28,21 +28,6 @@ An AI-powered localization tool for translating Ubuntu `.po` files into indigeno
 ![Translate UI](screenshots/translate-desktop.png)
 *Translate — unified upload, AI/manual translation, and export pipeline*
 
-### Real-World Translation Example
-
-Ubuntu GNOME Power Off menu localized for Myanmar users:
-
-<table>
-<tr>
-<td align="center"><strong>English (Before)</strong></td>
-<td align="center"><strong>Myanmar (After)</strong></td>
-</tr>
-<tr>
-<td><img src="screenshots/en.png" alt="English — Ubuntu GNOME Power Off menu" width="320"></td>
-<td><img src="screenshots/my.png" alt="Myanmar — Ubuntu GNOME Power Off menu" width="320"></td>
-</tr>
-</table>
-
 ## Tech Stack
 
 - **Web UI**: FastAPI + Jinja2 + htmx (Ubuntu-themed)
