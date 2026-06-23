@@ -22,10 +22,10 @@ An AI-powered localization tool for translating Ubuntu `.po` files into indigeno
 
 ## Screenshots
 
-![Homepage UI](assets/homepage.png)
+![Homepage UI](screenshots/homepage.png)
 *Homepage — language cards, recent sessions, and quick access to translate*
 
-![Translate UI](assets/translate.png)
+![Translate UI](screenshots/translate.png)
 *Translate — unified upload, AI/manual translation, and export pipeline*
 
 ### Real-World Translation Example
@@ -38,8 +38,8 @@ Ubuntu GNOME Power Off menu localized for Myanmar users:
 <td align="center"><strong>Myanmar (After)</strong></td>
 </tr>
 <tr>
-<td><img src="assets/en.png" alt="English — Ubuntu GNOME Power Off menu" width="320"></td>
-<td><img src="assets/my.png" alt="Myanmar — Ubuntu GNOME Power Off menu" width="320"></td>
+<td><img src="screenshots/en.png" alt="English — Ubuntu GNOME Power Off menu" width="320"></td>
+<td><img src="screenshots/my.png" alt="Myanmar — Ubuntu GNOME Power Off menu" width="320"></td>
 </tr>
 </table>
 
