@@ -1,7 +1,7 @@
 <!--
   Marp template — "terminal-dark"
   Copy this file into your repo (e.g. slides/intro.md) and replace the content.
-  Render:  marp slides/intro.md -o slides.html      (or .pdf / .png)
+  Render:  marp slides/intro.md -o slides/slides.html      (or .pdf / .png)
   Theme is self-contained in the <style> block below — no external CSS needed.
 -->
 ---
@@ -78,9 +78,33 @@ Stack: **FastAPI + Jinja2 + htmx + Google Gemini 2.5 Flash + polib + uv** · bui
 
 <!-- _class: lead -->
 
-# Demo
+# Landing Page — Desktop
 
-![w:880](screenshots/desktop-1280x800.png)
+![w:880](../screenshots/desktop-1280x800.png)
+
+---
+
+<!-- _class: lead -->
+
+# Landing Page — Mobile
+
+![h:520](../screenshots/mobile-390x844.png)
+
+---
+
+<!-- _class: lead -->
+
+# Translate Page — Desktop
+
+![w:880](../screenshots/translate-desktop.png)
+
+---
+
+<!-- _class: lead -->
+
+# Translate Page — Mobile
+
+![h:520](../screenshots/translate-mobile.png)
 
 ---
 
