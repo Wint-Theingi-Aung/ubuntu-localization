@@ -2,8 +2,8 @@
 {% block content %}
 
 <div class="top-bar">
-  <h1 class="page-title">🏆 <strong>Leaderboard</strong></h1>
-  <span style="font-size:14px;color:var(--text-light)">Top Ubuntu Translation Contributors</span>
+  <h1 class="page-title">{{ t('leaderboard.title') }}</h1>
+  <span style="font-size:14px;color:var(--text-light)">{{ t('leaderboard.subtitle') }}</span>
 </div>
 
 {% if error %}
@@ -14,44 +14,51 @@
 {% endif %}
 
 <!-- Language Filter -->
-<div class="lang-filter-bar">
-  <a href="/leaderboard/" class="btn btn-sm btn-outline">🌐 All</a>
-  <a href="/leaderboard/?lang=my" class="btn btn-sm {% if active_lang == 'my' or not active_lang %}btn-primary{% else %}btn-outline{% endif %}"><span class="lang-badge lang-my">my</span> Myanmar</a>
-  <a href="/leaderboard/?lang=shn" class="btn btn-sm {% if active_lang == 'shn' %}btn-primary{% else %}btn-outline{% endif %}"><span class="lang-badge lang-shn">shn</span> Shan</a>
-  <a href="/leaderboard/?lang=mnw" class="btn btn-sm {% if active_lang == 'mnw' %}btn-primary{% else %}btn-outline{% endif %}"><span class="lang-badge lang-mnw">mnw</span> Mon</a>
-  <a href="/leaderboard/?lang=ksw" class="btn btn-sm {% if active_lang == 'ksw' %}btn-primary{% else %}btn-outline{% endif %}"><span class="lang-badge lang-ksw">ksw</span> Karen</a>
+<div class="lang-filter-bar" style="display:flex;align-items:center;gap:8px;margin-bottom:var(--space-md);flex-wrap:wrap">
+  <label style="font-size:14px;font-weight:500;color:var(--text-light);white-space:nowrap">{{ t('leaderboard.filter_label') }}</label>
+  <select class="form-select" style="max-width:220px" onchange="const v=this.value;window.location.href=v?'/leaderboard/?lang='+v:'/leaderboard/'">
+    <option value="" {% if not active_lang %}selected{% endif %}>{{ t('leaderboard.filter_all') }}</option>
+    {% for code, info in languages.items() %}
+    <option value="{{ code }}" {% if active_lang == code %}selected{% endif %}>{{ t('lang.' + code) }}</option>
+    {% endfor %}
+  </select>
 </div>
 
 <!-- Stats -->
 <div class="stats-grid" style="margin-bottom:var(--space-lg)">
   <div class="stat">
     <span class="stat-value">{{ stats.total_strings_exported|default(0)|int|int }}</span>
-    <span class="stat-label">Strings Exported</span>
+    <span class="stat-label">{{ t('leaderboard.stats.strings_exported') }}</span>
   </div>
   <div class="stat">
     <span class="stat-value">{{ stats.total_exports|default(0)|int|int }}</span>
-    <span class="stat-label">Exports</span>
+    <span class="stat-label">{{ t('leaderboard.stats.exports') }}</span>
   </div>
   <div class="stat">
     <span class="stat-value">{{ stats.contributors|default(0) }}</span>
-    <span class="stat-label">Contributors</span>
+    <span class="stat-label">{{ t('leaderboard.stats.contributors') }}</span>
   </div>
   <div class="stat">
     <span class="stat-value">{{ stats.sessions|default(0) }}</span>
-    <span class="stat-label">Sessions</span>
+    <span class="stat-label">{{ t('leaderboard.stats.sessions') }}</span>
   </div>
 </div>
 
 <!-- Per-language Overview -->
 {% if lang_stats and lang_stats.languages %}
 <div class="card" style="margin-bottom:20px">
-  <h3 style="font-size:16px;margin-bottom:12px">📊 By Language</h3>
+  <h3 style="font-size:16px;margin-bottom:12px">{{ t('leaderboard.lang_table_title') }}</h3>
   <div class="table-wrapper">
     <table class="data-table">
-      <tr><th>Language</th><th>Strings Exported</th><th>Exports</th><th>Progress</th></tr>
+      <tr>
+        <th>{{ t('leaderboard.table.lang') }}</th>
+        <th>{{ t('leaderboard.table.strings_exported') }}</th>
+        <th>{{ t('leaderboard.table.exports') }}</th>
+        <th>{{ t('leaderboard.table.progress') }}</th>
+      </tr>
       {% for lang in lang_stats.languages %}
       <tr>
-        <td><span class="lang-badge lang-{{ lang.language_code }}">{{ lang.language_code }}</span></td>
+        <td><span class="lang-badge lang-{{ lang.language_code }}">{{ t('lang.' + lang.language_code) }}</span></td>
         <td><strong>{{ lang.total_strings }}</strong></td>
         <td>{{ lang.total_exports }}</td>
         <td>
@@ -69,18 +76,18 @@
 <!-- Rankings -->
 <div class="card">
   <h3 style="font-size:16px;margin-bottom:16px">
-    {% if active_lang %}🏅 {{ languages[active_lang].name }} Leaderboard{% else %}🏅 All-Time Leaders{% endif %}
+    {% if active_lang %}{{ t('leaderboard.language_leaderboard', language=t('lang.' + active_lang)) }}{% else %}{{ t('leaderboard.all_time_leaders') }}{% endif %}
   </h3>
 
   {% if leaderboard %}
   <div class="table-wrapper">
     <table class="data-table">
       <tr>
-        <th style="width:50px">#</th>
-        <th>Contributor</th>
-        <th style="text-align:right">Strings</th>
-        <th style="text-align:right">Exports</th>
-        <th>Last Active</th>
+        <th style="width:50px">{{ t('leaderboard.table.rank') }}</th>
+        <th>{{ t('leaderboard.table.contributor') }}</th>
+        <th style="text-align:right">{{ t('leaderboard.table.strings') }}</th>
+        <th style="text-align:right">{{ t('leaderboard.table.exports') }}</th>
+        <th>{{ t('leaderboard.table.last_active') }}</th>
       </tr>
       {% for entry in leaderboard %}
       <tr>
@@ -108,9 +115,9 @@
   {% else %}
   <div class="empty-state">
     <span class="empty-icon">📊</span>
-    <h3>No data yet</h3>
-    <p>Export some translations to build the leaderboard!</p>
-    <a href="/translate/" class="btn btn-primary">📤 Get Started</a>
+    <h3>{{ t('leaderboard.empty_title') }}</h3>
+    <p>{{ t('leaderboard.empty_desc') }}</p>
+    <a href="/translate/" class="btn btn-primary">{{ t('leaderboard.empty_cta') }}</a>
   </div>
   {% endif %}
 </div>

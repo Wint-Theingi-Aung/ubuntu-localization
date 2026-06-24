@@ -5,15 +5,16 @@ from fastapi.responses import HTMLResponse, JSONResponse
 
 from backend.config import LANGUAGES
 from backend.services import db
+from backend.services.ui_translations import get_ui_lang, t
 from backend.templates_engine import templates
 
 router = APIRouter(prefix="/leaderboard", tags=["leaderboard"])
 
 
 @router.get("/", response_class=HTMLResponse)
-async def leaderboard_page(request: Request, lang: str = "my"):
+async def leaderboard_page(request: Request, lang: str = ""):
     """Show the leaderboard page with top contributors."""
-    leaderboard = db.get_leaderboard(language_code=lang, limit=50)
+    leaderboard = db.get_leaderboard(language_code=lang, limit=50) if lang else db.get_leaderboard(limit=50)
     stats = db.get_app_stats()
     lang_stats = db.get_language_stats()
 
@@ -52,11 +53,16 @@ async def contributor_detail(request: Request, username: str):
     full_board = db.get_leaderboard(limit=200)
     rank = contrib["rank"]
 
+    if full_board:
+        pct = max(1, round(rank / max(1, len(full_board)) * 100))
+        rank_pct_num = pct
+    else:
+        rank_pct_num = None
+
     return templates.TemplateResponse(request, "contributor.html", {
         "contrib": contrib,
         "rank": rank,
-        "rank_pct": f"Top {max(1, round(rank / max(1, len(full_board)) * 100))}%"
-        if full_board else "Only contributor",
+        "rank_pct": rank_pct_num,
         "total_contributors": len(full_board),
         "languages": LANGUAGES,
     })
@@ -76,21 +82,22 @@ async def leaderboard_widget(request: Request, lang: str = "", limit: int = 5):
 async def stats_widget(request: Request):
     """htmx widget showing overall stats — embeddable on dashboard."""
     stats = db.get_app_stats()
+    lang = get_ui_lang(request)
     return HTMLResponse(f"""<div class="stats-grid" id="stats-widget">
         <div class="stat">
             <span class="stat-value">{stats['total_strings_exported']:,}</span>
-            <span class="stat-label">Strings Exported</span>
+            <span class="stat-label">{t('leaderboard.stats.strings_exported', lang)}</span>
         </div>
         <div class="stat">
             <span class="stat-value">{stats['total_exports']:,}</span>
-            <span class="stat-label">Exports</span>
+            <span class="stat-label">{t('leaderboard.stats.exports', lang)}</span>
         </div>
         <div class="stat">
             <span class="stat-value">{stats['contributors']}</span>
-            <span class="stat-label">Contributors</span>
+            <span class="stat-label">{t('leaderboard.stats.contributors', lang)}</span>
         </div>
         <div class="stat">
             <span class="stat-value">{stats['sessions']}</span>
-            <span class="stat-label">Sessions</span>
+            <span class="stat-label">{t('leaderboard.stats.sessions', lang)}</span>
         </div>
     </div>""")

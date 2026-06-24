@@ -3,7 +3,7 @@
 
 <div class="top-bar">
   <h1 class="page-title">🐧 <strong>{{ contrib.username }}</strong></h1>
-  <a href="/leaderboard/" class="btn btn-outline btn-sm">← Leaderboard</a>
+  <a href="/leaderboard/" class="btn btn-outline btn-sm">{{ t('leaderboard.contributor.back') }}</a>
 </div>
 
 <div class="card" style="max-width:640px">
@@ -18,18 +18,18 @@
         {% if rank == 1 %}🥇{% elif rank == 2 %}🥈{% else %}🥉{% endif %}
       </span>
       {% endif %}
-      Ranked <strong>#{{ rank }}</strong> of {{ total_contributors }} contributors
-      <br><span style="font-size:13px;color:var(--text-light)">{{ rank_pct }}</span>
+      {{ t('leaderboard.contributor.ranked', rank=rank, total=total_contributors) }}
+      <br><span style="font-size:13px;color:var(--text-light)">{{ t('leaderboard.contributor.top_pct', pct=rank_pct) if rank_pct else t('leaderboard.contributor.only_contributor') }}</span>
     </div>
 
     <div class="stats-grid" style="width:100%">
       <div class="stat">
         <span class="stat-value">{{ contrib.total_strings|int|int }}</span>
-        <span class="stat-label">Strings Translated</span>
+        <span class="stat-label">{{ t('leaderboard.contributor.strings_translated') }}</span>
       </div>
       <div class="stat">
         <span class="stat-value">{{ contrib.total_exports }}</span>
-        <span class="stat-label">Exports</span>
+        <span class="stat-label">{{ t('leaderboard.contributor.exports') }}</span>
       </div>
     </div>
   </div>
@@ -37,13 +37,17 @@
 
 {% if contrib.by_language %}
 <div class="card" style="max-width:600px;margin-top:var(--space-md)">
-  <h3 style="font-size:var(--text-base);margin-bottom:var(--space-sm)">📊 By Language</h3>
+  <h3 style="font-size:var(--text-base);margin-bottom:var(--space-sm)">{{ t('leaderboard.contributor.by_language') }}</h3>
   <div class="table-wrapper">
     <table class="data-table">
-      <tr><th>Language</th><th style="text-align:right">Strings</th><th style="text-align:right">Exports</th></tr>
+      <tr>
+        <th>{{ t('leaderboard.table.lang') }}</th>
+        <th style="text-align:right">{{ t('leaderboard.table.strings') }}</th>
+        <th style="text-align:right">{{ t('leaderboard.table.exports') }}</th>
+      </tr>
       {% for lang in contrib.by_language %}
       <tr>
-        <td><span class="lang-badge lang-{{ lang.language_code }}">{{ lang.language_code }}</span></td>
+        <td><span class="lang-badge lang-{{ lang.language_code }}">{{ t('lang.' + lang.language_code) }}</span></td>
         <td style="text-align:right;font-weight:700">{{ lang.total }}</td>
         <td style="text-align:right">{{ lang.exports }}</td>
       </tr>
@@ -55,8 +59,8 @@
 
 <div style="margin-top:var(--space-lg)">
   <div class="action-buttons">
-    <a href="/leaderboard/" class="btn btn-outline">← Back to Leaderboard</a>
-    <a href="/auth/profile/{{ contrib.username }}" class="btn btn-outline">🔍 Launchpad Profile</a>
+    <a href="/leaderboard/" class="btn btn-outline">{{ t('leaderboard.contributor.back') }}</a>
+    <a href="/auth/profile/{{ contrib.username }}" class="btn btn-outline">{{ t('leaderboard.contributor.launchpad_profile') }}</a>
   </div>
 </div>
 
