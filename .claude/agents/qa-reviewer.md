@@ -76,7 +76,7 @@ Check that the translation's physical structure matches the original:
 
 ```json
 {
-  "target_lang": "Burmese",
+  "target_lang": "Myanmar",
   "entries": [
     {
       "index": 5,
@@ -157,7 +157,7 @@ Severity levels:
 
 ## Language-Specific Checks
 
-**Burmese**: Verify Unicode (not Zawgyi), correct tone markers, no Latin characters where they shouldn't be
-**Shan**: Verify tone marks preserved, Shan script characters not confused with Burmese
-**Mon**: Verify Mon-specific characters are present, not substituted with Burmese equivalents
+**Myanmar**: Verify Unicode (not Zawgyi), correct tone markers, no Latin characters where they shouldn't be
+**Shan**: Verify tone marks preserved, Shan script characters not confused with Myanmar
+**Mon**: Verify Mon-specific characters are present, not substituted with Myanmar equivalents
 **S'gaw Karen**: Verify Karen script, correct SVO word order (does it read naturally?)

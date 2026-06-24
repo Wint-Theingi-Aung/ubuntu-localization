@@ -131,7 +131,7 @@ with st.sidebar:
 
     target_lang = st.selectbox(
         "Target Language",
-        ["Burmese", "Shan", "Mon", "S'gaw Karen"]
+        ["Myanmar", "Shan", "Mon", "S'gaw Karen"]
     )
 
     st.divider()

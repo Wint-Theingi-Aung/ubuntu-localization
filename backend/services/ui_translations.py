@@ -1,7 +1,7 @@
 """UI translations for the web interface in 5 languages.
 
-Languages: my (Burmese), en (English), shn (Shan), mnw (Mon), ksw (S'gaw Karen)
-Default: my (Burmese / မြန်မာ)
+Languages: my (Myanmar), en (English), shn (Shan), mnw (Mon), ksw (S'gaw Karen)
+Default: my (Myanmar / မြန်မာ)
 """
 
 # ── Translation keys ────────────────────────────────────────────────────
@@ -60,14 +60,14 @@ TRANSLATIONS = {
 
     # ── Dashboard ──
     "dashboard.title": {
-        "my": "Ubuntu ဘာသာပြန် စနစ်",
+        "my": "Ubuntu ဘာသာပြန်စနစ်",
         "en": "Ubuntu Localization",
         "shn": "Ubuntu ပိၼ်ႇၽႃႇသႃႇ",
         "mnw": "Ubuntu ပြန်ဘာသာ",
         "ksw": "Ubuntu တၢ်ကွဲးကျဲၤ",
     },
     "dashboard.subtitle": {
-        "my": "AI အကူအညီဖြင့် Ubuntu ကို ဌာနေဘာသာစကားများသို့ ပြန်ဆိုခြင်း",
+        "my": "AI အကူအညီဖြင့် Ubuntu ကို ဒေသခံတိုင်းရင်းသား ဘာသာစကားများသို့ ပြန်ဆိုခြင်း",
         "en": "AI-powered Ubuntu OS localization for indigenous languages",
         "shn": "AI ၸွႆႈထႅမ် Ubuntu ပိၼ်ႇၽႃႇသႃႇ",
         "mnw": "AI ထံက်ပၚ Ubuntu ပြန်ဘာသာ",
@@ -174,14 +174,14 @@ TRANSLATIONS = {
         "ksw": "🧪 မၤသးဒီးလံာ်နမူနာ",
     },
     "translate.demo_desc": {
-        "my": ".po ဖိုင် မရှိပါက နမူနာဖြင့် စမ်းသပ်ပါ။ Ubuntu GNOME Power Off menu မှ စာကြောင်း ၅ ကြောင်း: <strong>Power Off</strong>, <strong>Suspend</strong>, <strong>Restart...</strong>, <strong>Power Off...</strong>, <strong>Log Out...</strong>",
-        "en": "No .po file? Test with a sample. 5 strings from Ubuntu GNOME Power Off menu: <strong>Power Off</strong>, <strong>Suspend</strong>, <strong>Restart...</strong>, <strong>Power Off...</strong>, <strong>Log Out...</strong>",
-        "shn": "ဢမ်ႇမီး .po ၾၢႆႇ? ၸၢမ်းတူၺ်းတင်းၾၢႆႇတႅမ်ႈဝႆႉ။ Ubuntu GNOME Power Off menu ၼႃႈ ၵေႃႈ 5: <strong>Power Off</strong>, <strong>Suspend</strong>, <strong>Restart...</strong>, <strong>Power Off...</strong>, <strong>Log Out...</strong>",
-        "mnw": "ဟွံမဲ .po ဖိုင်? စမ်နကဵုနမူနာ။ Ubuntu GNOME Power Off menu ကေ စာကြောင်း 5: <strong>Power Off</strong>, <strong>Suspend</strong>, <strong>Restart...</strong>, <strong>Power Off...</strong>, <strong>Log Out...</strong>",
-        "ksw": "တမဲ .po လံာ်? မၤသးဒီးနမူနာ။ Ubuntu GNOME Power Off menu ဖဲ စာကြောင်း 5: <strong>Power Off</strong>, <strong>Suspend</strong>, <strong>Restart...</strong>, <strong>Power Off...</strong>, <strong>Log Out...</strong>",
+        "my": ".po ဖိုင် မရှိပါက နမူနာဖြင့် စမ်းသပ်ပါ။",
+        "en": "No .po file? Test with a sample.",
+        "shn": "ဢမ်ႇမီး .po ၾၢႆႇ? ၸၢမ်းတူၺ်းတင်းၾၢႆႇတႅမ်ႈဝႆႉ။",
+        "mnw": "ဟွံမဲ .po ဖိုင်? စမ်နကဵုနမူနာ။",
+        "ksw": "တမဲ .po လံာ်? မၤသးဒီးနမူနာ။",
     },
     "translate.demo_btn": {
-        "my": "🧪 နမူနာ စာကြောင်းများ တင်ရန်",
+        "my": "🧪 နမူနာစာကြောင်းများ ဘာသာပြန်ရန်",
         "en": "🧪 Load Demo Strings",
         "shn": "🧪 လူတ်ႇၶိုၼ်ႈ တူဝ်ယိူင်းထႅမ်း",
         "mnw": "🧪 ပၠောပ် နမူနာ",
@@ -197,7 +197,7 @@ TRANSLATIONS = {
         "ksw": "📝 ကွဲးလံာ် — ကဘျံ {page} ဖဲ {total}",
     },
     "translate.workspace_count": {
-        "my": "{count} ခု ဘာသာမပြန်ရသေး",
+        "my": "{count} ခု ဘာသာမပြန်ရသေးပါ",
         "en": "{count} untranslated total",
         "shn": "{count} ပႆႇပိၼ်ႇ",
         "mnw": "{count} ဟဗြန်ဏီ",
@@ -413,7 +413,7 @@ TRANSLATIONS = {
 
     # ── Batch Results ──
     "batch.translated": {
-        "my": "{count} ခု ဘာသာပြန်ပြီး",
+        "my": "{count} ခု ဘာသာပြန်ပြီးပါပြိ",
         "en": "{count} strings translated",
         "shn": "{count} ၶေႃႈပိၼ်ႇယဝ်ႉ",
         "mnw": "{count} လိက်ပြန်တုဲ",
@@ -434,21 +434,21 @@ TRANSLATIONS = {
         "ksw": "✔ 0 တၢ်ကမၢ",
     },
     "batch.flagged": {
-        "my": "⚠️ {count} ခု သတိပေး",
+        "my": "⚠️ {count} ခု သတိပေးချက်",
         "en": "⚠️ {count} flagged",
         "shn": "⚠️ {count} တူဝ်ယိူင်း",
         "mnw": "⚠️ {count} ဗၠေတ်",
         "ksw": "⚠️ {count} တၢ်ကမၢ",
     },
     "batch.ready_export": {
-        "my": "ထုတ်ယူရန် အဆင်သင့်ဖြစ်ပါပြီ",
+        "my": "ထုတ်ယူနိုင်ပါပြီ",
         "en": "Ready to export",
         "shn": "ဢွၵ်ႇလႆႈယဝ်ႉ",
         "mnw": "တိတ်ဂတာပ်",
         "ksw": "ဟဲထဂတာပ်",
     },
     "batch.saved": {
-        "my": "✓ သိမ်းပြီး",
+        "my": "✓ သိမ်းပြီးပါပြီ",
         "en": "✓ Saved",
         "shn": "✓ သိမ်းယဝ်ႉ",
         "mnw": "✓ သိမ်တုဲ",
@@ -494,11 +494,11 @@ TRANSLATIONS = {
 
     # ── Footer ──
     "footer.tagline": {
-        "my": "Ubuntu ဘာသာပြန် ကိရိယာ v2.0 · Gemini AI စွမ်းအားဖြင့်",
-        "en": "Ubuntu Localization Tool v2.0 · Powered by Gemini AI",
-        "shn": "Ubuntu ပိၼ်ႇၽႃႇသႃႇ v2.0 · ႁႅင်း Gemini AI",
-        "mnw": "Ubuntu ပြန်ဘာသာ v2.0 · နကဵု Gemini AI",
-        "ksw": "Ubuntu တၢ်ကွဲးကျဲၤ v2.0 · ဒီး Gemini AI",
+        "my": "Ubuntu ဘာသာပြန် ကိရိယာ v2.0",
+        "en": "Ubuntu Localization Tool v2.0",
+        "shn": "Ubuntu ပိၼ်ႇၽႃႇသႃႇ v2.0",
+        "mnw": "Ubuntu ပြန်ဘာသာ v2.0",
+        "ksw": "Ubuntu တၢ်ကွဲးကျဲၤ v2.0",
     },
 
     # ── Guide Page ──
@@ -518,7 +518,7 @@ TRANSLATIONS = {
         "ksw": "ပှၤကွဲးကျဲၤအံၤ မၤတၢ်မနုၤလဲၣ်",
     },
     "guide.uploading_po": {
-        "my": ".po ဖိုင်တစ်ခု တင်သွင်းခြင်း",
+        "my": ".po ဖိုင်တစ်ခု ထည့်သွင်းခြင်း",
         "en": "Uploading a .po File",
         "shn": "လူတ်ႇၶိုၼ်ႈ ၾၢႆႇ .po",
         "mnw": "ပၠောပ်ဝှာင် .po",
@@ -539,7 +539,7 @@ TRANSLATIONS = {
         "ksw": "သီထီၣ်လံာ်ကွဲးကျဲၤ",
     },
     "guide.exporting_work": {
-        "my": "သင်၏ လုပ်ဆောင်ချက်များကို ထုတ်ယူခြင်း",
+        "my": "လုပ်ဆောင်ချက်များ ထုတ်ယူခြင်း",
         "en": "Exporting Your Work",
         "shn": "ဢွၵ်ႇၾၢႆႇ",
         "mnw": "တိတ်ဝှာင်",
@@ -564,7 +564,7 @@ TRANSLATIONS = {
 
     # ── History ──
     "history.title": {
-        "my": "📚 ထုတ်ယူမှု မှတ်တမ်း",
+        "my": "📚 ထုတ်ယူမှုမှတ်တမ်း",
         "en": "📚 Export History",
         "shn": "📚 ပိုၼ်းဢွၵ်ႇ",
         "mnw": "📚 ဝင်တိတ်",
@@ -593,7 +593,7 @@ UI_LANGS = ["my", "en", "shn", "mnw", "ksw"]
 
 
 def get_ui_lang(request) -> str:
-    """Get the UI language from cookie, defaulting to 'my' (Burmese)."""
+    """Get the UI language from cookie, defaulting to 'my' (Myanmar)."""
     lang = request.cookies.get("ui_lang", DEFAULT_UI_LANG)
     if lang not in UI_LANGS:
         lang = DEFAULT_UI_LANG

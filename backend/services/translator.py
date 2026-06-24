@@ -68,7 +68,7 @@ Rules:
 - For error messages: clear, actionable, respectful tone
 - Return ONLY a JSON array of translated strings, in the same order as input
 - If a string should NOT be translated (brand names, code, symbols), return it unchanged
-- NEVER use Zawgyi encoding — always Unicode Myanmar (Burmese only)
+- NEVER use Zawgyi encoding — always Unicode Myanmar (Myanmar only)
 
 Input is a JSON array of msgid strings to translate."""
 
@@ -96,7 +96,7 @@ def translate_batch(
 
     Args:
         texts: List of msgid strings to translate
-        target_lang: Human-readable language name (e.g. 'Burmese')
+        target_lang: Human-readable language name (e.g. 'Myanmar')
         lang_code: ISO 639-3 language code (e.g. 'my')
         retries: Number of retry attempts on failure
 

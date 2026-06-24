@@ -15,7 +15,7 @@ export const meta = {
 // ============================================================================
 
 const LANGUAGES = {
-  'Burmese':    { code: 'my',  family: 'Sino-Tibetan', script: 'Myanmar',      wordOrder: 'SOV' },
+  'Myanmar':    { code: 'my',  family: 'Sino-Tibetan', script: 'Myanmar',      wordOrder: 'SOV' },
   'Shan':       { code: 'shn', family: 'Tai-Kadai',    script: 'Shan',          wordOrder: 'SVO' },
   'Mon':        { code: 'mnw', family: 'Austroasiatic',script: 'Mon',           wordOrder: 'SVO' },
   "S'gaw Karen": { code: 'ksw', family: 'Sino-Tibetan', script: "S'gaw Karen",  wordOrder: 'SVO' }
@@ -121,7 +121,7 @@ try {
   return { error: 'session_load_failed', detail: e.message }
 }
 
-const targetLang = queue.target_lang || session.language || 'Burmese'
+const targetLang = queue.target_lang || session.language || 'Myanmar'
 const langCode = queue.target_lang_code || LANGUAGES[targetLang]?.code || 'my'
 const untranslated = session.untranslated || []
 
@@ -176,7 +176,7 @@ Translation rules:
 - Keep brand names: Ubuntu, Canonical, Debian, Firefox, LibreOffice
 - For menu items and buttons: concise imperative form
 - For help text and descriptions: natural explanatory language
-- NEVER use Zawgyi encoding — always Unicode Myanmar (Burmese only)
+- NEVER use Zawgyi encoding — always Unicode Myanmar (Myanmar only)
 - Return ONLY valid JSON matching the required schema
 
 Input batch:

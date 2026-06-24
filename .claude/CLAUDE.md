@@ -4,7 +4,7 @@
 A localization tool for translating Ubuntu `.po` files into indigenous languages using Google Gemini AI, Claude Code skills, MCP servers, and subagent orchestration.
 
 ## Languages
-- Burmese (my), Shan (shn), Mon (mnw), S'gaw Karen (ksw)
+- Myanmar (my), Shan (shn), Mon (mnw), S'gaw Karen (ksw)
 
 ## Tech Stack
 - **Web UI**: FastAPI + Jinja2 + htmx (Ubuntu-themed)
@@ -67,7 +67,7 @@ uv run uvicorn backend.main:app --reload
 
 ## Usage Example
 ```
-/po-upload data/burmese_messages.po
+/po-upload data/myanmar_messages.po
 /po-detect
 /po-translate --priority=p1
 # This invokes batch-translate-orchestrator workflow internally:

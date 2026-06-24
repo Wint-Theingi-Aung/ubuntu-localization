@@ -11,7 +11,7 @@ auto-advance: 20
 <!-- 20s -->
 
 **Ubuntu translators** — volunteers and language teams translating Ubuntu into
-indigenous languages: **Burmese, Shan, Mon, S'gaw Karen**.
+indigenous languages: **Myanmar, Shan, Mon, S'gaw Karen**.
 
 They work through Launchpad, Ubuntu's translation platform. They're passionate
 about bringing open-source software to their communities, but they face:
@@ -88,7 +88,7 @@ language-specific grammar rules (SOV vs SVO, tone marks, script families).
 **Ubuntu is the world's most popular Linux distribution.** Over 6 million
 desktop users, plus countless servers and cloud instances.
 
-Indigenous language speakers — **33 million Burmese, 3.3 million Shan,
+Indigenous language speakers — **33 million Myanmar, 3.3 million Shan,
 1 million Mon, 7 million Karen** — currently use Ubuntu in English because
 translations don't exist or are incomplete.
 

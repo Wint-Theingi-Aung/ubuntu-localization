@@ -8,7 +8,7 @@ CREDENTIALS_DIR = Path.home() / ".cache" / "launchpad-bridge"
 CREDENTIALS_FILE = CREDENTIALS_DIR / "credentials"
 
 LANG_MAP = {
-    "my":  "Burmese",
+    "my":  "Myanmar",
     "shn": "Shan",
     "mnw": "Mon",
     "ksw": "S'gaw Karen",

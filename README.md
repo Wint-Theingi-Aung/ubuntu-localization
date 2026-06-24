@@ -6,7 +6,7 @@ An AI-powered localization tool for translating Ubuntu `.po` files into indigeno
 
 | Language | Code | Script |
 |----------|------|--------|
-| Burmese | `my` | Myanmar Unicode |
+| Myanmar | `my` | Myanmar Unicode |
 | Shan | `shn` | Shan Unicode |
 | Mon | `mnw` | Mon Unicode |
 | S'gaw Karen | `ksw` | S'gaw Karen Unicode |
