@@ -110,6 +110,6 @@ Stack: **FastAPI + Jinja2 + htmx + Google Gemini 2.5 Flash + polib + uv** · bui
 
 # Links
 
-- **Live:** Live: https://your-vercel-app.vercel.app
-- **Repo:** https://github.com/yourname/ubuntu-localization
+- **Live:** Live: https://ubuntu-localization.vercel.app/
+- **Repo:** https://github.com/Wint-Theingi-Aung/ubuntu-localization
 - **License:** MIT
