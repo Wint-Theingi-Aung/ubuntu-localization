@@ -19,14 +19,22 @@ An AI-powered localization tool for translating Ubuntu `.po` files into indigeno
 - **Manual editing** — side-by-side grid with auto-save on every field
 - **Export** — download the translated `.po` file directly from the browser
 - **Single-page workflow** — upload, translate, and export all on one unified page
+- **Interactive guide** — 6-chapter walkthrough for new translators
+- **Leaderboard** — per-language contributor rankings and stats
 
 ## Screenshots
 
-![Homepage UI](screenshots/desktop-1280x800.png)
-*Homepage — language cards, recent sessions, and quick access to translate*
+![Landing Page — Mon](screenshots/desktop-mon-1280x800.png)
+*Landing Page — Mon language selected*
 
-![Translate UI](screenshots/translate-desktop.png)
-*Translate — unified upload, AI/manual translation, and export pipeline*
+![Guide — S'gaw Karen](screenshots/guide-sgaw-karen-top-1280x800.png)
+*Guide Page — S'gaw Karen*
+
+![Translate — Myanmar](screenshots/translate-desktop.png)
+*Translate Page — Myanmar*
+
+![Leaderboard — Shan](screenshots/leaderboard-shan-1280x800.png)
+*Leaderboard — Shan translation contributions*
 
 ## Tech Stack
 
