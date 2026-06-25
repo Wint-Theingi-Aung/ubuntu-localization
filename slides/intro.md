@@ -78,9 +78,17 @@ Stack: **FastAPI + Jinja2 + htmx + Google Gemini 2.5 Flash + polib + uv** · bui
 
 <!-- _class: lead -->
 
-# Landing Page — Desktop
+# Landing Page — Mon
 
-![w:880](../screenshots/desktop-1280x800.png)
+![w:880](../screenshots/desktop-mon-1280x800.png)
+
+---
+
+<!-- _class: lead -->
+
+# Guide Page — S'gaw Karen
+
+![w:880](../screenshots/guide-sgaw-karen-top-1280x800.png)
 
 ---
 
@@ -94,7 +102,7 @@ Stack: **FastAPI + Jinja2 + htmx + Google Gemini 2.5 Flash + polib + uv** · bui
 
 <!-- _class: lead -->
 
-# Leaderboard — Per-Language Rankings
+# Leaderboard — Shan
 
 ![w:880](../screenshots/leaderboard-shan-1280x800.png)
 
