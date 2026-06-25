@@ -94,7 +94,7 @@ Stack: **FastAPI + Jinja2 + htmx + Google Gemini 2.5 Flash + polib + uv** · bui
 
 <!-- _class: lead -->
 
-# Translate Page — Desktop
+# Translate Page — Myanmar
 
 ![w:880](../screenshots/translate-desktop.png)
 
