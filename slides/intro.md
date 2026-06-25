@@ -86,14 +86,6 @@ Stack: **FastAPI + Jinja2 + htmx + Google Gemini 2.5 Flash + polib + uv** · bui
 
 <!-- _class: lead -->
 
-# Landing Page — Mobile
-
-![h:520](../screenshots/mobile-390x844.png)
-
----
-
-<!-- _class: lead -->
-
 # Translate Page — Desktop
 
 ![w:880](../screenshots/translate-desktop.png)
@@ -102,9 +94,9 @@ Stack: **FastAPI + Jinja2 + htmx + Google Gemini 2.5 Flash + polib + uv** · bui
 
 <!-- _class: lead -->
 
-# Translate Page — Mobile
+# Leaderboard — Per-Language Rankings
 
-![h:520](../screenshots/translate-mobile.png)
+![w:880](../screenshots/leaderboard-shan-1280x800.png)
 
 ---
 
