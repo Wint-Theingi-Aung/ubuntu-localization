@@ -10,6 +10,7 @@ Usage:
 from pathlib import Path
 
 from fastapi import FastAPI, Request
+from fastapi.middleware.gzip import GZipMiddleware
 from fastapi.responses import HTMLResponse, FileResponse
 from fastapi.staticfiles import StaticFiles
 
@@ -27,6 +28,9 @@ app = FastAPI(
     docs_url="/api/docs" if config.debug else None,
     redoc_url=None,
 )
+
+# ── Compression ─────────────────────────────────────────────────────────
+app.add_middleware(GZipMiddleware, minimum_size=500)
 
 # ── Static Files ───────────────────────────────────────────────────────
 
