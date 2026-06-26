@@ -4,15 +4,6 @@
       "command": "/home/wint/.claude/mcp-servers/github-server.sh",
       "args": []
     },
-    "filesystem": {
-      "command": "npx",
-      "args": [
-        "-y",
-        "@modelcontextprotocol/server-filesystem",
-        "/home/wint/ubuntu-localization",
-        "/tmp/ubuntu-localization"
-      ]
-    },
     "launchpad-bridge": {
       "command": "/home/wint/.claude/mcp-servers/launchpad-bridge/run.sh",
       "args": []
@@ -24,6 +15,17 @@
         "@modelcontextprotocol/server-postgres",
         "postgresql://localhost:5432/ubuntu_localization"
       ]
+    },
+    "filesystem": {
+      "type": "stdio",
+      "command": "npx",
+      "args": [
+        "-y",
+        "@modelcontextprotocol/server-filesystem",
+        "/home/wint/ubuntu-localization",
+        "/tmp/ubuntu-localization"
+      ],
+      "env": {}
     }
   }
 }
