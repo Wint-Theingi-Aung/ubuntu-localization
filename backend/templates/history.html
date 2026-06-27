@@ -31,7 +31,7 @@
       </div>
       <div class="export-detail">
         <span class="detail-label">{{ t('history.qa_passed') }}</span>
-        <span class="detail-value">{{ exp.stats.qa_passed }}/{{ exp.stats.qa_passed + exp.stats.qa_failed }}</span>
+        <span class="detail-value">{{ exp.stats.qa_passed }}/{{ exp.stats.qa_passed + (exp.stats.qa_failed or exp.stats.qa_flagged or 0) }}</span>
       </div>
     </div>
 
