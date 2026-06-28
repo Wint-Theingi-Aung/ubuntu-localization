@@ -62,10 +62,10 @@
       <thead>
         <tr>
           <th class="sortable" data-sort="name" onclick="sortTable('name')">{{ t('contributors.sort.name') }}</th>
-          <th class="sortable" data-sort="lang" onclick="sortTable('lang')">{{ t('contributors.table.lang') }}</th>
-          <th class="sortable" data-sort="karma" onclick="sortTable('karma')" style="text-align:right">{{ t('contributors.sort.karma') }}</th>
-          <th class="sortable" data-sort="teams" onclick="sortTable('teams')">{{ t('contributors.table.teams') }}</th>
-          <th>{{ t('contributors.table.profile') }}</th>
+          <th class="sortable col-mob-lang" data-sort="lang" onclick="sortTable('lang')">{{ t('contributors.table.lang') }}</th>
+          <th class="sortable col-mob-karma" data-sort="karma" onclick="sortTable('karma')" style="text-align:right">{{ t('contributors.sort.karma') }}</th>
+          <th class="sortable col-hide-mob" data-sort="teams" onclick="sortTable('teams')">{{ t('contributors.table.teams') }}</th>
+          <th class="col-hide-mob">{{ t('contributors.table.profile') }}</th>
         </tr>
       </thead>
       <tbody>
@@ -77,7 +77,7 @@
             </a>
             <div style="font-size:11px;color:var(--text-light)">@{{ c.username }}</div>
           </td>
-          <td>
+          <td class="col-mob-lang">
             {% if c.languages %}
               {% for lang_code in c.languages %}
                 <span class="lang-badge lang-{{ lang_code }}">{{ t('lang.' + lang_code) }}</span>
@@ -86,8 +86,8 @@
               <span style="font-size:12px;color:var(--text-light)">—</span>
             {% endif %}
           </td>
-          <td style="text-align:right;font-weight:700;color:var(--orange)">{{ c.karma|default(0) }}</td>
-          <td>
+          <td class="col-mob-karma" style="text-align:right;font-weight:700;color:var(--orange)">{{ c.karma|default(0) }}</td>
+          <td class="col-hide-mob">
             {% if c.teams %}
               {% for team in c.teams[:3] %}
                 <span style="display:inline-block;font-size:11px;padding:2px 6px;border-radius:var(--radius-sm);background:var(--bg-secondary);color:var(--text-light);margin:1px 2px">{{ team.team_name }}</span>
@@ -99,7 +99,7 @@
               <span style="font-size:12px;color:var(--text-light)">—</span>
             {% endif %}
           </td>
-          <td>
+          <td class="col-hide-mob">
             <a href="{{ c.web_link }}" target="_blank" rel="noopener noreferrer" class="btn btn-outline btn-sm" style="font-size:12px;text-decoration:none">
               Launchpad ↗
             </a>

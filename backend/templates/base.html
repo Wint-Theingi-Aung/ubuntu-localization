@@ -571,6 +571,15 @@ body.sidebar-open .hamburger-btn {
 .data-table th.sort-asc::after  { content: " ▲"; font-size: 10px; color: var(--orange); }
 .data-table th.sort-desc::after { content: " ▼"; font-size: 10px; color: var(--orange); }
 
+/* ── Mobile: column hiding ─────────────────────────────────────────── */
+@media (max-width: 640px) {
+  .col-hide-mob { display: none !important; }
+  .col-mob-lang,
+  .col-mob-karma { padding: 8px 6px !important; }
+  .data-table th.col-mob-lang,
+  .data-table th.col-mob-karma { font-size: 10px; letter-spacing: 0; }
+}
+
 /* ── Code ─────────────────────────────────────────────────────────── */
 
 code {
