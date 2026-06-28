@@ -624,12 +624,12 @@ TRANSLATIONS = {
         "mnw": "ညးပါလုပ် လတူအိုတ်",
         "ksw": "ပှၤမၤစၢၤ အထံးကီဒီး",
     },
-    "contributors.stats.total_karma": {
-        "my": "စုစုပေါင်း Karma",
-        "en": "Total Karma",
-        "shn": "Karma တင်းသဵင်ႈ",
-        "mnw": "Karma သီုဖအိုတ်",
-        "ksw": "Karma ခဲလၢာ်",
+    "contributors.stats.top_contributor_karma": {
+        "my": "ထိပ်ဆုံးပံ့ပိုးသူ၏ Karma",
+        "en": "Top Contributor's Karma",
+        "shn": "ၽူႈၸွႆႈထႅမ် ထိပ်ဆုံး Karma",
+        "mnw": "ညးပါလုပ် လတူအိုတ် Karma",
+        "ksw": "ပှၤမၤစၢၤ အထံးကီဒီး Karma",
     },
     "contributors.stats.active_rate": {
         "my": "လက်တွေ့ပံ့ပိုးမှုနှုန်း",

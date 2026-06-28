@@ -38,8 +38,8 @@
     <span class="stat-label">{{ t('contributors.stats.top_contributor') }}</span>
   </div>
   <div class="stat">
-    <span class="stat-value" id="stat-total-karma">0</span>
-    <span class="stat-label">{{ t('contributors.stats.total_karma') }}</span>
+    <span class="stat-value" id="stat-top-karma">0</span>
+    <span class="stat-label">{{ t('contributors.stats.top_contributor_karma') }}</span>
   </div>
   <div class="stat">
     <span class="stat-value" id="stat-active-rate">0%</span>
@@ -302,14 +302,12 @@ function goToPage(page) {
 function updateStats() {
   const filtered = getFilteredRows();
   const total = filtered.length;
-  let totalKarma = 0;
   let withKarma = 0;
   let topName = '—';
   let topKarma = -1;
 
   filtered.forEach(row => {
     const k = parseInt(row.dataset.karma) || 0;
-    totalKarma += k;
     if (k > 0) withKarma++;
     if (k > topKarma) {
       topKarma = k;
@@ -326,10 +324,11 @@ function updateStats() {
   const rate = total > 0 ? Math.round((withKarma / total) * 100) : 0;
   // Show N/A if nobody has positive karma
   const displayTop = (topKarma > 0) ? topName : '—';
+  const displayTopKarma = (topKarma > 0) ? topKarma.toLocaleString() : '0';
 
   document.getElementById('stat-total-contributors').textContent = total;
   document.getElementById('stat-top-contributor').textContent = displayTop;
-  document.getElementById('stat-total-karma').textContent = totalKarma.toLocaleString();
+  document.getElementById('stat-top-karma').textContent = displayTopKarma;
   document.getElementById('stat-active-rate').textContent = rate + '%';
 }
 
