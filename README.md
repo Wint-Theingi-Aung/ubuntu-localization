@@ -20,7 +20,7 @@ An AI-powered localization tool for translating Ubuntu `.po` files into indigeno
 - **Export** — download the translated `.po` file directly from the browser
 - **Single-page workflow** — upload, translate, and export all on one unified page
 - **Interactive guide** — 6-chapter walkthrough for new translators
-- **Leaderboard** — per-language contributor rankings and stats
+- **Contributors** — per-language contributor rankings and stats
 
 ## Screenshots
 
@@ -68,8 +68,8 @@ Open **http://localhost:8501/translate/** — upload a `.po` file, translate wit
 | `/` | Dashboard — language overview, recent sessions |
 | `/translate/` | Unified pipeline: upload → AI/manual translate → export |
 | `/guide/` | 6-chapter interactive user guide |
-| `/leaderboard/` | Top contributors per language |
-| `/leaderboard/contributor/{name}` | Individual contributor stats |
+| `/contributors/` | Top contributors per language |
+| `/contributors/contributor/{name}` | Individual contributor stats |
 | `/export/history` | Export history |
 | `/health` | Health check endpoint |
 

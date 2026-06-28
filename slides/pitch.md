@@ -53,7 +53,7 @@ and a web UI that turn weeks of manual translation into minutes.
 | `/po-translate` | Batch AI translation with **3-reviewer QA** |
 | `/po-export` | Write back clean .po, ready for Launchpad |
 | **Web UI** | Ubuntu-themed FastAPI + htmx dashboard |
-| **Leaderboard** | Per-language contributor rankings via Launchpad |
+| **Contributors** | Per-language contributor rankings via Launchpad |
 
 **4 indigenous languages supported** with Unicode-correct scripts and
 language-specific grammar rules (SOV vs SVO, tone marks, script families).

@@ -102,7 +102,7 @@ Stack: **FastAPI + Jinja2 + htmx + Google Gemini 2.5 Flash + polib + uv** · bui
 
 <!-- _class: lead -->
 
-# Leaderboard — Shan
+# Contributors — Shan
 
 ![w:880](../screenshots/leaderboard-shan-1280x800.png)
 

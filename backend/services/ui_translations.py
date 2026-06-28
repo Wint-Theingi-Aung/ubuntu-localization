@@ -43,7 +43,7 @@ TRANSLATIONS = {
         "mnw": "တၞဟ်",
         "ksw": "တၢ်ဂၢၢ်",
     },
-    "sidebar.leaderboard": {
+    "sidebar.contributors": {
         "my": "ပံ့ပိုးသူများ",
         "en": "Contributors",
         "shn": "ၽူႈၸွႆႈထႅမ်",
@@ -554,203 +554,245 @@ TRANSLATIONS = {
     },
 
     # ── Contributors ──
-    "leaderboard.title": {
+    "contributors.title": {
         "my": "👥 ပံ့ပိုးသူများ",
         "en": "👥 Contributors",
         "shn": "👥 ၽူႈၸွႆႈထႅမ်",
         "mnw": "👥 ညးပါလုပ်",
         "ksw": "👥 ပှၤမၤစၢၤ",
     },
-    "leaderboard.subtitle": {
+    "contributors.subtitle": {
         "my": "Ubuntu ဘာသာပြန် ပံ့ပိုးသူများ",
         "en": "Ubuntu Translation Contributors",
         "shn": "ၽူႈၸွႆႈထႅမ် ပိၼ်ႇၽႃႇသႃႇ Ubuntu",
         "mnw": "ညးပါလုပ် ကၠာဲဘာသာ Ubuntu",
         "ksw": "ပှၤမၤစၢၤ Ubuntu တၢ်ကွဲးကျဲၤ",
     },
-    "leaderboard.filter_label": {
+    "contributors.filter_label": {
         "my": "ဘာသာစကား စစ်ထုတ်ရန်",
         "en": "Filter by Language",
         "shn": "လိူၵ်ႈၽႃႇသႃႇ",
         "mnw": "ရုဲဗ္ၚေတ် အတိုၚ်ဘာသာ",
         "ksw": "ဃ့ထၢကျိာ်",
     },
-    "leaderboard.filter_all": {
+    "contributors.filter_all": {
         "my": "🌐 အားလုံး",
         "en": "🌐 All Languages",
         "shn": "🌐 တင်းသဵင်ႈ",
         "mnw": "🌐 သီုဖအိုတ်",
         "ksw": "🌐 ခဲလၢာ်",
     },
-    "leaderboard.stats.strings_exported": {
+    "contributors.stats.strings_exported": {
         "my": "စာကြောင်းများ ထုတ်ယူပြီး",
         "en": "Strings Exported",
         "shn": "ထႅဝ်ၶေႃႈ ဢွၵ်ႇယဝ်ႉ",
         "mnw": "လာင်အက္ခရ် တိတ်လဝ်",
         "ksw": "တၢ်ကတိာ်ဟဲထလၢာ်",
     },
-    "leaderboard.stats.exports": {
+    "contributors.stats.exports": {
         "my": "ထုတ်ယူမှုများ",
         "en": "Exports",
         "shn": "ဢွၵ်ႇ",
         "mnw": "တိတ်",
         "ksw": "ဟဲထ",
     },
-    "leaderboard.stats.contributors": {
+    "contributors.stats.contributors": {
         "my": "ပံ့ပိုးသူများ",
         "en": "Contributors",
         "shn": "ၽူႈၸွႆႈထႅမ်",
         "mnw": "ညးပါလုပ်",
         "ksw": "ပှၤမၤစၢၤတဖၣ်",
     },
-    "leaderboard.stats.sessions": {
+    "contributors.stats.sessions": {
         "my": "အစည်းအဝေးများ",
         "en": "Sessions",
         "shn": "ၵမ်းၵၢၼ်",
         "mnw": "အလန်",
         "ksw": "တၢ်မၤလိာ်",
     },
-    "leaderboard.lang_table_title": {
+    "contributors.stats.total_contributors": {
+        "my": "စုစုပေါင်း ပံ့ပိုးသူများ",
+        "en": "Total Contributors",
+        "shn": "ၽူႈၸွႆႈထႅမ် တင်းသဵင်ႈ",
+        "mnw": "ညးပါလုပ် သီုဖအိုတ်",
+        "ksw": "ပှၤမၤစၢၤ ခဲလၢာ်",
+    },
+    "contributors.stats.top_contributor": {
+        "my": "ထိပ်ဆုံး ပံ့ပိုးသူ",
+        "en": "Top Contributor",
+        "shn": "ၽူႈၸွႆႈထႅမ် ထိပ်ဆုံး",
+        "mnw": "ညးပါလုပ် လတူအိုတ်",
+        "ksw": "ပှၤမၤစၢၤ အထံးကီဒီး",
+    },
+    "contributors.stats.total_karma": {
+        "my": "စုစုပေါင်း Karma",
+        "en": "Total Karma",
+        "shn": "Karma တင်းသဵင်ႈ",
+        "mnw": "Karma သီုဖအိုတ်",
+        "ksw": "Karma ခဲလၢာ်",
+    },
+    "contributors.stats.active_rate": {
+        "my": "လက်တွေ့ပံ့ပိုးမှုနှုန်း",
+        "en": "Active Rate",
+        "shn": "ဢွၵ်ႇၶေႃႈပိၼ်ႇလႆႈ",
+        "mnw": "လၢတ်ကၠာဲမာန်",
+        "ksw": "တၢ်မၤစၢၤအဆၢ",
+    },
+    "contributors.sort.name": {
+        "my": "▲▼ အမည်",
+        "en": "▲▼ Name",
+        "shn": "▲▼ ၸိုဝ်ႈ",
+        "mnw": "▲▼ ယၟု",
+        "ksw": "▲▼ မံၤ",
+    },
+    "contributors.sort.karma": {
+        "my": "▲▼ Karma",
+        "en": "▲▼ Karma",
+        "shn": "▲▼ Karma",
+        "mnw": "▲▼ Karma",
+        "ksw": "▲▼ Karma",
+    },
+    "contributors.lang_table_title": {
         "my": "📊 ဘာသာစကားအလိုက်",
         "en": "📊 By Language",
         "shn": "📊 တႃႇၽႃႇသႃႇ",
         "mnw": "📊 အတိုၚ်ဘာသာ",
         "ksw": "📊 ဒ်ကျိာ်အဂီၢ်",
     },
-    "leaderboard.table.lang": {
+    "contributors.table.lang": {
         "my": "ဘာသာစကား",
         "en": "Language",
         "shn": "ၽႃႇသႃႇ",
         "mnw": "ဘာသာ",
         "ksw": "ကျိာ်",
     },
-    "leaderboard.table.strings_exported": {
+    "contributors.table.strings_exported": {
         "my": "စာကြောင်းထုတ်ယူမှု",
         "en": "Strings Exported",
         "shn": "ထႅဝ်ၶေႃႈဢွၵ်ႇ",
         "mnw": "လာင်အက္ခရ်တိတ်",
         "ksw": "ကတိာ်ဟဲထလၢာ်",
     },
-    "leaderboard.table.exports": {
+    "contributors.table.exports": {
         "my": "ထုတ်ယူမှု",
         "en": "Exports",
         "shn": "ဢွၵ်ႇ",
         "mnw": "တိတ်",
         "ksw": "ဟဲထ",
     },
-    "leaderboard.table.progress": {
+    "contributors.table.progress": {
         "my": "တိုးတက်မှု",
         "en": "Progress",
         "shn": "လွင်ႈၶိုၼ်ႈယႂ်ႇ",
         "mnw": "တိုန်ဇၞော်",
         "ksw": "တၢ်ထံးကီ",
     },
-    "leaderboard.table.rank": {
+    "contributors.table.rank": {
         "my": "အဆင့်",
         "en": "Rank",
         "shn": "ၸၼ်ႉ",
         "mnw": "အဆင့်",
         "ksw": "ဆင့်",
     },
-    "leaderboard.table.contributor": {
+    "contributors.table.contributor": {
         "my": "ပံ့ပိုးသူ",
         "en": "Contributor",
         "shn": "ၽူႈၸွႆႈထႅမ်",
         "mnw": "ညးပါလုပ်",
         "ksw": "ပှၤမၤစၢၤ",
     },
-    "leaderboard.table.strings": {
+    "contributors.table.strings": {
         "my": "စာကြောင်း",
         "en": "Strings",
         "shn": "ထႅဝ်ၶေႃႈ",
         "mnw": "လာင်အက္ခရ်",
         "ksw": "ကတိာ်",
     },
-    "leaderboard.table.last_active": {
+    "contributors.table.last_active": {
         "my": "နောက်ဆုံးလုပ်ဆောင်ချက်",
         "en": "Last Active",
         "shn": "လိုၼ်းသုတ်း",
         "mnw": "မံင်လက္ကရဴအိုတ်",
         "ksw": "အကတၢၢ်ခံ",
     },
-    "leaderboard.table.karma": {
+    "contributors.table.karma": {
         "my": " karma",
         "en": "Karma",
         "shn": "Karma",
         "mnw": "Karma",
         "ksw": "Karma",
     },
-    "leaderboard.table.teams": {
+    "contributors.table.teams": {
         "my": "အဖွဲ့များ",
         "en": "Teams",
         "shn": "တီႈႁူမ်",
         "mnw": "အဖွဲ့",
         "ksw": "တၢ်ဖဲၣ်",
     },
-    "leaderboard.table.profile": {
+    "contributors.table.profile": {
         "my": "ပရိုဖိုင်",
         "en": "Profile",
         "shn": "ပရဝ်ႇၾၢႆႇ",
         "mnw": "ပရဝ်ဖှဳ",
         "ksw": "ပရိၣ်ဖံ",
     },
-    "leaderboard.prev": {
+    "contributors.prev": {
         "my": "နောက်သို့",
         "en": "Previous",
         "shn": "ၵျွင်မိူဝ်ႈ",
         "mnw": "လက်ကြဴ",
         "ksw": "က့ၤလီၤ",
     },
-    "leaderboard.next": {
+    "contributors.next": {
         "my": "ရှေ့သို့",
         "en": "Next",
         "shn": "ၸူးတေႃ",
         "mnw": "ဂတ",
         "ksw": "ဆူညါ",
     },
-    "leaderboard.search_placeholder": {
+    "contributors.search_placeholder": {
         "my": "အမည် သို့မဟုတ် အသုံးပြုသူအမည်ဖြင့် ရှာဖွေရန်...",
         "en": "Search by name or username...",
         "shn": "ၶွင်ႈႁူမ်ႈ ၵႂၢႆးႁဝ်း...",
         "mnw": "ရှာဖွေ နာမ်...",
         "ksw": "နာမ်ဖဲ ရှာ...",
     },
-    "leaderboard.no_results": {
+    "contributors.no_results": {
         "my": "ရလဒ် မတွေ့ပါ",
         "en": "No contributors found",
         "shn": "ၽူႈၸွႆႈထႅမ် ပႆႇႁဵၼ်",
         "mnw": "ညးပါလုပ် ဟွံတွေ့",
         "ksw": "ပှၤမၤစၢၤ ဟွံတွေ့",
     },
-    "leaderboard.all_time_leaders": {
+    "contributors.all_time_leaders": {
         "my": "🏅 အချိန်တိုင်း ထိပ်ဆုံး",
         "en": "🏅 All-Time Leaders",
         "shn": "🏅 ၸဝ်ႈသဵၼ်ႈၵူႈပွၵ်ႈ",
         "mnw": "🏅 ညးဂမၠိုၚ်လတူအိုတ်",
         "ksw": "🏅 ပှၤခိၣ်နၢ်အဆင့်ထံးကီ",
     },
-    "leaderboard.language_leaderboard": {
+    "contributors.language_leaderboard": {
         "my": "🏅 {language} အဆင့်သတ်မှတ်ချက်",
-        "en": "🏅 {language} Leaderboard",
+        "en": "🏅 {language} Contributors",
         "shn": "🏅 သဵၼ်ႈၸၼ်ႉ {language}",
         "mnw": "🏅 စရင်အဆင့် {language}",
         "ksw": "🏅 {language} တၢ်ပာ်ဖျၢၣ်",
     },
-    "leaderboard.empty_title": {
+    "contributors.empty_title": {
         "my": "ဒေတာမရှိသေးပါ",
         "en": "No data yet",
         "shn": "ပႆႇမီးၶေႃႈမုၼ်း",
         "mnw": "ဒတာ ဟွံမံက်ဏီ",
         "ksw": "တၢ်ဂ့ၢ်အါဒံးဘၣ်",
     },
-    "leaderboard.empty_desc": {
+    "contributors.empty_desc": {
         "my": "ဘာသာပြန်ချက်များကို ထုတ်ယူပြီးပါက အဆင့်သတ်မှတ်ချက် ပေါ်လာပါမည်။",
-        "en": "Export some translations to build the leaderboard!",
+        "en": "Export some translations to build the contributors page!",
         "shn": "ဢွၵ်ႇပိုၼ်းၶေႃႈပိၼ်ႇ တႃႇသၢင်ႈသဵၼ်ႈၸၼ်ႉ!",
         "mnw": "ပ္တိတ်ကၠာဲဘာသာ သွက်ဂွံခၞံစရင်အဆင့်!",
         "ksw": "ဟဲထကတိာ်ကျိာ်တဖၣ် ဒ်သိးကဒိးထီၣ်တၢ်ပာ်ဖျၢၣ်!",
     },
-    "leaderboard.empty_cta": {
+    "contributors.empty_cta": {
         "my": "📤 စတင်ရန်",
         "en": "📤 Get Started",
         "shn": "📤 တႄႇ",
@@ -759,56 +801,56 @@ TRANSLATIONS = {
     },
 
     # ── Contributor Detail ──
-    "leaderboard.contributor.back": {
+    "contributors.contributor.back": {
         "my": "← ပံ့ပိုးသူများသို့",
         "en": "← Back to Contributors",
         "shn": "← ၶိုၼ်းၽူႈၸွႆႈထႅမ်",
         "mnw": "← ကလေင်ညးပါလုပ်",
         "ksw": "← က့ၤဆူပှၤမၤစၢၤ",
     },
-    "leaderboard.contributor.ranked": {
+    "contributors.contributor.ranked": {
         "my": "ပံ့ပိုးသူ {total} ဦးတွင် နံပါတ် #{rank}",
         "en": "Ranked #{rank} of {total} contributors",
         "shn": "ၸၼ်ႉ #{rank} ၼႂ်း {total} ၽူႈၸွႆႈထႅမ်",
         "mnw": "အဆင့် #{rank} ပ္ဍဲ {total} ညးပါလုပ်",
         "ksw": "အဆင့် #{rank} ဖဲ {total} ပှၤမၤစၢၤအပူၤ",
     },
-    "leaderboard.contributor.only_contributor": {
+    "contributors.contributor.only_contributor": {
         "my": "တစ်ဦးတည်းသော ပံ့ပိုးသူ",
         "en": "Only contributor",
         "shn": "ၽူႈၸွႆႈထႅမ် ၵေႃႉလဵဝ်",
         "mnw": "ညးပါလုပ် မွဲဓဝ်",
         "ksw": "ပှၤမၤစၢၤတမံၤဧိၤ",
     },
-    "leaderboard.contributor.top_pct": {
+    "contributors.contributor.top_pct": {
         "my": "ထိပ်ဆုံး {pct}%",
         "en": "Top {pct}%",
         "shn": "{pct}% ထိပ်ဆုံး",
         "mnw": "{pct}% လတူအိုတ်",
         "ksw": "ထံးကီ {pct}%",
     },
-    "leaderboard.contributor.strings_translated": {
+    "contributors.contributor.strings_translated": {
         "my": "ဘာသာပြန်ထားသော စာကြောင်းများ",
         "en": "Strings Translated",
         "shn": "ထႅဝ်ၶေႃႈပိၼ်ႇ",
         "mnw": "လာင်အက္ခရ်ကၠာဲလဝ်",
         "ksw": "ကတိာ်ကတိာ်ကျိာ်လၢာ်",
     },
-    "leaderboard.contributor.exports": {
+    "contributors.contributor.exports": {
         "my": "ထုတ်ယူမှုများ",
         "en": "Exports",
         "shn": "ဢွၵ်ႇ",
         "mnw": "တိတ်",
         "ksw": "ဟဲထ",
     },
-    "leaderboard.contributor.by_language": {
+    "contributors.contributor.by_language": {
         "my": "📊 ဘာသာစကားအလိုက်",
         "en": "📊 By Language",
         "shn": "📊 တႃႇၽႃႇသႃႇ",
         "mnw": "📊 အတိုၚ်ဘာသာ",
         "ksw": "📊 ဒ်ကျိာ်အဂီၢ်",
     },
-    "leaderboard.contributor.launchpad_profile": {
+    "contributors.contributor.launchpad_profile": {
         "my": "🔍 Launchpad ပရိုဖိုင်",
         "en": "🔍 Launchpad Profile",
         "shn": "🔍 ပရ�ဝ်ႇၾၢႆႇ Launchpad",
@@ -817,30 +859,30 @@ TRANSLATIONS = {
     },
 
     # ── Leaderboard Widget ──
-    "leaderboard.widget.title": {
+    "contributors.widget.title": {
         "my": "🏆 ထိပ်တန်းပံ့ပိုးသူများ",
         "en": "🏆 Top Contributors",
         "shn": "🏆 ၽူႈၸွႆႈထႅမ်ထိပ်ဆုံး",
         "mnw": "🏆 ညးပါလုပ်လတူအိုတ်",
         "ksw": "🏆 ပှၤမၤစၢၤအထံးကီဒီး",
     },
-    "leaderboard.widget.view_all": {
+    "contributors.widget.view_all": {
         "my": "အားလုံးကြည့်ရန်",
         "en": "View All",
         "shn": "တူၺ်းတင်းသဵင်ႈ",
         "mnw": "ရံင်သီုဖအိုတ်",
         "ksw": "ထီၣ်ခဲလၢာ်",
     },
-    "leaderboard.widget.strings": {
+    "contributors.widget.strings": {
         "my": "စာကြောင်း",
         "en": "strings",
         "shn": "ထႅဝ်ၶေႃႈ",
         "mnw": "လာင်",
         "ksw": "ကတိာ်",
     },
-    "leaderboard.widget.empty": {
+    "contributors.widget.empty": {
         "my": "အဆင့်သတ်မှတ်ချက် တည်ဆောက်ရန် ဘာသာပြန်ချက်များကို ထုတ်ယူပါ",
-        "en": "Export translations to build the leaderboard",
+        "en": "Export translations to see contributors",
         "shn": "ဢွၵ်ႇၶေႃႈပိၼ်ႇ တႃႇသၢင်ႈသဵၼ်ႈၸၼ်ႉ",
         "mnw": "ပ္တိတ်ကၠာဲဘာသာ သွက်ဂွံခၞံစရင်အဆင့်",
         "ksw": "ဟဲထကတိာ်ကျိာ် ဒ်သိးကဒိးထီၣ်တၢ်ပာ်ဖျၢၣ်",

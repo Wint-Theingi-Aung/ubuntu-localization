@@ -25,8 +25,8 @@ uv run uvicorn backend.main:app --reload
 | `/export/history` | Export history |
 | `/guide/` | 6-chapter interactive user guide |
 | `/guide/quickref` | Quick reference card |
-| `/leaderboard/` | Top contributors, per-language rankings |
-| `/leaderboard/contributor/{name}` | Individual contributor stats |
+| `/contributors/` | Top contributors, per-language rankings |
+| `/contributors/contributor/{name}` | Individual contributor stats |
 | `/auth/` | Launchpad login, profile, karma, teams |
 | `/health` | Health check endpoint |
 

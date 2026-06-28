@@ -560,6 +560,17 @@ body.sidebar-open .hamburger-btn {
 
 .data-table tr:hover td { background: rgba(233, 84, 32, 0.04); }
 
+/* Sortable headers */
+.data-table th.sortable {
+  cursor: pointer;
+  user-select: none;
+  transition: color 0.15s;
+  white-space: nowrap;
+}
+.data-table th.sortable:hover { color: var(--orange); }
+.data-table th.sort-asc::after  { content: " ▲"; font-size: 10px; color: var(--orange); }
+.data-table th.sort-desc::after { content: " ▼"; font-size: 10px; color: var(--orange); }
+
 /* ── Code ─────────────────────────────────────────────────────────── */
 
 code {
@@ -1323,8 +1334,8 @@ pre {
     </div>
     <div class="nav-section">
       <div class="nav-section-title">{{ t('sidebar.more') }}</div>
-      <a href="/leaderboard/" class="nav-item {% if request.url.path == '/leaderboard/' %}active{% endif %}" onclick="closeSidebar()">
-        <span class="nav-icon">👥</span> {{ t('sidebar.leaderboard') }}
+      <a href="/contributors/" class="nav-item {% if request.url.path == '/contributors/' %}active{% endif %}" onclick="closeSidebar()">
+        <span class="nav-icon">👥</span> {{ t('sidebar.contributors') }}
       </a>
       <a href="/export/history" class="nav-item {% if request.url.path == '/export/history' %}active{% endif %}" onclick="closeSidebar()">
         <span class="nav-icon">📚</span> {{ t('sidebar.history') }}

@@ -15,7 +15,7 @@ from fastapi.responses import HTMLResponse, FileResponse
 from fastapi.staticfiles import StaticFiles
 
 from backend.config import config, PROJECT_ROOT, EXPORTS_DIR, LANGUAGES
-from backend.routers import upload, translate, export, guide, leaderboard
+from backend.routers import upload, translate, export, guide, contributors
 from backend.services.translator import check_available
 from backend.templates_engine import templates
 
@@ -61,7 +61,7 @@ app.include_router(upload.router)
 app.include_router(translate.router)
 app.include_router(export.router)
 app.include_router(guide.router)
-app.include_router(leaderboard.router)
+app.include_router(contributors.router)
 
 # ── Main Pages ─────────────────────────────────────────────────────────
 

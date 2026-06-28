@@ -9,7 +9,7 @@ from backend.services import launchpad_client
 from backend.services.ui_translations import get_ui_lang, t
 from backend.templates_engine import templates
 
-router = APIRouter(prefix="/leaderboard", tags=["contributors"])
+router = APIRouter(prefix="/contributors", tags=["contributors"])
 
 
 @router.get("/", response_class=HTMLResponse)
@@ -37,7 +37,7 @@ async def contributors_page(request: Request, lang: str = ""):
     stats = db.get_app_stats()
     lang_stats = db.get_language_stats()
 
-    return templates.TemplateResponse(request, "leaderboard.html", {
+    return templates.TemplateResponse(request, "contributors_list.html", {
         "contributors": contributors,
         "stats": stats,
         "lang_stats": lang_stats,
@@ -65,7 +65,7 @@ async def contributor_detail(request: Request, username: str):
     detail = launchpad_client.get_contributor_detail(username)
     if not detail:
         contributors = launchpad_client.get_contributors_with_details(limit=50)
-        return templates.TemplateResponse(request, "leaderboard.html", {
+        return templates.TemplateResponse(request, "contributors_list.html", {
             "contributors": contributors,
             "stats": db.get_app_stats(),
             "lang_stats": db.get_language_stats(),
@@ -105,7 +105,7 @@ async def contributors_widget(request: Request, lang: str = "", limit: int = 5):
         db_entry = db_map.get(c["username"], {})
         c["strings_translated"] = db_entry.get("total_strings", 0) if db_entry else 0
 
-    return templates.TemplateResponse(request, "partials/leaderboard_widget.html", {
+    return templates.TemplateResponse(request, "partials/contributors_widget.html", {
         "contributors": contributors,
         "lang": lang,
     })
@@ -119,18 +119,18 @@ async def stats_widget(request: Request):
     return HTMLResponse(f"""<div class="stats-grid" id="stats-widget">
         <div class="stat">
             <span class="stat-value">{stats['total_strings_exported']:,}</span>
-            <span class="stat-label">{t('leaderboard.stats.strings_exported', lang)}</span>
+            <span class="stat-label">{t('contributors.stats.strings_exported', lang)}</span>
         </div>
         <div class="stat">
             <span class="stat-value">{stats['total_exports']:,}</span>
-            <span class="stat-label">{t('leaderboard.stats.exports', lang)}</span>
+            <span class="stat-label">{t('contributors.stats.exports', lang)}</span>
         </div>
         <div class="stat">
             <span class="stat-value">{stats['contributors']}</span>
-            <span class="stat-label">{t('leaderboard.stats.contributors', lang)}</span>
+            <span class="stat-label">{t('contributors.stats.contributors', lang)}</span>
         </div>
         <div class="stat">
             <span class="stat-value">{stats['sessions']}</span>
-            <span class="stat-label">{t('leaderboard.stats.sessions', lang)}</span>
+            <span class="stat-label">{t('contributors.stats.sessions', lang)}</span>
         </div>
     </div>""")
