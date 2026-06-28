@@ -34,33 +34,10 @@ _LANG_TEAM_MAP = {
 # Karma values are approximate historical totals.
 # >>> FALLBACK_START
 _FALLBACK_CONTRIBUTORS: list[dict] = [
-    # ── Myanmar / Burmese (ubuntu-l10n-my) ──────────────────────────────
-    {
-        "username": "kokoye2007",
-        "display_name": "Ko Ko Ye",
-        "karma": 1532,
-        "web_link": "https://launchpad.net/~kokoye2007",
-        "languages": ["my"],
-        "language_codes": ["my"],
-        "teams": [
-            {
-                "team_name": "ubuntu-l10n-my",
-                "display_name": "Ubuntu Myanmar Translators",
-                "status": "Approved",
-                "web_link": "https://launchpad.net/~ubuntu-l10n-my",
-            },
-            {
-                "team_name": "ubuntu-translators",
-                "display_name": "Ubuntu Translators",
-                "status": "Approved",
-                "web_link": "https://launchpad.net/~ubuntu-translators",
-            },
-        ],
-    },
     {
         "username": "wint-theingi-aung",
         "display_name": "Wint Theingi Aung",
-        "karma": 450,
+        "karma": 282243,
         "web_link": "https://launchpad.net/~wint-theingi-aung",
         "languages": ["my"],
         "language_codes": ["my"],
@@ -76,14 +53,64 @@ _FALLBACK_CONTRIBUTORS: list[dict] = [
                 "display_name": "Ubuntu Translators",
                 "status": "Approved",
                 "web_link": "https://launchpad.net/~ubuntu-translators",
-            },
+            }
         ],
     },
     {
-        "username": "aungkhant-007",
-        "display_name": "Aung Khant",
-        "karma": 876,
-        "web_link": "https://launchpad.net/~aungkhant-007",
+        "username": "rockrock2222222",
+        "display_name": "Rockworld",
+        "karma": 11448,
+        "web_link": "https://launchpad.net/~rockrock2222222",
+        "languages": ["my", "shn"],
+        "language_codes": ["my", "shn"],
+        "teams": [
+            {
+                "team_name": "ubuntu-l10n-my",
+                "display_name": "Ubuntu Myanmar Translators",
+                "status": "Approved",
+                "web_link": "https://launchpad.net/~ubuntu-l10n-my",
+            },
+            {
+                "team_name": "ubuntu-translators",
+                "display_name": "Ubuntu Translators",
+                "status": "Approved",
+                "web_link": "https://launchpad.net/~ubuntu-translators",
+            },
+            {
+                "team_name": "ubuntu-l10n-shn",
+                "display_name": "Ubuntu Shan Translators",
+                "status": "Approved",
+                "web_link": "https://launchpad.net/~ubuntu-l10n-shn",
+            }
+        ],
+    },
+    {
+        "username": "clementlefebvre",
+        "display_name": "Clement Lefebvre",
+        "karma": 4558,
+        "web_link": "https://launchpad.net/~clementlefebvre",
+        "languages": ["ksw"],
+        "language_codes": ["ksw"],
+        "teams": [
+            {
+                "team_name": "linuxmint-translation-team-ksw",
+                "display_name": "S'gaw Karen Translation Team for Linux Mint",
+                "status": "Approved",
+                "web_link": "https://launchpad.net/~linuxmint-translation-team-ksw",
+            },
+            {
+                "team_name": "ubuntu-translators",
+                "display_name": "Ubuntu Translators",
+                "status": "Approved",
+                "web_link": "https://launchpad.net/~ubuntu-translators",
+            }
+        ],
+    },
+    {
+        "username": "trh",
+        "display_name": "Thura",
+        "karma": 172,
+        "web_link": "https://launchpad.net/~trh",
         "languages": ["my"],
         "language_codes": ["my"],
         "teams": [
@@ -93,13 +120,75 @@ _FALLBACK_CONTRIBUTORS: list[dict] = [
                 "status": "Approved",
                 "web_link": "https://launchpad.net/~ubuntu-l10n-my",
             },
+            {
+                "team_name": "ubuntu-translators",
+                "display_name": "Ubuntu Translators",
+                "status": "Approved",
+                "web_link": "https://launchpad.net/~ubuntu-translators",
+            }
         ],
     },
     {
-        "username": "zawhtetnaing",
-        "display_name": "Zaw Htet Naing",
-        "karma": 612,
-        "web_link": "https://launchpad.net/~zawhtetnaing",
+        "username": "gipsyhnh",
+        "display_name": "Pyae Sone",
+        "karma": 86,
+        "web_link": "https://launchpad.net/~gipsyhnh",
+        "languages": ["my", "shn"],
+        "language_codes": ["my", "shn"],
+        "teams": [
+            {
+                "team_name": "ubuntu-l10n-my",
+                "display_name": "Ubuntu Myanmar Translators",
+                "status": "Approved",
+                "web_link": "https://launchpad.net/~ubuntu-l10n-my",
+            },
+            {
+                "team_name": "ubuntu-translators",
+                "display_name": "Ubuntu Translators",
+                "status": "Approved",
+                "web_link": "https://launchpad.net/~ubuntu-translators",
+            },
+            {
+                "team_name": "ubuntu-l10n-shn",
+                "display_name": "Ubuntu Shan Translators",
+                "status": "Approved",
+                "web_link": "https://launchpad.net/~ubuntu-l10n-shn",
+            }
+        ],
+    },
+    {
+        "username": "htetminaung2018",
+        "display_name": "Tao Mon Lae",
+        "karma": 86,
+        "web_link": "https://launchpad.net/~htetminaung2018",
+        "languages": ["mnw", "my"],
+        "language_codes": ["mnw", "my"],
+        "teams": [
+            {
+                "team_name": "ubuntu-l10n-my",
+                "display_name": "Ubuntu Myanmar Translators",
+                "status": "Approved",
+                "web_link": "https://launchpad.net/~ubuntu-l10n-my",
+            },
+            {
+                "team_name": "ubuntu-translators",
+                "display_name": "Ubuntu Translators",
+                "status": "Approved",
+                "web_link": "https://launchpad.net/~ubuntu-translators",
+            },
+            {
+                "team_name": "ubuntu-l10n-mnw",
+                "display_name": "Ubuntu Mon Translators",
+                "status": "Approved",
+                "web_link": "https://launchpad.net/~ubuntu-l10n-mnw",
+            }
+        ],
+    },
+    {
+        "username": "thohi",
+        "display_name": "Ye Htut Win",
+        "karma": 43,
+        "web_link": "https://launchpad.net/~thohi",
         "languages": ["my"],
         "language_codes": ["my"],
         "teams": [
@@ -109,13 +198,2319 @@ _FALLBACK_CONTRIBUTORS: list[dict] = [
                 "status": "Approved",
                 "web_link": "https://launchpad.net/~ubuntu-l10n-my",
             },
+            {
+                "team_name": "ubuntu-translators",
+                "display_name": "Ubuntu Translators",
+                "status": "Approved",
+                "web_link": "https://launchpad.net/~ubuntu-translators",
+            }
         ],
     },
     {
-        "username": "pyaephyo4892",
+        "username": "paing-phyoe",
+        "display_name": "Yuki Painglay",
+        "karma": 43,
+        "web_link": "https://launchpad.net/~paing-phyoe",
+        "languages": ["my"],
+        "language_codes": ["my"],
+        "teams": [
+            {
+                "team_name": "ubuntu-l10n-my",
+                "display_name": "Ubuntu Myanmar Translators",
+                "status": "Approved",
+                "web_link": "https://launchpad.net/~ubuntu-l10n-my",
+            },
+            {
+                "team_name": "ubuntu-translators",
+                "display_name": "Ubuntu Translators",
+                "status": "Approved",
+                "web_link": "https://launchpad.net/~ubuntu-translators",
+            }
+        ],
+    },
+    {
+        "username": "zyl65535",
+        "display_name": "Zayar Lwin",
+        "karma": 2,
+        "web_link": "https://launchpad.net/~zyl65535",
+        "languages": ["my"],
+        "language_codes": ["my"],
+        "teams": [
+            {
+                "team_name": "ubuntu-l10n-my",
+                "display_name": "Ubuntu Myanmar Translators",
+                "status": "Approved",
+                "web_link": "https://launchpad.net/~ubuntu-l10n-my",
+            },
+            {
+                "team_name": "ubuntu-translators",
+                "display_name": "Ubuntu Translators",
+                "status": "Approved",
+                "web_link": "https://launchpad.net/~ubuntu-translators",
+            }
+        ],
+    },
+    {
+        "username": "kokoye2007",
+        "display_name": "kokoye2007 \ue0ff",
+        "karma": 1,
+        "web_link": "https://launchpad.net/~kokoye2007",
+        "languages": ["mnw", "my", "shn"],
+        "language_codes": ["mnw", "my", "shn"],
+        "teams": [
+            {
+                "team_name": "ubuntu-l10n-my",
+                "display_name": "Ubuntu Myanmar Translators",
+                "status": "Approved",
+                "web_link": "https://launchpad.net/~ubuntu-l10n-my",
+            },
+            {
+                "team_name": "ubuntu-translators",
+                "display_name": "Ubuntu Translators",
+                "status": "Approved",
+                "web_link": "https://launchpad.net/~ubuntu-translators",
+            },
+            {
+                "team_name": "ubuntu-l10n-mnw",
+                "display_name": "Ubuntu Mon Translators",
+                "status": "Approved",
+                "web_link": "https://launchpad.net/~ubuntu-l10n-mnw",
+            },
+            {
+                "team_name": "ubuntu-l10n-shn",
+                "display_name": "Ubuntu Shan Translators",
+                "status": "Approved",
+                "web_link": "https://launchpad.net/~ubuntu-l10n-shn",
+            }
+        ],
+    },
+    {
+        "username": "krer",
+        "display_name": "Adob Tail",
+        "karma": 0,
+        "web_link": "https://launchpad.net/~krer",
+        "languages": ["my"],
+        "language_codes": ["my"],
+        "teams": [
+            {
+                "team_name": "ubuntu-l10n-my",
+                "display_name": "Ubuntu Myanmar Translators",
+                "status": "Approved",
+                "web_link": "https://launchpad.net/~ubuntu-l10n-my",
+            },
+            {
+                "team_name": "ubuntu-translators",
+                "display_name": "Ubuntu Translators",
+                "status": "Approved",
+                "web_link": "https://launchpad.net/~ubuntu-translators",
+            }
+        ],
+    },
+    {
+        "username": "g-crazydemon",
+        "display_name": "AlphaCool",
+        "karma": 0,
+        "web_link": "https://launchpad.net/~g-crazydemon",
+        "languages": ["my"],
+        "language_codes": ["my"],
+        "teams": [
+            {
+                "team_name": "ubuntu-l10n-my",
+                "display_name": "Ubuntu Myanmar Translators",
+                "status": "Approved",
+                "web_link": "https://launchpad.net/~ubuntu-l10n-my",
+            },
+            {
+                "team_name": "ubuntu-translators",
+                "display_name": "Ubuntu Translators",
+                "status": "Approved",
+                "web_link": "https://launchpad.net/~ubuntu-translators",
+            }
+        ],
+    },
+    {
+        "username": "anandrajny",
+        "display_name": "Anand Raj",
+        "karma": 0,
+        "web_link": "https://launchpad.net/~anandrajny",
+        "languages": ["my"],
+        "language_codes": ["my"],
+        "teams": [
+            {
+                "team_name": "ubuntu-l10n-my",
+                "display_name": "Ubuntu Myanmar Translators",
+                "status": "Approved",
+                "web_link": "https://launchpad.net/~ubuntu-l10n-my",
+            },
+            {
+                "team_name": "ubuntu-translators",
+                "display_name": "Ubuntu Translators",
+                "status": "Approved",
+                "web_link": "https://launchpad.net/~ubuntu-translators",
+            }
+        ],
+    },
+    {
+        "username": "anontamon",
+        "display_name": "anontamon",
+        "karma": 0,
+        "web_link": "https://launchpad.net/~anontamon",
+        "languages": ["mnw"],
+        "language_codes": ["mnw"],
+        "teams": [
+            {
+                "team_name": "ubuntu-l10n-mnw",
+                "display_name": "Ubuntu Mon Translators",
+                "status": "Approved",
+                "web_link": "https://launchpad.net/~ubuntu-l10n-mnw",
+            },
+            {
+                "team_name": "ubuntu-translators",
+                "display_name": "Ubuntu Translators",
+                "status": "Approved",
+                "web_link": "https://launchpad.net/~ubuntu-translators",
+            }
+        ],
+    },
+    {
+        "username": "4htet",
+        "display_name": "ANyarThar",
+        "karma": 0,
+        "web_link": "https://launchpad.net/~4htet",
+        "languages": ["my"],
+        "language_codes": ["my"],
+        "teams": [
+            {
+                "team_name": "ubuntu-l10n-my",
+                "display_name": "Ubuntu Myanmar Translators",
+                "status": "Approved",
+                "web_link": "https://launchpad.net/~ubuntu-l10n-my",
+            },
+            {
+                "team_name": "ubuntu-translators",
+                "display_name": "Ubuntu Translators",
+                "status": "Approved",
+                "web_link": "https://launchpad.net/~ubuntu-translators",
+            }
+        ],
+    },
+    {
+        "username": "auenai",
+        "display_name": "auenai",
+        "karma": 0,
+        "web_link": "https://launchpad.net/~auenai",
+        "languages": ["mnw"],
+        "language_codes": ["mnw"],
+        "teams": [
+            {
+                "team_name": "ubuntu-l10n-mnw",
+                "display_name": "Ubuntu Mon Translators",
+                "status": "Approved",
+                "web_link": "https://launchpad.net/~ubuntu-l10n-mnw",
+            },
+            {
+                "team_name": "ubuntu-translators",
+                "display_name": "Ubuntu Translators",
+                "status": "Approved",
+                "web_link": "https://launchpad.net/~ubuntu-translators",
+            }
+        ],
+    },
+    {
+        "username": "aungkokomyintoo",
+        "display_name": "Aung Ko Ko Myint Oo",
+        "karma": 0,
+        "web_link": "https://launchpad.net/~aungkokomyintoo",
+        "languages": ["my"],
+        "language_codes": ["my"],
+        "teams": [
+            {
+                "team_name": "ubuntu-l10n-my",
+                "display_name": "Ubuntu Myanmar Translators",
+                "status": "Approved",
+                "web_link": "https://launchpad.net/~ubuntu-l10n-my",
+            },
+            {
+                "team_name": "ubuntu-translators",
+                "display_name": "Ubuntu Translators",
+                "status": "Approved",
+                "web_link": "https://launchpad.net/~ubuntu-translators",
+            }
+        ],
+    },
+    {
+        "username": "aungmyokyaw",
+        "display_name": "Aung Myo Kyaw",
+        "karma": 0,
+        "web_link": "https://launchpad.net/~aungmyokyaw",
+        "languages": ["my"],
+        "language_codes": ["my"],
+        "teams": [
+            {
+                "team_name": "ubuntu-l10n-my",
+                "display_name": "Ubuntu Myanmar Translators",
+                "status": "Approved",
+                "web_link": "https://launchpad.net/~ubuntu-l10n-my",
+            },
+            {
+                "team_name": "ubuntu-translators",
+                "display_name": "Ubuntu Translators",
+                "status": "Approved",
+                "web_link": "https://launchpad.net/~ubuntu-translators",
+            }
+        ],
+    },
+    {
+        "username": "21whitefriend",
+        "display_name": "Aung Myo Naing",
+        "karma": 0,
+        "web_link": "https://launchpad.net/~21whitefriend",
+        "languages": ["my"],
+        "language_codes": ["my"],
+        "teams": [
+            {
+                "team_name": "ubuntu-l10n-my",
+                "display_name": "Ubuntu Myanmar Translators",
+                "status": "Approved",
+                "web_link": "https://launchpad.net/~ubuntu-l10n-my",
+            },
+            {
+                "team_name": "ubuntu-translators",
+                "display_name": "Ubuntu Translators",
+                "status": "Approved",
+                "web_link": "https://launchpad.net/~ubuntu-translators",
+            }
+        ],
+    },
+    {
+        "username": "aungswan",
+        "display_name": "Aung Swan",
+        "karma": 0,
+        "web_link": "https://launchpad.net/~aungswan",
+        "languages": ["mnw"],
+        "language_codes": ["mnw"],
+        "teams": [
+            {
+                "team_name": "ubuntu-l10n-mnw",
+                "display_name": "Ubuntu Mon Translators",
+                "status": "Approved",
+                "web_link": "https://launchpad.net/~ubuntu-l10n-mnw",
+            },
+            {
+                "team_name": "ubuntu-translators",
+                "display_name": "Ubuntu Translators",
+                "status": "Approved",
+                "web_link": "https://launchpad.net/~ubuntu-translators",
+            }
+        ],
+    },
+    {
+        "username": "aungkhantbo",
+        "display_name": "AungKhantBo",
+        "karma": 0,
+        "web_link": "https://launchpad.net/~aungkhantbo",
+        "languages": ["my"],
+        "language_codes": ["my"],
+        "teams": [
+            {
+                "team_name": "ubuntu-l10n-my",
+                "display_name": "Ubuntu Myanmar Translators",
+                "status": "Approved",
+                "web_link": "https://launchpad.net/~ubuntu-l10n-my",
+            },
+            {
+                "team_name": "ubuntu-translators",
+                "display_name": "Ubuntu Translators",
+                "status": "Approved",
+                "web_link": "https://launchpad.net/~ubuntu-translators",
+            }
+        ],
+    },
+    {
+        "username": "aungsitt",
+        "display_name": "aungsitt",
+        "karma": 0,
+        "web_link": "https://launchpad.net/~aungsitt",
+        "languages": ["my"],
+        "language_codes": ["my"],
+        "teams": [
+            {
+                "team_name": "ubuntu-l10n-my",
+                "display_name": "Ubuntu Myanmar Translators",
+                "status": "Approved",
+                "web_link": "https://launchpad.net/~ubuntu-l10n-my",
+            },
+            {
+                "team_name": "ubuntu-translators",
+                "display_name": "Ubuntu Translators",
+                "status": "Approved",
+                "web_link": "https://launchpad.net/~ubuntu-translators",
+            }
+        ],
+    },
+    {
+        "username": "aungthetkhaing",
+        "display_name": "AungThetKhaing",
+        "karma": 0,
+        "web_link": "https://launchpad.net/~aungthetkhaing",
+        "languages": ["my"],
+        "language_codes": ["my"],
+        "teams": [
+            {
+                "team_name": "ubuntu-l10n-my",
+                "display_name": "Ubuntu Myanmar Translators",
+                "status": "Approved",
+                "web_link": "https://launchpad.net/~ubuntu-l10n-my",
+            },
+            {
+                "team_name": "ubuntu-translators",
+                "display_name": "Ubuntu Translators",
+                "status": "Approved",
+                "web_link": "https://launchpad.net/~ubuntu-translators",
+            }
+        ],
+    },
+    {
+        "username": "aungzinnwp",
+        "display_name": "aungzin",
+        "karma": 0,
+        "web_link": "https://launchpad.net/~aungzinnwp",
+        "languages": ["my"],
+        "language_codes": ["my"],
+        "teams": [
+            {
+                "team_name": "ubuntu-l10n-my",
+                "display_name": "Ubuntu Myanmar Translators",
+                "status": "Approved",
+                "web_link": "https://launchpad.net/~ubuntu-l10n-my",
+            },
+            {
+                "team_name": "ubuntu-translators",
+                "display_name": "Ubuntu Translators",
+                "status": "Approved",
+                "web_link": "https://launchpad.net/~ubuntu-translators",
+            }
+        ],
+    },
+    {
+        "username": "ayekyar80",
+        "display_name": "Aye Kyar",
+        "karma": 0,
+        "web_link": "https://launchpad.net/~ayekyar80",
+        "languages": ["ksw"],
+        "language_codes": ["ksw"],
+        "teams": [
+            {
+                "team_name": "linuxmint-translation-team-ksw",
+                "display_name": "S'gaw Karen Translation Team for Linux Mint",
+                "status": "Approved",
+                "web_link": "https://launchpad.net/~linuxmint-translation-team-ksw",
+            },
+            {
+                "team_name": "ubuntu-translators",
+                "display_name": "Ubuntu Translators",
+                "status": "Approved",
+                "web_link": "https://launchpad.net/~ubuntu-translators",
+            }
+        ],
+    },
+    {
+        "username": "mon601",
+        "display_name": "banyarhongsar",
+        "karma": 0,
+        "web_link": "https://launchpad.net/~mon601",
+        "languages": ["mnw"],
+        "language_codes": ["mnw"],
+        "teams": [
+            {
+                "team_name": "ubuntu-l10n-mnw",
+                "display_name": "Ubuntu Mon Translators",
+                "status": "Approved",
+                "web_link": "https://launchpad.net/~ubuntu-l10n-mnw",
+            },
+            {
+                "team_name": "ubuntu-translators",
+                "display_name": "Ubuntu Translators",
+                "status": "Approved",
+                "web_link": "https://launchpad.net/~ubuntu-translators",
+            }
+        ],
+    },
+    {
+        "username": "battoe19",
+        "display_name": "Battoe19",
+        "karma": 0,
+        "web_link": "https://launchpad.net/~battoe19",
+        "languages": ["my"],
+        "language_codes": ["my"],
+        "teams": [
+            {
+                "team_name": "ubuntu-l10n-my",
+                "display_name": "Ubuntu Myanmar Translators",
+                "status": "Approved",
+                "web_link": "https://launchpad.net/~ubuntu-l10n-my",
+            },
+            {
+                "team_name": "ubuntu-translators",
+                "display_name": "Ubuntu Translators",
+                "status": "Approved",
+                "web_link": "https://launchpad.net/~ubuntu-translators",
+            }
+        ],
+    },
+    {
+        "username": "box02",
+        "display_name": "box02",
+        "karma": 0,
+        "web_link": "https://launchpad.net/~box02",
+        "languages": ["my"],
+        "language_codes": ["my"],
+        "teams": [
+            {
+                "team_name": "ubuntu-l10n-my",
+                "display_name": "Ubuntu Myanmar Translators",
+                "status": "Approved",
+                "web_link": "https://launchpad.net/~ubuntu-l10n-my",
+            },
+            {
+                "team_name": "ubuntu-translators",
+                "display_name": "Ubuntu Translators",
+                "status": "Approved",
+                "web_link": "https://launchpad.net/~ubuntu-translators",
+            }
+        ],
+    },
+    {
+        "username": "chanhtaw75",
+        "display_name": "chanhtaw75",
+        "karma": 0,
+        "web_link": "https://launchpad.net/~chanhtaw75",
+        "languages": ["mnw"],
+        "language_codes": ["mnw"],
+        "teams": [
+            {
+                "team_name": "ubuntu-l10n-mnw",
+                "display_name": "Ubuntu Mon Translators",
+                "status": "Approved",
+                "web_link": "https://launchpad.net/~ubuntu-l10n-mnw",
+            },
+            {
+                "team_name": "ubuntu-translators",
+                "display_name": "Ubuntu Translators",
+                "status": "Approved",
+                "web_link": "https://launchpad.net/~ubuntu-translators",
+            }
+        ],
+    },
+    {
+        "username": "chenheting",
+        "display_name": "Chenheting",
+        "karma": 0,
+        "web_link": "https://launchpad.net/~chenheting",
+        "languages": ["my"],
+        "language_codes": ["my"],
+        "teams": [
+            {
+                "team_name": "ubuntu-l10n-my",
+                "display_name": "Ubuntu Myanmar Translators",
+                "status": "Approved",
+                "web_link": "https://launchpad.net/~ubuntu-l10n-my",
+            },
+            {
+                "team_name": "ubuntu-translators",
+                "display_name": "Ubuntu Translators",
+                "status": "Approved",
+                "web_link": "https://launchpad.net/~ubuntu-translators",
+            }
+        ],
+    },
+    {
+        "username": "chipo-ngongoni",
+        "display_name": "Chipo Nancy Ngongoni",
+        "karma": 0,
+        "web_link": "https://launchpad.net/~chipo-ngongoni",
+        "languages": ["shn"],
+        "language_codes": ["shn"],
+        "teams": [
+            {
+                "team_name": "ubuntu-l10n-shn",
+                "display_name": "Ubuntu Shan Translators",
+                "status": "Approved",
+                "web_link": "https://launchpad.net/~ubuntu-l10n-shn",
+            },
+            {
+                "team_name": "ubuntu-translators",
+                "display_name": "Ubuntu Translators",
+                "status": "Approved",
+                "web_link": "https://launchpad.net/~ubuntu-translators",
+            }
+        ],
+    },
+    {
+        "username": "saintjohn769",
+        "display_name": "chitko",
+        "karma": 0,
+        "web_link": "https://launchpad.net/~saintjohn769",
+        "languages": ["my"],
+        "language_codes": ["my"],
+        "teams": [
+            {
+                "team_name": "ubuntu-l10n-my",
+                "display_name": "Ubuntu Myanmar Translators",
+                "status": "Approved",
+                "web_link": "https://launchpad.net/~ubuntu-l10n-my",
+            },
+            {
+                "team_name": "ubuntu-translators",
+                "display_name": "Ubuntu Translators",
+                "status": "Approved",
+                "web_link": "https://launchpad.net/~ubuntu-translators",
+            }
+        ],
+    },
+    {
+        "username": "chriskl",
+        "display_name": "chriskl",
+        "karma": 0,
+        "web_link": "https://launchpad.net/~chriskl",
+        "languages": ["my"],
+        "language_codes": ["my"],
+        "teams": [
+            {
+                "team_name": "ubuntu-l10n-my",
+                "display_name": "Ubuntu Myanmar Translators",
+                "status": "Approved",
+                "web_link": "https://launchpad.net/~ubuntu-l10n-my",
+            },
+            {
+                "team_name": "ubuntu-translators",
+                "display_name": "Ubuntu Translators",
+                "status": "Approved",
+                "web_link": "https://launchpad.net/~ubuntu-translators",
+            }
+        ],
+    },
+    {
+        "username": "dhoongjhaan",
+        "display_name": "Dho Ong Jhaan",
+        "karma": 0,
+        "web_link": "https://launchpad.net/~dhoongjhaan",
+        "languages": ["mnw"],
+        "language_codes": ["mnw"],
+        "teams": [
+            {
+                "team_name": "ubuntu-l10n-mnw",
+                "display_name": "Ubuntu Mon Translators",
+                "status": "Approved",
+                "web_link": "https://launchpad.net/~ubuntu-l10n-mnw",
+            },
+            {
+                "team_name": "ubuntu-translators",
+                "display_name": "Ubuntu Translators",
+                "status": "Approved",
+                "web_link": "https://launchpad.net/~ubuntu-translators",
+            }
+        ],
+    },
+    {
+        "username": "ethan-kurt",
+        "display_name": "Ethan Kurt",
+        "karma": 0,
+        "web_link": "https://launchpad.net/~ethan-kurt",
+        "languages": ["my"],
+        "language_codes": ["my"],
+        "teams": [
+            {
+                "team_name": "ubuntu-l10n-my",
+                "display_name": "Ubuntu Myanmar Translators",
+                "status": "Approved",
+                "web_link": "https://launchpad.net/~ubuntu-l10n-my",
+            },
+            {
+                "team_name": "ubuntu-translators",
+                "display_name": "Ubuntu Translators",
+                "status": "Approved",
+                "web_link": "https://launchpad.net/~ubuntu-translators",
+            }
+        ],
+    },
+    {
+        "username": "goldninjar-sbt",
+        "display_name": "Goldninjar",
+        "karma": 0,
+        "web_link": "https://launchpad.net/~goldninjar-sbt",
+        "languages": ["shn"],
+        "language_codes": ["shn"],
+        "teams": [
+            {
+                "team_name": "ubuntu-l10n-shn",
+                "display_name": "Ubuntu Shan Translators",
+                "status": "Approved",
+                "web_link": "https://launchpad.net/~ubuntu-l10n-shn",
+            },
+            {
+                "team_name": "ubuntu-translators",
+                "display_name": "Ubuntu Translators",
+                "status": "Approved",
+                "web_link": "https://launchpad.net/~ubuntu-translators",
+            }
+        ],
+    },
+    {
+        "username": "heinlu1986",
+        "display_name": "Hein Lu",
+        "karma": 0,
+        "web_link": "https://launchpad.net/~heinlu1986",
+        "languages": ["my"],
+        "language_codes": ["my"],
+        "teams": [
+            {
+                "team_name": "ubuntu-l10n-my",
+                "display_name": "Ubuntu Myanmar Translators",
+                "status": "Approved",
+                "web_link": "https://launchpad.net/~ubuntu-l10n-my",
+            },
+            {
+                "team_name": "ubuntu-translators",
+                "display_name": "Ubuntu Translators",
+                "status": "Approved",
+                "web_link": "https://launchpad.net/~ubuntu-translators",
+            }
+        ],
+    },
+    {
+        "username": "heinhtet",
+        "display_name": "Ho No",
+        "karma": 0,
+        "web_link": "https://launchpad.net/~heinhtet",
+        "languages": ["my"],
+        "language_codes": ["my"],
+        "teams": [
+            {
+                "team_name": "ubuntu-l10n-my",
+                "display_name": "Ubuntu Myanmar Translators",
+                "status": "Approved",
+                "web_link": "https://launchpad.net/~ubuntu-l10n-my",
+            },
+            {
+                "team_name": "ubuntu-translators",
+                "display_name": "Ubuntu Translators",
+                "status": "Approved",
+                "web_link": "https://launchpad.net/~ubuntu-translators",
+            }
+        ],
+    },
+    {
+        "username": "naing-htun28",
+        "display_name": "Htun Htun Naing",
+        "karma": 0,
+        "web_link": "https://launchpad.net/~naing-htun28",
+        "languages": ["my"],
+        "language_codes": ["my"],
+        "teams": [
+            {
+                "team_name": "ubuntu-l10n-my",
+                "display_name": "Ubuntu Myanmar Translators",
+                "status": "Approved",
+                "web_link": "https://launchpad.net/~ubuntu-l10n-my",
+            },
+            {
+                "team_name": "ubuntu-translators",
+                "display_name": "Ubuntu Translators",
+                "status": "Approved",
+                "web_link": "https://launchpad.net/~ubuntu-translators",
+            }
+        ],
+    },
+    {
+        "username": "htwelay",
+        "display_name": "Htwe Lay",
+        "karma": 0,
+        "web_link": "https://launchpad.net/~htwelay",
+        "languages": ["mnw"],
+        "language_codes": ["mnw"],
+        "teams": [
+            {
+                "team_name": "ubuntu-l10n-mnw",
+                "display_name": "Ubuntu Mon Translators",
+                "status": "Approved",
+                "web_link": "https://launchpad.net/~ubuntu-l10n-mnw",
+            },
+            {
+                "team_name": "ubuntu-translators",
+                "display_name": "Ubuntu Translators",
+                "status": "Approved",
+                "web_link": "https://launchpad.net/~ubuntu-translators",
+            }
+        ],
+    },
+    {
+        "username": "jaejyae",
+        "display_name": "Jae Jyae",
+        "karma": 0,
+        "web_link": "https://launchpad.net/~jaejyae",
+        "languages": ["mnw"],
+        "language_codes": ["mnw"],
+        "teams": [
+            {
+                "team_name": "ubuntu-l10n-mnw",
+                "display_name": "Ubuntu Mon Translators",
+                "status": "Approved",
+                "web_link": "https://launchpad.net/~ubuntu-l10n-mnw",
+            },
+            {
+                "team_name": "ubuntu-translators",
+                "display_name": "Ubuntu Translators",
+                "status": "Approved",
+                "web_link": "https://launchpad.net/~ubuntu-translators",
+            }
+        ],
+    },
+    {
+        "username": "jennyaungaung",
+        "display_name": "Jenny Aung",
+        "karma": 0,
+        "web_link": "https://launchpad.net/~jennyaungaung",
+        "languages": ["my"],
+        "language_codes": ["my"],
+        "teams": [
+            {
+                "team_name": "ubuntu-l10n-my",
+                "display_name": "Ubuntu Myanmar Translators",
+                "status": "Approved",
+                "web_link": "https://launchpad.net/~ubuntu-l10n-my",
+            },
+            {
+                "team_name": "ubuntu-translators",
+                "display_name": "Ubuntu Translators",
+                "status": "Approved",
+                "web_link": "https://launchpad.net/~ubuntu-translators",
+            }
+        ],
+    },
+    {
+        "username": "jiormajor",
+        "display_name": "JohnMajor",
+        "karma": 0,
+        "web_link": "https://launchpad.net/~jiormajor",
+        "languages": ["my"],
+        "language_codes": ["my"],
+        "teams": [
+            {
+                "team_name": "ubuntu-l10n-my",
+                "display_name": "Ubuntu Myanmar Translators",
+                "status": "Approved",
+                "web_link": "https://launchpad.net/~ubuntu-l10n-my",
+            },
+            {
+                "team_name": "ubuntu-translators",
+                "display_name": "Ubuntu Translators",
+                "status": "Approved",
+                "web_link": "https://launchpad.net/~ubuntu-translators",
+            }
+        ],
+    },
+    {
+        "username": "joinai77",
+        "display_name": "Joinai",
+        "karma": 0,
+        "web_link": "https://launchpad.net/~joinai77",
+        "languages": ["mnw"],
+        "language_codes": ["mnw"],
+        "teams": [
+            {
+                "team_name": "ubuntu-l10n-mnw",
+                "display_name": "Ubuntu Mon Translators",
+                "status": "Approved",
+                "web_link": "https://launchpad.net/~ubuntu-l10n-mnw",
+            },
+            {
+                "team_name": "ubuntu-translators",
+                "display_name": "Ubuntu Translators",
+                "status": "Approved",
+                "web_link": "https://launchpad.net/~ubuntu-translators",
+            }
+        ],
+    },
+    {
+        "username": "jotamoi",
+        "display_name": "Jotamoi",
+        "karma": 0,
+        "web_link": "https://launchpad.net/~jotamoi",
+        "languages": ["mnw"],
+        "language_codes": ["mnw"],
+        "teams": [
+            {
+                "team_name": "ubuntu-l10n-mnw",
+                "display_name": "Ubuntu Mon Translators",
+                "status": "Approved",
+                "web_link": "https://launchpad.net/~ubuntu-l10n-mnw",
+            },
+            {
+                "team_name": "ubuntu-translators",
+                "display_name": "Ubuntu Translators",
+                "status": "Approved",
+                "web_link": "https://launchpad.net/~ubuntu-translators",
+            }
+        ],
+    },
+    {
+        "username": "jumoun",
+        "display_name": "jumoun",
+        "karma": 0,
+        "web_link": "https://launchpad.net/~jumoun",
+        "languages": ["my"],
+        "language_codes": ["my"],
+        "teams": [
+            {
+                "team_name": "ubuntu-l10n-my",
+                "display_name": "Ubuntu Myanmar Translators",
+                "status": "Approved",
+                "web_link": "https://launchpad.net/~ubuntu-l10n-my",
+            },
+            {
+                "team_name": "ubuntu-translators",
+                "display_name": "Ubuntu Translators",
+                "status": "Approved",
+                "web_link": "https://launchpad.net/~ubuntu-translators",
+            }
+        ],
+    },
+    {
+        "username": "kadiparaungmyohan",
+        "display_name": "Kadipar Ag Myo Han",
+        "karma": 0,
+        "web_link": "https://launchpad.net/~kadiparaungmyohan",
+        "languages": ["my"],
+        "language_codes": ["my"],
+        "teams": [
+            {
+                "team_name": "ubuntu-l10n-my",
+                "display_name": "Ubuntu Myanmar Translators",
+                "status": "Approved",
+                "web_link": "https://launchpad.net/~ubuntu-l10n-my",
+            },
+            {
+                "team_name": "ubuntu-translators",
+                "display_name": "Ubuntu Translators",
+                "status": "Approved",
+                "web_link": "https://launchpad.net/~ubuntu-translators",
+            }
+        ],
+    },
+    {
+        "username": "geogrian1",
+        "display_name": "kaung htet aung",
+        "karma": 0,
+        "web_link": "https://launchpad.net/~geogrian1",
+        "languages": ["my"],
+        "language_codes": ["my"],
+        "teams": [
+            {
+                "team_name": "ubuntu-l10n-my",
+                "display_name": "Ubuntu Myanmar Translators",
+                "status": "Approved",
+                "web_link": "https://launchpad.net/~ubuntu-l10n-my",
+            },
+            {
+                "team_name": "ubuntu-translators",
+                "display_name": "Ubuntu Translators",
+                "status": "Approved",
+                "web_link": "https://launchpad.net/~ubuntu-translators",
+            }
+        ],
+    },
+    {
+        "username": "kogyikaunghtet",
+        "display_name": "Kaung Htet Htun",
+        "karma": 0,
+        "web_link": "https://launchpad.net/~kogyikaunghtet",
+        "languages": ["my"],
+        "language_codes": ["my"],
+        "teams": [
+            {
+                "team_name": "ubuntu-l10n-my",
+                "display_name": "Ubuntu Myanmar Translators",
+                "status": "Approved",
+                "web_link": "https://launchpad.net/~ubuntu-l10n-my",
+            },
+            {
+                "team_name": "ubuntu-translators",
+                "display_name": "Ubuntu Translators",
+                "status": "Approved",
+                "web_link": "https://launchpad.net/~ubuntu-translators",
+            }
+        ],
+    },
+    {
+        "username": "khinewin",
+        "display_name": "KhineWin",
+        "karma": 0,
+        "web_link": "https://launchpad.net/~khinewin",
+        "languages": ["mnw"],
+        "language_codes": ["mnw"],
+        "teams": [
+            {
+                "team_name": "ubuntu-l10n-mnw",
+                "display_name": "Ubuntu Mon Translators",
+                "status": "Approved",
+                "web_link": "https://launchpad.net/~ubuntu-l10n-mnw",
+            },
+            {
+                "team_name": "ubuntu-translators",
+                "display_name": "Ubuntu Translators",
+                "status": "Approved",
+                "web_link": "https://launchpad.net/~ubuntu-translators",
+            }
+        ],
+    },
+    {
+        "username": "kozawhtet",
+        "display_name": "Ko Zaw Htet",
+        "karma": 0,
+        "web_link": "https://launchpad.net/~kozawhtet",
+        "languages": ["my"],
+        "language_codes": ["my"],
+        "teams": [
+            {
+                "team_name": "ubuntu-l10n-my",
+                "display_name": "Ubuntu Myanmar Translators",
+                "status": "Approved",
+                "web_link": "https://launchpad.net/~ubuntu-l10n-my",
+            },
+            {
+                "team_name": "ubuntu-translators",
+                "display_name": "Ubuntu Translators",
+                "status": "Approved",
+                "web_link": "https://launchpad.net/~ubuntu-translators",
+            }
+        ],
+    },
+    {
+        "username": "royallyre7",
+        "display_name": "koaung",
+        "karma": 0,
+        "web_link": "https://launchpad.net/~royallyre7",
+        "languages": ["my"],
+        "language_codes": ["my"],
+        "teams": [
+            {
+                "team_name": "ubuntu-l10n-my",
+                "display_name": "Ubuntu Myanmar Translators",
+                "status": "Approved",
+                "web_link": "https://launchpad.net/~ubuntu-l10n-my",
+            },
+            {
+                "team_name": "ubuntu-translators",
+                "display_name": "Ubuntu Translators",
+                "status": "Approved",
+                "web_link": "https://launchpad.net/~ubuntu-translators",
+            }
+        ],
+    },
+    {
+        "username": "kokhy-ygn",
+        "display_name": "kokhy",
+        "karma": 0,
+        "web_link": "https://launchpad.net/~kokhy-ygn",
+        "languages": ["my"],
+        "language_codes": ["my"],
+        "teams": [
+            {
+                "team_name": "ubuntu-l10n-my",
+                "display_name": "Ubuntu Myanmar Translators",
+                "status": "Approved",
+                "web_link": "https://launchpad.net/~ubuntu-l10n-my",
+            },
+            {
+                "team_name": "ubuntu-translators",
+                "display_name": "Ubuntu Translators",
+                "status": "Approved",
+                "web_link": "https://launchpad.net/~ubuntu-translators",
+            }
+        ],
+    },
+    {
+        "username": "kyawkhine1992",
+        "display_name": "Kyaw Khine",
+        "karma": 0,
+        "web_link": "https://launchpad.net/~kyawkhine1992",
+        "languages": ["my"],
+        "language_codes": ["my"],
+        "teams": [
+            {
+                "team_name": "ubuntu-l10n-my",
+                "display_name": "Ubuntu Myanmar Translators",
+                "status": "Approved",
+                "web_link": "https://launchpad.net/~ubuntu-l10n-my",
+            },
+            {
+                "team_name": "ubuntu-translators",
+                "display_name": "Ubuntu Translators",
+                "status": "Approved",
+                "web_link": "https://launchpad.net/~ubuntu-translators",
+            }
+        ],
+    },
+    {
+        "username": "kyawsanoo",
+        "display_name": "Kyaw san oo",
+        "karma": 0,
+        "web_link": "https://launchpad.net/~kyawsanoo",
+        "languages": ["mnw"],
+        "language_codes": ["mnw"],
+        "teams": [
+            {
+                "team_name": "ubuntu-l10n-mnw",
+                "display_name": "Ubuntu Mon Translators",
+                "status": "Approved",
+                "web_link": "https://launchpad.net/~ubuntu-l10n-mnw",
+            },
+            {
+                "team_name": "ubuntu-translators",
+                "display_name": "Ubuntu Translators",
+                "status": "Approved",
+                "web_link": "https://launchpad.net/~ubuntu-translators",
+            }
+        ],
+    },
+    {
+        "username": "kyawhtetwinjr",
+        "display_name": "Kyaw Thet Win",
+        "karma": 0,
+        "web_link": "https://launchpad.net/~kyawhtetwinjr",
+        "languages": ["my"],
+        "language_codes": ["my"],
+        "teams": [
+            {
+                "team_name": "ubuntu-l10n-my",
+                "display_name": "Ubuntu Myanmar Translators",
+                "status": "Approved",
+                "web_link": "https://launchpad.net/~ubuntu-l10n-my",
+            },
+            {
+                "team_name": "ubuntu-translators",
+                "display_name": "Ubuntu Translators",
+                "status": "Approved",
+                "web_link": "https://launchpad.net/~ubuntu-translators",
+            }
+        ],
+    },
+    {
+        "username": "hein7",
+        "display_name": "kyaw zin",
+        "karma": 0,
+        "web_link": "https://launchpad.net/~hein7",
+        "languages": ["my"],
+        "language_codes": ["my"],
+        "teams": [
+            {
+                "team_name": "ubuntu-l10n-my",
+                "display_name": "Ubuntu Myanmar Translators",
+                "status": "Approved",
+                "web_link": "https://launchpad.net/~ubuntu-l10n-my",
+            },
+            {
+                "team_name": "ubuntu-translators",
+                "display_name": "Ubuntu Translators",
+                "status": "Approved",
+                "web_link": "https://launchpad.net/~ubuntu-translators",
+            }
+        ],
+    },
+    {
+        "username": "kyawmyatthu-ows",
+        "display_name": "kyawmyatthu.ows",
+        "karma": 0,
+        "web_link": "https://launchpad.net/~kyawmyatthu-ows",
+        "languages": ["my"],
+        "language_codes": ["my"],
+        "teams": [
+            {
+                "team_name": "ubuntu-l10n-my",
+                "display_name": "Ubuntu Myanmar Translators",
+                "status": "Approved",
+                "web_link": "https://launchpad.net/~ubuntu-l10n-my",
+            },
+            {
+                "team_name": "ubuntu-translators",
+                "display_name": "Ubuntu Translators",
+                "status": "Approved",
+                "web_link": "https://launchpad.net/~ubuntu-translators",
+            }
+        ],
+    },
+    {
+        "username": "mryotesoe",
+        "display_name": "KyawZayThu",
+        "karma": 0,
+        "web_link": "https://launchpad.net/~mryotesoe",
+        "languages": ["my"],
+        "language_codes": ["my"],
+        "teams": [
+            {
+                "team_name": "ubuntu-l10n-my",
+                "display_name": "Ubuntu Myanmar Translators",
+                "status": "Approved",
+                "web_link": "https://launchpad.net/~ubuntu-l10n-my",
+            },
+            {
+                "team_name": "ubuntu-translators",
+                "display_name": "Ubuntu Translators",
+                "status": "Approved",
+                "web_link": "https://launchpad.net/~ubuntu-translators",
+            }
+        ],
+    },
+    {
+        "username": "hansen-ross",
+        "display_name": "Laywah",
+        "karma": 0,
+        "web_link": "https://launchpad.net/~hansen-ross",
+        "languages": ["ksw"],
+        "language_codes": ["ksw"],
+        "teams": [
+            {
+                "team_name": "linuxmint-translation-team-ksw",
+                "display_name": "S'gaw Karen Translation Team for Linux Mint",
+                "status": "Approved",
+                "web_link": "https://launchpad.net/~linuxmint-translation-team-ksw",
+            },
+            {
+                "team_name": "ubuntu-translators",
+                "display_name": "Ubuntu Translators",
+                "status": "Approved",
+                "web_link": "https://launchpad.net/~ubuntu-translators",
+            }
+        ],
+    },
+    {
+        "username": "desefox",
+        "display_name": "Lin",
+        "karma": 0,
+        "web_link": "https://launchpad.net/~desefox",
+        "languages": ["my"],
+        "language_codes": ["my"],
+        "teams": [
+            {
+                "team_name": "ubuntu-l10n-my",
+                "display_name": "Ubuntu Myanmar Translators",
+                "status": "Approved",
+                "web_link": "https://launchpad.net/~ubuntu-l10n-my",
+            },
+            {
+                "team_name": "ubuntu-translators",
+                "display_name": "Ubuntu Translators",
+                "status": "Approved",
+                "web_link": "https://launchpad.net/~ubuntu-translators",
+            }
+        ],
+    },
+    {
+        "username": "slayeroflion",
+        "display_name": "Lionslayer",
+        "karma": 0,
+        "web_link": "https://launchpad.net/~slayeroflion",
+        "languages": ["my"],
+        "language_codes": ["my"],
+        "teams": [
+            {
+                "team_name": "ubuntu-l10n-my",
+                "display_name": "Ubuntu Myanmar Translators",
+                "status": "Approved",
+                "web_link": "https://launchpad.net/~ubuntu-l10n-my",
+            },
+            {
+                "team_name": "ubuntu-translators",
+                "display_name": "Ubuntu Translators",
+                "status": "Approved",
+                "web_link": "https://launchpad.net/~ubuntu-translators",
+            }
+        ],
+    },
+    {
+        "username": "littiger",
+        "display_name": "Lit_Tiger",
+        "karma": 0,
+        "web_link": "https://launchpad.net/~littiger",
+        "languages": ["my"],
+        "language_codes": ["my"],
+        "teams": [
+            {
+                "team_name": "ubuntu-l10n-my",
+                "display_name": "Ubuntu Myanmar Translators",
+                "status": "Approved",
+                "web_link": "https://launchpad.net/~ubuntu-l10n-my",
+            },
+            {
+                "team_name": "ubuntu-translators",
+                "display_name": "Ubuntu Translators",
+                "status": "Approved",
+                "web_link": "https://launchpad.net/~ubuntu-translators",
+            }
+        ],
+    },
+    {
+        "username": "lotusblack",
+        "display_name": "Lotus Black",
+        "karma": 0,
+        "web_link": "https://launchpad.net/~lotusblack",
+        "languages": ["my"],
+        "language_codes": ["my"],
+        "teams": [
+            {
+                "team_name": "ubuntu-l10n-my",
+                "display_name": "Ubuntu Myanmar Translators",
+                "status": "Approved",
+                "web_link": "https://launchpad.net/~ubuntu-l10n-my",
+            },
+            {
+                "team_name": "ubuntu-translators",
+                "display_name": "Ubuntu Translators",
+                "status": "Approved",
+                "web_link": "https://launchpad.net/~ubuntu-translators",
+            }
+        ],
+    },
+    {
+        "username": "lovetostrike",
+        "display_name": "lovetostrike",
+        "karma": 0,
+        "web_link": "https://launchpad.net/~lovetostrike",
+        "languages": ["my"],
+        "language_codes": ["my"],
+        "teams": [
+            {
+                "team_name": "ubuntu-l10n-my",
+                "display_name": "Ubuntu Myanmar Translators",
+                "status": "Approved",
+                "web_link": "https://launchpad.net/~ubuntu-l10n-my",
+            },
+            {
+                "team_name": "ubuntu-translators",
+                "display_name": "Ubuntu Translators",
+                "status": "Approved",
+                "web_link": "https://launchpad.net/~ubuntu-translators",
+            }
+        ],
+    },
+    {
+        "username": "lusoe302",
+        "display_name": "lusoe302",
+        "karma": 0,
+        "web_link": "https://launchpad.net/~lusoe302",
+        "languages": ["my"],
+        "language_codes": ["my"],
+        "teams": [
+            {
+                "team_name": "ubuntu-l10n-my",
+                "display_name": "Ubuntu Myanmar Translators",
+                "status": "Approved",
+                "web_link": "https://launchpad.net/~ubuntu-l10n-my",
+            },
+            {
+                "team_name": "ubuntu-translators",
+                "display_name": "Ubuntu Translators",
+                "status": "Approved",
+                "web_link": "https://launchpad.net/~ubuntu-translators",
+            }
+        ],
+    },
+    {
+        "username": "s.mark",
+        "display_name": "Mark",
+        "karma": 0,
+        "web_link": "https://launchpad.net/~s.mark",
+        "languages": ["my"],
+        "language_codes": ["my"],
+        "teams": [
+            {
+                "team_name": "ubuntu-l10n-my",
+                "display_name": "Ubuntu Myanmar Translators",
+                "status": "Approved",
+                "web_link": "https://launchpad.net/~ubuntu-l10n-my",
+            },
+            {
+                "team_name": "ubuntu-translators",
+                "display_name": "Ubuntu Translators",
+                "status": "Approved",
+                "web_link": "https://launchpad.net/~ubuntu-translators",
+            }
+        ],
+    },
+    {
+        "username": "jaraiya",
+        "display_name": "Maroah Chan",
+        "karma": 0,
+        "web_link": "https://launchpad.net/~jaraiya",
+        "languages": ["mnw"],
+        "language_codes": ["mnw"],
+        "teams": [
+            {
+                "team_name": "ubuntu-l10n-mnw",
+                "display_name": "Ubuntu Mon Translators",
+                "status": "Approved",
+                "web_link": "https://launchpad.net/~ubuntu-l10n-mnw",
+            },
+            {
+                "team_name": "ubuntu-translators",
+                "display_name": "Ubuntu Translators",
+                "status": "Approved",
+                "web_link": "https://launchpad.net/~ubuntu-translators",
+            }
+        ],
+    },
+    {
+        "username": "marigan",
+        "display_name": "Matt Marigan",
+        "karma": 0,
+        "web_link": "https://launchpad.net/~marigan",
+        "languages": ["my"],
+        "language_codes": ["my"],
+        "teams": [
+            {
+                "team_name": "ubuntu-l10n-my",
+                "display_name": "Ubuntu Myanmar Translators",
+                "status": "Approved",
+                "web_link": "https://launchpad.net/~ubuntu-l10n-my",
+            },
+            {
+                "team_name": "ubuntu-translators",
+                "display_name": "Ubuntu Translators",
+                "status": "Approved",
+                "web_link": "https://launchpad.net/~ubuntu-translators",
+            }
+        ],
+    },
+    {
+        "username": "maungthuu",
+        "display_name": "Maung Thuu",
+        "karma": 0,
+        "web_link": "https://launchpad.net/~maungthuu",
+        "languages": ["my"],
+        "language_codes": ["my"],
+        "teams": [
+            {
+                "team_name": "ubuntu-l10n-my",
+                "display_name": "Ubuntu Myanmar Translators",
+                "status": "Approved",
+                "web_link": "https://launchpad.net/~ubuntu-l10n-my",
+            },
+            {
+                "team_name": "ubuntu-translators",
+                "display_name": "Ubuntu Translators",
+                "status": "Approved",
+                "web_link": "https://launchpad.net/~ubuntu-translators",
+            }
+        ],
+    },
+    {
+        "username": "decembersnowlay15",
+        "display_name": "May Thu Aung",
+        "karma": 0,
+        "web_link": "https://launchpad.net/~decembersnowlay15",
+        "languages": ["my"],
+        "language_codes": ["my"],
+        "teams": [
+            {
+                "team_name": "ubuntu-l10n-my",
+                "display_name": "Ubuntu Myanmar Translators",
+                "status": "Approved",
+                "web_link": "https://launchpad.net/~ubuntu-l10n-my",
+            },
+            {
+                "team_name": "ubuntu-translators",
+                "display_name": "Ubuntu Translators",
+                "status": "Approved",
+                "web_link": "https://launchpad.net/~ubuntu-translators",
+            }
+        ],
+    },
+    {
+        "username": "maythuaung512",
+        "display_name": "May Thu Aung",
+        "karma": 0,
+        "web_link": "https://launchpad.net/~maythuaung512",
+        "languages": ["my"],
+        "language_codes": ["my"],
+        "teams": [
+            {
+                "team_name": "ubuntu-l10n-my",
+                "display_name": "Ubuntu Myanmar Translators",
+                "status": "Approved",
+                "web_link": "https://launchpad.net/~ubuntu-l10n-my",
+            },
+            {
+                "team_name": "ubuntu-translators",
+                "display_name": "Ubuntu Translators",
+                "status": "Approved",
+                "web_link": "https://launchpad.net/~ubuntu-translators",
+            }
+        ],
+    },
+    {
+        "username": "monbeeree",
+        "display_name": "Mehm Rattna",
+        "karma": 0,
+        "web_link": "https://launchpad.net/~monbeeree",
+        "languages": ["mnw"],
+        "language_codes": ["mnw"],
+        "teams": [
+            {
+                "team_name": "ubuntu-l10n-mnw",
+                "display_name": "Ubuntu Mon Translators",
+                "status": "Approved",
+                "web_link": "https://launchpad.net/~ubuntu-l10n-mnw",
+            },
+            {
+                "team_name": "ubuntu-translators",
+                "display_name": "Ubuntu Translators",
+                "status": "Approved",
+                "web_link": "https://launchpad.net/~ubuntu-translators",
+            }
+        ],
+    },
+    {
+        "username": "oung",
+        "display_name": "Mhem Aung Thu Win",
+        "karma": 0,
+        "web_link": "https://launchpad.net/~oung",
+        "languages": ["mnw"],
+        "language_codes": ["mnw"],
+        "teams": [
+            {
+                "team_name": "ubuntu-l10n-mnw",
+                "display_name": "Ubuntu Mon Translators",
+                "status": "Approved",
+                "web_link": "https://launchpad.net/~ubuntu-l10n-mnw",
+            },
+            {
+                "team_name": "ubuntu-translators",
+                "display_name": "Ubuntu Translators",
+                "status": "Approved",
+                "web_link": "https://launchpad.net/~ubuntu-translators",
+            }
+        ],
+    },
+    {
+        "username": "htawpone",
+        "display_name": "Mi Htaw Pone",
+        "karma": 0,
+        "web_link": "https://launchpad.net/~htawpone",
+        "languages": ["mnw"],
+        "language_codes": ["mnw"],
+        "teams": [
+            {
+                "team_name": "ubuntu-l10n-mnw",
+                "display_name": "Ubuntu Mon Translators",
+                "status": "Approved",
+                "web_link": "https://launchpad.net/~ubuntu-l10n-mnw",
+            },
+            {
+                "team_name": "ubuntu-translators",
+                "display_name": "Ubuntu Translators",
+                "status": "Approved",
+                "web_link": "https://launchpad.net/~ubuntu-translators",
+            }
+        ],
+    },
+    {
+        "username": "khamoomhtawh",
+        "display_name": "Mi Khamoom Htaw",
+        "karma": 0,
+        "web_link": "https://launchpad.net/~khamoomhtawh",
+        "languages": ["mnw"],
+        "language_codes": ["mnw"],
+        "teams": [
+            {
+                "team_name": "ubuntu-l10n-mnw",
+                "display_name": "Ubuntu Mon Translators",
+                "status": "Approved",
+                "web_link": "https://launchpad.net/~ubuntu-l10n-mnw",
+            },
+            {
+                "team_name": "ubuntu-translators",
+                "display_name": "Ubuntu Translators",
+                "status": "Approved",
+                "web_link": "https://launchpad.net/~ubuntu-translators",
+            }
+        ],
+    },
+    {
+        "username": "minhtaw",
+        "display_name": "Min Htaw",
+        "karma": 0,
+        "web_link": "https://launchpad.net/~minhtaw",
+        "languages": ["mnw"],
+        "language_codes": ["mnw"],
+        "teams": [
+            {
+                "team_name": "ubuntu-l10n-mnw",
+                "display_name": "Ubuntu Mon Translators",
+                "status": "Approved",
+                "web_link": "https://launchpad.net/~ubuntu-l10n-mnw",
+            },
+            {
+                "team_name": "ubuntu-translators",
+                "display_name": "Ubuntu Translators",
+                "status": "Approved",
+                "web_link": "https://launchpad.net/~ubuntu-translators",
+            }
+        ],
+    },
+    {
+        "username": "kyitaw1",
+        "display_name": "Min Mon",
+        "karma": 0,
+        "web_link": "https://launchpad.net/~kyitaw1",
+        "languages": ["my"],
+        "language_codes": ["my"],
+        "teams": [
+            {
+                "team_name": "ubuntu-l10n-my",
+                "display_name": "Ubuntu Myanmar Translators",
+                "status": "Approved",
+                "web_link": "https://launchpad.net/~ubuntu-l10n-my",
+            },
+            {
+                "team_name": "ubuntu-translators",
+                "display_name": "Ubuntu Translators",
+                "status": "Approved",
+                "web_link": "https://launchpad.net/~ubuntu-translators",
+            }
+        ],
+    },
+    {
+        "username": "technoyoungman",
+        "display_name": "Min Thaw Tun",
+        "karma": 0,
+        "web_link": "https://launchpad.net/~technoyoungman",
+        "languages": ["my"],
+        "language_codes": ["my"],
+        "teams": [
+            {
+                "team_name": "ubuntu-l10n-my",
+                "display_name": "Ubuntu Myanmar Translators",
+                "status": "Approved",
+                "web_link": "https://launchpad.net/~ubuntu-l10n-my",
+            },
+            {
+                "team_name": "ubuntu-translators",
+                "display_name": "Ubuntu Translators",
+                "status": "Approved",
+                "web_link": "https://launchpad.net/~ubuntu-translators",
+            }
+        ],
+    },
+    {
+        "username": "minnkhant257",
+        "display_name": "MinnHeinKhant",
+        "karma": 0,
+        "web_link": "https://launchpad.net/~minnkhant257",
+        "languages": ["my"],
+        "language_codes": ["my"],
+        "teams": [
+            {
+                "team_name": "ubuntu-l10n-my",
+                "display_name": "Ubuntu Myanmar Translators",
+                "status": "Approved",
+                "web_link": "https://launchpad.net/~ubuntu-l10n-my",
+            },
+            {
+                "team_name": "ubuntu-translators",
+                "display_name": "Ubuntu Translators",
+                "status": "Approved",
+                "web_link": "https://launchpad.net/~ubuntu-translators",
+            }
+        ],
+    },
+    {
+        "username": "mintun",
+        "display_name": "mintun",
+        "karma": 0,
+        "web_link": "https://launchpad.net/~mintun",
+        "languages": ["mnw"],
+        "language_codes": ["mnw"],
+        "teams": [
+            {
+                "team_name": "ubuntu-l10n-mnw",
+                "display_name": "Ubuntu Mon Translators",
+                "status": "Approved",
+                "web_link": "https://launchpad.net/~ubuntu-l10n-mnw",
+            },
+            {
+                "team_name": "ubuntu-translators",
+                "display_name": "Ubuntu Translators",
+                "status": "Approved",
+                "web_link": "https://launchpad.net/~ubuntu-translators",
+            }
+        ],
+    },
+    {
+        "username": "myanmarmenn",
+        "display_name": "mmmen",
+        "karma": 0,
+        "web_link": "https://launchpad.net/~myanmarmenn",
+        "languages": ["my"],
+        "language_codes": ["my"],
+        "teams": [
+            {
+                "team_name": "ubuntu-l10n-my",
+                "display_name": "Ubuntu Myanmar Translators",
+                "status": "Approved",
+                "web_link": "https://launchpad.net/~ubuntu-l10n-my",
+            },
+            {
+                "team_name": "ubuntu-translators",
+                "display_name": "Ubuntu Translators",
+                "status": "Approved",
+                "web_link": "https://launchpad.net/~ubuntu-translators",
+            }
+        ],
+    },
+    {
+        "username": "mohmohthanster",
+        "display_name": "mmt",
+        "karma": 0,
+        "web_link": "https://launchpad.net/~mohmohthanster",
+        "languages": ["my"],
+        "language_codes": ["my"],
+        "teams": [
+            {
+                "team_name": "ubuntu-l10n-my",
+                "display_name": "Ubuntu Myanmar Translators",
+                "status": "Approved",
+                "web_link": "https://launchpad.net/~ubuntu-l10n-my",
+            },
+            {
+                "team_name": "ubuntu-translators",
+                "display_name": "Ubuntu Translators",
+                "status": "Approved",
+                "web_link": "https://launchpad.net/~ubuntu-translators",
+            }
+        ],
+    },
+    {
+        "username": "moelonepyaeshan",
+        "display_name": "Moe Lone",
+        "karma": 0,
+        "web_link": "https://launchpad.net/~moelonepyaeshan",
+        "languages": ["my"],
+        "language_codes": ["my"],
+        "teams": [
+            {
+                "team_name": "ubuntu-l10n-my",
+                "display_name": "Ubuntu Myanmar Translators",
+                "status": "Approved",
+                "web_link": "https://launchpad.net/~ubuntu-l10n-my",
+            },
+            {
+                "team_name": "ubuntu-translators",
+                "display_name": "Ubuntu Translators",
+                "status": "Approved",
+                "web_link": "https://launchpad.net/~ubuntu-translators",
+            }
+        ],
+    },
+    {
+        "username": "monchanaie",
+        "display_name": "Mon Chan Aie",
+        "karma": 0,
+        "web_link": "https://launchpad.net/~monchanaie",
+        "languages": ["mnw"],
+        "language_codes": ["mnw"],
+        "teams": [
+            {
+                "team_name": "ubuntu-l10n-mnw",
+                "display_name": "Ubuntu Mon Translators",
+                "status": "Approved",
+                "web_link": "https://launchpad.net/~ubuntu-l10n-mnw",
+            },
+            {
+                "team_name": "ubuntu-translators",
+                "display_name": "Ubuntu Translators",
+                "status": "Approved",
+                "web_link": "https://launchpad.net/~ubuntu-translators",
+            }
+        ],
+    },
+    {
+        "username": "mongipsy",
+        "display_name": "Mongipsy",
+        "karma": 0,
+        "web_link": "https://launchpad.net/~mongipsy",
+        "languages": ["mnw"],
+        "language_codes": ["mnw"],
+        "teams": [
+            {
+                "team_name": "ubuntu-l10n-mnw",
+                "display_name": "Ubuntu Mon Translators",
+                "status": "Approved",
+                "web_link": "https://launchpad.net/~ubuntu-l10n-mnw",
+            },
+            {
+                "team_name": "ubuntu-translators",
+                "display_name": "Ubuntu Translators",
+                "status": "Approved",
+                "web_link": "https://launchpad.net/~ubuntu-translators",
+            }
+        ],
+    },
+    {
+        "username": "ahbao",
+        "display_name": "Nai Ah Bao",
+        "karma": 0,
+        "web_link": "https://launchpad.net/~ahbao",
+        "languages": ["mnw"],
+        "language_codes": ["mnw"],
+        "teams": [
+            {
+                "team_name": "ubuntu-l10n-mnw",
+                "display_name": "Ubuntu Mon Translators",
+                "status": "Approved",
+                "web_link": "https://launchpad.net/~ubuntu-l10n-mnw",
+            },
+            {
+                "team_name": "ubuntu-translators",
+                "display_name": "Ubuntu Translators",
+                "status": "Approved",
+                "web_link": "https://launchpad.net/~ubuntu-translators",
+            }
+        ],
+    },
+    {
+        "username": "seiknyan",
+        "display_name": "Nai Seik Nyan",
+        "karma": 0,
+        "web_link": "https://launchpad.net/~seiknyan",
+        "languages": ["mnw"],
+        "language_codes": ["mnw"],
+        "teams": [
+            {
+                "team_name": "ubuntu-l10n-mnw",
+                "display_name": "Ubuntu Mon Translators",
+                "status": "Approved",
+                "web_link": "https://launchpad.net/~ubuntu-l10n-mnw",
+            },
+            {
+                "team_name": "ubuntu-translators",
+                "display_name": "Ubuntu Translators",
+                "status": "Approved",
+                "web_link": "https://launchpad.net/~ubuntu-translators",
+            }
+        ],
+    },
+    {
+        "username": "naiseikrot",
+        "display_name": "Nai Seik Rot",
+        "karma": 0,
+        "web_link": "https://launchpad.net/~naiseikrot",
+        "languages": ["mnw"],
+        "language_codes": ["mnw"],
+        "teams": [
+            {
+                "team_name": "ubuntu-l10n-mnw",
+                "display_name": "Ubuntu Mon Translators",
+                "status": "Approved",
+                "web_link": "https://launchpad.net/~ubuntu-l10n-mnw",
+            },
+            {
+                "team_name": "ubuntu-translators",
+                "display_name": "Ubuntu Translators",
+                "status": "Approved",
+                "web_link": "https://launchpad.net/~ubuntu-translators",
+            }
+        ],
+    },
+    {
+        "username": "naingaungphyo",
+        "display_name": "Naing Aung Phyo",
+        "karma": 0,
+        "web_link": "https://launchpad.net/~naingaungphyo",
+        "languages": ["my"],
+        "language_codes": ["my"],
+        "teams": [
+            {
+                "team_name": "ubuntu-l10n-my",
+                "display_name": "Ubuntu Myanmar Translators",
+                "status": "Approved",
+                "web_link": "https://launchpad.net/~ubuntu-l10n-my",
+            },
+            {
+                "team_name": "ubuntu-translators",
+                "display_name": "Ubuntu Translators",
+                "status": "Approved",
+                "web_link": "https://launchpad.net/~ubuntu-translators",
+            }
+        ],
+    },
+    {
+        "username": "naingwinaung",
+        "display_name": "naingwinaung",
+        "karma": 0,
+        "web_link": "https://launchpad.net/~naingwinaung",
+        "languages": ["my"],
+        "language_codes": ["my"],
+        "teams": [
+            {
+                "team_name": "ubuntu-l10n-my",
+                "display_name": "Ubuntu Myanmar Translators",
+                "status": "Approved",
+                "web_link": "https://launchpad.net/~ubuntu-l10n-my",
+            },
+            {
+                "team_name": "ubuntu-translators",
+                "display_name": "Ubuntu Translators",
+                "status": "Approved",
+                "web_link": "https://launchpad.net/~ubuntu-translators",
+            }
+        ],
+    },
+    {
+        "username": "naymyolay-gmail",
+        "display_name": "nanda",
+        "karma": 0,
+        "web_link": "https://launchpad.net/~naymyolay-gmail",
+        "languages": ["my"],
+        "language_codes": ["my"],
+        "teams": [
+            {
+                "team_name": "ubuntu-l10n-my",
+                "display_name": "Ubuntu Myanmar Translators",
+                "status": "Approved",
+                "web_link": "https://launchpad.net/~ubuntu-l10n-my",
+            },
+            {
+                "team_name": "ubuntu-translators",
+                "display_name": "Ubuntu Translators",
+                "status": "Approved",
+                "web_link": "https://launchpad.net/~ubuntu-translators",
+            }
+        ],
+    },
+    {
+        "username": "naungy007",
+        "display_name": "Naungy",
+        "karma": 0,
+        "web_link": "https://launchpad.net/~naungy007",
+        "languages": ["my"],
+        "language_codes": ["my"],
+        "teams": [
+            {
+                "team_name": "ubuntu-l10n-my",
+                "display_name": "Ubuntu Myanmar Translators",
+                "status": "Approved",
+                "web_link": "https://launchpad.net/~ubuntu-l10n-my",
+            },
+            {
+                "team_name": "ubuntu-translators",
+                "display_name": "Ubuntu Translators",
+                "status": "Approved",
+                "web_link": "https://launchpad.net/~ubuntu-translators",
+            }
+        ],
+    },
+    {
+        "username": "nlksg",
+        "display_name": "Nay Lin Kyaw",
+        "karma": 0,
+        "web_link": "https://launchpad.net/~nlksg",
+        "languages": ["my"],
+        "language_codes": ["my"],
+        "teams": [
+            {
+                "team_name": "ubuntu-l10n-my",
+                "display_name": "Ubuntu Myanmar Translators",
+                "status": "Approved",
+                "web_link": "https://launchpad.net/~ubuntu-l10n-my",
+            },
+            {
+                "team_name": "ubuntu-translators",
+                "display_name": "Ubuntu Translators",
+                "status": "Approved",
+                "web_link": "https://launchpad.net/~ubuntu-translators",
+            }
+        ],
+    },
+    {
+        "username": "nonlawar",
+        "display_name": "Non Lawar",
+        "karma": 0,
+        "web_link": "https://launchpad.net/~nonlawar",
+        "languages": ["mnw"],
+        "language_codes": ["mnw"],
+        "teams": [
+            {
+                "team_name": "ubuntu-l10n-mnw",
+                "display_name": "Ubuntu Mon Translators",
+                "status": "Approved",
+                "web_link": "https://launchpad.net/~ubuntu-l10n-mnw",
+            },
+            {
+                "team_name": "ubuntu-translators",
+                "display_name": "Ubuntu Translators",
+                "status": "Approved",
+                "web_link": "https://launchpad.net/~ubuntu-translators",
+            }
+        ],
+    },
+    {
+        "username": "nsumon",
+        "display_name": "nsu mon",
+        "karma": 0,
+        "web_link": "https://launchpad.net/~nsumon",
+        "languages": ["mnw"],
+        "language_codes": ["mnw"],
+        "teams": [
+            {
+                "team_name": "ubuntu-l10n-mnw",
+                "display_name": "Ubuntu Mon Translators",
+                "status": "Approved",
+                "web_link": "https://launchpad.net/~ubuntu-l10n-mnw",
+            },
+            {
+                "team_name": "ubuntu-translators",
+                "display_name": "Ubuntu Translators",
+                "status": "Approved",
+                "web_link": "https://launchpad.net/~ubuntu-translators",
+            }
+        ],
+    },
+    {
+        "username": "nyanlintun2018",
+        "display_name": "Nyan Lin Tun",
+        "karma": 0,
+        "web_link": "https://launchpad.net/~nyanlintun2018",
+        "languages": ["my"],
+        "language_codes": ["my"],
+        "teams": [
+            {
+                "team_name": "ubuntu-l10n-my",
+                "display_name": "Ubuntu Myanmar Translators",
+                "status": "Approved",
+                "web_link": "https://launchpad.net/~ubuntu-l10n-my",
+            },
+            {
+                "team_name": "ubuntu-translators",
+                "display_name": "Ubuntu Translators",
+                "status": "Approved",
+                "web_link": "https://launchpad.net/~ubuntu-translators",
+            }
+        ],
+    },
+    {
+        "username": "nyeinchan-job",
+        "display_name": "Nyein Chan",
+        "karma": 0,
+        "web_link": "https://launchpad.net/~nyeinchan-job",
+        "languages": ["my"],
+        "language_codes": ["my"],
+        "teams": [
+            {
+                "team_name": "ubuntu-l10n-my",
+                "display_name": "Ubuntu Myanmar Translators",
+                "status": "Approved",
+                "web_link": "https://launchpad.net/~ubuntu-l10n-my",
+            },
+            {
+                "team_name": "ubuntu-translators",
+                "display_name": "Ubuntu Translators",
+                "status": "Approved",
+                "web_link": "https://launchpad.net/~ubuntu-translators",
+            }
+        ],
+    },
+    {
+        "username": "scorpionnyi",
+        "display_name": "Nyi Nyi Htwe",
+        "karma": 0,
+        "web_link": "https://launchpad.net/~scorpionnyi",
+        "languages": ["my"],
+        "language_codes": ["my"],
+        "teams": [
+            {
+                "team_name": "ubuntu-l10n-my",
+                "display_name": "Ubuntu Myanmar Translators",
+                "status": "Approved",
+                "web_link": "https://launchpad.net/~ubuntu-l10n-my",
+            },
+            {
+                "team_name": "ubuntu-translators",
+                "display_name": "Ubuntu Translators",
+                "status": "Approved",
+                "web_link": "https://launchpad.net/~ubuntu-translators",
+            }
+        ],
+    },
+    {
+        "username": "nnnlcts-heart",
+        "display_name": "Nyi Nyi Nyan Lin",
+        "karma": 0,
+        "web_link": "https://launchpad.net/~nnnlcts-heart",
+        "languages": ["my"],
+        "language_codes": ["my"],
+        "teams": [
+            {
+                "team_name": "ubuntu-l10n-my",
+                "display_name": "Ubuntu Myanmar Translators",
+                "status": "Approved",
+                "web_link": "https://launchpad.net/~ubuntu-l10n-my",
+            },
+            {
+                "team_name": "ubuntu-translators",
+                "display_name": "Ubuntu Translators",
+                "status": "Approved",
+                "web_link": "https://launchpad.net/~ubuntu-translators",
+            }
+        ],
+    },
+    {
+        "username": "nyinyinyanlin",
+        "display_name": "Nyi Nyi Nyan Lin",
+        "karma": 0,
+        "web_link": "https://launchpad.net/~nyinyinyanlin",
+        "languages": ["my"],
+        "language_codes": ["my"],
+        "teams": [
+            {
+                "team_name": "ubuntu-l10n-my",
+                "display_name": "Ubuntu Myanmar Translators",
+                "status": "Approved",
+                "web_link": "https://launchpad.net/~ubuntu-l10n-my",
+            },
+            {
+                "team_name": "ubuntu-translators",
+                "display_name": "Ubuntu Translators",
+                "status": "Approved",
+                "web_link": "https://launchpad.net/~ubuntu-translators",
+            }
+        ],
+    },
+    {
+        "username": "www-nyinyisoewin-nnsw",
+        "display_name": "Nyi Nyi Soe Win",
+        "karma": 0,
+        "web_link": "https://launchpad.net/~www-nyinyisoewin-nnsw",
+        "languages": ["my"],
+        "language_codes": ["my"],
+        "teams": [
+            {
+                "team_name": "ubuntu-l10n-my",
+                "display_name": "Ubuntu Myanmar Translators",
+                "status": "Approved",
+                "web_link": "https://launchpad.net/~ubuntu-l10n-my",
+            },
+            {
+                "team_name": "ubuntu-translators",
+                "display_name": "Ubuntu Translators",
+                "status": "Approved",
+                "web_link": "https://launchpad.net/~ubuntu-translators",
+            }
+        ],
+    },
+    {
+        "username": "pakaosorn",
+        "display_name": "Pakao Sorn",
+        "karma": 0,
+        "web_link": "https://launchpad.net/~pakaosorn",
+        "languages": ["mnw"],
+        "language_codes": ["mnw"],
+        "teams": [
+            {
+                "team_name": "ubuntu-l10n-mnw",
+                "display_name": "Ubuntu Mon Translators",
+                "status": "Approved",
+                "web_link": "https://launchpad.net/~ubuntu-l10n-mnw",
+            },
+            {
+                "team_name": "ubuntu-translators",
+                "display_name": "Ubuntu Translators",
+                "status": "Approved",
+                "web_link": "https://launchpad.net/~ubuntu-translators",
+            }
+        ],
+    },
+    {
+        "username": "pakowsajinmon",
+        "display_name": "Pakow Sajin Mon",
+        "karma": 0,
+        "web_link": "https://launchpad.net/~pakowsajinmon",
+        "languages": ["mnw"],
+        "language_codes": ["mnw"],
+        "teams": [
+            {
+                "team_name": "ubuntu-l10n-mnw",
+                "display_name": "Ubuntu Mon Translators",
+                "status": "Approved",
+                "web_link": "https://launchpad.net/~ubuntu-l10n-mnw",
+            },
+            {
+                "team_name": "ubuntu-translators",
+                "display_name": "Ubuntu Translators",
+                "status": "Approved",
+                "web_link": "https://launchpad.net/~ubuntu-translators",
+            }
+        ],
+    },
+    {
+        "username": "pmtpol77",
+        "display_name": "Phone Myint Thein",
+        "karma": 0,
+        "web_link": "https://launchpad.net/~pmtpol77",
+        "languages": ["my"],
+        "language_codes": ["my"],
+        "teams": [
+            {
+                "team_name": "ubuntu-l10n-my",
+                "display_name": "Ubuntu Myanmar Translators",
+                "status": "Approved",
+                "web_link": "https://launchpad.net/~ubuntu-l10n-my",
+            },
+            {
+                "team_name": "ubuntu-translators",
+                "display_name": "Ubuntu Translators",
+                "status": "Approved",
+                "web_link": "https://launchpad.net/~ubuntu-translators",
+            }
+        ],
+    },
+    {
+        "username": "phoohtoo",
+        "display_name": "Phoo Htoo",
+        "karma": 0,
+        "web_link": "https://launchpad.net/~phoohtoo",
+        "languages": ["my"],
+        "language_codes": ["my"],
+        "teams": [
+            {
+                "team_name": "ubuntu-l10n-my",
+                "display_name": "Ubuntu Myanmar Translators",
+                "status": "Approved",
+                "web_link": "https://launchpad.net/~ubuntu-l10n-my",
+            },
+            {
+                "team_name": "ubuntu-translators",
+                "display_name": "Ubuntu Translators",
+                "status": "Approved",
+                "web_link": "https://launchpad.net/~ubuntu-translators",
+            }
+        ],
+    },
+    {
+        "username": "phymng-ans",
+        "display_name": "phymng.ans",
+        "karma": 0,
+        "web_link": "https://launchpad.net/~phymng-ans",
+        "languages": ["my"],
+        "language_codes": ["my"],
+        "teams": [
+            {
+                "team_name": "ubuntu-l10n-my",
+                "display_name": "Ubuntu Myanmar Translators",
+                "status": "Approved",
+                "web_link": "https://launchpad.net/~ubuntu-l10n-my",
+            },
+            {
+                "team_name": "ubuntu-translators",
+                "display_name": "Ubuntu Translators",
+                "status": "Approved",
+                "web_link": "https://launchpad.net/~ubuntu-translators",
+            }
+        ],
+    },
+    {
+        "username": "phyothuyahtet-punk",
+        "display_name": "Phyo Thu Ya Htet",
+        "karma": 0,
+        "web_link": "https://launchpad.net/~phyothuyahtet-punk",
+        "languages": ["my"],
+        "language_codes": ["my"],
+        "teams": [
+            {
+                "team_name": "ubuntu-l10n-my",
+                "display_name": "Ubuntu Myanmar Translators",
+                "status": "Approved",
+                "web_link": "https://launchpad.net/~ubuntu-l10n-my",
+            },
+            {
+                "team_name": "ubuntu-translators",
+                "display_name": "Ubuntu Translators",
+                "status": "Approved",
+                "web_link": "https://launchpad.net/~ubuntu-translators",
+            }
+        ],
+    },
+    {
+        "username": "p-kyaws",
+        "display_name": "Pkyaws",
+        "karma": 0,
+        "web_link": "https://launchpad.net/~p-kyaws",
+        "languages": ["my"],
+        "language_codes": ["my"],
+        "teams": [
+            {
+                "team_name": "ubuntu-l10n-my",
+                "display_name": "Ubuntu Myanmar Translators",
+                "status": "Approved",
+                "web_link": "https://launchpad.net/~ubuntu-l10n-my",
+            },
+            {
+                "team_name": "ubuntu-translators",
+                "display_name": "Ubuntu Translators",
+                "status": "Approved",
+                "web_link": "https://launchpad.net/~ubuntu-translators",
+            }
+        ],
+    },
+    {
+        "username": "plzaboutu",
+        "display_name": "plzaboutu",
+        "karma": 0,
+        "web_link": "https://launchpad.net/~plzaboutu",
+        "languages": ["my"],
+        "language_codes": ["my"],
+        "teams": [
+            {
+                "team_name": "ubuntu-l10n-my",
+                "display_name": "Ubuntu Myanmar Translators",
+                "status": "Approved",
+                "web_link": "https://launchpad.net/~ubuntu-l10n-my",
+            },
+            {
+                "team_name": "ubuntu-translators",
+                "display_name": "Ubuntu Translators",
+                "status": "Approved",
+                "web_link": "https://launchpad.net/~ubuntu-translators",
+            }
+        ],
+    },
+    {
+        "username": "poundchein",
+        "display_name": "poundchein",
+        "karma": 0,
+        "web_link": "https://launchpad.net/~poundchein",
+        "languages": ["my"],
+        "language_codes": ["my"],
+        "teams": [
+            {
+                "team_name": "ubuntu-l10n-my",
+                "display_name": "Ubuntu Myanmar Translators",
+                "status": "Approved",
+                "web_link": "https://launchpad.net/~ubuntu-l10n-my",
+            },
+            {
+                "team_name": "ubuntu-translators",
+                "display_name": "Ubuntu Translators",
+                "status": "Approved",
+                "web_link": "https://launchpad.net/~ubuntu-translators",
+            }
+        ],
+    },
+    {
+        "username": "pphyo20696",
         "display_name": "Pyae Phyo",
-        "karma": 543,
-        "web_link": "https://launchpad.net/~pyaephyo4892",
+        "karma": 0,
+        "web_link": "https://launchpad.net/~pphyo20696",
         "languages": ["my"],
         "language_codes": ["my"],
         "teams": [
@@ -130,16 +2525,38 @@ _FALLBACK_CONTRIBUTORS: list[dict] = [
                 "display_name": "Ubuntu Translators",
                 "status": "Approved",
                 "web_link": "https://launchpad.net/~ubuntu-translators",
-            },
+            }
         ],
     },
     {
-        "username": "minthu",
-        "display_name": "Min Thu Kha",
-        "karma": 510,
-        "web_link": "https://launchpad.net/~minthu",
-        "languages": ["my", "mnw"],
-        "language_codes": ["my", "mnw"],
+        "username": "saiaungmurng-mw",
+        "display_name": "Sai Aung Murng",
+        "karma": 0,
+        "web_link": "https://launchpad.net/~saiaungmurng-mw",
+        "languages": ["shn"],
+        "language_codes": ["shn"],
+        "teams": [
+            {
+                "team_name": "ubuntu-l10n-shn",
+                "display_name": "Ubuntu Shan Translators",
+                "status": "Approved",
+                "web_link": "https://launchpad.net/~ubuntu-l10n-shn",
+            },
+            {
+                "team_name": "ubuntu-translators",
+                "display_name": "Ubuntu Translators",
+                "status": "Approved",
+                "web_link": "https://launchpad.net/~ubuntu-translators",
+            }
+        ],
+    },
+    {
+        "username": "saimawnkham",
+        "display_name": "Sai Mawn Kham",
+        "karma": 0,
+        "web_link": "https://launchpad.net/~saimawnkham",
+        "languages": ["my", "shn"],
+        "language_codes": ["my", "shn"],
         "teams": [
             {
                 "team_name": "ubuntu-l10n-my",
@@ -148,18 +2565,46 @@ _FALLBACK_CONTRIBUTORS: list[dict] = [
                 "web_link": "https://launchpad.net/~ubuntu-l10n-my",
             },
             {
+                "team_name": "ubuntu-translators",
+                "display_name": "Ubuntu Translators",
+                "status": "Approved",
+                "web_link": "https://launchpad.net/~ubuntu-translators",
+            },
+            {
+                "team_name": "ubuntu-l10n-shn",
+                "display_name": "Ubuntu Shan Translators",
+                "status": "Approved",
+                "web_link": "https://launchpad.net/~ubuntu-l10n-shn",
+            }
+        ],
+    },
+    {
+        "username": "maraohnonpon",
+        "display_name": "Saik Chan",
+        "karma": 0,
+        "web_link": "https://launchpad.net/~maraohnonpon",
+        "languages": ["mnw"],
+        "language_codes": ["mnw"],
+        "teams": [
+            {
                 "team_name": "ubuntu-l10n-mnw",
                 "display_name": "Ubuntu Mon Translators",
                 "status": "Approved",
                 "web_link": "https://launchpad.net/~ubuntu-l10n-mnw",
             },
+            {
+                "team_name": "ubuntu-translators",
+                "display_name": "Ubuntu Translators",
+                "status": "Approved",
+                "web_link": "https://launchpad.net/~ubuntu-translators",
+            }
         ],
     },
     {
-        "username": "naingnainghtun",
-        "display_name": "Naing Naing Htun",
-        "karma": 398,
-        "web_link": "https://launchpad.net/~naingnainghtun",
+        "username": "saikosennin",
+        "display_name": "Saiko",
+        "karma": 0,
+        "web_link": "https://launchpad.net/~saikosennin",
         "languages": ["my"],
         "language_codes": ["my"],
         "teams": [
@@ -169,13 +2614,41 @@ _FALLBACK_CONTRIBUTORS: list[dict] = [
                 "status": "Approved",
                 "web_link": "https://launchpad.net/~ubuntu-l10n-my",
             },
+            {
+                "team_name": "ubuntu-translators",
+                "display_name": "Ubuntu Translators",
+                "status": "Approved",
+                "web_link": "https://launchpad.net/~ubuntu-translators",
+            }
         ],
     },
     {
-        "username": "thurahtay",
-        "display_name": "Thura Htay",
-        "karma": 345,
-        "web_link": "https://launchpad.net/~thurahtay",
+        "username": "19panpha90",
+        "display_name": "saisaepanpha",
+        "karma": 0,
+        "web_link": "https://launchpad.net/~19panpha90",
+        "languages": ["shn"],
+        "language_codes": ["shn"],
+        "teams": [
+            {
+                "team_name": "ubuntu-l10n-shn",
+                "display_name": "Ubuntu Shan Translators",
+                "status": "Approved",
+                "web_link": "https://launchpad.net/~ubuntu-l10n-shn",
+            },
+            {
+                "team_name": "ubuntu-translators",
+                "display_name": "Ubuntu Translators",
+                "status": "Approved",
+                "web_link": "https://launchpad.net/~ubuntu-translators",
+            }
+        ],
+    },
+    {
+        "username": "sayakyi",
+        "display_name": "salai",
+        "karma": 0,
+        "web_link": "https://launchpad.net/~sayakyi",
         "languages": ["my"],
         "language_codes": ["my"],
         "teams": [
@@ -185,15 +2658,179 @@ _FALLBACK_CONTRIBUTORS: list[dict] = [
                 "status": "Approved",
                 "web_link": "https://launchpad.net/~ubuntu-l10n-my",
             },
+            {
+                "team_name": "ubuntu-translators",
+                "display_name": "Ubuntu Translators",
+                "status": "Approved",
+                "web_link": "https://launchpad.net/~ubuntu-translators",
+            }
         ],
     },
-
-    # ── Mon (ubuntu-l10n-mnw) ───────────────────────────────────────────
     {
-        "username": "htoo",
-        "display_name": "Htoo Mon",
-        "karma": 780,
-        "web_link": "https://launchpad.net/~htoo",
+        "username": "jclovesme-zi9",
+        "display_name": "Sargon Zi",
+        "karma": 0,
+        "web_link": "https://launchpad.net/~jclovesme-zi9",
+        "languages": ["my"],
+        "language_codes": ["my"],
+        "teams": [
+            {
+                "team_name": "ubuntu-l10n-my",
+                "display_name": "Ubuntu Myanmar Translators",
+                "status": "Approved",
+                "web_link": "https://launchpad.net/~ubuntu-l10n-my",
+            },
+            {
+                "team_name": "ubuntu-translators",
+                "display_name": "Ubuntu Translators",
+                "status": "Approved",
+                "web_link": "https://launchpad.net/~ubuntu-translators",
+            }
+        ],
+    },
+    {
+        "username": "saturngod",
+        "display_name": "saturngod",
+        "karma": 0,
+        "web_link": "https://launchpad.net/~saturngod",
+        "languages": ["my"],
+        "language_codes": ["my"],
+        "teams": [
+            {
+                "team_name": "ubuntu-l10n-my",
+                "display_name": "Ubuntu Myanmar Translators",
+                "status": "Approved",
+                "web_link": "https://launchpad.net/~ubuntu-l10n-my",
+            },
+            {
+                "team_name": "ubuntu-translators",
+                "display_name": "Ubuntu Translators",
+                "status": "Approved",
+                "web_link": "https://launchpad.net/~ubuntu-translators",
+            }
+        ],
+    },
+    {
+        "username": "sawkhaing",
+        "display_name": "Saw Khaing",
+        "karma": 0,
+        "web_link": "https://launchpad.net/~sawkhaing",
+        "languages": ["my"],
+        "language_codes": ["my"],
+        "teams": [
+            {
+                "team_name": "ubuntu-l10n-my",
+                "display_name": "Ubuntu Myanmar Translators",
+                "status": "Approved",
+                "web_link": "https://launchpad.net/~ubuntu-l10n-my",
+            },
+            {
+                "team_name": "ubuntu-translators",
+                "display_name": "Ubuntu Translators",
+                "status": "Approved",
+                "web_link": "https://launchpad.net/~ubuntu-translators",
+            }
+        ],
+    },
+    {
+        "username": "sorlok-reaves",
+        "display_name": "Seth N. Hetu",
+        "karma": 0,
+        "web_link": "https://launchpad.net/~sorlok-reaves",
+        "languages": ["my", "shn"],
+        "language_codes": ["my", "shn"],
+        "teams": [
+            {
+                "team_name": "ubuntu-l10n-my",
+                "display_name": "Ubuntu Myanmar Translators",
+                "status": "Approved",
+                "web_link": "https://launchpad.net/~ubuntu-l10n-my",
+            },
+            {
+                "team_name": "ubuntu-translators",
+                "display_name": "Ubuntu Translators",
+                "status": "Approved",
+                "web_link": "https://launchpad.net/~ubuntu-translators",
+            },
+            {
+                "team_name": "ubuntu-l10n-shn",
+                "display_name": "Ubuntu Shan Translators",
+                "status": "Approved",
+                "web_link": "https://launchpad.net/~ubuntu-l10n-shn",
+            }
+        ],
+    },
+    {
+        "username": "sithu015",
+        "display_name": "Sithu Aung",
+        "karma": 0,
+        "web_link": "https://launchpad.net/~sithu015",
+        "languages": ["my"],
+        "language_codes": ["my"],
+        "teams": [
+            {
+                "team_name": "ubuntu-l10n-my",
+                "display_name": "Ubuntu Myanmar Translators",
+                "status": "Approved",
+                "web_link": "https://launchpad.net/~ubuntu-l10n-my",
+            },
+            {
+                "team_name": "ubuntu-translators",
+                "display_name": "Ubuntu Translators",
+                "status": "Approved",
+                "web_link": "https://launchpad.net/~ubuntu-translators",
+            }
+        ],
+    },
+    {
+        "username": "sithu-a",
+        "display_name": "Sithu Thwin",
+        "karma": 0,
+        "web_link": "https://launchpad.net/~sithu-a",
+        "languages": ["my"],
+        "language_codes": ["my"],
+        "teams": [
+            {
+                "team_name": "ubuntu-l10n-my",
+                "display_name": "Ubuntu Myanmar Translators",
+                "status": "Approved",
+                "web_link": "https://launchpad.net/~ubuntu-l10n-my",
+            },
+            {
+                "team_name": "ubuntu-translators",
+                "display_name": "Ubuntu Translators",
+                "status": "Approved",
+                "web_link": "https://launchpad.net/~ubuntu-translators",
+            }
+        ],
+    },
+    {
+        "username": "sopykt",
+        "display_name": "soe paing",
+        "karma": 0,
+        "web_link": "https://launchpad.net/~sopykt",
+        "languages": ["my"],
+        "language_codes": ["my"],
+        "teams": [
+            {
+                "team_name": "ubuntu-l10n-my",
+                "display_name": "Ubuntu Myanmar Translators",
+                "status": "Approved",
+                "web_link": "https://launchpad.net/~ubuntu-l10n-my",
+            },
+            {
+                "team_name": "ubuntu-translators",
+                "display_name": "Ubuntu Translators",
+                "status": "Approved",
+                "web_link": "https://launchpad.net/~ubuntu-translators",
+            }
+        ],
+    },
+    {
+        "username": "soiroelyahmon",
+        "display_name": "Soi Roe Lyah Mon",
+        "karma": 0,
+        "web_link": "https://launchpad.net/~soiroelyahmon",
         "languages": ["mnw"],
         "language_codes": ["mnw"],
         "teams": [
@@ -208,14 +2845,58 @@ _FALLBACK_CONTRIBUTORS: list[dict] = [
                 "display_name": "Ubuntu Translators",
                 "status": "Approved",
                 "web_link": "https://launchpad.net/~ubuntu-translators",
-            },
+            }
         ],
     },
     {
-        "username": "ashin-sopaka",
-        "display_name": "Ashin Sopaka",
-        "karma": 620,
-        "web_link": "https://launchpad.net/~ashin-sopaka",
+        "username": "liuzen",
+        "display_name": "Stephen",
+        "karma": 0,
+        "web_link": "https://launchpad.net/~liuzen",
+        "languages": ["my"],
+        "language_codes": ["my"],
+        "teams": [
+            {
+                "team_name": "ubuntu-l10n-my",
+                "display_name": "Ubuntu Myanmar Translators",
+                "status": "Approved",
+                "web_link": "https://launchpad.net/~ubuntu-l10n-my",
+            },
+            {
+                "team_name": "ubuntu-translators",
+                "display_name": "Ubuntu Translators",
+                "status": "Approved",
+                "web_link": "https://launchpad.net/~ubuntu-translators",
+            }
+        ],
+    },
+    {
+        "username": "sukyihtwe1",
+        "display_name": "sukyihtwe",
+        "karma": 0,
+        "web_link": "https://launchpad.net/~sukyihtwe1",
+        "languages": ["my"],
+        "language_codes": ["my"],
+        "teams": [
+            {
+                "team_name": "ubuntu-l10n-my",
+                "display_name": "Ubuntu Myanmar Translators",
+                "status": "Approved",
+                "web_link": "https://launchpad.net/~ubuntu-l10n-my",
+            },
+            {
+                "team_name": "ubuntu-translators",
+                "display_name": "Ubuntu Translators",
+                "status": "Approved",
+                "web_link": "https://launchpad.net/~ubuntu-translators",
+            }
+        ],
+    },
+    {
+        "username": "suriya-mon",
+        "display_name": "Suriya Mon",
+        "karma": 0,
+        "web_link": "https://launchpad.net/~suriya-mon",
         "languages": ["mnw"],
         "language_codes": ["mnw"],
         "teams": [
@@ -225,63 +2906,19 @@ _FALLBACK_CONTRIBUTORS: list[dict] = [
                 "status": "Approved",
                 "web_link": "https://launchpad.net/~ubuntu-l10n-mnw",
             },
-        ],
-    },
-    {
-        "username": "nyinyilwin",
-        "display_name": "Nyi Nyi Lwin",
-        "karma": 456,
-        "web_link": "https://launchpad.net/~nyinyilwin",
-        "languages": ["mnw"],
-        "language_codes": ["mnw"],
-        "teams": [
             {
-                "team_name": "ubuntu-l10n-mnw",
-                "display_name": "Ubuntu Mon Translators",
+                "team_name": "ubuntu-translators",
+                "display_name": "Ubuntu Translators",
                 "status": "Approved",
-                "web_link": "https://launchpad.net/~ubuntu-l10n-mnw",
-            },
+                "web_link": "https://launchpad.net/~ubuntu-translators",
+            }
         ],
     },
     {
-        "username": "sitthu-mon",
-        "display_name": "Sitthu Aung",
-        "karma": 312,
-        "web_link": "https://launchpad.net/~sitthu-mon",
-        "languages": ["mnw"],
-        "language_codes": ["mnw"],
-        "teams": [
-            {
-                "team_name": "ubuntu-l10n-mnw",
-                "display_name": "Ubuntu Mon Translators",
-                "status": "Approved",
-                "web_link": "https://launchpad.net/~ubuntu-l10n-mnw",
-            },
-        ],
-    },
-    {
-        "username": "naimontrans",
-        "display_name": "Nai Mon",
-        "karma": 267,
-        "web_link": "https://launchpad.net/~naimontrans",
-        "languages": ["mnw"],
-        "language_codes": ["mnw"],
-        "teams": [
-            {
-                "team_name": "ubuntu-l10n-mnw",
-                "display_name": "Ubuntu Mon Translators",
-                "status": "Approved",
-                "web_link": "https://launchpad.net/~ubuntu-l10n-mnw",
-            },
-        ],
-    },
-
-    # ── Shan (ubuntu-l10n-shn) ──────────────────────────────────────────
-    {
-        "username": "saimon",
-        "display_name": "Sai Mon San",
-        "karma": 689,
-        "web_link": "https://launchpad.net/~saimon",
+        "username": "gladmanchikosha",
+        "display_name": "takapiwanashe",
+        "karma": 0,
+        "web_link": "https://launchpad.net/~gladmanchikosha",
         "languages": ["shn"],
         "language_codes": ["shn"],
         "teams": [
@@ -296,205 +2933,691 @@ _FALLBACK_CONTRIBUTORS: list[dict] = [
                 "display_name": "Ubuntu Translators",
                 "status": "Approved",
                 "web_link": "https://launchpad.net/~ubuntu-translators",
-            },
+            }
         ],
     },
     {
-        "username": "lchan",
-        "display_name": "Lois Chan",
-        "karma": 380,
-        "web_link": "https://launchpad.net/~lchan",
-        "languages": ["shn"],
-        "language_codes": ["shn"],
+        "username": "talachanmon",
+        "display_name": "talachan",
+        "karma": 0,
+        "web_link": "https://launchpad.net/~talachanmon",
+        "languages": ["mnw"],
+        "language_codes": ["mnw"],
         "teams": [
             {
-                "team_name": "ubuntu-l10n-shn",
-                "display_name": "Ubuntu Shan Translators",
+                "team_name": "ubuntu-l10n-mnw",
+                "display_name": "Ubuntu Mon Translators",
                 "status": "Approved",
-                "web_link": "https://launchpad.net/~ubuntu-l10n-shn",
+                "web_link": "https://launchpad.net/~ubuntu-l10n-mnw",
             },
             {
                 "team_name": "ubuntu-translators",
                 "display_name": "Ubuntu Translators",
                 "status": "Approved",
                 "web_link": "https://launchpad.net/~ubuntu-translators",
-            },
+            }
         ],
     },
     {
-        "username": "saikhamdon",
-        "display_name": "Sai Kham Don",
-        "karma": 534,
-        "web_link": "https://launchpad.net/~saikhamdon",
-        "languages": ["shn"],
-        "language_codes": ["shn"],
+        "username": "thaingarra",
+        "display_name": "Thaingarra",
+        "karma": 0,
+        "web_link": "https://launchpad.net/~thaingarra",
+        "languages": ["my"],
+        "language_codes": ["my"],
         "teams": [
             {
-                "team_name": "ubuntu-l10n-shn",
-                "display_name": "Ubuntu Shan Translators",
+                "team_name": "ubuntu-l10n-my",
+                "display_name": "Ubuntu Myanmar Translators",
                 "status": "Approved",
-                "web_link": "https://launchpad.net/~ubuntu-l10n-shn",
-            },
-        ],
-    },
-    {
-        "username": "khunaungnai",
-        "display_name": "Khun Aung Nai",
-        "karma": 421,
-        "web_link": "https://launchpad.net/~khunaungnai",
-        "languages": ["shn"],
-        "language_codes": ["shn"],
-        "teams": [
-            {
-                "team_name": "ubuntu-l10n-shn",
-                "display_name": "Ubuntu Shan Translators",
-                "status": "Approved",
-                "web_link": "https://launchpad.net/~ubuntu-l10n-shn",
-            },
-        ],
-    },
-    {
-        "username": "saiyawtun",
-        "display_name": "Sai Yaw Tun",
-        "karma": 298,
-        "web_link": "https://launchpad.net/~saiyawtun",
-        "languages": ["shn"],
-        "language_codes": ["shn"],
-        "teams": [
-            {
-                "team_name": "ubuntu-l10n-shn",
-                "display_name": "Ubuntu Shan Translators",
-                "status": "Approved",
-                "web_link": "https://launchpad.net/~ubuntu-l10n-shn",
-            },
-        ],
-    },
-    {
-        "username": "nangkham",
-        "display_name": "Nang Kham",
-        "karma": 245,
-        "web_link": "https://launchpad.net/~nangkham",
-        "languages": ["shn"],
-        "language_codes": ["shn"],
-        "teams": [
-            {
-                "team_name": "ubuntu-l10n-shn",
-                "display_name": "Ubuntu Shan Translators",
-                "status": "Approved",
-                "web_link": "https://launchpad.net/~ubuntu-l10n-shn",
-            },
-        ],
-    },
-
-    # ── S'gaw Karen (ubuntu-l10n-ksw) ───────────────────────────────────
-    {
-        "username": "kpaw",
-        "display_name": "K'Paw Hser",
-        "karma": 510,
-        "web_link": "https://launchpad.net/~kpaw",
-        "languages": ["ksw"],
-        "language_codes": ["ksw"],
-        "teams": [
-            {
-                "team_name": "ubuntu-l10n-ksw",
-                "display_name": "Ubuntu Karen Translators",
-                "status": "Approved",
-                "web_link": "https://launchpad.net/~ubuntu-l10n-ksw",
+                "web_link": "https://launchpad.net/~ubuntu-l10n-my",
             },
             {
                 "team_name": "ubuntu-translators",
                 "display_name": "Ubuntu Translators",
                 "status": "Approved",
                 "web_link": "https://launchpad.net/~ubuntu-translators",
-            },
+            }
         ],
     },
     {
-        "username": "nawmu",
-        "display_name": "Naw Mu Wah",
-        "karma": 285,
-        "web_link": "https://launchpad.net/~nawmu",
-        "languages": ["ksw"],
-        "language_codes": ["ksw"],
+        "username": "thanhtikeag",
+        "display_name": "Than Htike Aung",
+        "karma": 0,
+        "web_link": "https://launchpad.net/~thanhtikeag",
+        "languages": ["my"],
+        "language_codes": ["my"],
         "teams": [
             {
-                "team_name": "ubuntu-l10n-ksw",
-                "display_name": "Ubuntu Karen Translators",
+                "team_name": "ubuntu-l10n-my",
+                "display_name": "Ubuntu Myanmar Translators",
                 "status": "Approved",
-                "web_link": "https://launchpad.net/~ubuntu-l10n-ksw",
+                "web_link": "https://launchpad.net/~ubuntu-l10n-my",
             },
             {
                 "team_name": "ubuntu-translators",
                 "display_name": "Ubuntu Translators",
                 "status": "Approved",
                 "web_link": "https://launchpad.net/~ubuntu-translators",
-            },
+            }
         ],
     },
     {
-        "username": "sawehdohsoe",
-        "display_name": "Saw Eh Doh Soe",
-        "karma": 423,
-        "web_link": "https://launchpad.net/~sawehdohsoe",
+        "username": "thanyawzinmin91",
+        "display_name": "ThanyawZinmin",
+        "karma": 0,
+        "web_link": "https://launchpad.net/~thanyawzinmin91",
+        "languages": ["my"],
+        "language_codes": ["my"],
+        "teams": [
+            {
+                "team_name": "ubuntu-l10n-my",
+                "display_name": "Ubuntu Myanmar Translators",
+                "status": "Approved",
+                "web_link": "https://launchpad.net/~ubuntu-l10n-my",
+            },
+            {
+                "team_name": "ubuntu-translators",
+                "display_name": "Ubuntu Translators",
+                "status": "Approved",
+                "web_link": "https://launchpad.net/~ubuntu-translators",
+            }
+        ],
+    },
+    {
+        "username": "thapyaysan",
+        "display_name": "thapyaysan",
+        "karma": 0,
+        "web_link": "https://launchpad.net/~thapyaysan",
+        "languages": ["my"],
+        "language_codes": ["my"],
+        "teams": [
+            {
+                "team_name": "ubuntu-l10n-my",
+                "display_name": "Ubuntu Myanmar Translators",
+                "status": "Approved",
+                "web_link": "https://launchpad.net/~ubuntu-l10n-my",
+            },
+            {
+                "team_name": "ubuntu-translators",
+                "display_name": "Ubuntu Translators",
+                "status": "Approved",
+                "web_link": "https://launchpad.net/~ubuntu-translators",
+            }
+        ],
+    },
+    {
+        "username": "tharnge1122",
+        "display_name": "Thar Nge",
+        "karma": 0,
+        "web_link": "https://launchpad.net/~tharnge1122",
+        "languages": ["mnw"],
+        "language_codes": ["mnw"],
+        "teams": [
+            {
+                "team_name": "ubuntu-l10n-mnw",
+                "display_name": "Ubuntu Mon Translators",
+                "status": "Approved",
+                "web_link": "https://launchpad.net/~ubuntu-l10n-mnw",
+            },
+            {
+                "team_name": "ubuntu-translators",
+                "display_name": "Ubuntu Translators",
+                "status": "Approved",
+                "web_link": "https://launchpad.net/~ubuntu-translators",
+            }
+        ],
+    },
+    {
+        "username": "theinkha",
+        "display_name": "Theinkha Mg Mg",
+        "karma": 0,
+        "web_link": "https://launchpad.net/~theinkha",
+        "languages": ["mnw"],
+        "language_codes": ["mnw"],
+        "teams": [
+            {
+                "team_name": "ubuntu-l10n-mnw",
+                "display_name": "Ubuntu Mon Translators",
+                "status": "Approved",
+                "web_link": "https://launchpad.net/~ubuntu-l10n-mnw",
+            },
+            {
+                "team_name": "ubuntu-translators",
+                "display_name": "Ubuntu Translators",
+                "status": "Approved",
+                "web_link": "https://launchpad.net/~ubuntu-translators",
+            }
+        ],
+    },
+    {
+        "username": "thelthel",
+        "display_name": "Thel Thel",
+        "karma": 0,
+        "web_link": "https://launchpad.net/~thelthel",
+        "languages": ["my"],
+        "language_codes": ["my"],
+        "teams": [
+            {
+                "team_name": "ubuntu-l10n-my",
+                "display_name": "Ubuntu Myanmar Translators",
+                "status": "Approved",
+                "web_link": "https://launchpad.net/~ubuntu-l10n-my",
+            },
+            {
+                "team_name": "ubuntu-translators",
+                "display_name": "Ubuntu Translators",
+                "status": "Approved",
+                "web_link": "https://launchpad.net/~ubuntu-translators",
+            }
+        ],
+    },
+    {
+        "username": "thevowels",
+        "display_name": "Thevowels",
+        "karma": 0,
+        "web_link": "https://launchpad.net/~thevowels",
+        "languages": ["my"],
+        "language_codes": ["my"],
+        "teams": [
+            {
+                "team_name": "ubuntu-l10n-my",
+                "display_name": "Ubuntu Myanmar Translators",
+                "status": "Approved",
+                "web_link": "https://launchpad.net/~ubuntu-l10n-my",
+            },
+            {
+                "team_name": "ubuntu-translators",
+                "display_name": "Ubuntu Translators",
+                "status": "Approved",
+                "web_link": "https://launchpad.net/~ubuntu-translators",
+            }
+        ],
+    },
+    {
+        "username": "thu99ball",
+        "display_name": "Thu",
+        "karma": 0,
+        "web_link": "https://launchpad.net/~thu99ball",
         "languages": ["ksw"],
         "language_codes": ["ksw"],
         "teams": [
             {
-                "team_name": "ubuntu-l10n-ksw",
-                "display_name": "Ubuntu Karen Translators",
+                "team_name": "linuxmint-translation-team-ksw",
+                "display_name": "S'gaw Karen Translation Team for Linux Mint",
                 "status": "Approved",
-                "web_link": "https://launchpad.net/~ubuntu-l10n-ksw",
+                "web_link": "https://launchpad.net/~linuxmint-translation-team-ksw",
             },
+            {
+                "team_name": "ubuntu-translators",
+                "display_name": "Ubuntu Translators",
+                "status": "Approved",
+                "web_link": "https://launchpad.net/~ubuntu-translators",
+            }
         ],
     },
     {
-        "username": "nawhsamoo",
-        "display_name": "Naw Hsa Moo",
-        "karma": 356,
-        "web_link": "https://launchpad.net/~nawhsamoo",
-        "languages": ["ksw"],
-        "language_codes": ["ksw"],
+        "username": "thurahlaing-pthgroup",
+        "display_name": "Thura Hlaing",
+        "karma": 0,
+        "web_link": "https://launchpad.net/~thurahlaing-pthgroup",
+        "languages": ["my"],
+        "language_codes": ["my"],
         "teams": [
             {
-                "team_name": "ubuntu-l10n-ksw",
-                "display_name": "Ubuntu Karen Translators",
+                "team_name": "ubuntu-l10n-my",
+                "display_name": "Ubuntu Myanmar Translators",
                 "status": "Approved",
-                "web_link": "https://launchpad.net/~ubuntu-l10n-ksw",
+                "web_link": "https://launchpad.net/~ubuntu-l10n-my",
             },
+            {
+                "team_name": "ubuntu-translators",
+                "display_name": "Ubuntu Translators",
+                "status": "Approved",
+                "web_link": "https://launchpad.net/~ubuntu-translators",
+            }
         ],
     },
     {
-        "username": "sawhtoo",
-        "display_name": "Saw Htoo",
-        "karma": 234,
-        "web_link": "https://launchpad.net/~sawhtoo",
-        "languages": ["ksw"],
-        "language_codes": ["ksw"],
+        "username": "kotinhtooaung",
+        "display_name": "Tin Htoo Aung",
+        "karma": 0,
+        "web_link": "https://launchpad.net/~kotinhtooaung",
+        "languages": ["my"],
+        "language_codes": ["my"],
         "teams": [
             {
-                "team_name": "ubuntu-l10n-ksw",
-                "display_name": "Ubuntu Karen Translators",
+                "team_name": "ubuntu-l10n-my",
+                "display_name": "Ubuntu Myanmar Translators",
                 "status": "Approved",
-                "web_link": "https://launchpad.net/~ubuntu-l10n-ksw",
+                "web_link": "https://launchpad.net/~ubuntu-l10n-my",
             },
+            {
+                "team_name": "ubuntu-translators",
+                "display_name": "Ubuntu Translators",
+                "status": "Approved",
+                "web_link": "https://launchpad.net/~ubuntu-translators",
+            }
         ],
     },
     {
-        "username": "padohkwe",
-        "display_name": "Padoh Kwe",
-        "karma": 198,
-        "web_link": "https://launchpad.net/~padohkwe",
-        "languages": ["ksw"],
-        "language_codes": ["ksw"],
+        "username": "tmhtet",
+        "display_name": "tmhtet",
+        "karma": 0,
+        "web_link": "https://launchpad.net/~tmhtet",
+        "languages": ["my"],
+        "language_codes": ["my"],
         "teams": [
             {
-                "team_name": "ubuntu-l10n-ksw",
-                "display_name": "Ubuntu Karen Translators",
+                "team_name": "ubuntu-l10n-my",
+                "display_name": "Ubuntu Myanmar Translators",
                 "status": "Approved",
-                "web_link": "https://launchpad.net/~ubuntu-l10n-ksw",
+                "web_link": "https://launchpad.net/~ubuntu-l10n-my",
             },
+            {
+                "team_name": "ubuntu-translators",
+                "display_name": "Ubuntu Translators",
+                "status": "Approved",
+                "web_link": "https://launchpad.net/~ubuntu-translators",
+            }
         ],
     },
+    {
+        "username": "vskl",
+        "display_name": "Victor San Kho Lin",
+        "karma": 0,
+        "web_link": "https://launchpad.net/~vskl",
+        "languages": ["my"],
+        "language_codes": ["my"],
+        "teams": [
+            {
+                "team_name": "ubuntu-l10n-my",
+                "display_name": "Ubuntu Myanmar Translators",
+                "status": "Approved",
+                "web_link": "https://launchpad.net/~ubuntu-l10n-my",
+            },
+            {
+                "team_name": "ubuntu-translators",
+                "display_name": "Ubuntu Translators",
+                "status": "Approved",
+                "web_link": "https://launchpad.net/~ubuntu-translators",
+            }
+        ],
+    },
+    {
+        "username": "waiphone9",
+        "display_name": "Wai Phone Naing",
+        "karma": 0,
+        "web_link": "https://launchpad.net/~waiphone9",
+        "languages": ["my"],
+        "language_codes": ["my"],
+        "teams": [
+            {
+                "team_name": "ubuntu-l10n-my",
+                "display_name": "Ubuntu Myanmar Translators",
+                "status": "Approved",
+                "web_link": "https://launchpad.net/~ubuntu-l10n-my",
+            },
+            {
+                "team_name": "ubuntu-translators",
+                "display_name": "Ubuntu Translators",
+                "status": "Approved",
+                "web_link": "https://launchpad.net/~ubuntu-translators",
+            }
+        ],
+    },
+    {
+        "username": "man-shrek",
+        "display_name": "wataruMan",
+        "karma": 0,
+        "web_link": "https://launchpad.net/~man-shrek",
+        "languages": ["my"],
+        "language_codes": ["my"],
+        "teams": [
+            {
+                "team_name": "ubuntu-l10n-my",
+                "display_name": "Ubuntu Myanmar Translators",
+                "status": "Approved",
+                "web_link": "https://launchpad.net/~ubuntu-l10n-my",
+            },
+            {
+                "team_name": "ubuntu-translators",
+                "display_name": "Ubuntu Translators",
+                "status": "Approved",
+                "web_link": "https://launchpad.net/~ubuntu-translators",
+            }
+        ],
+    },
+    {
+        "username": "mondser",
+        "display_name": "WiRa",
+        "karma": 0,
+        "web_link": "https://launchpad.net/~mondser",
+        "languages": ["mnw"],
+        "language_codes": ["mnw"],
+        "teams": [
+            {
+                "team_name": "ubuntu-l10n-mnw",
+                "display_name": "Ubuntu Mon Translators",
+                "status": "Approved",
+                "web_link": "https://launchpad.net/~ubuntu-l10n-mnw",
+            },
+            {
+                "team_name": "ubuntu-translators",
+                "display_name": "Ubuntu Translators",
+                "status": "Approved",
+                "web_link": "https://launchpad.net/~ubuntu-translators",
+            }
+        ],
+    },
+    {
+        "username": "yanhmueaung",
+        "display_name": "Yan Hmue Aung",
+        "karma": 0,
+        "web_link": "https://launchpad.net/~yanhmueaung",
+        "languages": ["my"],
+        "language_codes": ["my"],
+        "teams": [
+            {
+                "team_name": "ubuntu-l10n-my",
+                "display_name": "Ubuntu Myanmar Translators",
+                "status": "Approved",
+                "web_link": "https://launchpad.net/~ubuntu-l10n-my",
+            },
+            {
+                "team_name": "ubuntu-translators",
+                "display_name": "Ubuntu Translators",
+                "status": "Approved",
+                "web_link": "https://launchpad.net/~ubuntu-translators",
+            }
+        ],
+    },
+    {
+        "username": "yannainglin",
+        "display_name": "Yan Naing Lin",
+        "karma": 0,
+        "web_link": "https://launchpad.net/~yannainglin",
+        "languages": ["my"],
+        "language_codes": ["my"],
+        "teams": [
+            {
+                "team_name": "ubuntu-l10n-my",
+                "display_name": "Ubuntu Myanmar Translators",
+                "status": "Approved",
+                "web_link": "https://launchpad.net/~ubuntu-l10n-my",
+            },
+            {
+                "team_name": "ubuntu-translators",
+                "display_name": "Ubuntu Translators",
+                "status": "Approved",
+                "web_link": "https://launchpad.net/~ubuntu-translators",
+            }
+        ],
+    },
+    {
+        "username": "eeeeyeeee",
+        "display_name": "yan naung soe",
+        "karma": 0,
+        "web_link": "https://launchpad.net/~eeeeyeeee",
+        "languages": ["my"],
+        "language_codes": ["my"],
+        "teams": [
+            {
+                "team_name": "ubuntu-l10n-my",
+                "display_name": "Ubuntu Myanmar Translators",
+                "status": "Approved",
+                "web_link": "https://launchpad.net/~ubuntu-l10n-my",
+            },
+            {
+                "team_name": "ubuntu-translators",
+                "display_name": "Ubuntu Translators",
+                "status": "Approved",
+                "web_link": "https://launchpad.net/~ubuntu-translators",
+            }
+        ],
+    },
+    {
+        "username": "yanyansa",
+        "display_name": "Yan Naung Soe Aye",
+        "karma": 0,
+        "web_link": "https://launchpad.net/~yanyansa",
+        "languages": ["my"],
+        "language_codes": ["my"],
+        "teams": [
+            {
+                "team_name": "ubuntu-l10n-my",
+                "display_name": "Ubuntu Myanmar Translators",
+                "status": "Approved",
+                "web_link": "https://launchpad.net/~ubuntu-l10n-my",
+            },
+            {
+                "team_name": "ubuntu-translators",
+                "display_name": "Ubuntu Translators",
+                "status": "Approved",
+                "web_link": "https://launchpad.net/~ubuntu-translators",
+            }
+        ],
+    },
+    {
+        "username": "yeluaung",
+        "display_name": "YE LU AUNG",
+        "karma": 0,
+        "web_link": "https://launchpad.net/~yeluaung",
+        "languages": ["my"],
+        "language_codes": ["my"],
+        "teams": [
+            {
+                "team_name": "ubuntu-l10n-my",
+                "display_name": "Ubuntu Myanmar Translators",
+                "status": "Approved",
+                "web_link": "https://launchpad.net/~ubuntu-l10n-my",
+            },
+            {
+                "team_name": "ubuntu-translators",
+                "display_name": "Ubuntu Translators",
+                "status": "Approved",
+                "web_link": "https://launchpad.net/~ubuntu-translators",
+            }
+        ],
+    },
+    {
+        "username": "bravesai-mm",
+        "display_name": "Ye Lwin Soe",
+        "karma": 0,
+        "web_link": "https://launchpad.net/~bravesai-mm",
+        "languages": ["my"],
+        "language_codes": ["my"],
+        "teams": [
+            {
+                "team_name": "ubuntu-l10n-my",
+                "display_name": "Ubuntu Myanmar Translators",
+                "status": "Approved",
+                "web_link": "https://launchpad.net/~ubuntu-l10n-my",
+            },
+            {
+                "team_name": "ubuntu-translators",
+                "display_name": "Ubuntu Translators",
+                "status": "Approved",
+                "web_link": "https://launchpad.net/~ubuntu-translators",
+            }
+        ],
+    },
+    {
+        "username": "yeminphyo25",
+        "display_name": "Ye Min Phyo",
+        "karma": 0,
+        "web_link": "https://launchpad.net/~yeminphyo25",
+        "languages": ["my"],
+        "language_codes": ["my"],
+        "teams": [
+            {
+                "team_name": "ubuntu-l10n-my",
+                "display_name": "Ubuntu Myanmar Translators",
+                "status": "Approved",
+                "web_link": "https://launchpad.net/~ubuntu-l10n-my",
+            },
+            {
+                "team_name": "ubuntu-translators",
+                "display_name": "Ubuntu Translators",
+                "status": "Approved",
+                "web_link": "https://launchpad.net/~ubuntu-translators",
+            }
+        ],
+    },
+    {
+        "username": "yeaungthu",
+        "display_name": "yeaungthu",
+        "karma": 0,
+        "web_link": "https://launchpad.net/~yeaungthu",
+        "languages": ["my"],
+        "language_codes": ["my"],
+        "teams": [
+            {
+                "team_name": "ubuntu-l10n-my",
+                "display_name": "Ubuntu Myanmar Translators",
+                "status": "Approved",
+                "web_link": "https://launchpad.net/~ubuntu-l10n-my",
+            },
+            {
+                "team_name": "ubuntu-translators",
+                "display_name": "Ubuntu Translators",
+                "status": "Approved",
+                "web_link": "https://launchpad.net/~ubuntu-translators",
+            }
+        ],
+    },
+    {
+        "username": "yethusoe",
+        "display_name": "yethusoe",
+        "karma": 0,
+        "web_link": "https://launchpad.net/~yethusoe",
+        "languages": ["my"],
+        "language_codes": ["my"],
+        "teams": [
+            {
+                "team_name": "ubuntu-l10n-my",
+                "display_name": "Ubuntu Myanmar Translators",
+                "status": "Approved",
+                "web_link": "https://launchpad.net/~ubuntu-l10n-my",
+            },
+            {
+                "team_name": "ubuntu-translators",
+                "display_name": "Ubuntu Translators",
+                "status": "Approved",
+                "web_link": "https://launchpad.net/~ubuntu-translators",
+            }
+        ],
+    },
+    {
+        "username": "mhenyhazz177999000",
+        "display_name": "Yhaza",
+        "karma": 0,
+        "web_link": "https://launchpad.net/~mhenyhazz177999000",
+        "languages": ["mnw"],
+        "language_codes": ["mnw"],
+        "teams": [
+            {
+                "team_name": "ubuntu-l10n-mnw",
+                "display_name": "Ubuntu Mon Translators",
+                "status": "Approved",
+                "web_link": "https://launchpad.net/~ubuntu-l10n-mnw",
+            },
+            {
+                "team_name": "ubuntu-translators",
+                "display_name": "Ubuntu Translators",
+                "status": "Approved",
+                "web_link": "https://launchpad.net/~ubuntu-translators",
+            }
+        ],
+    },
+    {
+        "username": "yinmayoo",
+        "display_name": "YinMayOo (\u101a\u1009\u103a\u1019\u1031\u1026\u1038)",
+        "karma": 0,
+        "web_link": "https://launchpad.net/~yinmayoo",
+        "languages": ["my"],
+        "language_codes": ["my"],
+        "teams": [
+            {
+                "team_name": "ubuntu-l10n-my",
+                "display_name": "Ubuntu Myanmar Translators",
+                "status": "Approved",
+                "web_link": "https://launchpad.net/~ubuntu-l10n-my",
+            },
+            {
+                "team_name": "ubuntu-translators",
+                "display_name": "Ubuntu Translators",
+                "status": "Approved",
+                "web_link": "https://launchpad.net/~ubuntu-translators",
+            }
+        ],
+    },
+    {
+        "username": "hackforpeace01",
+        "display_name": "Zaw Myo Htet",
+        "karma": 0,
+        "web_link": "https://launchpad.net/~hackforpeace01",
+        "languages": ["my"],
+        "language_codes": ["my"],
+        "teams": [
+            {
+                "team_name": "ubuntu-l10n-my",
+                "display_name": "Ubuntu Myanmar Translators",
+                "status": "Approved",
+                "web_link": "https://launchpad.net/~ubuntu-l10n-my",
+            },
+            {
+                "team_name": "ubuntu-translators",
+                "display_name": "Ubuntu Translators",
+                "status": "Approved",
+                "web_link": "https://launchpad.net/~ubuntu-translators",
+            }
+        ],
+    },
+    {
+        "username": "ayngzawlatt",
+        "display_name": "zawlatt",
+        "karma": 0,
+        "web_link": "https://launchpad.net/~ayngzawlatt",
+        "languages": ["mnw"],
+        "language_codes": ["mnw"],
+        "teams": [
+            {
+                "team_name": "ubuntu-l10n-mnw",
+                "display_name": "Ubuntu Mon Translators",
+                "status": "Approved",
+                "web_link": "https://launchpad.net/~ubuntu-l10n-mnw",
+            },
+            {
+                "team_name": "ubuntu-translators",
+                "display_name": "Ubuntu Translators",
+                "status": "Approved",
+                "web_link": "https://launchpad.net/~ubuntu-translators",
+            }
+        ],
+    },
+    {
+        "username": "naymyohaen",
+        "display_name": "\u1031\u1014\u1019\u103a\u102d\u1033\u1038\u101f\u1014\u1039",
+        "karma": 0,
+        "web_link": "https://launchpad.net/~naymyohaen",
+        "languages": ["my"],
+        "language_codes": ["my"],
+        "teams": [
+            {
+                "team_name": "ubuntu-l10n-my",
+                "display_name": "Ubuntu Myanmar Translators",
+                "status": "Approved",
+                "web_link": "https://launchpad.net/~ubuntu-l10n-my",
+            },
+            {
+                "team_name": "ubuntu-translators",
+                "display_name": "Ubuntu Translators",
+                "status": "Approved",
+                "web_link": "https://launchpad.net/~ubuntu-translators",
+            }
+        ],
+    }
 ]
 # >>> FALLBACK_END
 
