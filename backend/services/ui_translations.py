@@ -694,6 +694,20 @@ TRANSLATIONS = {
         "mnw": "ပရဝ်ဖှဳ",
         "ksw": "ပရိၣ်ဖံ",
     },
+    "leaderboard.prev": {
+        "my": "နောက်သို့",
+        "en": "Previous",
+        "shn": "ၵျွင်မိူဝ်ႈ",
+        "mnw": "လက်ကြဴ",
+        "ksw": "က့ၤလီၤ",
+    },
+    "leaderboard.next": {
+        "my": "ရှေ့သို့",
+        "en": "Next",
+        "shn": "ၸူးတေႃ",
+        "mnw": "ဂတ",
+        "ksw": "ဆူညါ",
+    },
     "leaderboard.search_placeholder": {
         "my": "အမည် သို့မဟုတ် အသုံးပြုသူအမည်ဖြင့် ရှာဖွေရန်...",
         "en": "Search by name or username...",

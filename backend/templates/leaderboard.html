@@ -49,9 +49,12 @@
 
 <!-- Contributors Table -->
 <div class="card">
-  <h3 style="font-size:16px;margin-bottom:16px">
-    {% if active_lang %}{{ t('leaderboard.language_leaderboard', language=t('lang.' + active_lang)) }}{% else %}{{ t('leaderboard.all_time_leaders') }}{% endif %}
-  </h3>
+  <div style="display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:12px;margin-bottom:16px">
+    <h3 style="font-size:16px;margin:0">
+      {% if active_lang %}{{ t('leaderboard.language_leaderboard', language=t('lang.' + active_lang)) }}{% else %}{{ t('leaderboard.all_time_leaders') }}{% endif %}
+    </h3>
+    <span id="page-info" style="font-size:13px;color:var(--text-light)"></span>
+  </div>
 
   {% if contributors %}
   <div class="table-wrapper">
@@ -106,6 +109,16 @@
       </tbody>
     </table>
   </div>
+
+  <!-- Pagination -->
+  <div id="pagination" style="display:flex;justify-content:center;align-items:center;gap:8px;margin-top:16px;flex-wrap:wrap">
+    <button id="btn-first" class="btn btn-outline btn-sm" onclick="goToPage(1)" disabled style="font-size:12px">««</button>
+    <button id="btn-prev" class="btn btn-outline btn-sm" onclick="goToPage(currentPage - 1)" disabled style="font-size:12px">« {{ t('leaderboard.prev') }}</button>
+    <div id="page-numbers" style="display:flex;gap:4px;align-items:center"></div>
+    <button id="btn-next" class="btn btn-outline btn-sm" onclick="goToPage(currentPage + 1)" disabled style="font-size:12px">{{ t('leaderboard.next') }} »</button>
+    <button id="btn-last" class="btn btn-outline btn-sm" onclick="goToPage(totalPages)" disabled style="font-size:12px">»»</button>
+  </div>
+
   <div id="no-results" style="display:none" class="empty-state">
     <span class="empty-icon">🔍</span>
     <h3>{{ t('leaderboard.no_results') }}</h3>
@@ -121,20 +134,105 @@
 </div>
 
 <script>
+const PAGE_SIZE = 10;
+let currentPage = 1;
+let totalPages = 1;
+const ALL_ROWS = Array.from(document.querySelectorAll('.contributor-row'));
+
+function getFilteredRows() {
+  return ALL_ROWS.filter(row => !row.classList.contains('search-hidden'));
+}
+
+function renderPage() {
+  const filtered = getFilteredRows();
+  totalPages = Math.max(1, Math.ceil(filtered.length / PAGE_SIZE));
+  if (currentPage > totalPages) currentPage = totalPages;
+  if (currentPage < 1) currentPage = 1;
+
+  // Show only current page rows; hide the rest
+  ALL_ROWS.forEach(row => { row.style.display = 'none'; });
+  const start = (currentPage - 1) * PAGE_SIZE;
+  const end = Math.min(start + PAGE_SIZE, filtered.length);
+  for (let i = start; i < end; i++) {
+    filtered[i].style.display = '';
+  }
+
+  // Update info text
+  const info = document.getElementById('page-info');
+  if (info) {
+    if (filtered.length) {
+      info.textContent = filtered.length + ' contributors · page ' + currentPage + ' of ' + totalPages;
+    } else {
+      info.textContent = '';
+    }
+  }
+
+  // Update nav buttons
+  const btnFirst = document.getElementById('btn-first');
+  const btnPrev  = document.getElementById('btn-prev');
+  const btnNext  = document.getElementById('btn-next');
+  const btnLast  = document.getElementById('btn-last');
+  if (btnFirst) btnFirst.disabled = (currentPage === 1);
+  if (btnPrev)  btnPrev.disabled  = (currentPage === 1);
+  if (btnNext)  btnNext.disabled  = (currentPage >= totalPages);
+  if (btnLast)  btnLast.disabled  = (currentPage >= totalPages);
+
+  renderPageNumbers();
+}
+
+function renderPageNumbers() {
+  const container = document.getElementById('page-numbers');
+  if (!container) return;
+  container.innerHTML = '';
+
+  if (totalPages <= 1) return;
+
+  const maxButtons = 7;
+  let start = Math.max(1, currentPage - 3);
+  let end = Math.min(totalPages, start + maxButtons - 1);
+  if (end - start < maxButtons - 1) start = Math.max(1, end - maxButtons + 1);
+
+  for (let p = start; p <= end; p++) {
+    const btn = document.createElement('button');
+    btn.textContent = p;
+    btn.className = p === currentPage ? 'btn btn-primary btn-sm' : 'btn btn-outline btn-sm';
+    btn.style.cssText = 'font-size:12px;min-width:32px;padding:4px 8px';
+    btn.onclick = () => goToPage(p);
+    container.appendChild(btn);
+  }
+}
+
+function goToPage(page) {
+  if (page < 1 || page > totalPages) return;
+  currentPage = page;
+  renderPage();
+  document.getElementById('contributors-table').scrollIntoView({behavior: 'smooth', block: 'start'});
+}
+
 function filterContributors() {
   const query = document.getElementById('contributor-search').value.toLowerCase().trim();
-  const rows = document.querySelectorAll('.contributor-row');
   let visible = 0;
-  rows.forEach(row => {
+  ALL_ROWS.forEach(row => {
     const name = row.dataset.name || '';
-    const username = row.dataset.username || '';
-    const match = !query || name.includes(query) || username.includes(query);
-    row.style.display = match ? '' : 'none';
-    if (match) visible++;
+    const uname = row.dataset.username || '';
+    const match = !query || name.includes(query) || uname.includes(query);
+    if (match) {
+      row.classList.remove('search-hidden');
+      visible++;
+    } else {
+      row.classList.add('search-hidden');
+    }
   });
   const noResults = document.getElementById('no-results');
   if (noResults) noResults.style.display = visible === 0 ? '' : 'none';
+  currentPage = 1;
+  renderPage();
 }
+
+// Init on load
+document.addEventListener('DOMContentLoaded', () => {
+  renderPage();
+});
 </script>
 
 {% endblock %}
