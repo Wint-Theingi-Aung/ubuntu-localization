@@ -737,14 +737,14 @@ TRANSLATIONS = {
         "ksw": "ပရိၣ်ဖံ",
     },
     "contributors.prev": {
-        "my": "နောက်သို့",
+        "my": "ရှေ့သို့",
         "en": "Previous",
         "shn": "ၵျွင်မိူဝ်ႈ",
         "mnw": "လက်ကြဴ",
         "ksw": "က့ၤလီၤ",
     },
     "contributors.next": {
-        "my": "ရှေ့သို့",
+        "my": "နောက်သို့",
         "en": "Next",
         "shn": "ၸူးတေႃ",
         "mnw": "ဂတ",
