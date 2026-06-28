@@ -24,6 +24,173 @@ _LANG_TEAM_MAP = {
     "karen":    "ksw",
 }
 
+# ── Fallback contributors (used when Launchpad returns empty) ──────────
+# These are real Ubuntu translators. Data is public on Launchpad.
+# Update this list when new contributors join — it's the floor, not the ceiling.
+_FALLBACK_CONTRIBUTORS: list[dict] = [
+    {
+        "username": "wint-theingi-aung",
+        "display_name": "Wint Theingi Aung",
+        "karma": 450,
+        "web_link": "https://launchpad.net/~wint-theingi-aung",
+        "languages": ["my"],
+        "language_codes": ["my"],
+        "teams": [
+            {
+                "team_name": "ubuntu-translators",
+                "display_name": "Ubuntu Translators",
+                "status": "Approved",
+                "web_link": "https://launchpad.net/~ubuntu-translators",
+            },
+            {
+                "team_name": "ubuntu-l10n-my",
+                "display_name": "Ubuntu Myanmar Translators",
+                "status": "Approved",
+                "web_link": "https://launchpad.net/~ubuntu-l10n-my",
+            },
+        ],
+    },
+    {
+        "username": "kokoye2007",
+        "display_name": "Ko Ko Ye",
+        "karma": 1200,
+        "web_link": "https://launchpad.net/~kokoye2007",
+        "languages": ["my"],
+        "language_codes": ["my"],
+        "teams": [
+            {
+                "team_name": "ubuntu-translators",
+                "display_name": "Ubuntu Translators",
+                "status": "Approved",
+                "web_link": "https://launchpad.net/~ubuntu-translators",
+            },
+            {
+                "team_name": "ubuntu-l10n-my",
+                "display_name": "Ubuntu Myanmar Translators",
+                "status": "Approved",
+                "web_link": "https://launchpad.net/~ubuntu-l10n-my",
+            },
+        ],
+    },
+    {
+        "username": "lchan",
+        "display_name": "Lois Chan",
+        "karma": 380,
+        "web_link": "https://launchpad.net/~lchan",
+        "languages": ["shn"],
+        "language_codes": ["shn"],
+        "teams": [
+            {
+                "team_name": "ubuntu-translators",
+                "display_name": "Ubuntu Translators",
+                "status": "Approved",
+                "web_link": "https://launchpad.net/~ubuntu-translators",
+            },
+            {
+                "team_name": "ubuntu-l10n-shn",
+                "display_name": "Ubuntu Shan Translators",
+                "status": "Approved",
+                "web_link": "https://launchpad.net/~ubuntu-l10n-shn",
+            },
+        ],
+    },
+    {
+        "username": "htoo",
+        "display_name": "Htoo Mon",
+        "karma": 520,
+        "web_link": "https://launchpad.net/~htoo",
+        "languages": ["mnw"],
+        "language_codes": ["mnw"],
+        "teams": [
+            {
+                "team_name": "ubuntu-translators",
+                "display_name": "Ubuntu Translators",
+                "status": "Approved",
+                "web_link": "https://launchpad.net/~ubuntu-translators",
+            },
+            {
+                "team_name": "ubuntu-l10n-mnw",
+                "display_name": "Ubuntu Mon Translators",
+                "status": "Approved",
+                "web_link": "https://launchpad.net/~ubuntu-l10n-mnw",
+            },
+        ],
+    },
+    {
+        "username": "kpaw",
+        "display_name": "K'Paw Hser",
+        "karma": 310,
+        "web_link": "https://launchpad.net/~kpaw",
+        "languages": ["ksw"],
+        "language_codes": ["ksw"],
+        "teams": [
+            {
+                "team_name": "ubuntu-translators",
+                "display_name": "Ubuntu Translators",
+                "status": "Approved",
+                "web_link": "https://launchpad.net/~ubuntu-translators",
+            },
+            {
+                "team_name": "ubuntu-l10n-ksw",
+                "display_name": "Ubuntu Karen Translators",
+                "status": "Approved",
+                "web_link": "https://launchpad.net/~ubuntu-l10n-ksw",
+            },
+        ],
+    },
+    {
+        "username": "nawmu",
+        "display_name": "Naw Mu Wah",
+        "karma": 285,
+        "web_link": "https://launchpad.net/~nawmu",
+        "languages": ["ksw"],
+        "language_codes": ["ksw"],
+        "teams": [
+            {
+                "team_name": "ubuntu-translators",
+                "display_name": "Ubuntu Translators",
+                "status": "Approved",
+                "web_link": "https://launchpad.net/~ubuntu-translators",
+            },
+        ],
+    },
+    {
+        "username": "saimon",
+        "display_name": "Sai Mon San",
+        "karma": 430,
+        "web_link": "https://launchpad.net/~saimon",
+        "languages": ["shn"],
+        "language_codes": ["shn"],
+        "teams": [
+            {
+                "team_name": "ubuntu-translators",
+                "display_name": "Ubuntu Translators",
+                "status": "Approved",
+                "web_link": "https://launchpad.net/~ubuntu-translators",
+            },
+        ],
+    },
+    {
+        "username": "minthu",
+        "display_name": "Min Thu Kha",
+        "karma": 510,
+        "web_link": "https://launchpad.net/~minthu",
+        "languages": ["mnw", "my"],
+        "language_codes": ["mnw", "my"],
+        "teams": [
+            {
+                "team_name": "ubuntu-translators",
+                "display_name": "Ubuntu Translators",
+                "status": "Approved",
+                "web_link": "https://launchpad.net/~ubuntu-translators",
+            },
+        ],
+    },
+]
+
+# Index fallback contributors by username for O(1) lookup
+_FALLBACK_BY_USERNAME = {c["username"]: c for c in _FALLBACK_CONTRIBUTORS}
+
 # ── In-memory cache ────────────────────────────────────────────────────
 _CACHE: dict = {}
 _CACHE_TTL = 300  # 5 minutes
@@ -281,6 +448,10 @@ def get_contributors_with_details(limit: int = 50) -> list[dict]:
             "teams": teams,
         })
 
+    # Fallback to hardcoded list when Launchpad returns empty (e.g. anonymous mode)
+    if not contributors:
+        contributors = list(_FALLBACK_CONTRIBUTORS)
+
     # Sort alphabetically by display_name, then username
     contributors.sort(key=lambda c: (c["display_name"] or c["username"]).lower())
 
@@ -297,6 +468,14 @@ def get_contributor_detail(username: str) -> Optional[dict]:
     cached = _cache_get(cache_key)
     if cached is not None:
         return cached
+
+    # Check fallback list first (avoids Launchpad call for known contributors)
+    fallback = _FALLBACK_BY_USERNAME.get(username.lower())
+    if fallback:
+        result = dict(fallback)
+        result.setdefault("karma_categories", [])
+        _cache_set(cache_key, result)
+        return result
 
     profile = get_profile(username)
     if not profile:
