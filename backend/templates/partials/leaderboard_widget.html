@@ -7,18 +7,16 @@
     <a href="/leaderboard/" class="btn btn-outline btn-sm">{{ t('leaderboard.widget.view_all') }}</a>
   </div>
 
-  {% if leaderboard %}
-    {% for entry in leaderboard %}
+  {% if contributors %}
+    {% for c in contributors %}
     <div style="display:flex;align-items:center;gap:12px;padding:8px 0;border-bottom:1px solid var(--border)">
-      <span style="width:28px;text-align:center;font-weight:700;color:var(--text-light)">
-        {% if entry.rank == 1 %}🥇{% elif entry.rank == 2 %}🥈{% elif entry.rank == 3 %}🥉{% else %}{{ entry.rank }}{% endif %}
-      </span>
       <div style="flex:1">
-        <a href="/leaderboard/contributor/{{ entry.username }}" style="color:var(--text);text-decoration:none;font-weight:500">
-          {{ entry.display_name or entry.username }}
+        <a href="/leaderboard/contributor/{{ c.username }}" style="color:var(--text);text-decoration:none;font-weight:500">
+          {{ c.display_name or c.username }}
         </a>
+        <div style="font-size:11px;color:var(--text-light)">@{{ c.username }}</div>
       </div>
-      <span style="font-weight:700;color:var(--orange)">{{ entry.strings_translated or entry.total_strings|default(0)|int|int }}</span>
+      <span style="font-weight:700;color:var(--orange)">{{ c.karma|default(0) }}</span>
       <span style="font-size:11px;color:var(--text-light)">{{ t('leaderboard.widget.strings') }}</span>
     </div>
     {% endfor %}

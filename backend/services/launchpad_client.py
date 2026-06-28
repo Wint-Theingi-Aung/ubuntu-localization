@@ -1,6 +1,7 @@
 """Launchpad client service — wraps launchpadlib for profile, karma, teams."""
 
 import json
+import time
 from pathlib import Path
 from typing import Optional
 
@@ -13,6 +14,19 @@ LANG_MAP = {
     "mnw": "Mon",
     "ksw": "S'gaw Karen",
 }
+
+# Team-name substrings used to infer a contributor's language affiliation
+_LANG_TEAM_MAP = {
+    "myanmar":  "my",
+    "burmese":  "my",
+    "shan":     "shn",
+    "mon":      "mnw",
+    "karen":    "ksw",
+}
+
+# ── In-memory cache ────────────────────────────────────────────────────
+_CACHE: dict = {}
+_CACHE_TTL = 300  # 5 minutes
 
 # ── Auth helpers ───────────────────────────────────────────────────────
 
@@ -203,3 +217,104 @@ def _safe_int(val) -> int:
         return 0
     except Exception:
         return 0
+
+
+def _cache_get(key: str):
+    """Return cached value if still valid, else None."""
+    entry = _CACHE.get(key)
+    if entry and time.time() - entry["ts"] < _CACHE_TTL:
+        return entry["val"]
+    return None
+
+
+def _cache_set(key: str, val):
+    """Store a value in the in-memory cache."""
+    _CACHE[key] = {"val": val, "ts": time.time()}
+
+
+def _infer_languages(teams: list[dict]) -> list[str]:
+    """Infer language codes from team names."""
+    langs = set()
+    for t in teams:
+        name_lower = t.get("team_name", "").lower()
+        for substring, code in _LANG_TEAM_MAP.items():
+            if substring in name_lower:
+                langs.add(code)
+    return sorted(langs)
+
+
+def get_contributors_with_details(limit: int = 50) -> list[dict]:
+    """Fetch contributors from Launchpad with profile + team details.
+
+    Returns a list of dicts sorted alphabetically by display_name/username:
+        username, display_name, karma, web_link, languages (list of codes), teams
+    """
+    cache_key = f"contributors:{limit}"
+    cached = _cache_get(cache_key)
+    if cached is not None:
+        return cached
+
+    members = get_top_contributors(limit=limit)
+    contributors = []
+
+    for m in members:
+        username = m.get("username", "")
+        if not username:
+            continue
+
+        # Fetch full profile for karma + web_link
+        profile = get_profile(username)
+        if not profile:
+            continue
+
+        # Fetch teams to infer languages
+        teams = get_teams(username, translation_only=True)
+        languages = _infer_languages(teams)
+
+        contributors.append({
+            "username": profile["username"],
+            "display_name": profile.get("display_name", ""),
+            "karma": profile.get("karma", 0),
+            "web_link": profile.get("web_link", ""),
+            "languages": languages,
+            "language_codes": languages,  # alias for template convenience
+            "teams": teams,
+        })
+
+    # Sort alphabetically by display_name, then username
+    contributors.sort(key=lambda c: (c["display_name"] or c["username"]).lower())
+
+    _cache_set(cache_key, contributors)
+    return contributors
+
+
+def get_contributor_detail(username: str) -> Optional[dict]:
+    """Fetch detailed info for a single contributor from Launchpad.
+
+    Returns dict with username, display_name, karma, web_link, languages, teams, karma_categories.
+    """
+    cache_key = f"contributor:{username}"
+    cached = _cache_get(cache_key)
+    if cached is not None:
+        return cached
+
+    profile = get_profile(username)
+    if not profile:
+        return None
+
+    teams = get_teams(username, translation_only=True)
+    languages = _infer_languages(teams)
+    karma_data = get_karma(username)
+
+    detail = {
+        "username": profile["username"],
+        "display_name": profile.get("display_name", ""),
+        "karma": profile.get("karma", 0),
+        "web_link": profile.get("web_link", ""),
+        "languages": languages,
+        "teams": teams,
+        "karma_categories": karma_data.get("categories", []) if karma_data else [],
+    }
+
+    _cache_set(cache_key, detail)
+    return detail

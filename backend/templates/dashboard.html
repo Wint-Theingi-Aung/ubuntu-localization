@@ -80,6 +80,32 @@
   </div>
 </div>
 
+<!-- Contributors Section -->
+<div style="margin-top:var(--space-2xl)">
+  <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:var(--space-md);flex-wrap:wrap;gap:8px">
+    <h2 style="font-size:var(--text-xl);font-weight:400">{{ t('leaderboard.title') }}</h2>
+    <select class="form-select" style="max-width:200px" id="dashboard-lang-filter" onchange="loadDashboardContributors(this.value)">
+      <option value="">{{ t('leaderboard.filter_all') }}</option>
+      {% for code, info in languages.items() %}
+      <option value="{{ code }}">{{ t('lang.' + code) }}</option>
+      {% endfor %}
+    </select>
+  </div>
+  <div id="dashboard-contributors" hx-get="/leaderboard/widget" hx-trigger="load" hx-swap="innerHTML">
+    <div style="text-align:center;padding:24px;color:var(--text-light)">
+      <span style="font-size:24px">⏳</span>
+      <div style="margin-top:8px;font-size:14px">Loading contributors...</div>
+    </div>
+  </div>
+</div>
+
+<script>
+function loadDashboardContributors(lang) {
+  const url = lang ? '/leaderboard/widget?lang=' + lang : '/leaderboard/widget';
+  htmx.ajax('GET', url, {target: '#dashboard-contributors', swap: 'innerHTML'});
+}
+</script>
+
 {% if not ai_available %}
 <div class="warning-banner" style="margin-top:var(--space-xl)">
   <span class="banner-icon">⚠️</span>

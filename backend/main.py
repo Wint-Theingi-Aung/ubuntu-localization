@@ -70,6 +70,7 @@ async def dashboard(request: Request):
     """Main landing page — language cards, CTA to translate."""
     return templates.TemplateResponse(request, "dashboard.html", {
         "ai_available": check_available(),
+        "languages": LANGUAGES,
     })
 
 

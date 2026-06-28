@@ -1,25 +1,44 @@
-"""Leaderboard router — top contributors, per-language stats, contribution timelines."""
+"""Contributors router — Launchpad-sourced contributor list, per-language filtering."""
 
 from fastapi import APIRouter, Request
 from fastapi.responses import HTMLResponse, JSONResponse
 
 from backend.config import LANGUAGES
 from backend.services import db
+from backend.services import launchpad_client
 from backend.services.ui_translations import get_ui_lang, t
 from backend.templates_engine import templates
 
-router = APIRouter(prefix="/leaderboard", tags=["leaderboard"])
+router = APIRouter(prefix="/leaderboard", tags=["contributors"])
 
 
 @router.get("/", response_class=HTMLResponse)
-async def leaderboard_page(request: Request, lang: str = ""):
-    """Show the leaderboard page with top contributors."""
-    leaderboard = db.get_leaderboard(language_code=lang, limit=50) if lang else db.get_leaderboard(limit=50)
+async def contributors_page(request: Request, lang: str = ""):
+    """Show the contributors page with Launchpad-sourced data."""
+    contributors = launchpad_client.get_contributors_with_details(limit=50)
+
+    # Filter by language if requested
+    if lang:
+        contributors = [c for c in contributors if lang in c.get("languages", [])]
+
+    # Merge local DB stats (strings_translated) when available
+    db_board = db.get_leaderboard(limit=200)
+    db_map = {}
+    for entry in db_board:
+        uname = entry.get("username", "")
+        if uname:
+            db_map[uname] = entry
+
+    for c in contributors:
+        db_entry = db_map.get(c["username"], {})
+        c["strings_translated"] = db_entry.get("total_strings", 0) if db_entry else 0
+        c["exports_count"] = db_entry.get("total_exports", 0) if db_entry else 0
+
     stats = db.get_app_stats()
     lang_stats = db.get_language_stats()
 
     return templates.TemplateResponse(request, "leaderboard.html", {
-        "leaderboard": leaderboard,
+        "contributors": contributors,
         "stats": stats,
         "lang_stats": lang_stats,
         "active_lang": lang,
@@ -28,10 +47,13 @@ async def leaderboard_page(request: Request, lang: str = ""):
 
 
 @router.get("/api", response_class=JSONResponse)
-async def leaderboard_api(lang: str = "", limit: int = 50):
-    """JSON API for the leaderboard."""
+async def contributors_api(lang: str = "", limit: int = 50):
+    """JSON API for contributors."""
+    contributors = launchpad_client.get_contributors_with_details(limit=limit)
+    if lang:
+        contributors = [c for c in contributors if lang in c.get("languages", [])]
     return {
-        "leaderboard": db.get_leaderboard(language_code=lang, limit=limit),
+        "contributors": contributors,
         "stats": db.get_app_stats(),
         "by_language": db.get_language_stats(),
     }
@@ -39,41 +61,52 @@ async def leaderboard_api(lang: str = "", limit: int = 50):
 
 @router.get("/contributor/{username}", response_class=HTMLResponse)
 async def contributor_detail(request: Request, username: str):
-    """Show detailed stats for a single contributor."""
-    contrib = db.get_contributor_stats(username)
-    if not contrib or not contrib["total_strings"]:
+    """Show detailed info for a single contributor from Launchpad."""
+    detail = launchpad_client.get_contributor_detail(username)
+    if not detail:
+        contributors = launchpad_client.get_contributors_with_details(limit=50)
         return templates.TemplateResponse(request, "leaderboard.html", {
-            "leaderboard": db.get_leaderboard(),
+            "contributors": contributors,
             "stats": db.get_app_stats(),
             "lang_stats": db.get_language_stats(),
-            "error": f"Contributor '{username}' not found.",
+            "error": f"Contributor '{username}' not found on Launchpad.",
+            "languages": LANGUAGES,
+            "active_lang": "",
         })
 
-    # Get contributor rank among all
-    full_board = db.get_leaderboard(limit=200)
-    rank = contrib["rank"]
-
-    if full_board:
-        pct = max(1, round(rank / max(1, len(full_board)) * 100))
-        rank_pct_num = pct
+    # Merge local DB stats
+    db_stats = db.get_contributor_stats(username)
+    if db_stats:
+        detail["strings_translated"] = db_stats.get("total_strings", 0)
+        detail["exports_count"] = db_stats.get("total_exports", 0)
+        detail["by_language"] = db_stats.get("by_language", [])
     else:
-        rank_pct_num = None
+        detail["strings_translated"] = 0
+        detail["exports_count"] = 0
+        detail["by_language"] = []
 
     return templates.TemplateResponse(request, "contributor.html", {
-        "contrib": contrib,
-        "rank": rank,
-        "rank_pct": rank_pct_num,
-        "total_contributors": len(full_board),
+        "contrib": detail,
         "languages": LANGUAGES,
     })
 
 
 @router.get("/widget", response_class=HTMLResponse)
-async def leaderboard_widget(request: Request, lang: str = "", limit: int = 5):
-    """htmx widget showing top N contributors — embeddable on dashboard."""
-    leaderboard = db.get_leaderboard(language_code=lang, limit=limit)
+async def contributors_widget(request: Request, lang: str = "", limit: int = 5):
+    """htmx widget showing top contributors — embeddable on dashboard."""
+    contributors = launchpad_client.get_contributors_with_details(limit=20)
+    if lang:
+        contributors = [c for c in contributors if lang in c.get("languages", [])]
+    contributors = contributors[:limit]
+
+    # Merge local DB stats
+    db_map = {e.get("username", ""): e for e in db.get_leaderboard(limit=200) if e.get("username")}
+    for c in contributors:
+        db_entry = db_map.get(c["username"], {})
+        c["strings_translated"] = db_entry.get("total_strings", 0) if db_entry else 0
+
     return templates.TemplateResponse(request, "partials/leaderboard_widget.html", {
-        "leaderboard": leaderboard,
+        "contributors": contributors,
         "lang": lang,
     })
 

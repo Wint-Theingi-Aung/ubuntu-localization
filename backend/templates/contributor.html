@@ -9,32 +9,73 @@
 <div class="card" style="max-width:640px">
   <div class="profile-card">
     <div class="profile-avatar">
-      {% if contrib.username and contrib.username[0] %}{{ contrib.username[0].upper() }}{% else %}🐧{% endif %}
+      {% if contrib.display_name and contrib.display_name[0] %}{{ contrib.display_name[0].upper() }}{% elif contrib.username and contrib.username[0] %}{{ contrib.username[0].upper() }}{% else %}🐧{% endif %}
     </div>
-    <h2 class="profile-name">@{{ contrib.username }}</h2>
-    <div class="profile-meta">
-      {% if rank <= 3 %}
-      <span style="font-size:32px">
-        {% if rank == 1 %}🥇{% elif rank == 2 %}🥈{% else %}🥉{% endif %}
-      </span>
-      {% endif %}
-      {{ t('leaderboard.contributor.ranked', rank=rank, total=total_contributors) }}
-      <br><span style="font-size:13px;color:var(--text-light)">{{ t('leaderboard.contributor.top_pct', pct=rank_pct) if rank_pct else t('leaderboard.contributor.only_contributor') }}</span>
-    </div>
+    <h2 class="profile-name">{{ contrib.display_name or contrib.username }}</h2>
+    <div style="font-size:13px;color:var(--text-light);margin-bottom:var(--space-sm)">@{{ contrib.username }}</div>
 
     <div class="stats-grid" style="width:100%">
       <div class="stat">
-        <span class="stat-value">{{ contrib.total_strings|int|int }}</span>
+        <span class="stat-value" style="color:var(--orange)">{{ contrib.karma|default(0) }}</span>
+        <span class="stat-label">{{ t('leaderboard.table.karma') }}</span>
+      </div>
+      {% if contrib.strings_translated %}
+      <div class="stat">
+        <span class="stat-value">{{ contrib.strings_translated|int|int }}</span>
         <span class="stat-label">{{ t('leaderboard.contributor.strings_translated') }}</span>
       </div>
+      {% endif %}
+      {% if contrib.exports_count %}
       <div class="stat">
-        <span class="stat-value">{{ contrib.total_exports }}</span>
+        <span class="stat-value">{{ contrib.exports_count }}</span>
         <span class="stat-label">{{ t('leaderboard.contributor.exports') }}</span>
       </div>
+      {% endif %}
     </div>
   </div>
 </div>
 
+<!-- Languages -->
+{% if contrib.languages %}
+<div class="card" style="max-width:600px;margin-top:var(--space-md)">
+  <h3 style="font-size:var(--text-base);margin-bottom:var(--space-sm)">{{ t('leaderboard.table.lang') }}</h3>
+  <div style="display:flex;flex-wrap:wrap;gap:6px">
+    {% for lang_code in contrib.languages %}
+      <span class="lang-badge lang-{{ lang_code }}">{{ t('lang.' + lang_code) }}</span>
+    {% endfor %}
+  </div>
+</div>
+{% endif %}
+
+<!-- Teams -->
+{% if contrib.teams %}
+<div class="card" style="max-width:600px;margin-top:var(--space-md)">
+  <h3 style="font-size:var(--text-base);margin-bottom:var(--space-sm)">{{ t('leaderboard.table.teams') }}</h3>
+  <div class="table-wrapper">
+    <table class="data-table">
+      <tr>
+        <th>{{ t('leaderboard.table.contributor') }}</th>
+        <th>{{ t('leaderboard.table.profile') }}</th>
+      </tr>
+      {% for team in contrib.teams %}
+      <tr>
+        <td>
+          <strong>{{ team.display_name or team.team_name }}</strong>
+          <div style="font-size:11px;color:var(--text-light)">@{{ team.team_name }}</div>
+        </td>
+        <td>
+          {% if team.web_link %}
+          <a href="{{ team.web_link }}" target="_blank" rel="noopener noreferrer" class="btn btn-outline btn-sm" style="font-size:12px">Launchpad ↗</a>
+          {% endif %}
+        </td>
+      </tr>
+      {% endfor %}
+    </table>
+  </div>
+</div>
+{% endif %}
+
+<!-- Local contribution breakdown -->
 {% if contrib.by_language %}
 <div class="card" style="max-width:600px;margin-top:var(--space-md)">
   <h3 style="font-size:var(--text-base);margin-bottom:var(--space-sm)">{{ t('leaderboard.contributor.by_language') }}</h3>
@@ -60,7 +101,7 @@
 <div style="margin-top:var(--space-lg)">
   <div class="action-buttons">
     <a href="/leaderboard/" class="btn btn-outline">{{ t('leaderboard.contributor.back') }}</a>
-    <a href="/auth/profile/{{ contrib.username }}" class="btn btn-outline">{{ t('leaderboard.contributor.launchpad_profile') }}</a>
+    <a href="{{ contrib.web_link }}" target="_blank" rel="noopener noreferrer" class="btn btn-outline">{{ t('leaderboard.contributor.launchpad_profile') }}</a>
   </div>
 </div>
 

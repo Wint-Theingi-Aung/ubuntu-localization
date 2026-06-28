@@ -13,15 +13,18 @@
 </div>
 {% endif %}
 
-<!-- Language Filter -->
-<div class="lang-filter-bar" style="display:flex;align-items:center;gap:8px;margin-bottom:var(--space-md);flex-wrap:wrap">
-  <label style="font-size:14px;font-weight:500;color:var(--text-light);white-space:nowrap">{{ t('leaderboard.filter_label') }}</label>
-  <select class="form-select" style="max-width:220px" onchange="const v=this.value;window.location.href=v?'/leaderboard/?lang='+v:'/leaderboard/'">
-    <option value="" {% if not active_lang %}selected{% endif %}>{{ t('leaderboard.filter_all') }}</option>
-    {% for code, info in languages.items() %}
-    <option value="{{ code }}" {% if active_lang == code %}selected{% endif %}>{{ t('lang.' + code) }}</option>
-    {% endfor %}
-  </select>
+<!-- Language Filter + Search -->
+<div style="display:flex;align-items:center;gap:12px;margin-bottom:var(--space-md);flex-wrap:wrap">
+  <div style="display:flex;align-items:center;gap:8px">
+    <label style="font-size:14px;font-weight:500;color:var(--text-light);white-space:nowrap">{{ t('leaderboard.filter_label') }}</label>
+    <select class="form-select" style="max-width:220px" id="lang-filter" onchange="const v=this.value;window.location.href=v?'/leaderboard/?lang='+v:'/leaderboard/'">
+      <option value="" {% if not active_lang %}selected{% endif %}>{{ t('leaderboard.filter_all') }}</option>
+      {% for code, info in languages.items() %}
+      <option value="{{ code }}" {% if active_lang == code %}selected{% endif %}>{{ t('lang.' + code) }}</option>
+      {% endfor %}
+    </select>
+  </div>
+  <input type="text" class="form-input" id="contributor-search" placeholder="{{ t('leaderboard.search_placeholder') }}" style="max-width:280px" oninput="filterContributors()">
 </div>
 
 <!-- Stats -->
@@ -35,7 +38,7 @@
     <span class="stat-label">{{ t('leaderboard.stats.exports') }}</span>
   </div>
   <div class="stat">
-    <span class="stat-value">{{ stats.contributors|default(0) }}</span>
+    <span class="stat-value">{{ contributors|length }}</span>
     <span class="stat-label">{{ t('leaderboard.stats.contributors') }}</span>
   </div>
   <div class="stat">
@@ -44,82 +47,94 @@
   </div>
 </div>
 
-<!-- Per-language Overview -->
-{% if lang_stats and lang_stats.languages %}
-<div class="card" style="margin-bottom:20px">
-  <h3 style="font-size:16px;margin-bottom:12px">{{ t('leaderboard.lang_table_title') }}</h3>
-  <div class="table-wrapper">
-    <table class="data-table">
-      <tr>
-        <th>{{ t('leaderboard.table.lang') }}</th>
-        <th>{{ t('leaderboard.table.strings_exported') }}</th>
-        <th>{{ t('leaderboard.table.exports') }}</th>
-        <th>{{ t('leaderboard.table.progress') }}</th>
-      </tr>
-      {% for lang in lang_stats.languages %}
-      <tr>
-        <td><span class="lang-badge lang-{{ lang.language_code }}">{{ t('lang.' + lang.language_code) }}</span></td>
-        <td><strong>{{ lang.total_strings }}</strong></td>
-        <td>{{ lang.total_exports }}</td>
-        <td>
-          <div class="progress-bar-container" style="margin:0;min-width:100px">
-            <div class="progress-bar" style="width:{{ (lang.total_strings / [1, (lang_stats.languages | map(attribute='total_strings') | max) or 1] | max) * 100 if lang.total_strings else 0 }}%"></div>
-          </div>
-        </td>
-      </tr>
-      {% endfor %}
-    </table>
-  </div>
-</div>
-{% endif %}
-
-<!-- Rankings -->
+<!-- Contributors Table -->
 <div class="card">
   <h3 style="font-size:16px;margin-bottom:16px">
     {% if active_lang %}{{ t('leaderboard.language_leaderboard', language=t('lang.' + active_lang)) }}{% else %}{{ t('leaderboard.all_time_leaders') }}{% endif %}
   </h3>
 
-  {% if leaderboard %}
+  {% if contributors %}
   <div class="table-wrapper">
-    <table class="data-table">
-      <tr>
-        <th style="width:50px">{{ t('leaderboard.table.rank') }}</th>
-        <th>{{ t('leaderboard.table.contributor') }}</th>
-        <th style="text-align:right">{{ t('leaderboard.table.strings') }}</th>
-        <th style="text-align:right">{{ t('leaderboard.table.exports') }}</th>
-        <th>{{ t('leaderboard.table.last_active') }}</th>
-      </tr>
-      {% for entry in leaderboard %}
-      <tr>
-        <td>
-          {% if entry.rank == 1 %}<span style="font-size:22px">🥇</span>
-          {% elif entry.rank == 2 %}<span style="font-size:22px">🥈</span>
-          {% elif entry.rank == 3 %}<span style="font-size:22px">🥉</span>
-          {% else %}<span style="color:var(--text-light);font-weight:700">{{ entry.rank }}</span>{% endif %}
-        </td>
-        <td>
-          <a href="/leaderboard/contributor/{{ entry.username }}" style="color:var(--text);text-decoration:none;font-weight:500">
-            {{ entry.display_name or entry.username }}
-          </a>
-          {% if entry.username %}<div style="font-size:11px;color:var(--text-light)">@{{ entry.username }}</div>{% endif %}
-        </td>
-        <td style="text-align:right;font-weight:700">{{ entry.strings_translated or entry.total_strings|default(0)|int|int }}</td>
-        <td style="text-align:right">{{ entry.exports_count or entry.total_exports|default(0)|int|int }}</td>
-        <td style="font-size:12px;color:var(--text-light);white-space:nowrap">
-          {% if entry.last_contribution %}{{ entry.last_contribution[:10] }}{% elif entry.last_seen %}{{ entry.last_seen[:10] }}{% else %}—{% endif %}
-        </td>
-      </tr>
-      {% endfor %}
+    <table class="data-table" id="contributors-table">
+      <thead>
+        <tr>
+          <th>{{ t('leaderboard.table.contributor') }}</th>
+          <th>{{ t('leaderboard.table.lang') }}</th>
+          <th style="text-align:right">{{ t('leaderboard.table.karma') }}</th>
+          <th>{{ t('leaderboard.table.teams') }}</th>
+          <th>{{ t('leaderboard.table.profile') }}</th>
+        </tr>
+      </thead>
+      <tbody>
+        {% for c in contributors %}
+        <tr class="contributor-row" data-name="{{ (c.display_name or c.username)|lower }}" data-username="{{ c.username|lower }}">
+          <td>
+            <a href="/leaderboard/contributor/{{ c.username }}" style="color:var(--text);text-decoration:none;font-weight:500">
+              {{ c.display_name or c.username }}
+            </a>
+            <div style="font-size:11px;color:var(--text-light)">@{{ c.username }}</div>
+          </td>
+          <td>
+            {% if c.languages %}
+              {% for lang_code in c.languages %}
+                <span class="lang-badge lang-{{ lang_code }}">{{ t('lang.' + lang_code) }}</span>
+              {% endfor %}
+            {% else %}
+              <span style="font-size:12px;color:var(--text-light)">—</span>
+            {% endif %}
+          </td>
+          <td style="text-align:right;font-weight:700;color:var(--orange)">{{ c.karma|default(0) }}</td>
+          <td>
+            {% if c.teams %}
+              {% for team in c.teams[:3] %}
+                <span style="display:inline-block;font-size:11px;padding:2px 6px;border-radius:var(--radius-sm);background:var(--bg-secondary);color:var(--text-light);margin:1px 2px">{{ team.team_name }}</span>
+              {% endfor %}
+              {% if c.teams|length > 3 %}
+                <span style="font-size:11px;color:var(--text-light)">+{{ c.teams|length - 3 }}</span>
+              {% endif %}
+            {% else %}
+              <span style="font-size:12px;color:var(--text-light)">—</span>
+            {% endif %}
+          </td>
+          <td>
+            <a href="{{ c.web_link }}" target="_blank" rel="noopener noreferrer" class="btn btn-outline btn-sm" style="font-size:12px;text-decoration:none">
+              Launchpad ↗
+            </a>
+          </td>
+        </tr>
+        {% endfor %}
+      </tbody>
     </table>
+  </div>
+  <div id="no-results" style="display:none" class="empty-state">
+    <span class="empty-icon">🔍</span>
+    <h3>{{ t('leaderboard.no_results') }}</h3>
   </div>
   {% else %}
   <div class="empty-state">
-    <span class="empty-icon">📊</span>
+    <span class="empty-icon">👥</span>
     <h3>{{ t('leaderboard.empty_title') }}</h3>
     <p>{{ t('leaderboard.empty_desc') }}</p>
     <a href="/translate/" class="btn btn-primary">{{ t('leaderboard.empty_cta') }}</a>
   </div>
   {% endif %}
 </div>
+
+<script>
+function filterContributors() {
+  const query = document.getElementById('contributor-search').value.toLowerCase().trim();
+  const rows = document.querySelectorAll('.contributor-row');
+  let visible = 0;
+  rows.forEach(row => {
+    const name = row.dataset.name || '';
+    const username = row.dataset.username || '';
+    const match = !query || name.includes(query) || username.includes(query);
+    row.style.display = match ? '' : 'none';
+    if (match) visible++;
+  });
+  const noResults = document.getElementById('no-results');
+  if (noResults) noResults.style.display = visible === 0 ? '' : 'none';
+}
+</script>
 
 {% endblock %}

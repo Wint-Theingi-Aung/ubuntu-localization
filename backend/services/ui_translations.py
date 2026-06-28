@@ -44,11 +44,11 @@ TRANSLATIONS = {
         "ksw": "တၢ်ဂၢၢ်",
     },
     "sidebar.leaderboard": {
-        "my": "အဆင့်သတ်မှတ်ချက်",
-        "en": "Leaderboard",
-        "shn": "သဵၼ်ႈၸၼ်ႉ",
-        "mnw": "စရင်အဆင့်",
-        "ksw": "တၢ်ပာ်ဖျၢၣ်",
+        "my": "ပံ့ပိုးသူများ",
+        "en": "Contributors",
+        "shn": "ၽူႈၸွႆႈထႅမ်",
+        "mnw": "ညးပါလုပ်",
+        "ksw": "ပှၤမၤစၢၤ",
     },
     "sidebar.history": {
         "my": "မှတ်တမ်း",
@@ -553,20 +553,20 @@ TRANSLATIONS = {
         "ksw": "တၢ်ကူစါဂ့ၤဂ့ၤ",
     },
 
-    # ── Leaderboard ──
+    # ── Contributors ──
     "leaderboard.title": {
-        "my": "🏆 အဆင့်သတ်မှတ်ချက်",
-        "en": "🏆 Leaderboard",
-        "shn": "🏆 သဵၼ်ႈၸၼ်ႉ",
-        "mnw": "🏆 စရင်အဆင့်",
-        "ksw": "🏆 တၢ်ပာ်ဖျၢၣ်",
+        "my": "👥 ပံ့ပိုးသူများ",
+        "en": "👥 Contributors",
+        "shn": "👥 ၽူႈၸွႆႈထႅမ်",
+        "mnw": "👥 ညးပါလုပ်",
+        "ksw": "👥 ပှၤမၤစၢၤ",
     },
     "leaderboard.subtitle": {
-        "my": "Ubuntu ဘာသာပြန် ထိပ်တန်းပံ့ပိုးသူများ",
-        "en": "Top Ubuntu Translation Contributors",
-        "shn": "ၽူႈၸွႆႈထႅမ် ပိၼ်ႇၽႃႇသႃႇ Ubuntu ဢၼ်ၶဝ်ႈသဵၼ်ႈ",
-        "mnw": "ညးပါလုပ် ကၠာဲဘာသာ Ubuntu လတူအိုတ်",
-        "ksw": "ပှၤမၤစၢၤကတိာ်ကျိာ် Ubuntu အထံးကီဒီး",
+        "my": "Ubuntu ဘာသာပြန် ပံ့ပိုးသူများ",
+        "en": "Ubuntu Translation Contributors",
+        "shn": "ၽူႈၸွႆႈထႅမ် ပိၼ်ႇၽႃႇသႃႇ Ubuntu",
+        "mnw": "ညးပါလုပ် ကၠာဲဘာသာ Ubuntu",
+        "ksw": "ပှၤမၤစၢၤ Ubuntu တၢ်ကွဲးကျဲၤ",
     },
     "leaderboard.filter_label": {
         "my": "ဘာသာစကား စစ်ထုတ်ရန်",
@@ -673,6 +673,41 @@ TRANSLATIONS = {
         "mnw": "မံင်လက္ကရဴအိုတ်",
         "ksw": "အကတၢၢ်ခံ",
     },
+    "leaderboard.table.karma": {
+        "my": " karma",
+        "en": "Karma",
+        "shn": "Karma",
+        "mnw": "Karma",
+        "ksw": "Karma",
+    },
+    "leaderboard.table.teams": {
+        "my": "အဖွဲ့များ",
+        "en": "Teams",
+        "shn": "တီႈႁူမ်",
+        "mnw": "အဖွဲ့",
+        "ksw": "တၢ်ဖဲၣ်",
+    },
+    "leaderboard.table.profile": {
+        "my": "ပရိုဖိုင်",
+        "en": "Profile",
+        "shn": "ပရဝ်ႇၾၢႆႇ",
+        "mnw": "ပရဝ်ဖှဳ",
+        "ksw": "ပရိၣ်ဖံ",
+    },
+    "leaderboard.search_placeholder": {
+        "my": "အမည် သို့မဟုတ် အသုံးပြုသူအမည်ဖြင့် ရှာဖွေရန်...",
+        "en": "Search by name or username...",
+        "shn": "ၶွင်ႈႁူမ်ႈ ၵႂၢႆးႁဝ်း...",
+        "mnw": "ရှာဖွေ နာမ်...",
+        "ksw": "နာမ်ဖဲ ရှာ...",
+    },
+    "leaderboard.no_results": {
+        "my": "ရလဒ် မတွေ့ပါ",
+        "en": "No contributors found",
+        "shn": "ၽူႈၸွႆႈထႅမ် ပႆႇႁဵၼ်",
+        "mnw": "ညးပါလုပ် ဟွံတွေ့",
+        "ksw": "ပှၤမၤစၢၤ ဟွံတွေ့",
+    },
     "leaderboard.all_time_leaders": {
         "my": "🏅 အချိန်တိုင်း ထိပ်ဆုံး",
         "en": "🏅 All-Time Leaders",
@@ -711,11 +746,11 @@ TRANSLATIONS = {
 
     # ── Contributor Detail ──
     "leaderboard.contributor.back": {
-        "my": "← အဆင့်သတ်မှတ်ချက်သို့",
-        "en": "← Back to Leaderboard",
-        "shn": "← ၶိုၼ်းသဵၼ်ႈၸၼ်ႉ",
-        "mnw": "← ကလေင်စရင်အဆင့်",
-        "ksw": "← က့ၤဆူတၢ်ပာ်ဖျၢၣ်",
+        "my": "← ပံ့ပိုးသူများသို့",
+        "en": "← Back to Contributors",
+        "shn": "← ၶိုၼ်းၽူႈၸွႆႈထႅမ်",
+        "mnw": "← ကလေင်ညးပါလုပ်",
+        "ksw": "← က့ၤဆူပှၤမၤစၢၤ",
     },
     "leaderboard.contributor.ranked": {
         "my": "ပံ့ပိုးသူ {total} ဦးတွင် နံပါတ် #{rank}",
