@@ -209,18 +209,11 @@ def get_auth_status() -> dict:
             "authenticated": False,
             "setup_required": True,
             "setup_url": "https://login.launchpad.net/",
-            "setup_command": "python ~/.claude/mcp-servers/launchpad-bridge/setup_auth.py",
+            "setup_command": "uv run python -m backend.auth_setup",
         }
 
     try:
-        from launchpadlib.launchpad import Launchpad
-        lp = Launchpad.login_with(
-            application_name="ubuntu-localization-tool",
-            service_root="production",
-            launchpadlib_dir=str(CREDENTIALS_DIR),
-            credentials_file=str(CREDENTIALS_FILE),
-            version="devel",
-        )
+        lp = _get_lp()
         me = lp.me
         return {
             "authenticated": True,
@@ -236,7 +229,7 @@ def get_auth_status() -> dict:
         }
 
 
-# ── Anonymous API ──────────────────────────────────────────────────────
+# ── Launchpad connection helpers ───────────────────────────────────────
 
 def _get_anonymous_lp():
     """Get an anonymous Launchpad connection."""
@@ -248,10 +241,31 @@ def _get_anonymous_lp():
     )
 
 
+def _get_lp():
+    """Get the best available Launchpad connection.
+
+    Uses authenticated mode when OAuth credentials exist, otherwise
+    falls back to anonymous access.
+    """
+    from launchpadlib.launchpad import Launchpad
+    if is_authenticated():
+        try:
+            return Launchpad.login_with(
+                application_name="ubuntu-localization-tool",
+                service_root="production",
+                launchpadlib_dir=str(CREDENTIALS_DIR),
+                credentials_file=str(CREDENTIALS_FILE),
+                version="devel",
+            )
+        except Exception:
+            pass  # fall through to anonymous
+    return _get_anonymous_lp()
+
+
 def get_profile(username: str) -> Optional[dict]:
     """Get a user's public Launchpad profile."""
     try:
-        lp = _get_anonymous_lp()
+        lp = _get_lp()
         person = lp.people[username]
         person.lp_refresh()
         return {
@@ -268,7 +282,7 @@ def get_profile(username: str) -> Optional[dict]:
 def get_karma(username: str) -> Optional[dict]:
     """Get detailed karma for a user."""
     try:
-        lp = _get_anonymous_lp()
+        lp = _get_lp()
         person = lp.people[username]
         karma_total = _safe_int(getattr(person, "karma", 0))
 
@@ -296,7 +310,7 @@ def get_karma(username: str) -> Optional[dict]:
 def get_teams(username: str, translation_only: bool = True) -> list[dict]:
     """Get team memberships for a user."""
     try:
-        lp = _get_anonymous_lp()
+        lp = _get_lp()
         person = lp.people[username]
         teams = []
         for membership in getattr(person, "memberships_details", []):
@@ -323,14 +337,7 @@ def get_my_profile() -> Optional[dict]:
     if not is_authenticated():
         return None
     try:
-        from launchpadlib.launchpad import Launchpad
-        lp = Launchpad.login_with(
-            application_name="ubuntu-localization-tool",
-            service_root="production",
-            launchpadlib_dir=str(CREDENTIALS_DIR),
-            credentials_file=str(CREDENTIALS_FILE),
-            version="devel",
-        )
+        lp = _get_lp()
         me = lp.me
         me.lp_refresh()
         username = str(me.name)
@@ -348,9 +355,9 @@ def get_my_profile() -> Optional[dict]:
 
 
 def get_top_contributors(limit: int = 15) -> list[dict]:
-    """Get top Ubuntu contributors."""
+    """Get top Ubuntu translators — authenticated when credentials exist."""
     try:
-        lp = _get_anonymous_lp()
+        lp = _get_lp()
         contributors = []
         try:
             translators = lp.people["ubuntu-translators"]
