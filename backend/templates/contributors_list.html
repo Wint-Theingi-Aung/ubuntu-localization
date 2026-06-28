@@ -201,7 +201,15 @@ function sortTable(col) {
 /* ── Filtering ───────────────────────────────────────────────────────── */
 
 function getFilteredRows() {
-  return ALL_ROWS.filter(row => !row.classList.contains('search-hidden'));
+  const activeLang = document.getElementById('lang-filter')?.value || '';
+  return ALL_ROWS.filter(row => {
+    if (row.classList.contains('search-hidden')) return false;
+    if (activeLang && row.dataset.langs) {
+      const rowLangs = row.dataset.langs.toLowerCase().split(/\s+/);
+      if (!rowLangs.includes(activeLang.toLowerCase())) return false;
+    }
+    return true;
+  });
 }
 
 function filterContributors() {
@@ -305,15 +313,22 @@ function updateStats() {
     if (k > 0) withKarma++;
     if (k > topKarma) {
       topKarma = k;
-      topName = (row.dataset.name || row.dataset.username || '—')
-        .replace(/\b\w/g, c => c.toUpperCase());
+      // Use display name directly from the row's first anchor text
+      const anchor = row.querySelector('a');
+      if (anchor) {
+        topName = anchor.textContent.trim();
+      } else {
+        topName = row.dataset.name || row.dataset.username || '—';
+      }
     }
   });
 
   const rate = total > 0 ? Math.round((withKarma / total) * 100) : 0;
+  // Show N/A if nobody has positive karma
+  const displayTop = (topKarma > 0) ? topName : '—';
 
   document.getElementById('stat-total-contributors').textContent = total;
-  document.getElementById('stat-top-contributor').textContent = topName;
+  document.getElementById('stat-top-contributor').textContent = displayTop;
   document.getElementById('stat-total-karma').textContent = totalKarma.toLocaleString();
   document.getElementById('stat-active-rate').textContent = rate + '%';
 }
