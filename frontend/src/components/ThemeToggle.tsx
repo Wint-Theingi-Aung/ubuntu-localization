@@ -32,7 +32,7 @@ export default function ThemeToggle() {
   return (
     <button
       onClick={toggle}
-      className="w-full flex items-center justify-between px-4 py-2.5 rounded-xl text-white/60 hover:text-white hover:bg-white/[0.08] transition-all duration-200 text-sm"
+      className="w-full flex items-center justify-between px-4 py-2.5 rounded-xl text-[var(--tx-muted)] hover:text-[var(--tx-primary)] hover:bg-[var(--surface-overlay)] transition-all duration-200 text-sm"
       aria-label={isDark ? 'Switch to light mode' : 'Switch to dark mode'}
     >
       <span className="flex items-center gap-3">

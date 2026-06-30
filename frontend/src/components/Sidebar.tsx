@@ -49,7 +49,7 @@ export default function Sidebar() {
       {/* Mobile hamburger */}
       <button
         onClick={() => setIsOpen(!isOpen)}
-        className="lg:hidden fixed top-4 left-4 z-50 p-2.5 rounded-xl bg-white/[0.06] backdrop-blur-sm text-white hover:bg-white/[0.12] transition-colors border border-white/[0.08]"
+        className="lg:hidden fixed top-4 left-4 z-50 p-2.5 rounded-xl bg-[var(--surface-overlay)] backdrop-blur-sm text-[var(--tx-primary)] hover:bg-[var(--surface-card-hover)] transition-colors border border-[var(--border-theme)]"
         aria-label="Toggle menu"
       >
         {isOpen ? <X size={20} /> : <Menu size={20} />}
@@ -65,23 +65,23 @@ export default function Sidebar() {
 
       {/* Sidebar */}
       <aside
-        className={`fixed top-0 left-0 h-full w-64 bg-[#1a0512]/95 backdrop-blur-xl border-r border-white/[0.06] z-40 transform transition-transform duration-300 ease-out overflow-y-auto ${
+        className={`fixed top-0 left-0 h-full w-64 sidebar-glass z-40 transform transition-transform duration-300 ease-out overflow-y-auto ${
           isOpen ? 'translate-x-0' : '-translate-x-full lg:translate-x-0'
         }`}
       >
-        <div className="flex flex-col h-full">
+        <div className="flex flex-col h-full sidebar-logo-bg">
           {/* Logo */}
-          <div className="p-5 border-b border-white/[0.06]">
+          <div className="p-5 border-b border-[var(--border-theme)]">
             <Link href="/" className="flex items-center gap-3 group">
               <div className="relative">
                 <TuxLogo size={40} />
-                <div className="absolute -bottom-0.5 -right-0.5 w-3 h-3 bg-ubuntu-orange rounded-full border-2 border-[#1a0512]" />
+                <div className="absolute -bottom-0.5 -right-0.5 w-3 h-3 bg-ubuntu-orange rounded-full border-2 border-[var(--surface-sidebar)]" />
               </div>
               <div>
-                <h1 className="font-bold text-white text-base group-hover:text-ubuntu-orange transition-colors">
+                <h1 className="font-bold text-[var(--tx-primary)] text-base group-hover:text-ubuntu-orange transition-colors">
                   Ubuntu
                 </h1>
-                <p className="text-[10px] text-white/30 font-medium tracking-wider uppercase">
+                <p className="text-[10px] text-[var(--tx-dim)] font-medium tracking-wider uppercase">
                   {t('app_title', 'Localization Tool')}
                 </p>
               </div>
@@ -90,7 +90,7 @@ export default function Sidebar() {
 
           {/* Navigation */}
           <nav className="flex-1 p-3 space-y-0.5 overflow-y-auto">
-            <p className="text-[10px] text-white/20 font-semibold uppercase tracking-wider px-4 py-2">
+            <p className="text-[10px] text-[var(--tx-faint)] font-semibold uppercase tracking-wider px-4 py-2">
               {t('sidebar_navigation', 'Navigation')}
             </p>
             {navItems.map((item) => {
@@ -112,15 +112,15 @@ export default function Sidebar() {
           </nav>
 
           {/* Theme Toggle */}
-          <div className="p-3 border-t border-white/[0.06]">
+          <div className="p-3 border-t border-[var(--border-theme)]">
             <ThemeToggle />
           </div>
 
           {/* Language Toggle */}
-          <div className="p-3 border-t border-white/[0.06]">
+          <div className="p-3 border-t border-[var(--border-theme)]">
             <div className="flex items-center gap-2 px-4 py-2">
-              <Globe size={14} className="text-white/30" />
-              <p className="text-[10px] text-white/20 font-semibold uppercase tracking-wider">
+              <Globe size={14} className="text-[var(--tx-dim)]" />
+              <p className="text-[10px] text-[var(--tx-faint)] font-semibold uppercase tracking-wider">
                 {t('sidebar_interface_language', 'Interface Language')}
               </p>
             </div>
@@ -139,7 +139,7 @@ export default function Sidebar() {
           </div>
 
           {/* Footer */}
-          <div className="p-3 border-t border-white/[0.06]">
+          <div className="p-3 border-t border-[var(--border-theme)]">
             <a
               href="https://github.com/Wint-Theingi-Aung/ubuntu-localization"
               target="_blank"
@@ -151,10 +151,10 @@ export default function Sidebar() {
               <ExternalLink size={12} className="ml-auto opacity-40" />
             </a>
             <div className="mt-3 px-4 flex items-center justify-between">
-              <p className="text-[10px] text-white/20">
+              <p className="text-[10px] text-[var(--tx-faint)]">
                 v3.1.0
               </p>
-              <p className="text-[10px] text-white/20">
+              <p className="text-[10px] text-[var(--tx-faint)]">
                 Next.js + Tailwind
               </p>
             </div>

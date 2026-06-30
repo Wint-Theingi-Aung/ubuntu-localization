@@ -36,10 +36,10 @@ export default function Dashboard() {
       <div className="flex flex-col md:flex-row md:items-center md:justify-between gap-4">
         <div>
           <div className="flex items-center gap-3">
-            <h1 className="text-3xl font-bold text-white">{t('dashboard_title', 'Dashboard')}</h1>
+            <h1 className="text-3xl font-bold text-[var(--tx-primary)]">{t('dashboard_title', 'Dashboard')}</h1>
             <Sparkles className="text-ubuntu-orange animate-pulse-slow" size={24} />
           </div>
-          <p className="text-white/50 mt-1">{t('dashboard_subtitle', 'AI-powered Ubuntu localization for indigenous Myanmar languages')}</p>
+          <p className="text-[var(--tx-muted)] mt-1">{t('dashboard_subtitle', 'AI-powered Ubuntu localization for indigenous Myanmar languages')}</p>
         </div>
         <Link href="/translate" className="btn-primary flex items-center gap-2 w-fit">
           <Languages size={18} />
@@ -50,14 +50,14 @@ export default function Dashboard() {
 
       <div className="grid grid-cols-2 lg:grid-cols-4 gap-4">
         {stats.map((stat) => (
-          <div key={stat.label} className="stat-card">
+          <div key={stat.label} className="stat-card glass-card p-4">
             <div className="flex items-center gap-3">
               <div className={`w-12 h-12 rounded-xl ${stat.bg} flex items-center justify-center`}>
                 <stat.icon className={stat.color} size={24} />
               </div>
               <div>
-                <p className="text-2xl font-bold text-white">{stat.value}</p>
-                <p className="text-sm text-white/50">{stat.label}</p>
+                <p className="text-2xl font-bold text-[var(--tx-primary)]">{stat.value}</p>
+                <p className="text-sm text-[var(--tx-muted)]">{stat.label}</p>
               </div>
             </div>
           </div>
@@ -65,7 +65,7 @@ export default function Dashboard() {
       </div>
 
       <div>
-        <h2 className="text-xl font-semibold text-white mb-4">{t('dashboard_translation_progress', 'Translation Progress')}</h2>
+        <h2 className="text-xl font-semibold text-[var(--tx-primary)] mb-4">{t('dashboard_translation_progress', 'Translation Progress')}</h2>
         <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
           {languages.map((lang) => (
             <div key={lang.code} onClick={() => setSelectedLang(lang.code)}>
@@ -76,22 +76,22 @@ export default function Dashboard() {
       </div>
 
       <div>
-        <h2 className="text-xl font-semibold text-white mb-4">{t('dashboard_quick_actions', 'Quick Actions')}</h2>
+        <h2 className="text-xl font-semibold text-[var(--tx-primary)] mb-4">{t('dashboard_quick_actions', 'Quick Actions')}</h2>
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
           {quickActions.map((action) => (
-            <Link key={action.href} href={action.href} className="glass-card-hover p-6 group">
+            <Link key={action.href} href={action.href} className="glass-card glass-card-hover p-6 group">
               <action.icon className={`${action.iconColor} mb-3`} size={32} />
-              <h3 className={`font-semibold text-white ${action.hoverColor} transition-colors`}>
+              <h3 className={`font-semibold text-[var(--tx-primary)] ${action.hoverColor} transition-colors`}>
                 {action.title}
               </h3>
-              <p className="text-sm text-white/50 mt-1">{action.desc}</p>
+              <p className="text-sm text-[var(--tx-muted)] mt-1">{action.desc}</p>
             </Link>
           ))}
         </div>
       </div>
 
       <div className="glass-card p-6">
-        <h2 className="text-xl font-semibold text-white mb-4">{t('dashboard_recent_activity', 'Recent Activity')}</h2>
+        <h2 className="text-xl font-semibold text-[var(--tx-primary)] mb-4">{t('dashboard_recent_activity', 'Recent Activity')}</h2>
         <div className="space-y-3">
           {[
             { action: 'Translated 150 strings', lang: 'Myanmar', time: '2 hours ago', user: 'wint-theingi-aung' },
@@ -99,12 +99,12 @@ export default function Dashboard() {
             { action: 'Added 25 glossary terms', lang: 'Shan', time: '1 day ago', user: 'gipsyhnh' },
             { action: 'Translated 8 strings in nautilus.po', lang: 'Mon', time: '1 day ago', user: 'htetminaung2018' },
           ].map((activity, idx) => (
-            <div key={idx} className="flex items-center justify-between py-2 border-b border-white/5 last:border-0">
+            <div key={idx} className="flex items-center justify-between py-2 border-b border-[var(--border-light)] last:border-0">
               <div>
-                <p className="text-white text-sm">{activity.action}</p>
-                <p className="text-xs text-white/40">{activity.user} • {activity.lang}</p>
+                <p className="text-[var(--tx-primary)] text-sm">{activity.action}</p>
+                <p className="text-xs text-[var(--tx-dim)]">{activity.user} • {activity.lang}</p>
               </div>
-              <span className="text-xs text-white/30">{activity.time}</span>
+              <span className="text-xs text-[var(--tx-faint)]">{activity.time}</span>
             </div>
           ))}
         </div>
@@ -112,10 +112,10 @@ export default function Dashboard() {
 
       <div className="glass-card p-6 flex flex-col md:flex-row items-center justify-between gap-4">
         <div className="flex items-center gap-4">
-          <Github className="text-white/30" size={32} />
+          <Github className="text-[var(--tx-dim)]" size={32} />
           <div>
-            <h3 className="font-semibold text-white">{t('dashboard_open_source', 'Open Source Project')}</h3>
-            <p className="text-sm text-white/40">{t('dashboard_contribute_cta', 'Contribute on GitHub — star, fork, and help translate Ubuntu')}</p>
+            <h3 className="font-semibold text-[var(--tx-primary)]">{t('dashboard_open_source', 'Open Source Project')}</h3>
+            <p className="text-sm text-[var(--tx-muted)]">{t('dashboard_contribute_cta', 'Contribute on GitHub — star, fork, and help translate Ubuntu')}</p>
           </div>
         </div>
         <a href="https://github.com/Wint-Theingi-Aung/ubuntu-localization" target="_blank" rel="noopener noreferrer" className="btn-outline flex items-center gap-2 text-sm">

@@ -4,10 +4,7 @@ import { useState } from 'react'
 import { History, Download, Languages, FileText, Clock, BookOpen } from 'lucide-react'
 import { useI18n } from '@/lib/i18n'
 
-interface HistoryEntry {
-  id: number; timestamp: string; user: string; action: 'translate' | 'export' | 'upload' | 'glossary'
-  description: string; language?: string; details?: string
-}
+interface HistoryEntry { id: number; timestamp: string; user: string; action: 'translate' | 'export' | 'upload' | 'glossary'; description: string; language?: string; details?: string }
 
 const historyData: HistoryEntry[] = [
   { id: 1, timestamp: '2026-06-30 14:30', user: 'wint-theingi-aung', action: 'translate', description: 'Translated 150 strings in gnome-control-center.po', language: 'Myanmar', details: 'AI batch translation with Gemini' },
@@ -34,19 +31,19 @@ const filterOptions: { key: string | null; labelKey: string; fallback: string }[
 export default function HistoryPage() {
   const { t } = useI18n()
   const [filter, setFilter] = useState<string | null>(null)
-  const filtered = filter ? historyData.filter((h) => h.action === filter) : historyData
+  const filtered = filter ? historyData.filter(h => h.action === filter) : historyData
 
   return (
     <div className="max-w-5xl mx-auto space-y-6">
       <div>
-        <h1 className="text-3xl font-bold text-white">{t('history_title', 'History')}</h1>
-        <p className="text-white/50 mt-1">{t('history_subtitle', 'Recent translation activities')}</p>
+        <h1 className="text-3xl font-bold text-[var(--tx-primary)]">{t('history_title', 'History')}</h1>
+        <p className="text-[var(--tx-muted)] mt-1">{t('history_subtitle', 'Recent translation activities')}</p>
       </div>
 
       <div className="flex gap-2 overflow-x-auto pb-2">
-        {filterOptions.map((opt) => (
+        {filterOptions.map(opt => (
           <button key={opt.key || 'all'} onClick={() => setFilter(opt.key)}
-            className={`px-4 py-2 rounded-lg text-sm transition-all duration-200 whitespace-nowrap ${filter === opt.key ? 'bg-ubuntu-orange text-white shadow-lg shadow-ubuntu-orange/20' : 'bg-white/5 text-white/50 hover:bg-white/10'}`}>
+            className={`px-4 py-2 rounded-lg text-sm font-medium transition-all duration-200 whitespace-nowrap ${filter === opt.key ? 'bg-ubuntu-orange text-white shadow-lg shadow-ubuntu-orange/20' : 'bg-[var(--surface-overlay)] text-[var(--tx-muted)] hover:text-[var(--tx-primary)]'}`}>
             {t(opt.labelKey, opt.fallback)}
           </button>
         ))}
@@ -54,25 +51,25 @@ export default function HistoryPage() {
 
       {/* Desktop Timeline */}
       <div className="hidden md:block relative">
-        <div className="absolute left-8 top-0 bottom-0 w-px bg-white/10" />
+        <div className="absolute left-8 top-0 bottom-0 w-px bg-[var(--border-theme)]" />
         <div className="space-y-6">
-          {filtered.map((entry) => {
-            const Icon = actionIcons[entry.action]; const colorClass = actionColors[entry.action]
+          {filtered.map(entry => {
+            const Icon = actionIcons[entry.action]; const c = actionColors[entry.action]
             return (
               <div key={entry.id} className="timeline-item">
-                <div className={`timeline-icon ${colorClass}`}><Icon size={24} /></div>
-                <div className="timeline-content">
+                <div className={`timeline-icon ${c}`}><Icon size={24} /></div>
+                <div className="timeline-content glass-card p-4">
                   <div className="flex items-start justify-between">
                     <div>
-                      <p className="text-white font-medium">{entry.description}</p>
+                      <p className="text-[var(--tx-primary)] font-medium">{entry.description}</p>
                       <div className="flex items-center gap-3 mt-1">
-                        <span className="text-sm text-white/50">{entry.user}</span>
+                        <span className="text-sm text-[var(--tx-muted)]">{entry.user}</span>
                         {entry.language && <span className="badge-orange">{entry.language}</span>}
                       </div>
                     </div>
-                    <div className="flex items-center gap-1 text-xs text-white/30 flex-shrink-0 ml-4"><Clock size={12} />{entry.timestamp}</div>
+                    <div className="flex items-center gap-1 text-xs text-[var(--tx-dim)] flex-shrink-0 ml-4"><Clock size={12} />{entry.timestamp}</div>
                   </div>
-                  {entry.details && <p className="text-sm text-white/40 mt-2">{entry.details}</p>}
+                  {entry.details && <p className="text-sm text-[var(--tx-muted)] mt-2">{entry.details}</p>}
                 </div>
               </div>
             )
@@ -82,21 +79,21 @@ export default function HistoryPage() {
 
       {/* Mobile Cards */}
       <div className="md:hidden space-y-3">
-        {filtered.map((entry) => {
-          const Icon = actionIcons[entry.action]; const colorClass = actionColors[entry.action]
+        {filtered.map(entry => {
+          const Icon = actionIcons[entry.action]; const c = actionColors[entry.action]
           return (
             <div key={entry.id} className="glass-card p-4 space-y-3">
               <div className="flex items-start gap-3">
-                <div className={`w-10 h-10 rounded-full flex items-center justify-center flex-shrink-0 ${colorClass}`}><Icon size={18} /></div>
+                <div className={`w-10 h-10 rounded-full flex items-center justify-center flex-shrink-0 ${c}`}><Icon size={18} /></div>
                 <div className="flex-1 min-w-0">
-                  <p className="text-white font-medium text-sm">{entry.description}</p>
+                  <p className="text-[var(--tx-primary)] font-medium text-sm">{entry.description}</p>
                   <div className="flex items-center gap-2 mt-1 flex-wrap">
-                    <span className="text-xs text-white/40">{entry.user}</span>
+                    <span className="text-xs text-[var(--tx-dim)]">{entry.user}</span>
                     {entry.language && <span className="badge-orange text-[10px]">{entry.language}</span>}
                   </div>
                 </div>
               </div>
-              <div className="flex items-center justify-between text-xs text-white/30">
+              <div className="flex items-center justify-between text-xs text-[var(--tx-dim)]">
                 <span>{entry.details}</span>
                 <span className="flex items-center gap-1 flex-shrink-0"><Clock size={10} />{entry.timestamp}</span>
               </div>
@@ -107,9 +104,9 @@ export default function HistoryPage() {
 
       {filtered.length === 0 && (
         <div className="text-center py-12">
-          <History className="mx-auto text-white/20 mb-4" size={48} />
-          <p className="text-white/50 text-lg font-medium">{t('history_empty', 'No activities match your filter')}</p>
-          <p className="text-white/30 text-sm mt-1">{t('history_empty_hint', 'Try selecting a different filter')}</p>
+          <History className="mx-auto text-[var(--tx-faint)] mb-4" size={48} />
+          <p className="text-[var(--tx-muted)] text-lg font-medium">{t('history_empty', 'No activities match your filter')}</p>
+          <p className="text-[var(--tx-dim)] text-sm mt-1">{t('history_empty_hint', 'Try selecting a different filter')}</p>
         </div>
       )}
     </div>

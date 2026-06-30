@@ -10,7 +10,7 @@ import templatesData from '@/data/templates.json'
 const ITEMS_PER_PAGE = 20
 
 const allPkgCategories = Array.from(new Set(templatesData.packages.map((p: { category: string }) => p.category))).sort()
-const categories = ['All', ...allPkgCategories]
+const categories = ['All', ...allPkgCategories] as string[]
 const priorities = ['All', 'high', 'medium', 'low']
 
 const langLinks = [
@@ -41,21 +41,12 @@ export default function TemplatesPage() {
 
   const filtered = useMemo(() => {
     let result = templatesData.packages as any[]
-
     if (search) {
       const q = search.toLowerCase()
-      result = result.filter(
-        (p: any) => p.name.toLowerCase().includes(q) || p.description.toLowerCase().includes(q)
-      )
+      result = result.filter((p: any) => p.name.toLowerCase().includes(q) || p.description.toLowerCase().includes(q))
     }
-
-    if (category !== 'All') {
-      result = result.filter((p: any) => p.category === category)
-    }
-
-    if (priority !== 'All') {
-      result = result.filter((p: any) => p.priority === priority)
-    }
+    if (category !== 'All') result = result.filter((p: any) => p.category === category)
+    if (priority !== 'All') result = result.filter((p: any) => p.priority === priority)
 
     result = [...result].sort((a: any, b: any) => {
       let cmp = 0
@@ -67,23 +58,15 @@ export default function TemplatesPage() {
       }
       return sortDir === 'asc' ? cmp : -cmp
     })
-
     return result
   }, [search, category, priority, sortBy, sortDir])
 
   const totalPages = Math.ceil(filtered.length / ITEMS_PER_PAGE)
-  const paginated = filtered.slice(
-    (currentPage - 1) * ITEMS_PER_PAGE,
-    currentPage * ITEMS_PER_PAGE
-  )
+  const paginated = filtered.slice((currentPage - 1) * ITEMS_PER_PAGE, currentPage * ITEMS_PER_PAGE)
 
   const toggleSort = (field: 'name' | 'entries' | 'priority') => {
-    if (sortBy === field) {
-      setSortDir(d => d === 'asc' ? 'desc' : 'asc')
-    } else {
-      setSortBy(field)
-      setSortDir('asc')
-    }
+    if (sortBy === field) setSortDir(d => d === 'asc' ? 'desc' : 'asc')
+    else { setSortBy(field); setSortDir('asc') }
     setCurrentPage(1)
   }
 
@@ -91,8 +74,8 @@ export default function TemplatesPage() {
     <div className="max-w-7xl mx-auto space-y-6">
       <div className="flex flex-col md:flex-row md:items-center md:justify-between gap-4">
         <div>
-          <h1 className="text-3xl font-bold text-white">{t('templates_title', 'Templates')}</h1>
-          <p className="text-white/50 mt-1">
+          <h1 className="text-3xl font-bold text-[var(--tx-primary)]">{t('templates_title', 'Templates')}</h1>
+          <p className="text-[var(--tx-muted)] mt-1">
             {t('templates_subtitle', 'Ubuntu packages requiring translation')} — {templatesData.packages.length} {t('templates_total', 'total')}
           </p>
         </div>
@@ -121,10 +104,10 @@ export default function TemplatesPage() {
       </div>
 
       <div className="flex items-center justify-between">
-        <p className="text-xs text-white/30">
+        <p className="text-xs text-[var(--tx-dim)]">
           {t('templates_showing', 'Showing')} {paginated.length} {t('templates_of', 'of')} {filtered.length} {t('templates_packages', 'packages')}
         </p>
-        <div className="flex items-center gap-2 text-xs text-white/30">
+        <div className="flex items-center gap-2 text-xs text-[var(--tx-dim)]">
           <Filter size={12} />
           {category !== 'All' && <span className="badge-blue">{category}</span>}
           {priority !== 'All' && <span className={priorityColors[priority]}>{priority}</span>}
@@ -138,20 +121,20 @@ export default function TemplatesPage() {
             <thead>
               <tr>
                 <th>
-                  <button onClick={() => toggleSort('name')} className="flex items-center gap-1 hover:text-white/60 transition-colors">
+                  <button onClick={() => toggleSort('name')} className="flex items-center gap-1 hover:text-[var(--tx-secondary)] transition-colors">
                     {t('templates_package', 'Package')}
                     <ArrowUpDown size={12} />
                   </button>
                 </th>
                 <th>{t('templates_category', 'Category')}</th>
                 <th>
-                  <button onClick={() => toggleSort('priority')} className="flex items-center gap-1 hover:text-white/60 transition-colors">
+                  <button onClick={() => toggleSort('priority')} className="flex items-center gap-1 hover:text-[var(--tx-secondary)] transition-colors">
                     {t('templates_priority', 'Priority')}
                     <ArrowUpDown size={12} />
                   </button>
                 </th>
                 <th>
-                  <button onClick={() => toggleSort('entries')} className="flex items-center gap-1 hover:text-white/60 transition-colors">
+                  <button onClick={() => toggleSort('entries')} className="flex items-center gap-1 hover:text-[var(--tx-secondary)] transition-colors">
                     {t('templates_entries', 'Entries')}
                     <ArrowUpDown size={12} />
                   </button>
@@ -164,8 +147,8 @@ export default function TemplatesPage() {
                 <tr key={pkg.id}>
                   <td data-label={t('templates_package', 'Package')}>
                     <div>
-                      <p className="font-medium text-white text-sm">{pkg.name}</p>
-                      <p className="text-[11px] text-white/30 mt-0.5 font-mono">{pkg.description}</p>
+                      <p className="font-medium text-[var(--tx-primary)] text-sm">{pkg.name}</p>
+                      <p className="text-[11px] text-[var(--tx-dim)] mt-0.5 font-mono">{pkg.description}</p>
                     </div>
                   </td>
                   <td data-label={t('templates_category', 'Category')}>
@@ -174,14 +157,14 @@ export default function TemplatesPage() {
                   <td data-label={t('templates_priority', 'Priority')}>
                     <span className={`${priorityColors[pkg.priority]} text-[10px]`}>{pkg.priority}</span>
                   </td>
-                  <td data-label={t('templates_entries', 'Entries')} className="font-mono text-xs text-white/50">
+                  <td data-label={t('templates_entries', 'Entries')} className="font-mono text-xs text-[var(--tx-muted)]">
                     {pkg.entries.toLocaleString()}
                   </td>
                   <td data-label={t('templates_translate', 'Translate')}>
                     <div className="flex gap-1">
                       {langLinks.map((lang) => (
-                        <a key={lang.code} href={lpUrl(pkg.name, lang.code)} target="_blank" rel="noopener noreferrer" className="lp-link" title={`${t('templates_translate', 'Translate')} ${pkg.name} → ${lang.name}`}
-                        >
+                        <a key={lang.code} href={lpUrl(pkg.name, lang.code)} target="_blank" rel="noopener noreferrer" className="lp-link"
+                          title={`${t('templates_translate', 'Translate')} ${pkg.name} → ${lang.name}`}>
                           {lang.label}
                           <ExternalLink size={8} />
                         </a>
@@ -201,8 +184,8 @@ export default function TemplatesPage() {
           <div key={pkg.id} className="glass-card p-4 space-y-3">
             <div className="flex items-start justify-between">
               <div>
-                <p className="font-medium text-white text-sm">{pkg.name}</p>
-                <p className="text-[11px] text-white/30 mt-0.5 font-mono">{pkg.description}</p>
+                <p className="font-medium text-[var(--tx-primary)] text-sm">{pkg.name}</p>
+                <p className="text-[11px] text-[var(--tx-dim)] mt-0.5 font-mono">{pkg.description}</p>
               </div>
               <div className="flex gap-1.5">
                 <span className="badge-blue text-[10px]">{pkg.category}</span>
@@ -210,10 +193,11 @@ export default function TemplatesPage() {
               </div>
             </div>
             <div className="flex items-center justify-between">
-              <span className="font-mono text-xs text-white/40">{pkg.entries.toLocaleString()} {t('templates_entries_label', 'entries')}</span>
+              <span className="font-mono text-xs text-[var(--tx-dim)]">{pkg.entries.toLocaleString()} {t('templates_entries_label', 'entries')}</span>
               <div className="flex gap-1.5 lp-links-cell">
                 {langLinks.map((lang) => (
-                  <a key={lang.code} href={lpUrl(pkg.name, lang.code)} target="_blank" rel="noopener noreferrer" className="lp-link" title={`${t('templates_translate', 'Translate')} → ${lang.name}`}>
+                  <a key={lang.code} href={lpUrl(pkg.name, lang.code)} target="_blank" rel="noopener noreferrer" className="lp-link"
+                    title={`${t('templates_translate', 'Translate')} → ${lang.name}`}>
                     {lang.label}
                     <ExternalLink size={8} />
                   </a>
@@ -226,9 +210,9 @@ export default function TemplatesPage() {
 
       {filtered.length === 0 && (
         <div className="text-center py-16">
-          <Package className="mx-auto text-white/10 mb-4" size={48} />
-          <p className="text-white/30 text-lg font-medium">{t('templates_empty', 'No packages match your filters')}</p>
-          <p className="text-white/20 text-sm mt-1">{t('templates_empty_hint', 'Try adjusting your search or filters')}</p>
+          <Package className="mx-auto text-[var(--tx-faint)] mb-4" size={48} />
+          <p className="text-[var(--tx-dim)] text-lg font-medium">{t('templates_empty', 'No packages match your filters')}</p>
+          <p className="text-[var(--tx-faint)] text-sm mt-1">{t('templates_empty_hint', 'Try adjusting your search or filters')}</p>
         </div>
       )}
 

@@ -1,6 +1,5 @@
 import type { Metadata } from 'next'
 import './globals.css'
-import Sidebar from '@/components/Sidebar'
 import { I18nProvider } from '@/lib/i18n'
 import { ClientLayout } from '@/components/ClientLayout'
 
@@ -17,7 +16,7 @@ export default function RootLayout({
 }) {
   return (
     <html lang="en" className="dark">
-      <body className="bg-[#300A24] dark:bg-[#300A24] min-h-screen transition-colors duration-300">
+      <body className="min-h-screen transition-colors duration-300">
         <I18nProvider>
           <ClientLayout>
             {children}
