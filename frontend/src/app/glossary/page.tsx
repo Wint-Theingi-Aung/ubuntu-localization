@@ -3,26 +3,22 @@
 import { useState, useMemo } from 'react'
 import SearchInput from '@/components/SearchInput'
 import Pagination from '@/components/Pagination'
-import { BookOpen, AlertCircle, Info, CheckCircle2, Clock, HelpCircle } from 'lucide-react'
+import { BookOpen, AlertCircle, CheckCircle2, Clock, HelpCircle } from 'lucide-react'
+import { useI18n } from '@/lib/i18n'
 import glossaryData from '@/data/glossary.json'
 
 const ITEMS_PER_PAGE = 20
 
 const langColumns = [
-  { code: 'en', label: 'English', flag: '🇬🇧' },
-  { code: 'my', label: 'Myanmar', flag: '🇲🇲' },
-  { code: 'shn', label: 'Shan', flag: '🇲🇲' },
-  { code: 'mnw', label: 'Mon', flag: '🇲🇲' },
-  { code: 'ksw', label: 'S\'gaw Karen', flag: '🇲🇲' },
+  { code: 'en', label: 'English', flag: '🇬🇧', labelKey: 'glossary_english' },
+  { code: 'my', label: 'Myanmar', flag: '🇲🇲', labelKey: 'glossary_myanmar' },
+  { code: 'shn', label: 'Shan', flag: '🇲🇲', labelKey: 'glossary_shan' },
+  { code: 'mnw', label: 'Mon', flag: '🇲🇲', labelKey: 'glossary_mon' },
+  { code: 'ksw', label: "S'gaw Karen", flag: '🇲🇲', labelKey: 'glossary_karen' },
 ]
 
 type GlossaryEntry = {
-  id: number
-  en: string
-  my: string
-  shn: string
-  mnw: string
-  ksw: string
+  id: number; en: string; my: string; shn: string; mnw: string; ksw: string
 }
 
 function getTranslationStatus(entry: GlossaryEntry): 'translated' | 'partial' | 'pending' {
@@ -38,6 +34,7 @@ function getTranslatedCount(entry: GlossaryEntry): number {
 }
 
 export default function GlossaryPage() {
+  const { t } = useI18n()
   const [search, setSearch] = useState('')
   const [currentPage, setCurrentPage] = useState(1)
   const [selectedLang, setSelectedLang] = useState<string | null>(null)
@@ -45,149 +42,88 @@ export default function GlossaryPage() {
 
   const filtered = useMemo(() => {
     let result = glossaryData.entries as GlossaryEntry[]
-
     if (search) {
       const q = search.toLowerCase()
-      result = result.filter(
-        entry =>
-          entry.en.toLowerCase().includes(q) ||
-          entry.my.toLowerCase().includes(q) ||
-          entry.shn.toLowerCase().includes(q) ||
-          entry.mnw.toLowerCase().includes(q) ||
-          entry.ksw.toLowerCase().includes(q)
+      result = result.filter(entry =>
+        entry.en.toLowerCase().includes(q) || entry.my.toLowerCase().includes(q) ||
+        entry.shn.toLowerCase().includes(q) || entry.mnw.toLowerCase().includes(q) ||
+        entry.ksw.toLowerCase().includes(q)
       )
     }
-
-    if (statusFilter) {
-      result = result.filter(entry => getTranslationStatus(entry) === statusFilter)
-    }
-
+    if (statusFilter) result = result.filter(entry => getTranslationStatus(entry) === statusFilter)
     return result
   }, [search, statusFilter])
 
   const totalPages = Math.ceil(filtered.length / ITEMS_PER_PAGE)
-  const paginated = filtered.slice(
-    (currentPage - 1) * ITEMS_PER_PAGE,
-    currentPage * ITEMS_PER_PAGE
-  )
+  const paginated = filtered.slice((currentPage - 1) * ITEMS_PER_PAGE, currentPage * ITEMS_PER_PAGE)
 
-  // Stats
-  const totalTranslated = glossaryData.entries.filter(e => getTranslationStatus(e as GlossaryEntry) === 'translated').length
-  const totalPartial = glossaryData.entries.filter(e => getTranslationStatus(e as GlossaryEntry) === 'partial').length
-  const totalPending = glossaryData.entries.filter(e => getTranslationStatus(e as GlossaryEntry) === 'pending').length
+  const totalTranslated = (glossaryData.entries as GlossaryEntry[]).filter(e => getTranslationStatus(e) === 'translated').length
+  const totalPartial = (glossaryData.entries as GlossaryEntry[]).filter(e => getTranslationStatus(e) === 'partial').length
+  const totalPending = (glossaryData.entries as GlossaryEntry[]).filter(e => getTranslationStatus(e) === 'pending').length
 
   return (
     <div className="max-w-7xl mx-auto space-y-6">
-      {/* Header */}
       <div className="flex flex-col md:flex-row md:items-center md:justify-between gap-4">
         <div>
-          <h1 className="text-3xl font-bold text-white">Glossary</h1>
-          <p className="text-white/50 mt-1">
-            Standardized terminology for consistent translations
-          </p>
+          <h1 className="text-3xl font-bold text-white">{t('glossary_title', 'Glossary')}</h1>
+          <p className="text-white/50 mt-1">{t('glossary_subtitle', 'Standardized terminology for consistent translations')}</p>
         </div>
-        <div className="flex items-center gap-3">
-          <span className="text-sm text-white/40">{glossaryData.entries.length} terms</span>
-        </div>
+        <span className="text-sm text-white/40">{glossaryData.entries.length} {t('glossary_terms', 'terms')}</span>
       </div>
 
-      {/* Disclaimer */}
       <div className="glass-card p-4 border-l-4 border-amber-500/50">
         <div className="flex gap-3">
           <AlertCircle className="text-amber-400 flex-shrink-0 mt-0.5" size={18} />
           <div>
-            <p className="text-sm text-white/70 font-medium">Personal Note</p>
-            <p className="text-xs text-white/50 mt-0.5">
-              {glossaryData.disclaimer}
-            </p>
+            <p className="text-sm text-white/70 font-medium">{t('glossary_personal_note', 'Personal Note')}</p>
+            <p className="text-xs text-white/50 mt-0.5">{t('glossary_disclaimer', 'These are unofficial personal notes. Contributions are welcome via GitHub.')}</p>
           </div>
         </div>
       </div>
 
-      {/* Stats Row */}
       <div className="grid grid-cols-3 gap-3">
-        <button
-          onClick={() => setStatusFilter(statusFilter === 'translated' ? null : 'translated')}
-          className={`glass-card p-3 text-center transition-all duration-200 ${
-            statusFilter === 'translated' ? 'ring-2 ring-emerald-500/30 bg-emerald-500/[0.06]' : 'hover:bg-white/[0.06]'
-          }`}
-        >
-          <div className="flex items-center justify-center gap-2">
-            <CheckCircle2 size={16} className="text-emerald-400" />
-            <span className="text-lg font-bold text-emerald-400">{totalTranslated}</span>
-          </div>
-          <p className="text-[10px] text-white/40 mt-1">Fully Translated</p>
-        </button>
-        <button
-          onClick={() => setStatusFilter(statusFilter === 'partial' ? null : 'partial')}
-          className={`glass-card p-3 text-center transition-all duration-200 ${
-            statusFilter === 'partial' ? 'ring-2 ring-amber-500/30 bg-amber-500/[0.06]' : 'hover:bg-white/[0.06]'
-          }`}
-        >
-          <div className="flex items-center justify-center gap-2">
-            <Clock size={16} className="text-amber-400" />
-            <span className="text-lg font-bold text-amber-400">{totalPartial}</span>
-          </div>
-          <p className="text-[10px] text-white/40 mt-1">Partial</p>
-        </button>
-        <button
-          onClick={() => setStatusFilter(statusFilter === 'pending' ? null : 'pending')}
-          className={`glass-card p-3 text-center transition-all duration-200 ${
-            statusFilter === 'pending' ? 'ring-2 ring-white/20 bg-white/[0.06]' : 'hover:bg-white/[0.06]'
-          }`}
-        >
-          <div className="flex items-center justify-center gap-2">
-            <HelpCircle size={16} className="text-white/30" />
-            <span className="text-lg font-bold text-white/30">{totalPending}</span>
-          </div>
-          <p className="text-[10px] text-white/40 mt-1">Pending</p>
-        </button>
+        {[
+          { key: 'translated', icon: CheckCircle2, color: 'text-emerald-400', ring: 'ring-emerald-500/30', bg: 'bg-emerald-500/[0.06]', count: totalTranslated, label: t('glossary_fully_translated', 'Fully Translated') },
+          { key: 'partial', icon: Clock, color: 'text-amber-400', ring: 'ring-amber-500/30', bg: 'bg-amber-500/[0.06]', count: totalPartial, label: t('glossary_partial', 'Partial') },
+          { key: 'pending', icon: HelpCircle, color: 'text-white/30', ring: 'ring-white/20', bg: 'bg-white/[0.06]', count: totalPending, label: t('glossary_pending', 'Pending') },
+        ].map(stat => (
+          <button key={stat.key} onClick={() => setStatusFilter(statusFilter === stat.key ? null : stat.key)}
+            className={`glass-card p-3 text-center transition-all duration-200 ${statusFilter === stat.key ? `ring-2 ${stat.ring} ${stat.bg}` : 'hover:bg-white/[0.06]'}`}>
+            <div className="flex items-center justify-center gap-2">
+              <stat.icon size={16} className={stat.color} />
+              <span className={`text-lg font-bold ${stat.color}`}>{stat.count}</span>
+            </div>
+            <p className="text-[10px] text-white/40 mt-1">{stat.label}</p>
+          </button>
+        ))}
       </div>
 
-      {/* Search & Language Filter */}
       <div className="flex flex-col md:flex-row gap-4">
         <div className="flex-1">
-          <SearchInput
-            value={search}
-            onChange={(v) => { setSearch(v); setCurrentPage(1) }}
-            placeholder="Search glossary terms..."
-          />
+          <SearchInput value={search} onChange={(v) => { setSearch(v); setCurrentPage(1) }} placeholder={t('glossary_search', 'Search glossary terms...')} />
         </div>
         <div className="flex gap-2 flex-wrap">
           {langColumns.slice(1).map((lang) => (
-            <button
-              key={lang.code}
-              onClick={() => {
-                setSelectedLang(selectedLang === lang.code ? null : lang.code)
-                setCurrentPage(1)
-              }}
-              className={`px-3 py-2 rounded-lg text-sm transition-all duration-200 ${
-                selectedLang === lang.code
-                  ? 'bg-ubuntu-orange text-white shadow-lg shadow-ubuntu-orange/20'
-                  : 'bg-white/5 text-white/50 hover:bg-white/10'
-              }`}
-            >
-              {lang.flag} {lang.label}
+            <button key={lang.code} onClick={() => { setSelectedLang(selectedLang === lang.code ? null : lang.code); setCurrentPage(1) }}
+              className={`px-3 py-2 rounded-lg text-sm transition-all duration-200 ${selectedLang === lang.code ? 'bg-ubuntu-orange text-white shadow-lg shadow-ubuntu-orange/20' : 'bg-white/5 text-white/50 hover:bg-white/10'}`}>
+              {lang.flag} {t(lang.labelKey, lang.label)}
             </button>
           ))}
         </div>
       </div>
 
-      {/* Table — Desktop */}
+      {/* Desktop Table */}
       <div className="glass-card overflow-hidden hidden md:block">
         <div className="overflow-x-auto">
-          <table className="data-table">
+          <table className="data-table responsive-table">
             <thead>
               <tr>
                 {langColumns.map((lang) => (
-                  <th
-                    key={lang.code}
-                    className={selectedLang && selectedLang !== lang.code ? 'hidden' : ''}
-                  >
-                    {lang.flag} {lang.label}
+                  <th key={lang.code} className={selectedLang && selectedLang !== lang.code ? 'hidden' : ''}>
+                    {lang.flag} {t(lang.labelKey, lang.label)}
                   </th>
                 ))}
-                <th className="w-24">Status</th>
+                <th className="w-24">{t('glossary_status', 'Status')}</th>
               </tr>
             </thead>
             <tbody>
@@ -196,51 +132,15 @@ export default function GlossaryPage() {
                 const count = getTranslatedCount(entry)
                 return (
                   <tr key={entry.id}>
-                    <td data-label="English" className="font-medium text-white">
-                      {entry.en}
-                    </td>
-                    <td
-                      data-label="Myanmar"
-                      className={`font-myanmar ${selectedLang && selectedLang !== 'my' ? 'hidden' : ''}`}
-                    >
-                      {entry.my || <span className="text-white/20">—</span>}
-                    </td>
-                    <td
-                      data-label="Shan"
-                      className={`font-myanmar ${selectedLang && selectedLang !== 'shn' ? 'hidden' : ''}`}
-                    >
-                      {entry.shn || <span className="text-white/20 italic">—</span>}
-                    </td>
-                    <td
-                      data-label="Mon"
-                      className={`font-myanmar ${selectedLang && selectedLang !== 'mnw' ? 'hidden' : ''}`}
-                    >
-                      {entry.mnw || <span className="text-white/20 italic">—</span>}
-                    </td>
-                    <td
-                      data-label="S'gaw Karen"
-                      className={`font-myanmar ${selectedLang && selectedLang !== 'ksw' ? 'hidden' : ''}`}
-                    >
-                      {entry.ksw || <span className="text-white/20 italic">—</span>}
-                    </td>
-                    <td data-label="Status">
-                      {status === 'translated' && (
-                        <span className="status-translated">
-                          <CheckCircle2 size={10} className="mr-1" />
-                          Full
-                        </span>
-                      )}
-                      {status === 'partial' && (
-                        <span className="status-partial">
-                          <Clock size={10} className="mr-1" />
-                          {count}/4
-                        </span>
-                      )}
-                      {status === 'pending' && (
-                        <span className="status-pending">
-                          Pending
-                        </span>
-                      )}
+                    <td data-label={t('glossary_english', 'English')} className="font-medium text-white">{entry.en}</td>
+                    <td data-label={t('glossary_myanmar', 'Myanmar')} className={`font-myanmar ${selectedLang && selectedLang !== 'my' ? 'hidden' : ''}`}>{entry.my || <span className="text-white/20">—</span>}</td>
+                    <td data-label={t('glossary_shan', 'Shan')} className={`font-myanmar ${selectedLang && selectedLang !== 'shn' ? 'hidden' : ''}`}>{entry.shn || <span className="text-white/20 italic">—</span>}</td>
+                    <td data-label={t('glossary_mon', 'Mon')} className={`font-myanmar ${selectedLang && selectedLang !== 'mnw' ? 'hidden' : ''}`}>{entry.mnw || <span className="text-white/20 italic">—</span>}</td>
+                    <td data-label={t('glossary_karen', "S'gaw Karen")} className={`font-myanmar ${selectedLang && selectedLang !== 'ksw' ? 'hidden' : ''}`}>{entry.ksw || <span className="text-white/20 italic">—</span>}</td>
+                    <td data-label={t('glossary_status', 'Status')}>
+                      {status === 'translated' && <span className="status-translated"><CheckCircle2 size={10} className="mr-1" />{t('glossary_full', 'Full')}</span>}
+                      {status === 'partial' && <span className="status-partial"><Clock size={10} className="mr-1" />{count}/4</span>}
+                      {status === 'pending' && <span className="status-pending">{t('glossary_pending', 'Pending')}</span>}
                     </td>
                   </tr>
                 )
@@ -250,7 +150,7 @@ export default function GlossaryPage() {
         </div>
       </div>
 
-      {/* Mobile — Card Layout */}
+      {/* Mobile Cards */}
       <div className="md:hidden space-y-3">
         {paginated.map((entry) => {
           const status = getTranslationStatus(entry)
@@ -259,30 +159,15 @@ export default function GlossaryPage() {
             <div key={entry.id} className="glass-card p-4 space-y-3">
               <div className="flex items-start justify-between">
                 <p className="font-medium text-white text-sm">{entry.en}</p>
-                {status === 'translated' && (
-                  <span className="status-translated"><CheckCircle2 size={10} className="mr-1" />Full</span>
-                )}
-                {status === 'partial' && (
-                  <span className="status-partial"><Clock size={10} className="mr-1" />{count}/4</span>
-                )}
-                {status === 'pending' && (
-                  <span className="status-pending">Pending</span>
-                )}
+                {status === 'translated' && <span className="status-translated"><CheckCircle2 size={10} className="mr-1" />{t('glossary_full', 'Full')}</span>}
+                {status === 'partial' && <span className="status-partial"><Clock size={10} className="mr-1" />{count}/4</span>}
+                {status === 'pending' && <span className="status-pending">{t('glossary_pending', 'Pending')}</span>}
               </div>
               <div className="grid grid-cols-2 gap-2">
-                {[
-                  { code: 'my', label: 'Myanmar', value: entry.my },
-                  { code: 'shn', label: 'Shan', value: entry.shn },
-                  { code: 'mnw', label: 'Mon', value: entry.mnw },
-                  { code: 'ksw', label: 'Karen', value: entry.ksw },
-                ].map(lang => (
+                {[{ code: 'my', label: t('glossary_myanmar', 'Myanmar'), value: entry.my }, { code: 'shn', label: t('glossary_shan', 'Shan'), value: entry.shn }, { code: 'mnw', label: t('glossary_mon', 'Mon'), value: entry.mnw }, { code: 'ksw', label: t('glossary_karen', "Karen"), value: entry.ksw }].map(lang => (
                   <div key={lang.code} className="text-xs">
                     <span className="text-white/30">{lang.label}: </span>
-                    {lang.value ? (
-                      <span className="font-myanmar text-white/70">{lang.value}</span>
-                    ) : (
-                      <span className="text-white/15 italic">—</span>
-                    )}
+                    {lang.value ? <span className="font-myanmar text-white/70">{lang.value}</span> : <span className="text-white/15 italic">—</span>}
                   </div>
                 ))}
               </div>
@@ -291,20 +176,15 @@ export default function GlossaryPage() {
         })}
       </div>
 
-      {/* Empty state */}
       {filtered.length === 0 && (
         <div className="text-center py-12">
           <BookOpen className="mx-auto text-white/20 mb-4" size={48} />
-          <p className="text-white/50 text-lg font-medium">No terms match your search</p>
-          <p className="text-white/30 text-sm mt-1">Try a different search term or clear filters</p>
+          <p className="text-white/50 text-lg font-medium">{t('glossary_no_results', 'No terms match your search')}</p>
+          <p className="text-white/30 text-sm mt-1">{t('glossary_no_results_hint', 'Try a different search term or clear filters')}</p>
         </div>
       )}
 
-      <Pagination
-        currentPage={currentPage}
-        totalPages={totalPages}
-        onPageChange={setCurrentPage}
-      />
+      <Pagination currentPage={currentPage} totalPages={totalPages} onPageChange={setCurrentPage} />
     </div>
   )
 }

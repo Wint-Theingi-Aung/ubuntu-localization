@@ -19,7 +19,7 @@
   }
 
   .font-myanmar {
-    font-family: 'Pyidaungsu', 'Noto Sans Myanmar', sans-serif;
+    font-family: 'Pyidaungsu', 'Padauk', 'Noto Sans Myanmar', sans-serif;
     line-height: 1.8;
   }
 
@@ -308,25 +308,62 @@
 /* ── Responsive Table → Card Layout ── */
 @media (max-width: 768px) {
   .responsive-table thead {
-    @apply hidden;
+    display: none;
+  }
+
+  .responsive-table tbody {
+    display: block;
   }
 
   .responsive-table tbody tr {
-    @apply block mb-4 glass-card p-4;
+    display: block;
+    margin-bottom: 1rem;
+    background: rgba(255, 255, 255, 0.04);
+    backdrop-filter: blur(24px);
+    -webkit-backdrop-filter: blur(24px);
+    border: 1px solid rgba(255, 255, 255, 0.08);
+    border-radius: 1rem;
+    padding: 1rem;
+    box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.2);
   }
 
   .responsive-table tbody td {
-    @apply block text-right relative pl-[50%] py-2;
+    display: block;
+    text-align: right;
+    position: relative;
+    padding-left: 50%;
+    padding-top: 0.5rem;
+    padding-bottom: 0.5rem;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.04);
+  }
+
+  .responsive-table tbody td:last-child {
+    border-bottom: none;
   }
 
   .responsive-table tbody td::before {
-    @apply absolute left-4 top-2 text-left text-white/40 font-medium text-xs uppercase;
     content: attr(data-label);
+    position: absolute;
+    left: 1rem;
+    top: 0.5rem;
+    text-align: left;
+    color: rgba(255, 255, 255, 0.4);
+    font-weight: 500;
+    font-size: 0.7rem;
+    text-transform: uppercase;
+    white-space: nowrap;
   }
 
-  /* Stack launchpad links vertically on mobile */
+  .responsive-table tbody td .lp-link {
+    display: inline-flex;
+  }
+
+  /* Stack launchpad links on mobile */
   .lp-links-cell {
-    @apply flex flex-wrap justify-end gap-1.5;
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: flex-end;
+    gap: 0.375rem;
   }
 }
 
@@ -360,10 +397,174 @@
 
 /* ── Focus Visible ── */
 :focus-visible {
-  @apply outline-2 outline-offset-2 outline-ubuntu-orange/50;
+  outline: 2px solid rgba(233, 84, 32, 0.5);
+  outline-offset: 2px;
 }
 
 /* ── Selection ── */
 ::selection {
-  @apply bg-ubuntu-orange/30 text-white;
+  background: rgba(233, 84, 32, 0.3);
+  color: #fff;
+}
+
+/* ── Light Theme Overrides ── */
+.light body,
+body:not(.dark) {
+  background: #f5f0f0;
+  color: #1a1a2e;
+}
+
+.light .glass-card,
+body:not(.dark) .glass-card {
+  background: rgba(255, 255, 255, 0.8);
+  border-color: rgba(0, 0, 0, 0.08);
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.06);
+}
+
+.light .glass-card-hover:hover,
+body:not(.dark) .glass-card-hover:hover {
+  background: rgba(255, 255, 255, 0.95);
+  border-color: rgba(0, 0, 0, 0.12);
+}
+
+.light .bg-\[\#300A24\],
+body:not(.dark) .bg-\[\#300A24\] {
+  background: #f5f0f0;
+}
+
+.light .bg-\[\#1a0512\]\/95,
+body:not(.dark) .bg-\[\#1a0512\]\/95 {
+  background: rgba(255, 255, 255, 0.95);
+}
+
+.light .text-white,
+body:not(.dark) .text-white {
+  color: #1a1a2e;
+}
+
+.light .text-white\/50,
+body:not(.dark) .text-white\/50 {
+  color: rgba(26, 26, 46, 0.5);
+}
+
+.light .text-white\/30,
+body:not(.dark) .text-white\/30 {
+  color: rgba(26, 26, 46, 0.3);
+}
+
+.light .text-white\/40,
+body:not(.dark) .text-white\/40 {
+  color: rgba(26, 26, 46, 0.4);
+}
+
+.light .text-white\/20,
+body:not(.dark) .text-white\/20 {
+  color: rgba(26, 26, 46, 0.2);
+}
+
+.light .text-white\/60,
+body:not(.dark) .text-white\/60 {
+  color: rgba(26, 26, 46, 0.6);
+}
+
+.light .text-white\/70,
+body:not(.dark) .text-white\/70 {
+  color: rgba(26, 26, 46, 0.7);
+}
+
+.light .bg-white\/\[0\.04\],
+body:not(.dark) .bg-white\/\[0\.04\] {
+  background: rgba(0, 0, 0, 0.04);
+}
+
+.light .bg-white\/\[0\.03\],
+body:not(.dark) .bg-white\/\[0\.03\] {
+  background: rgba(0, 0, 0, 0.03);
+}
+
+.light .bg-white\/\[0\.06\],
+body:not(.dark) .bg-white\/\[0\.06\] {
+  background: rgba(0, 0, 0, 0.06);
+}
+
+.light .bg-white\/10,
+body:not(.dark) .bg-white\/10 {
+  background: rgba(0, 0, 0, 0.1);
+}
+
+.light .border-white\/\[0\.06\],
+body:not(.dark) .border-white\/\[0\.06\] {
+  border-color: rgba(0, 0, 0, 0.06);
+}
+
+.light .border-white\/\[0\.08\],
+body:not(.dark) .border-white\/\[0\.08\] {
+  border-color: rgba(0, 0, 0, 0.08);
+}
+
+.light .hover\:bg-white\/\[0\.08\]:hover,
+body:not(.dark) .hover\:bg-white\/\[0\.08\]:hover {
+  background: rgba(0, 0, 0, 0.08);
+}
+
+.light .sidebar-link,
+body:not(.dark) .sidebar-link {
+  color: rgba(26, 26, 46, 0.6);
+}
+
+.light .sidebar-link:hover,
+body:not(.dark) .sidebar-link:hover {
+  color: #1a1a2e;
+  background: rgba(0, 0, 0, 0.06);
+}
+
+.light .input-field,
+body:not(.dark) .input-field {
+  background: rgba(0, 0, 0, 0.03);
+  border-color: rgba(0, 0, 0, 0.1);
+  color: #1a1a2e;
+}
+
+.light .input-field::placeholder,
+body:not(.dark) .input-field::placeholder {
+  color: rgba(26, 26, 46, 0.3);
+}
+
+.light .btn-secondary,
+body:not(.dark) .btn-secondary {
+  background: rgba(0, 0, 0, 0.06);
+  border-color: rgba(0, 0, 0, 0.08);
+}
+
+.light .data-table thead,
+body:not(.dark) .data-table thead {
+  background: rgba(0, 0, 0, 0.03);
+  color: rgba(26, 26, 46, 0.4);
+}
+
+.light .data-table tbody tr,
+body:not(.dark) .data-table tbody tr {
+  border-color: rgba(0, 0, 0, 0.06);
+}
+
+.light .data-table tbody tr:hover,
+body:not(.dark) .data-table tbody tr:hover {
+  background: rgba(0, 0, 0, 0.03);
+}
+
+.light .status-pending,
+body:not(.dark) .status-pending {
+  background: rgba(0, 0, 0, 0.04);
+  color: rgba(26, 26, 46, 0.3);
+}
+
+.light .accordion-header:hover,
+body:not(.dark) .accordion-header:hover {
+  background: rgba(0, 0, 0, 0.04);
+}
+
+.light .tips-box,
+body:not(.dark) .tips-box {
+  background: rgba(0, 0, 0, 0.03);
+  border-color: rgba(0, 0, 0, 0.06);
 }

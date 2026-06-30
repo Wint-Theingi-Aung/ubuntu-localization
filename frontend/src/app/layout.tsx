@@ -1,6 +1,8 @@
 import type { Metadata } from 'next'
 import './globals.css'
 import Sidebar from '@/components/Sidebar'
+import { I18nProvider } from '@/lib/i18n'
+import { ClientLayout } from '@/components/ClientLayout'
 
 export const metadata: Metadata = {
   title: 'Ubuntu Localization Tool',
@@ -15,13 +17,12 @@ export default function RootLayout({
 }) {
   return (
     <html lang="en" className="dark">
-      <body className="bg-[#300A24] min-h-screen">
-        <div className="flex min-h-screen">
-          <Sidebar />
-          <main className="flex-1 lg:ml-64 p-4 lg:p-8">
+      <body className="bg-[#300A24] dark:bg-[#300A24] min-h-screen transition-colors duration-300">
+        <I18nProvider>
+          <ClientLayout>
             {children}
-          </main>
-        </div>
+          </ClientLayout>
+        </I18nProvider>
       </body>
     </html>
   )

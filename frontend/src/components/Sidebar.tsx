@@ -18,18 +18,20 @@ import {
   Globe,
 } from 'lucide-react'
 import TuxLogo from './TuxLogo'
+import ThemeToggle from './ThemeToggle'
+import { useI18n, type LanguageCode } from '@/lib/i18n'
 
 const navItems = [
-  { href: '/', label: 'Dashboard', icon: LayoutDashboard },
-  { href: '/templates', label: 'Templates', icon: FileCode },
-  { href: '/translate', label: 'Translation', icon: Languages },
-  { href: '/glossary', label: 'Glossary', icon: BookOpen },
-  { href: '/guide', label: 'Guide', icon: BookMarked },
-  { href: '/contributors', label: 'Contributors', icon: Users },
-  { href: '/history', label: 'History', icon: History },
+  { href: '/', labelKey: 'sidebar_dashboard', icon: LayoutDashboard, fallback: 'Dashboard' },
+  { href: '/templates', labelKey: 'sidebar_templates', icon: FileCode, fallback: 'Templates' },
+  { href: '/translate', labelKey: 'sidebar_translation', icon: Languages, fallback: 'Translation' },
+  { href: '/glossary', labelKey: 'sidebar_glossary', icon: BookOpen, fallback: 'Glossary' },
+  { href: '/guide', labelKey: 'sidebar_guide', icon: BookMarked, fallback: 'Guide' },
+  { href: '/contributors', labelKey: 'sidebar_contributors', icon: Users, fallback: 'Contributors' },
+  { href: '/history', labelKey: 'sidebar_history', icon: History, fallback: 'History' },
 ]
 
-const uiLanguages = [
+const uiLanguages: { code: LanguageCode; label: string; name: string; native: string }[] = [
   { code: 'my', label: 'MY', name: 'Myanmar', native: 'မြန်မာ' },
   { code: 'shn', label: 'SHN', name: 'Shan', native: 'ရှမ်း' },
   { code: 'mnw', label: 'MNW', name: 'Mon', native: 'မွန်' },
@@ -39,7 +41,7 @@ const uiLanguages = [
 
 export default function Sidebar() {
   const [isOpen, setIsOpen] = useState(false)
-  const [uiLang, setUiLang] = useState('en')
+  const { lang, setLang, t } = useI18n()
   const pathname = usePathname()
 
   return (
@@ -63,7 +65,7 @@ export default function Sidebar() {
 
       {/* Sidebar */}
       <aside
-        className={`fixed top-0 left-0 h-full w-64 bg-[#1a0512]/95 backdrop-blur-xl border-r border-white/[0.06] z-40 transform transition-transform duration-300 ease-out ${
+        className={`fixed top-0 left-0 h-full w-64 bg-[#1a0512]/95 backdrop-blur-xl border-r border-white/[0.06] z-40 transform transition-transform duration-300 ease-out overflow-y-auto ${
           isOpen ? 'translate-x-0' : '-translate-x-full lg:translate-x-0'
         }`}
       >
@@ -80,7 +82,7 @@ export default function Sidebar() {
                   Ubuntu
                 </h1>
                 <p className="text-[10px] text-white/30 font-medium tracking-wider uppercase">
-                  Localization Tool
+                  {t('app_title', 'Localization Tool')}
                 </p>
               </div>
             </Link>
@@ -89,7 +91,7 @@ export default function Sidebar() {
           {/* Navigation */}
           <nav className="flex-1 p-3 space-y-0.5 overflow-y-auto">
             <p className="text-[10px] text-white/20 font-semibold uppercase tracking-wider px-4 py-2">
-              Navigation
+              {t('sidebar_navigation', 'Navigation')}
             </p>
             {navItems.map((item) => {
               const isActive = pathname === item.href ||
@@ -103,29 +105,34 @@ export default function Sidebar() {
                   className={`sidebar-link relative ${isActive ? 'active' : ''}`}
                 >
                   <item.icon size={18} />
-                  <span>{item.label}</span>
+                  <span>{t(item.labelKey, item.fallback)}</span>
                 </Link>
               )
             })}
           </nav>
+
+          {/* Theme Toggle */}
+          <div className="p-3 border-t border-white/[0.06]">
+            <ThemeToggle />
+          </div>
 
           {/* Language Toggle */}
           <div className="p-3 border-t border-white/[0.06]">
             <div className="flex items-center gap-2 px-4 py-2">
               <Globe size={14} className="text-white/30" />
               <p className="text-[10px] text-white/20 font-semibold uppercase tracking-wider">
-                Interface Language
+                {t('sidebar_interface_language', 'Interface Language')}
               </p>
             </div>
             <div className="px-3 flex flex-wrap gap-1.5">
-              {uiLanguages.map((lang) => (
+              {uiLanguages.map((language) => (
                 <button
-                  key={lang.code}
-                  onClick={() => setUiLang(lang.code)}
-                  className={`lang-toggle-btn ${uiLang === lang.code ? 'active' : ''}`}
-                  title={`${lang.name} (${lang.native})`}
+                  key={language.code}
+                  onClick={() => setLang(language.code)}
+                  className={`lang-toggle-btn ${lang === language.code ? 'active' : ''}`}
+                  title={`${language.name} (${language.native})`}
                 >
-                  {lang.label}
+                  {language.label}
                 </button>
               ))}
             </div>
@@ -140,12 +147,12 @@ export default function Sidebar() {
               className="sidebar-link text-xs"
             >
               <Github size={16} />
-              <span>View on GitHub</span>
+              <span>{t('sidebar_view_github', 'View on GitHub')}</span>
               <ExternalLink size={12} className="ml-auto opacity-40" />
             </a>
             <div className="mt-3 px-4 flex items-center justify-between">
               <p className="text-[10px] text-white/20">
-                v3.0.0
+                v3.1.0
               </p>
               <p className="text-[10px] text-white/20">
                 Next.js + Tailwind

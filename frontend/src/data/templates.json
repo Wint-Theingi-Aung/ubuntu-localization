@@ -3,7 +3,7 @@
     "version": "2.0.0",
     "lastUpdated": "2026-06-30",
     "description": "Ubuntu translation templates - core packages requiring localization",
-    "totalPackages": 582,
+    "totalPackages": 547,
     "source": "https://translations.launchpad.net/ubuntu"
   },
   "packages": [
@@ -1393,14 +1393,6 @@
     },
     {
       "id": 174,
-      "name": "jockey",
-      "description": "Additional Drivers",
-      "category": "System",
-      "priority": "medium",
-      "entries": 240
-    },
-    {
-      "id": 175,
       "name": "language-selector",
       "description": "Language Support",
       "category": "System",
@@ -1408,7 +1400,7 @@
       "entries": 320
     },
     {
-      "id": 176,
+      "id": 175,
       "name": "im-config",
       "description": "Input Method Config",
       "category": "System",
@@ -1416,7 +1408,7 @@
       "entries": 180
     },
     {
-      "id": 177,
+      "id": 176,
       "name": "onboard",
       "description": "Onboard Keyboard",
       "category": "Accessibility",
@@ -1424,7 +1416,7 @@
       "entries": 520
     },
     {
-      "id": 178,
+      "id": 177,
       "name": "orca",
       "description": "Orca Screen Reader",
       "category": "Accessibility",
@@ -1432,7 +1424,7 @@
       "entries": 920
     },
     {
-      "id": 179,
+      "id": 178,
       "name": "mousetweaks",
       "description": "Mouse Tweaks",
       "category": "Accessibility",
@@ -1440,7 +1432,7 @@
       "entries": 120
     },
     {
-      "id": 180,
+      "id": 179,
       "name": "dasher",
       "description": "Dasher",
       "category": "Accessibility",
@@ -1448,7 +1440,7 @@
       "entries": 380
     },
     {
-      "id": 181,
+      "id": 180,
       "name": "caribou",
       "description": "Caribou Keyboard",
       "category": "Accessibility",
@@ -1456,7 +1448,7 @@
       "entries": 280
     },
     {
-      "id": 182,
+      "id": 181,
       "name": "accerciser",
       "description": "Accerciser",
       "category": "Accessibility",
@@ -1464,7 +1456,7 @@
       "entries": 220
     },
     {
-      "id": 183,
+      "id": 182,
       "name": "at-spi2",
       "description": "AT-SPI2",
       "category": "Accessibility",
@@ -1472,7 +1464,7 @@
       "entries": 180
     },
     {
-      "id": 184,
+      "id": 183,
       "name": "xfce4-panel",
       "description": "Xfce Panel",
       "category": "Desktop",
@@ -1480,7 +1472,7 @@
       "entries": 520
     },
     {
-      "id": 185,
+      "id": 184,
       "name": "xfce4-settings",
       "description": "Xfce Settings",
       "category": "Desktop",
@@ -1488,7 +1480,7 @@
       "entries": 420
     },
     {
-      "id": 186,
+      "id": 185,
       "name": "xfce4-terminal",
       "description": "Xfce Terminal",
       "category": "Desktop",
@@ -1496,7 +1488,7 @@
       "entries": 280
     },
     {
-      "id": 187,
+      "id": 186,
       "name": "xfce4-appfinder",
       "description": "Xfce App Finder",
       "category": "Desktop",
@@ -1504,7 +1496,7 @@
       "entries": 180
     },
     {
-      "id": 188,
+      "id": 187,
       "name": "xfce4-power-manager",
       "description": "Xfce Power Manager",
       "category": "Desktop",
@@ -1512,7 +1504,7 @@
       "entries": 320
     },
     {
-      "id": 189,
+      "id": 188,
       "name": "xfce4-notifyd",
       "description": "Xfce Notifications",
       "category": "Desktop",
@@ -1520,7 +1512,7 @@
       "entries": 140
     },
     {
-      "id": 190,
+      "id": 189,
       "name": "xfce4-screensaver",
       "description": "Xfce Screensaver",
       "category": "Desktop",
@@ -1528,7 +1520,7 @@
       "entries": 180
     },
     {
-      "id": 191,
+      "id": 190,
       "name": "xfce4-session",
       "description": "Xfce Session",
       "category": "Desktop",
@@ -1536,7 +1528,7 @@
       "entries": 220
     },
     {
-      "id": 192,
+      "id": 191,
       "name": "xfce4-whiskermenu",
       "description": "Whisker Menu",
       "category": "Desktop",
@@ -1544,7 +1536,7 @@
       "entries": 180
     },
     {
-      "id": 193,
+      "id": 192,
       "name": "thunar",
       "description": "Thunar File Manager",
       "category": "Desktop",
@@ -1552,7 +1544,7 @@
       "entries": 520
     },
     {
-      "id": 194,
+      "id": 193,
       "name": "xfdashboard",
       "description": "Xfdashboard",
       "category": "Desktop",
@@ -1560,7 +1552,7 @@
       "entries": 180
     },
     {
-      "id": 195,
+      "id": 194,
       "name": "ristretto",
       "description": "Ristretto Image Viewer",
       "category": "Desktop",
@@ -1568,7 +1560,7 @@
       "entries": 180
     },
     {
-      "id": 196,
+      "id": 195,
       "name": "mousepad",
       "description": "Mousepad Text Editor",
       "category": "Desktop",
@@ -1576,7 +1568,7 @@
       "entries": 180
     },
     {
-      "id": 197,
+      "id": 196,
       "name": "parole",
       "description": "Parole Media Player",
       "category": "Desktop",
@@ -1584,7 +1576,7 @@
       "entries": 220
     },
     {
-      "id": 198,
+      "id": 197,
       "name": "xfburn",
       "description": "Xfburn",
       "category": "Desktop",
@@ -1592,7 +1584,7 @@
       "entries": 140
     },
     {
-      "id": 199,
+      "id": 198,
       "name": "orage",
       "description": "Orage Calendar",
       "category": "Desktop",
@@ -1600,7 +1592,7 @@
       "entries": 220
     },
     {
-      "id": 200,
+      "id": 199,
       "name": "galculator",
       "description": "Galculator",
       "category": "Desktop",
@@ -1608,7 +1600,7 @@
       "entries": 160
     },
     {
-      "id": 201,
+      "id": 200,
       "name": "plasma-desktop",
       "description": "KDE Plasma Desktop",
       "category": "Desktop",
@@ -1616,7 +1608,7 @@
       "entries": 2400
     },
     {
-      "id": 202,
+      "id": 201,
       "name": "plasma-workspace",
       "description": "KDE Plasma Workspace",
       "category": "Desktop",
@@ -1624,7 +1616,7 @@
       "entries": 1800
     },
     {
-      "id": 203,
+      "id": 202,
       "name": "systemsettings",
       "description": "KDE System Settings",
       "category": "Desktop",
@@ -1632,7 +1624,7 @@
       "entries": 1200
     },
     {
-      "id": 204,
+      "id": 203,
       "name": "dolphin",
       "description": "Dolphin File Manager",
       "category": "Desktop",
@@ -1640,7 +1632,7 @@
       "entries": 820
     },
     {
-      "id": 205,
+      "id": 204,
       "name": "konsole",
       "description": "Konsole Terminal",
       "category": "Desktop",
@@ -1648,7 +1640,7 @@
       "entries": 520
     },
     {
-      "id": 206,
+      "id": 205,
       "name": "kate",
       "description": "Kate Text Editor",
       "category": "Desktop",
@@ -1656,7 +1648,7 @@
       "entries": 680
     },
     {
-      "id": 207,
+      "id": 206,
       "name": "okular",
       "description": "Okular Document Viewer",
       "category": "Desktop",
@@ -1664,7 +1656,7 @@
       "entries": 520
     },
     {
-      "id": 208,
+      "id": 207,
       "name": "gwenview",
       "description": "Gwenview Image Viewer",
       "category": "Desktop",
@@ -1672,7 +1664,7 @@
       "entries": 380
     },
     {
-      "id": 209,
+      "id": 208,
       "name": "spectacle",
       "description": "Spectacle Screenshot",
       "category": "Desktop",
@@ -1680,7 +1672,7 @@
       "entries": 240
     },
     {
-      "id": 210,
+      "id": 209,
       "name": "ark",
       "description": "Ark Archive Manager",
       "category": "Desktop",
@@ -1688,7 +1680,7 @@
       "entries": 280
     },
     {
-      "id": 211,
+      "id": 210,
       "name": "kcalc",
       "description": "KCalc Calculator",
       "category": "Desktop",
@@ -1696,7 +1688,7 @@
       "entries": 220
     },
     {
-      "id": 212,
+      "id": 211,
       "name": "kmail",
       "description": "KMail",
       "category": "Desktop",
@@ -1704,7 +1696,7 @@
       "entries": 680
     },
     {
-      "id": 213,
+      "id": 212,
       "name": "korganizer",
       "description": "KOrganizer Calendar",
       "category": "Desktop",
@@ -1712,7 +1704,7 @@
       "entries": 480
     },
     {
-      "id": 214,
+      "id": 213,
       "name": "kaddressbook",
       "description": "KAddressBook",
       "category": "Desktop",
@@ -1720,7 +1712,7 @@
       "entries": 280
     },
     {
-      "id": 215,
+      "id": 214,
       "name": "dragon",
       "description": "Dragon Player",
       "category": "Desktop",
@@ -1728,7 +1720,7 @@
       "entries": 180
     },
     {
-      "id": 216,
+      "id": 215,
       "name": "juk",
       "description": "Juk Music Player",
       "category": "Desktop",
@@ -1736,7 +1728,7 @@
       "entries": 240
     },
     {
-      "id": 217,
+      "id": 216,
       "name": "kamoso",
       "description": "Kamoso Webcam",
       "category": "Desktop",
@@ -1744,7 +1736,7 @@
       "entries": 140
     },
     {
-      "id": 218,
+      "id": 217,
       "name": "kdeconnect",
       "description": "KDE Connect",
       "category": "Desktop",
@@ -1752,7 +1744,7 @@
       "entries": 380
     },
     {
-      "id": 219,
+      "id": 218,
       "name": "plasma-nm",
       "description": "Plasma Network Manager",
       "category": "Desktop",
@@ -1760,7 +1752,7 @@
       "entries": 320
     },
     {
-      "id": 220,
+      "id": 219,
       "name": "plasma-pa",
       "description": "Plasma Audio",
       "category": "Desktop",
@@ -1768,7 +1760,7 @@
       "entries": 140
     },
     {
-      "id": 221,
+      "id": 220,
       "name": "plasma-browser-integration",
       "description": "Browser Integration",
       "category": "Desktop",
@@ -1776,7 +1768,7 @@
       "entries": 120
     },
     {
-      "id": 222,
+      "id": 221,
       "name": "kde-gtk-config",
       "description": "KDE GTK Config",
       "category": "Desktop",
@@ -1784,7 +1776,7 @@
       "entries": 80
     },
     {
-      "id": 223,
+      "id": 222,
       "name": "breeze",
       "description": "Breeze Theme",
       "category": "Desktop",
@@ -1792,7 +1784,7 @@
       "entries": 180
     },
     {
-      "id": 224,
+      "id": 223,
       "name": "oxygen",
       "description": "Oxygen Theme",
       "category": "Desktop",
@@ -1800,7 +1792,7 @@
       "entries": 140
     },
     {
-      "id": 225,
+      "id": 224,
       "name": "discover",
       "description": "Discover Software Center",
       "category": "Desktop",
@@ -1808,7 +1800,7 @@
       "entries": 620
     },
     {
-      "id": 226,
+      "id": 225,
       "name": "sddm",
       "description": "SDDM Login Manager",
       "category": "Desktop",
@@ -1816,7 +1808,7 @@
       "entries": 180
     },
     {
-      "id": 227,
+      "id": 226,
       "name": "partitionmanager",
       "description": "KDE Partition Manager",
       "category": "Desktop",
@@ -1824,7 +1816,7 @@
       "entries": 320
     },
     {
-      "id": 228,
+      "id": 227,
       "name": "filelight",
       "description": "Filelight Disk Usage",
       "category": "Desktop",
@@ -1832,7 +1824,7 @@
       "entries": 180
     },
     {
-      "id": 229,
+      "id": 228,
       "name": "ksysguard",
       "description": "KSysGuard",
       "category": "Desktop",
@@ -1840,7 +1832,7 @@
       "entries": 280
     },
     {
-      "id": 230,
+      "id": 229,
       "name": "yakuake",
       "description": "Yakuake Terminal",
       "category": "Desktop",
@@ -1848,7 +1840,7 @@
       "entries": 180
     },
     {
-      "id": 231,
+      "id": 230,
       "name": "maas",
       "description": "MAAS",
       "category": "Server",
@@ -1856,7 +1848,7 @@
       "entries": 1800
     },
     {
-      "id": 232,
+      "id": 231,
       "name": "juju",
       "description": "Juju",
       "category": "Server",
@@ -1864,7 +1856,7 @@
       "entries": 1200
     },
     {
-      "id": 233,
+      "id": 232,
       "name": "openstack",
       "description": "OpenStack",
       "category": "Server",
@@ -1872,7 +1864,7 @@
       "entries": 8000
     },
     {
-      "id": 234,
+      "id": 233,
       "name": "cloud-init",
       "description": "Cloud Init",
       "category": "Server",
@@ -1880,7 +1872,7 @@
       "entries": 420
     },
     {
-      "id": 235,
+      "id": 234,
       "name": "landscape-server",
       "description": "Landscape Server",
       "category": "Server",
@@ -1888,7 +1880,7 @@
       "entries": 820
     },
     {
-      "id": 236,
+      "id": 235,
       "name": "multipass",
       "description": "Multipass",
       "category": "Server",
@@ -1896,7 +1888,7 @@
       "entries": 380
     },
     {
-      "id": 237,
+      "id": 236,
       "name": "lxd",
       "description": "LXD",
       "category": "Server",
@@ -1904,7 +1896,7 @@
       "entries": 680
     },
     {
-      "id": 238,
+      "id": 237,
       "name": "microk8s",
       "description": "MicroK8s",
       "category": "Server",
@@ -1912,7 +1904,7 @@
       "entries": 420
     },
     {
-      "id": 239,
+      "id": 238,
       "name": "snapd",
       "description": "Snapd",
       "category": "System",
@@ -1920,7 +1912,7 @@
       "entries": 620
     },
     {
-      "id": 240,
+      "id": 239,
       "name": "netplan.io",
       "description": "Netplan IO",
       "category": "System",
@@ -1928,7 +1920,7 @@
       "entries": 240
     },
     {
-      "id": 241,
+      "id": 240,
       "name": "curtin",
       "description": "Curtin",
       "category": "Server",
@@ -1936,7 +1928,7 @@
       "entries": 180
     },
     {
-      "id": 242,
+      "id": 241,
       "name": "subiquity",
       "description": "Subiquity Installer",
       "category": "Server",
@@ -1944,7 +1936,7 @@
       "entries": 920
     },
     {
-      "id": 243,
+      "id": 242,
       "name": "pro",
       "description": "Ubuntu Pro",
       "category": "Server",
@@ -1952,7 +1944,7 @@
       "entries": 320
     },
     {
-      "id": 244,
+      "id": 243,
       "name": "livepatch",
       "description": "Livepatch",
       "category": "Server",
@@ -1960,7 +1952,7 @@
       "entries": 180
     },
     {
-      "id": 245,
+      "id": 244,
       "name": "ubuntu-advantage-tools",
       "description": "Advantage Tools",
       "category": "Server",
@@ -1968,7 +1960,7 @@
       "entries": 280
     },
     {
-      "id": 246,
+      "id": 245,
       "name": "gufw",
       "description": "Gufw Firewall",
       "category": "System",
@@ -1976,7 +1968,7 @@
       "entries": 280
     },
     {
-      "id": 247,
+      "id": 246,
       "name": "clamav",
       "description": "ClamAV Antivirus",
       "category": "System",
@@ -1984,7 +1976,7 @@
       "entries": 420
     },
     {
-      "id": 248,
+      "id": 247,
       "name": "fail2ban",
       "description": "Fail2Ban",
       "category": "System",
@@ -1992,7 +1984,7 @@
       "entries": 280
     },
     {
-      "id": 249,
+      "id": 248,
       "name": "aide",
       "description": "AIDE",
       "category": "System",
@@ -2000,7 +1992,7 @@
       "entries": 180
     },
     {
-      "id": 250,
+      "id": 249,
       "name": "lynis",
       "description": "Lynis Security",
       "category": "System",
@@ -2008,7 +2000,7 @@
       "entries": 220
     },
     {
-      "id": 251,
+      "id": 250,
       "name": "rkhunter",
       "description": "RKHunter",
       "category": "System",
@@ -2016,7 +2008,7 @@
       "entries": 180
     },
     {
-      "id": 252,
+      "id": 251,
       "name": "chkrootkit",
       "description": "Chkrootkit",
       "category": "System",
@@ -2024,7 +2016,7 @@
       "entries": 120
     },
     {
-      "id": 253,
+      "id": 252,
       "name": "john",
       "description": "John the Ripper",
       "category": "System",
@@ -2032,7 +2024,7 @@
       "entries": 280
     },
     {
-      "id": 254,
+      "id": 253,
       "name": "hydra",
       "description": "THC Hydra",
       "category": "System",
@@ -2040,7 +2032,7 @@
       "entries": 220
     },
     {
-      "id": 255,
+      "id": 254,
       "name": "aircrack-ng",
       "description": "Aircrack-ng",
       "category": "System",
@@ -2048,7 +2040,7 @@
       "entries": 320
     },
     {
-      "id": 256,
+      "id": 255,
       "name": "nikto",
       "description": "Nikto",
       "category": "System",
@@ -2056,7 +2048,7 @@
       "entries": 180
     },
     {
-      "id": 257,
+      "id": 256,
       "name": "burpsuite",
       "description": "Burp Suite",
       "category": "System",
@@ -2064,7 +2056,7 @@
       "entries": 680
     },
     {
-      "id": 258,
+      "id": 257,
       "name": "stellarium",
       "description": "Stellarium",
       "category": "Education",
@@ -2072,7 +2064,7 @@
       "entries": 1200
     },
     {
-      "id": 259,
+      "id": 258,
       "name": "gcompris",
       "description": "GCompris",
       "category": "Education",
@@ -2080,7 +2072,7 @@
       "entries": 1800
     },
     {
-      "id": 260,
+      "id": 259,
       "name": "scratch",
       "description": "Scratch",
       "category": "Education",
@@ -2088,7 +2080,7 @@
       "entries": 820
     },
     {
-      "id": 261,
+      "id": 260,
       "name": "geogebra",
       "description": "GeoGebra",
       "category": "Education",
@@ -2096,7 +2088,7 @@
       "entries": 1400
     },
     {
-      "id": 262,
+      "id": 261,
       "name": "kalzium",
       "description": "Kalzium",
       "category": "Education",
@@ -2104,7 +2096,7 @@
       "entries": 680
     },
     {
-      "id": 263,
+      "id": 262,
       "name": "ktouch",
       "description": "KTouch Typing",
       "category": "Education",
@@ -2112,7 +2104,7 @@
       "entries": 380
     },
     {
-      "id": 264,
+      "id": 263,
       "name": "kstars",
       "description": "KStars Astronomy",
       "category": "Education",
@@ -2120,7 +2112,7 @@
       "entries": 920
     },
     {
-      "id": 265,
+      "id": 264,
       "name": "marble",
       "description": "Marble Globe",
       "category": "Education",
@@ -2128,7 +2120,7 @@
       "entries": 620
     },
     {
-      "id": 266,
+      "id": 265,
       "name": "step",
       "description": "Step Physics",
       "category": "Education",
@@ -2136,7 +2128,7 @@
       "entries": 420
     },
     {
-      "id": 267,
+      "id": 266,
       "name": "cantor",
       "description": "Cantor Math",
       "category": "Education",
@@ -2144,7 +2136,7 @@
       "entries": 480
     },
     {
-      "id": 268,
+      "id": 267,
       "name": "rocs",
       "description": "Rocs Graph Theory",
       "category": "Education",
@@ -2152,7 +2144,7 @@
       "entries": 280
     },
     {
-      "id": 269,
+      "id": 268,
       "name": "blinken",
       "description": "Blinken Memory",
       "category": "Education",
@@ -2160,7 +2152,7 @@
       "entries": 120
     },
     {
-      "id": 270,
+      "id": 269,
       "name": "kanagram",
       "description": "Kanagram Anagram",
       "category": "Education",
@@ -2168,7 +2160,7 @@
       "entries": 140
     },
     {
-      "id": 271,
+      "id": 270,
       "name": "khangman",
       "description": "KHangman",
       "category": "Education",
@@ -2176,7 +2168,7 @@
       "entries": 120
     },
     {
-      "id": 272,
+      "id": 271,
       "name": "kgeography",
       "description": "KGeography",
       "category": "Education",
@@ -2184,7 +2176,7 @@
       "entries": 480
     },
     {
-      "id": 273,
+      "id": 272,
       "name": "kiten",
       "description": "Kiten Japanese",
       "category": "Education",
@@ -2192,7 +2184,7 @@
       "entries": 320
     },
     {
-      "id": 274,
+      "id": 273,
       "name": "parley",
       "description": "Parley Vocabulary",
       "category": "Education",
@@ -2200,7 +2192,7 @@
       "entries": 380
     },
     {
-      "id": 275,
+      "id": 274,
       "name": "artikulate",
       "description": "Artikulate Pronunciation",
       "category": "Education",
@@ -2208,7 +2200,7 @@
       "entries": 220
     },
     {
-      "id": 276,
+      "id": 275,
       "name": "kdenlive",
       "description": "Kdenlive Video Editor",
       "category": "Apps",
@@ -2216,7 +2208,7 @@
       "entries": 1800
     },
     {
-      "id": 277,
+      "id": 276,
       "name": "pitivi",
       "description": "PiTiVi Video Editor",
       "category": "Apps",
@@ -2224,7 +2216,7 @@
       "entries": 820
     },
     {
-      "id": 278,
+      "id": 277,
       "name": "handbrake",
       "description": "HandBrake",
       "category": "Apps",
@@ -2232,7 +2224,7 @@
       "entries": 620
     },
     {
-      "id": 279,
+      "id": 278,
       "name": "obs-studio",
       "description": "OBS Studio",
       "category": "Apps",
@@ -2240,7 +2232,7 @@
       "entries": 920
     },
     {
-      "id": 280,
+      "id": 279,
       "name": "ardour",
       "description": "Ardour Audio",
       "category": "Apps",
@@ -2248,7 +2240,7 @@
       "entries": 1400
     },
     {
-      "id": 281,
+      "id": 280,
       "name": "lmms",
       "description": "LMMS Music",
       "category": "Apps",
@@ -2256,7 +2248,7 @@
       "entries": 680
     },
     {
-      "id": 282,
+      "id": 281,
       "name": "hydrogen",
       "description": "Hydrogen Drums",
       "category": "Apps",
@@ -2264,7 +2256,7 @@
       "entries": 420
     },
     {
-      "id": 283,
+      "id": 282,
       "name": "musescore",
       "description": "MuseScore",
       "category": "Apps",
@@ -2272,7 +2264,7 @@
       "entries": 1200
     },
     {
-      "id": 284,
+      "id": 283,
       "name": "openshot",
       "description": "OpenShot Video",
       "category": "Apps",
@@ -2280,7 +2272,7 @@
       "entries": 680
     },
     {
-      "id": 285,
+      "id": 284,
       "name": "freemind",
       "description": "FreeMind Mindmap",
       "category": "Apps",
@@ -2288,7 +2280,7 @@
       "entries": 420
     },
     {
-      "id": 286,
+      "id": 285,
       "name": "scribus",
       "description": "Scribus Publishing",
       "category": "Apps",
@@ -2296,7 +2288,7 @@
       "entries": 1800
     },
     {
-      "id": 287,
+      "id": 286,
       "name": "mypaint",
       "description": "MyPaint",
       "category": "Apps",
@@ -2304,7 +2296,7 @@
       "entries": 420
     },
     {
-      "id": 288,
+      "id": 287,
       "name": "krita",
       "description": "Krita Painting",
       "category": "Apps",
@@ -2312,7 +2304,7 @@
       "entries": 2400
     },
     {
-      "id": 289,
+      "id": 288,
       "name": "darktable",
       "description": "Darktable Photography",
       "category": "Apps",
@@ -2320,7 +2312,7 @@
       "entries": 1800
     },
     {
-      "id": 290,
+      "id": 289,
       "name": "rawtherapee",
       "description": "RawTherapee",
       "category": "Apps",
@@ -2328,7 +2320,7 @@
       "entries": 1200
     },
     {
-      "id": 291,
+      "id": 290,
       "name": "hugin",
       "description": "Hugin Panorama",
       "category": "Apps",
@@ -2336,7 +2328,7 @@
       "entries": 680
     },
     {
-      "id": 292,
+      "id": 291,
       "name": "brasero",
       "description": "Brasero Disc Burner",
       "category": "Apps",
@@ -2344,7 +2336,7 @@
       "entries": 420
     },
     {
-      "id": 293,
+      "id": 292,
       "name": "deja-dup",
       "description": "Backups (D\u00e9j\u00e0 Dup)",
       "category": "Apps",
@@ -2352,15 +2344,7 @@
       "entries": 320
     },
     {
-      "id": 294,
-      "name": "gnome-builder",
-      "description": "GNOME Builder",
-      "category": "Dev",
-      "priority": "low",
-      "entries": 1200
-    },
-    {
-      "id": 295,
+      "id": 293,
       "name": "meld",
       "description": "Meld Diff Viewer",
       "category": "Dev",
@@ -2368,7 +2352,7 @@
       "entries": 420
     },
     {
-      "id": 296,
+      "id": 294,
       "name": "glade",
       "description": "Glade UI Designer",
       "category": "Dev",
@@ -2376,7 +2360,7 @@
       "entries": 520
     },
     {
-      "id": 297,
+      "id": 295,
       "name": "anjuta",
       "description": "Anjuta IDE",
       "category": "Dev",
@@ -2384,7 +2368,7 @@
       "entries": 680
     },
     {
-      "id": 298,
+      "id": 296,
       "name": "geany",
       "description": "Geany IDE",
       "category": "Dev",
@@ -2392,7 +2376,7 @@
       "entries": 520
     },
     {
-      "id": 299,
+      "id": 297,
       "name": "codeblocks",
       "description": "Code::Blocks",
       "category": "Dev",
@@ -2400,7 +2384,7 @@
       "entries": 680
     },
     {
-      "id": 300,
+      "id": 298,
       "name": "netbeans",
       "description": "NetBeans IDE",
       "category": "Dev",
@@ -2408,7 +2392,7 @@
       "entries": 1800
     },
     {
-      "id": 301,
+      "id": 299,
       "name": "spyder",
       "description": "Spyder Python IDE",
       "category": "Dev",
@@ -2416,7 +2400,7 @@
       "entries": 620
     },
     {
-      "id": 302,
+      "id": 300,
       "name": "thonny",
       "description": "Thonny Python IDE",
       "category": "Dev",
@@ -2424,7 +2408,7 @@
       "entries": 320
     },
     {
-      "id": 303,
+      "id": 301,
       "name": "idle3",
       "description": "IDLE Python",
       "category": "Dev",
@@ -2432,7 +2416,7 @@
       "entries": 280
     },
     {
-      "id": 304,
+      "id": 302,
       "name": "sqlitebrowser",
       "description": "SQLite Browser",
       "category": "Dev",
@@ -2440,7 +2424,7 @@
       "entries": 380
     },
     {
-      "id": 305,
+      "id": 303,
       "name": "d-feet",
       "description": "D-Feet D-Bus",
       "category": "Dev",
@@ -2448,7 +2432,7 @@
       "entries": 180
     },
     {
-      "id": 306,
+      "id": 304,
       "name": "sysprof",
       "description": "Sysprof Profiler",
       "category": "Dev",
@@ -2456,7 +2440,7 @@
       "entries": 220
     },
     {
-      "id": 307,
+      "id": 305,
       "name": "valgrind",
       "description": "Valgrind",
       "category": "Dev",
@@ -2464,7 +2448,7 @@
       "entries": 320
     },
     {
-      "id": 308,
+      "id": 306,
       "name": "strace",
       "description": "Strace",
       "category": "Dev",
@@ -2472,7 +2456,7 @@
       "entries": 180
     },
     {
-      "id": 309,
+      "id": 307,
       "name": "ltrace",
       "description": "Ltrace",
       "category": "Dev",
@@ -2480,7 +2464,7 @@
       "entries": 120
     },
     {
-      "id": 310,
+      "id": 308,
       "name": "cmake",
       "description": "CMake",
       "category": "Dev",
@@ -2488,7 +2472,7 @@
       "entries": 280
     },
     {
-      "id": 311,
+      "id": 309,
       "name": "meson",
       "description": "Meson Build",
       "category": "Dev",
@@ -2496,7 +2480,7 @@
       "entries": 220
     },
     {
-      "id": 312,
+      "id": 310,
       "name": "ninja",
       "description": "Ninja Build",
       "category": "Dev",
@@ -2504,7 +2488,7 @@
       "entries": 120
     },
     {
-      "id": 313,
+      "id": 311,
       "name": "autotools",
       "description": "GNU Autotools",
       "category": "Dev",
@@ -2512,7 +2496,7 @@
       "entries": 280
     },
     {
-      "id": 314,
+      "id": 312,
       "name": "make",
       "description": "GNU Make",
       "category": "Dev",
@@ -2520,7 +2504,7 @@
       "entries": 180
     },
     {
-      "id": 315,
+      "id": 313,
       "name": "autoconf",
       "description": "Autoconf",
       "category": "Dev",
@@ -2528,7 +2512,7 @@
       "entries": 140
     },
     {
-      "id": 316,
+      "id": 314,
       "name": "automake",
       "description": "Automake",
       "category": "Dev",
@@ -2536,7 +2520,7 @@
       "entries": 120
     },
     {
-      "id": 317,
+      "id": 315,
       "name": "libtool",
       "description": "Libtool",
       "category": "Dev",
@@ -2544,7 +2528,7 @@
       "entries": 120
     },
     {
-      "id": 318,
+      "id": 316,
       "name": "pkg-config",
       "description": "pkg-config",
       "category": "Dev",
@@ -2552,7 +2536,7 @@
       "entries": 80
     },
     {
-      "id": 319,
+      "id": 317,
       "name": "doxygen",
       "description": "Doxygen",
       "category": "Dev",
@@ -2560,7 +2544,7 @@
       "entries": 280
     },
     {
-      "id": 320,
+      "id": 318,
       "name": "gettext",
       "description": "GNU Gettext",
       "category": "Dev",
@@ -2568,7 +2552,7 @@
       "entries": 180
     },
     {
-      "id": 321,
+      "id": 319,
       "name": "intltool",
       "description": "Intltool",
       "category": "Dev",
@@ -2576,7 +2560,7 @@
       "entries": 80
     },
     {
-      "id": 322,
+      "id": 320,
       "name": "itstool",
       "description": "ITS Tool",
       "category": "Dev",
@@ -2584,7 +2568,7 @@
       "entries": 60
     },
     {
-      "id": 323,
+      "id": 321,
       "name": "xml2po",
       "description": "xml2po",
       "category": "Dev",
@@ -2592,7 +2576,7 @@
       "entries": 60
     },
     {
-      "id": 324,
+      "id": 322,
       "name": "po4a",
       "description": "Po4a",
       "category": "Dev",
@@ -2600,7 +2584,7 @@
       "entries": 120
     },
     {
-      "id": 325,
+      "id": 323,
       "name": "pootle",
       "description": "Pootle",
       "category": "Dev",
@@ -2608,7 +2592,7 @@
       "entries": 480
     },
     {
-      "id": 326,
+      "id": 324,
       "name": "weblate",
       "description": "Weblate",
       "category": "Dev",
@@ -2616,7 +2600,7 @@
       "entries": 820
     },
     {
-      "id": 327,
+      "id": 325,
       "name": "transifex",
       "description": "Transifex Client",
       "category": "Dev",
@@ -2624,7 +2608,7 @@
       "entries": 120
     },
     {
-      "id": 328,
+      "id": 326,
       "name": "zanata",
       "description": "Zanata",
       "category": "Dev",
@@ -2632,7 +2616,7 @@
       "entries": 420
     },
     {
-      "id": 329,
+      "id": 327,
       "name": "lokalize",
       "description": "Lokalize",
       "category": "Dev",
@@ -2640,7 +2624,7 @@
       "entries": 320
     },
     {
-      "id": 330,
+      "id": 328,
       "name": "poedit",
       "description": "Poedit",
       "category": "Dev",
@@ -2648,7 +2632,7 @@
       "entries": 280
     },
     {
-      "id": 331,
+      "id": 329,
       "name": "virt-manager",
       "description": "Virt Manager",
       "category": "Dev",
@@ -2656,7 +2640,7 @@
       "entries": 520
     },
     {
-      "id": 332,
+      "id": 330,
       "name": "gnome-boxes",
       "description": "GNOME Boxes",
       "category": "Apps",
@@ -2664,15 +2648,7 @@
       "entries": 320
     },
     {
-      "id": 333,
-      "name": "deja-dup",
-      "description": "D\u00e9j\u00e0 Dup Backups",
-      "category": "Apps",
-      "priority": "medium",
-      "entries": 320
-    },
-    {
-      "id": 334,
+      "id": 331,
       "name": "timeshift",
       "description": "Timeshift",
       "category": "System",
@@ -2680,7 +2656,7 @@
       "entries": 380
     },
     {
-      "id": 335,
+      "id": 332,
       "name": "stacer",
       "description": "Stacer System",
       "category": "System",
@@ -2688,7 +2664,7 @@
       "entries": 280
     },
     {
-      "id": 336,
+      "id": 333,
       "name": "bleachbit",
       "description": "BleachBit",
       "category": "System",
@@ -2696,7 +2672,7 @@
       "entries": 220
     },
     {
-      "id": 337,
+      "id": 334,
       "name": "gparted",
       "description": "GParted",
       "category": "System",
@@ -2704,7 +2680,7 @@
       "entries": 480
     },
     {
-      "id": 338,
+      "id": 335,
       "name": "testdisk",
       "description": "TestDisk",
       "category": "System",
@@ -2712,7 +2688,7 @@
       "entries": 180
     },
     {
-      "id": 339,
+      "id": 336,
       "name": "clamtk",
       "description": "ClamTk Antivirus",
       "category": "System",
@@ -2720,7 +2696,7 @@
       "entries": 220
     },
     {
-      "id": 340,
+      "id": 337,
       "name": "sweeper",
       "description": "Sweeper",
       "category": "System",
@@ -2728,7 +2704,7 @@
       "entries": 140
     },
     {
-      "id": 341,
+      "id": 338,
       "name": "ksystemlog",
       "description": "KSystemLog",
       "category": "System",
@@ -2736,7 +2712,7 @@
       "entries": 180
     },
     {
-      "id": 342,
+      "id": 339,
       "name": "kdiff3",
       "description": "KDiff3",
       "category": "Dev",
@@ -2744,7 +2720,7 @@
       "entries": 220
     },
     {
-      "id": 343,
+      "id": 340,
       "name": "kompare",
       "description": "Kompare",
       "category": "Dev",
@@ -2752,7 +2728,7 @@
       "entries": 180
     },
     {
-      "id": 344,
+      "id": 341,
       "name": "kcachegrind",
       "description": "KCachegrind",
       "category": "Dev",
@@ -2760,7 +2736,7 @@
       "entries": 220
     },
     {
-      "id": 345,
+      "id": 342,
       "name": "massif-visualizer",
       "description": "Massif Visualizer",
       "category": "Dev",
@@ -2768,7 +2744,7 @@
       "entries": 140
     },
     {
-      "id": 346,
+      "id": 343,
       "name": "heaptrack",
       "description": "Heaptrack",
       "category": "Dev",
@@ -2776,7 +2752,7 @@
       "entries": 180
     },
     {
-      "id": 347,
+      "id": 344,
       "name": "hotspot",
       "description": "Hotspot Profiler",
       "category": "Dev",
@@ -2784,7 +2760,7 @@
       "entries": 180
     },
     {
-      "id": 348,
+      "id": 345,
       "name": "eog-plugins",
       "description": "Eye of GNOME Plugins",
       "category": "Apps",
@@ -2792,7 +2768,7 @@
       "entries": 180
     },
     {
-      "id": 349,
+      "id": 346,
       "name": "evolution-ews",
       "description": "Evolution EWS",
       "category": "Apps",
@@ -2800,7 +2776,7 @@
       "entries": 420
     },
     {
-      "id": 350,
+      "id": 347,
       "name": "evolution-rss",
       "description": "Evolution RSS",
       "category": "Apps",
@@ -2808,15 +2784,7 @@
       "entries": 180
     },
     {
-      "id": 351,
-      "name": "file-roller",
-      "description": "File Roller",
-      "category": "Apps",
-      "priority": "low",
-      "entries": 340
-    },
-    {
-      "id": 352,
+      "id": 348,
       "name": "foliate",
       "description": "Foliate Ebook Reader",
       "category": "Apps",
@@ -2824,7 +2792,7 @@
       "entries": 320
     },
     {
-      "id": 353,
+      "id": 349,
       "name": "fractal",
       "description": "Fractal Matrix Client",
       "category": "Apps",
@@ -2832,7 +2800,7 @@
       "entries": 420
     },
     {
-      "id": 354,
+      "id": 350,
       "name": "gfeeds",
       "description": "Feeds RSS Reader",
       "category": "Apps",
@@ -2840,7 +2808,7 @@
       "entries": 220
     },
     {
-      "id": 355,
+      "id": 351,
       "name": "ghex",
       "description": "GHex Hex Editor",
       "category": "Dev",
@@ -2848,7 +2816,7 @@
       "entries": 180
     },
     {
-      "id": 356,
+      "id": 352,
       "name": "gitg",
       "description": "Gitg Git Viewer",
       "category": "Dev",
@@ -2856,7 +2824,7 @@
       "entries": 280
     },
     {
-      "id": 357,
+      "id": 353,
       "name": "glom",
       "description": "Glom Database",
       "category": "Dev",
@@ -2864,7 +2832,7 @@
       "entries": 380
     },
     {
-      "id": 358,
+      "id": 354,
       "name": "gnome-authenticator",
       "description": "Authenticator",
       "category": "Apps",
@@ -2872,7 +2840,7 @@
       "entries": 220
     },
     {
-      "id": 359,
+      "id": 355,
       "name": "gnome-crypto-toolkit",
       "description": "Crypto Toolkit",
       "category": "System",
@@ -2880,7 +2848,7 @@
       "entries": 180
     },
     {
-      "id": 360,
+      "id": 356,
       "name": "gnome-decoder",
       "description": "Decoder QR",
       "category": "Apps",
@@ -2888,7 +2856,7 @@
       "entries": 160
     },
     {
-      "id": 361,
+      "id": 357,
       "name": "gnome-epub-thumbnailer",
       "description": "EPUB Thumbnailer",
       "category": "Apps",
@@ -2896,7 +2864,7 @@
       "entries": 60
     },
     {
-      "id": 362,
+      "id": 358,
       "name": "gnome-flashback",
       "description": "GNOME Flashback",
       "category": "Core",
@@ -2904,7 +2872,7 @@
       "entries": 420
     },
     {
-      "id": 363,
+      "id": 359,
       "name": "gnome-firmware",
       "description": "Firmware Updater",
       "category": "System",
@@ -2912,7 +2880,7 @@
       "entries": 180
     },
     {
-      "id": 364,
+      "id": 360,
       "name": "gnome-multi-writer",
       "description": "Multi Writer",
       "category": "Apps",
@@ -2920,15 +2888,7 @@
       "entries": 120
     },
     {
-      "id": 365,
-      "name": "gnome-nettool",
-      "description": "Network Tool",
-      "category": "System",
-      "priority": "low",
-      "entries": 180
-    },
-    {
-      "id": 366,
+      "id": 361,
       "name": "gnome-network-displays",
       "description": "Network Displays",
       "category": "Apps",
@@ -2936,7 +2896,7 @@
       "entries": 160
     },
     {
-      "id": 367,
+      "id": 362,
       "name": "gnome-notes",
       "description": "GNOME Notes",
       "category": "Apps",
@@ -2944,7 +2904,7 @@
       "entries": 180
     },
     {
-      "id": 368,
+      "id": 363,
       "name": "gnome-online-accounts",
       "description": "Online Accounts",
       "category": "Core",
@@ -2952,7 +2912,7 @@
       "entries": 280
     },
     {
-      "id": 369,
+      "id": 364,
       "name": "gnome-podcasts",
       "description": "Podcasts",
       "category": "Apps",
@@ -2960,7 +2920,7 @@
       "entries": 220
     },
     {
-      "id": 370,
+      "id": 365,
       "name": "gnome-recorder",
       "description": "Recorder",
       "category": "Apps",
@@ -2968,15 +2928,7 @@
       "entries": 140
     },
     {
-      "id": 371,
-      "name": "gnome-remote-desktop",
-      "description": "Remote Desktop",
-      "category": "System",
-      "priority": "low",
-      "entries": 280
-    },
-    {
-      "id": 372,
+      "id": 366,
       "name": "gnome-shell-extensions",
       "description": "Shell Extensions",
       "category": "Core",
@@ -2984,7 +2936,7 @@
       "entries": 280
     },
     {
-      "id": 373,
+      "id": 367,
       "name": "gnome-tour",
       "description": "GNOME Tour",
       "category": "Core",
@@ -2992,15 +2944,7 @@
       "entries": 120
     },
     {
-      "id": 374,
-      "name": "gnome-tweaks",
-      "description": "Tweaks",
-      "category": "Apps",
-      "priority": "medium",
-      "entries": 240
-    },
-    {
-      "id": 375,
+      "id": 368,
       "name": "gnome-user-docs",
       "description": "User Docs",
       "category": "Docs",
@@ -3008,7 +2952,7 @@
       "entries": 1200
     },
     {
-      "id": 376,
+      "id": 369,
       "name": "gthumb",
       "description": "gThumb Image Viewer",
       "category": "Apps",
@@ -3016,7 +2960,7 @@
       "entries": 480
     },
     {
-      "id": 377,
+      "id": 370,
       "name": "gtkatlantic",
       "description": "GTK Atlantic",
       "category": "Games",
@@ -3024,7 +2968,7 @@
       "entries": 180
     },
     {
-      "id": 378,
+      "id": 371,
       "name": "gtkdialer",
       "description": "GTK Dialer",
       "category": "Apps",
@@ -3032,7 +2976,7 @@
       "entries": 120
     },
     {
-      "id": 379,
+      "id": 372,
       "name": "gtkhash",
       "description": "GTK Hash",
       "category": "System",
@@ -3040,7 +2984,7 @@
       "entries": 140
     },
     {
-      "id": 380,
+      "id": 373,
       "name": "gtranslator",
       "description": "Gtranslator",
       "category": "Dev",
@@ -3048,7 +2992,7 @@
       "entries": 280
     },
     {
-      "id": 381,
+      "id": 374,
       "name": "guake",
       "description": "Guake Terminal",
       "category": "Dev",
@@ -3056,15 +3000,7 @@
       "entries": 220
     },
     {
-      "id": 382,
-      "name": "gufw",
-      "description": "Gufw Firewall",
-      "category": "System",
-      "priority": "low",
-      "entries": 280
-    },
-    {
-      "id": 383,
+      "id": 375,
       "name": "hexchat",
       "description": "HexChat IRC",
       "category": "Apps",
@@ -3072,7 +3008,7 @@
       "entries": 380
     },
     {
-      "id": 384,
+      "id": 376,
       "name": "hplip",
       "description": "HP Printer Driver",
       "category": "System",
@@ -3080,7 +3016,7 @@
       "entries": 680
     },
     {
-      "id": 385,
+      "id": 377,
       "name": "ibus",
       "description": "IBus Input",
       "category": "System",
@@ -3088,7 +3024,7 @@
       "entries": 520
     },
     {
-      "id": 386,
+      "id": 378,
       "name": "ibus-anthy",
       "description": "IBus Anthy Japanese",
       "category": "System",
@@ -3096,7 +3032,7 @@
       "entries": 380
     },
     {
-      "id": 387,
+      "id": 379,
       "name": "ibus-chewing",
       "description": "IBus Chewing Chinese",
       "category": "System",
@@ -3104,7 +3040,7 @@
       "entries": 280
     },
     {
-      "id": 388,
+      "id": 380,
       "name": "ibus-hangul",
       "description": "IBus Hangul Korean",
       "category": "System",
@@ -3112,7 +3048,7 @@
       "entries": 280
     },
     {
-      "id": 389,
+      "id": 381,
       "name": "ibus-libpinyin",
       "description": "IBus Pinyin",
       "category": "System",
@@ -3120,7 +3056,7 @@
       "entries": 320
     },
     {
-      "id": 390,
+      "id": 382,
       "name": "ibus-m17n",
       "description": "IBus m17n",
       "category": "System",
@@ -3128,7 +3064,7 @@
       "entries": 280
     },
     {
-      "id": 391,
+      "id": 383,
       "name": "ibus-unikey",
       "description": "IBus Unikey Vietnamese",
       "category": "System",
@@ -3136,7 +3072,7 @@
       "entries": 220
     },
     {
-      "id": 392,
+      "id": 384,
       "name": "im-chooser",
       "description": "IM Chooser",
       "category": "System",
@@ -3144,7 +3080,7 @@
       "entries": 120
     },
     {
-      "id": 393,
+      "id": 385,
       "name": "indicator-application",
       "description": "App Indicator",
       "category": "Core",
@@ -3152,7 +3088,7 @@
       "entries": 120
     },
     {
-      "id": 394,
+      "id": 386,
       "name": "indicator-bluetooth",
       "description": "Bluetooth Indicator",
       "category": "Core",
@@ -3160,7 +3096,7 @@
       "entries": 100
     },
     {
-      "id": 395,
+      "id": 387,
       "name": "indicator-datetime",
       "description": "Datetime Indicator",
       "category": "Core",
@@ -3168,7 +3104,7 @@
       "entries": 140
     },
     {
-      "id": 396,
+      "id": 388,
       "name": "indicator-keyboard",
       "description": "Keyboard Indicator",
       "category": "Core",
@@ -3176,7 +3112,7 @@
       "entries": 100
     },
     {
-      "id": 397,
+      "id": 389,
       "name": "indicator-messages",
       "description": "Messages Indicator",
       "category": "Core",
@@ -3184,7 +3120,7 @@
       "entries": 100
     },
     {
-      "id": 398,
+      "id": 390,
       "name": "indicator-network",
       "description": "Network Indicator",
       "category": "Core",
@@ -3192,7 +3128,7 @@
       "entries": 120
     },
     {
-      "id": 399,
+      "id": 391,
       "name": "indicator-power",
       "description": "Power Indicator",
       "category": "Core",
@@ -3200,7 +3136,7 @@
       "entries": 100
     },
     {
-      "id": 400,
+      "id": 392,
       "name": "indicator-printers",
       "description": "Printers Indicator",
       "category": "Core",
@@ -3208,7 +3144,7 @@
       "entries": 80
     },
     {
-      "id": 401,
+      "id": 393,
       "name": "indicator-session",
       "description": "Session Indicator",
       "category": "Core",
@@ -3216,7 +3152,7 @@
       "entries": 100
     },
     {
-      "id": 402,
+      "id": 394,
       "name": "indicator-sound",
       "description": "Sound Indicator",
       "category": "Core",
@@ -3224,7 +3160,7 @@
       "entries": 100
     },
     {
-      "id": 403,
+      "id": 395,
       "name": "kazam",
       "description": "Kazam Screencast",
       "category": "Apps",
@@ -3232,15 +3168,7 @@
       "entries": 280
     },
     {
-      "id": 404,
-      "name": "kdeconnect",
-      "description": "KDE Connect",
-      "category": "Desktop",
-      "priority": "medium",
-      "entries": 380
-    },
-    {
-      "id": 405,
+      "id": 396,
       "name": "keepassxc",
       "description": "KeePassXC",
       "category": "Apps",
@@ -3248,15 +3176,7 @@
       "entries": 420
     },
     {
-      "id": 406,
-      "name": "kdenlive",
-      "description": "Kdenlive Video",
-      "category": "Apps",
-      "priority": "low",
-      "entries": 1800
-    },
-    {
-      "id": 407,
+      "id": 397,
       "name": "kile",
       "description": "Kile LaTeX",
       "category": "Dev",
@@ -3264,7 +3184,7 @@
       "entries": 680
     },
     {
-      "id": 408,
+      "id": 398,
       "name": "kolourpaint",
       "description": "Kolourpaint",
       "category": "Apps",
@@ -3272,7 +3192,7 @@
       "entries": 220
     },
     {
-      "id": 409,
+      "id": 399,
       "name": "konversation",
       "description": "Konversation IRC",
       "category": "Apps",
@@ -3280,7 +3200,7 @@
       "entries": 380
     },
     {
-      "id": 410,
+      "id": 400,
       "name": "kphotoalbum",
       "description": "KPhotoAlbum",
       "category": "Apps",
@@ -3288,15 +3208,7 @@
       "entries": 420
     },
     {
-      "id": 411,
-      "name": "krita",
-      "description": "Krita Painting",
-      "category": "Apps",
-      "priority": "low",
-      "entries": 2400
-    },
-    {
-      "id": 412,
+      "id": 401,
       "name": "kscreen",
       "description": "KScreen",
       "category": "Desktop",
@@ -3304,7 +3216,7 @@
       "entries": 140
     },
     {
-      "id": 413,
+      "id": 402,
       "name": "ksudoku",
       "description": "KSudoku",
       "category": "Games",
@@ -3312,7 +3224,7 @@
       "entries": 140
     },
     {
-      "id": 414,
+      "id": 403,
       "name": "kteatime",
       "description": "KTeaTime",
       "category": "Games",
@@ -3320,7 +3232,7 @@
       "entries": 80
     },
     {
-      "id": 415,
+      "id": 404,
       "name": "ktimer",
       "description": "KTimer",
       "category": "Desktop",
@@ -3328,7 +3240,7 @@
       "entries": 80
     },
     {
-      "id": 416,
+      "id": 405,
       "name": "ktorrent",
       "description": "KTorrent",
       "category": "Apps",
@@ -3336,7 +3248,7 @@
       "entries": 420
     },
     {
-      "id": 417,
+      "id": 406,
       "name": "kwallet",
       "description": "KWallet",
       "category": "Desktop",
@@ -3344,7 +3256,7 @@
       "entries": 180
     },
     {
-      "id": 418,
+      "id": 407,
       "name": "kwin",
       "description": "KWin Window Manager",
       "category": "Desktop",
@@ -3352,7 +3264,7 @@
       "entries": 680
     },
     {
-      "id": 419,
+      "id": 408,
       "name": "libreoffice-l10n",
       "description": "LibreOffice L10n",
       "category": "Apps",
@@ -3360,7 +3272,7 @@
       "entries": 200
     },
     {
-      "id": 420,
+      "id": 409,
       "name": "lightdm",
       "description": "LightDM",
       "category": "System",
@@ -3368,7 +3280,7 @@
       "entries": 280
     },
     {
-      "id": 421,
+      "id": 410,
       "name": "lightdm-gtk-greeter",
       "description": "LightDM GTK Greeter",
       "category": "System",
@@ -3376,7 +3288,7 @@
       "entries": 180
     },
     {
-      "id": 422,
+      "id": 411,
       "name": "lp-appinstall",
       "description": "App Install",
       "category": "System",
@@ -3384,7 +3296,7 @@
       "entries": 80
     },
     {
-      "id": 423,
+      "id": 412,
       "name": "lubuntu-defaults",
       "description": "Lubuntu Defaults",
       "category": "Desktop",
@@ -3392,7 +3304,7 @@
       "entries": 120
     },
     {
-      "id": 424,
+      "id": 413,
       "name": "lubuntu-software-center",
       "description": "Lubuntu Software",
       "category": "Desktop",
@@ -3400,7 +3312,7 @@
       "entries": 320
     },
     {
-      "id": 425,
+      "id": 414,
       "name": "mate-applets",
       "description": "MATE Applets",
       "category": "Desktop",
@@ -3408,7 +3320,7 @@
       "entries": 380
     },
     {
-      "id": 426,
+      "id": 415,
       "name": "mate-control-center",
       "description": "MATE Control Center",
       "category": "Desktop",
@@ -3416,7 +3328,7 @@
       "entries": 480
     },
     {
-      "id": 427,
+      "id": 416,
       "name": "mate-desktop",
       "description": "MATE Desktop",
       "category": "Desktop",
@@ -3424,7 +3336,7 @@
       "entries": 280
     },
     {
-      "id": 428,
+      "id": 417,
       "name": "mate-indicator-applet",
       "description": "MATE Indicator",
       "category": "Desktop",
@@ -3432,7 +3344,7 @@
       "entries": 120
     },
     {
-      "id": 429,
+      "id": 418,
       "name": "mate-media",
       "description": "MATE Media",
       "category": "Desktop",
@@ -3440,7 +3352,7 @@
       "entries": 180
     },
     {
-      "id": 430,
+      "id": 419,
       "name": "mate-menus",
       "description": "MATE Menus",
       "category": "Desktop",
@@ -3448,7 +3360,7 @@
       "entries": 140
     },
     {
-      "id": 431,
+      "id": 420,
       "name": "mate-panel",
       "description": "MATE Panel",
       "category": "Desktop",
@@ -3456,7 +3368,7 @@
       "entries": 320
     },
     {
-      "id": 432,
+      "id": 421,
       "name": "mate-screensaver",
       "description": "MATE Screensaver",
       "category": "Desktop",
@@ -3464,7 +3376,7 @@
       "entries": 180
     },
     {
-      "id": 433,
+      "id": 422,
       "name": "mate-session-manager",
       "description": "MATE Session",
       "category": "Desktop",
@@ -3472,7 +3384,7 @@
       "entries": 180
     },
     {
-      "id": 434,
+      "id": 423,
       "name": "mate-settings-daemon",
       "description": "MATE Settings",
       "category": "Desktop",
@@ -3480,7 +3392,7 @@
       "entries": 280
     },
     {
-      "id": 435,
+      "id": 424,
       "name": "mate-system-monitor",
       "description": "MATE System Monitor",
       "category": "Desktop",
@@ -3488,7 +3400,7 @@
       "entries": 220
     },
     {
-      "id": 436,
+      "id": 425,
       "name": "mate-terminal",
       "description": "MATE Terminal",
       "category": "Desktop",
@@ -3496,7 +3408,7 @@
       "entries": 220
     },
     {
-      "id": 437,
+      "id": 426,
       "name": "mate-utils",
       "description": "MATE Utils",
       "category": "Desktop",
@@ -3504,7 +3416,7 @@
       "entries": 280
     },
     {
-      "id": 438,
+      "id": 427,
       "name": "mozo",
       "description": "Mozo Menu Editor",
       "category": "Desktop",
@@ -3512,7 +3424,7 @@
       "entries": 120
     },
     {
-      "id": 439,
+      "id": 428,
       "name": "pluma",
       "description": "Pluma Text Editor",
       "category": "Desktop",
@@ -3520,7 +3432,7 @@
       "entries": 280
     },
     {
-      "id": 440,
+      "id": 429,
       "name": "caja",
       "description": "Caja File Manager",
       "category": "Desktop",
@@ -3528,7 +3440,7 @@
       "entries": 520
     },
     {
-      "id": 441,
+      "id": 430,
       "name": "atril",
       "description": "Atril Document Viewer",
       "category": "Desktop",
@@ -3536,7 +3448,7 @@
       "entries": 320
     },
     {
-      "id": 442,
+      "id": 431,
       "name": "eom",
       "description": "Eye of MATE",
       "category": "Desktop",
@@ -3544,7 +3456,7 @@
       "entries": 220
     },
     {
-      "id": 443,
+      "id": 432,
       "name": "engrampa",
       "description": "Engrampa Archive",
       "category": "Desktop",
@@ -3552,23 +3464,7 @@
       "entries": 220
     },
     {
-      "id": 444,
-      "name": "cheese",
-      "description": "Cheese Webcam",
-      "category": "Apps",
-      "priority": "low",
-      "entries": 280
-    },
-    {
-      "id": 445,
-      "name": "deja-dup",
-      "description": "D\u00e9j\u00e0 Dup",
-      "category": "Apps",
-      "priority": "medium",
-      "entries": 320
-    },
-    {
-      "id": 446,
+      "id": 433,
       "name": "empathy",
       "description": "Empathy Chat",
       "category": "Apps",
@@ -3576,7 +3472,7 @@
       "entries": 520
     },
     {
-      "id": 447,
+      "id": 434,
       "name": "epiphany",
       "description": "Epiphany Web Browser",
       "category": "Apps",
@@ -3584,7 +3480,7 @@
       "entries": 680
     },
     {
-      "id": 448,
+      "id": 435,
       "name": "fcitx",
       "description": "Fcitx Input",
       "category": "System",
@@ -3592,7 +3488,7 @@
       "entries": 380
     },
     {
-      "id": 449,
+      "id": 436,
       "name": "fcitx5",
       "description": "Fcitx5 Input",
       "category": "System",
@@ -3600,7 +3496,7 @@
       "entries": 420
     },
     {
-      "id": 450,
+      "id": 437,
       "name": "freerdp",
       "description": "FreeRDP",
       "category": "System",
@@ -3608,7 +3504,7 @@
       "entries": 420
     },
     {
-      "id": 451,
+      "id": 438,
       "name": "gadmin",
       "description": "GAdmin Tools",
       "category": "System",
@@ -3616,7 +3512,7 @@
       "entries": 280
     },
     {
-      "id": 452,
+      "id": 439,
       "name": "gbrainy",
       "description": "GBrainy Brain Game",
       "category": "Games",
@@ -3624,7 +3520,7 @@
       "entries": 180
     },
     {
-      "id": 453,
+      "id": 440,
       "name": "gcstar",
       "description": "GCstar Collection",
       "category": "Apps",
@@ -3632,15 +3528,7 @@
       "entries": 280
     },
     {
-      "id": 454,
-      "name": "gfeeds",
-      "description": "Feeds RSS",
-      "category": "Apps",
-      "priority": "low",
-      "entries": 220
-    },
-    {
-      "id": 455,
+      "id": 441,
       "name": "gftp",
       "description": "gFTP",
       "category": "Apps",
@@ -3648,7 +3536,7 @@
       "entries": 220
     },
     {
-      "id": 456,
+      "id": 442,
       "name": "glipper",
       "description": "Glipper Clipboard",
       "category": "Apps",
@@ -3656,7 +3544,7 @@
       "entries": 120
     },
     {
-      "id": 457,
+      "id": 443,
       "name": "gnome-aisleriot",
       "description": "AisleRiot Solitaire",
       "category": "Games",
@@ -3664,7 +3552,7 @@
       "entries": 220
     },
     {
-      "id": 458,
+      "id": 444,
       "name": "gnome-break-timer",
       "description": "Break Timer",
       "category": "Apps",
@@ -3672,7 +3560,7 @@
       "entries": 140
     },
     {
-      "id": 459,
+      "id": 445,
       "name": "gnome-chemistry",
       "description": "GNOME Chemistry",
       "category": "Education",
@@ -3680,7 +3568,7 @@
       "entries": 280
     },
     {
-      "id": 460,
+      "id": 446,
       "name": "gnome-friends",
       "description": "GNOME Friends",
       "category": "Apps",
@@ -3688,7 +3576,7 @@
       "entries": 120
     },
     {
-      "id": 461,
+      "id": 447,
       "name": "gnome-gmail",
       "description": "Gmail Integration",
       "category": "Apps",
@@ -3696,7 +3584,7 @@
       "entries": 120
     },
     {
-      "id": 462,
+      "id": 448,
       "name": "gnome-hexgl",
       "description": "HexGL",
       "category": "Games",
@@ -3704,7 +3592,7 @@
       "entries": 80
     },
     {
-      "id": 463,
+      "id": 449,
       "name": "gnome-internet-radio-locator",
       "description": "Internet Radio",
       "category": "Apps",
@@ -3712,7 +3600,7 @@
       "entries": 180
     },
     {
-      "id": 464,
+      "id": 450,
       "name": "gnome-latex",
       "description": "GNOME LaTeX",
       "category": "Dev",
@@ -3720,7 +3608,7 @@
       "entries": 380
     },
     {
-      "id": 465,
+      "id": 451,
       "name": "gnome-paint",
       "description": "GNOME Paint",
       "category": "Apps",
@@ -3728,7 +3616,7 @@
       "entries": 180
     },
     {
-      "id": 466,
+      "id": 452,
       "name": "gnome-pomodoro",
       "description": "Pomodoro Timer",
       "category": "Apps",
@@ -3736,7 +3624,7 @@
       "entries": 180
     },
     {
-      "id": 467,
+      "id": 453,
       "name": "gnome-rdp",
       "description": "GNOME RDP",
       "category": "System",
@@ -3744,7 +3632,7 @@
       "entries": 140
     },
     {
-      "id": 468,
+      "id": 454,
       "name": "gnome-shell-pomodoro",
       "description": "Shell Pomodoro",
       "category": "Apps",
@@ -3752,7 +3640,7 @@
       "entries": 120
     },
     {
-      "id": 469,
+      "id": 455,
       "name": "gnome-subtitles",
       "description": "GNOME Subtitles",
       "category": "Apps",
@@ -3760,7 +3648,7 @@
       "entries": 220
     },
     {
-      "id": 470,
+      "id": 456,
       "name": "gnome-todo",
       "description": "GNOME Todo",
       "category": "Apps",
@@ -3768,7 +3656,7 @@
       "entries": 180
     },
     {
-      "id": 471,
+      "id": 457,
       "name": "grisbi",
       "description": "Grisbi Finance",
       "category": "Apps",
@@ -3776,7 +3664,7 @@
       "entries": 520
     },
     {
-      "id": 472,
+      "id": 458,
       "name": "gtimelog",
       "description": "GTimeLog",
       "category": "Apps",
@@ -3784,7 +3672,7 @@
       "entries": 140
     },
     {
-      "id": 473,
+      "id": 459,
       "name": "gtuber",
       "description": "GTuber",
       "category": "Apps",
@@ -3792,15 +3680,7 @@
       "entries": 120
     },
     {
-      "id": 474,
-      "name": "gufw",
-      "description": "Gufw Firewall",
-      "category": "System",
-      "priority": "low",
-      "entries": 280
-    },
-    {
-      "id": 475,
+      "id": 460,
       "name": "guitarix",
       "description": "Guitarix Amp",
       "category": "Apps",
@@ -3808,7 +3688,7 @@
       "entries": 320
     },
     {
-      "id": 476,
+      "id": 461,
       "name": "gvfs",
       "description": "GVfs Virtual FS",
       "category": "Core",
@@ -3816,7 +3696,7 @@
       "entries": 280
     },
     {
-      "id": 477,
+      "id": 462,
       "name": "hardinfo",
       "description": "HardInfo System",
       "category": "System",
@@ -3824,7 +3704,7 @@
       "entries": 220
     },
     {
-      "id": 478,
+      "id": 463,
       "name": "indicator-stickynotes",
       "description": "Sticky Notes",
       "category": "Apps",
@@ -3832,15 +3712,7 @@
       "entries": 120
     },
     {
-      "id": 479,
-      "name": "inkscape",
-      "description": "Inkscape Vector",
-      "category": "Apps",
-      "priority": "low",
-      "entries": 4800
-    },
-    {
-      "id": 480,
+      "id": 464,
       "name": "iodine",
       "description": "Iodine DNS Tunnel",
       "category": "System",
@@ -3848,7 +3720,7 @@
       "entries": 120
     },
     {
-      "id": 481,
+      "id": 465,
       "name": "k3b",
       "description": "K3b Disc Burner",
       "category": "Apps",
@@ -3856,7 +3728,7 @@
       "entries": 680
     },
     {
-      "id": 482,
+      "id": 466,
       "name": "kaffeine",
       "description": "Kaffeine Media",
       "category": "Apps",
@@ -3864,7 +3736,7 @@
       "entries": 280
     },
     {
-      "id": 483,
+      "id": 467,
       "name": "kalgebra",
       "description": "KAlgebra Math",
       "category": "Education",
@@ -3872,15 +3744,7 @@
       "entries": 280
     },
     {
-      "id": 484,
-      "name": "kalzium",
-      "description": "Kalzium Chemistry",
-      "category": "Education",
-      "priority": "low",
-      "entries": 680
-    },
-    {
-      "id": 485,
+      "id": 468,
       "name": "kamera",
       "description": "Kamera",
       "category": "Apps",
@@ -3888,15 +3752,7 @@
       "entries": 120
     },
     {
-      "id": 486,
-      "name": "kanagram",
-      "description": "Kanagram",
-      "category": "Education",
-      "priority": "low",
-      "entries": 140
-    },
-    {
-      "id": 487,
+      "id": 469,
       "name": "kapman",
       "description": "Kapman Game",
       "category": "Games",
@@ -3904,7 +3760,7 @@
       "entries": 100
     },
     {
-      "id": 488,
+      "id": 470,
       "name": "kbackup",
       "description": "KBackup",
       "category": "Apps",
@@ -3912,7 +3768,7 @@
       "entries": 140
     },
     {
-      "id": 489,
+      "id": 471,
       "name": "kbibtex",
       "description": "KBibTeX",
       "category": "Dev",
@@ -3920,7 +3776,7 @@
       "entries": 320
     },
     {
-      "id": 490,
+      "id": 472,
       "name": "kblackbox",
       "description": "KBlackBox Game",
       "category": "Games",
@@ -3928,7 +3784,7 @@
       "entries": 100
     },
     {
-      "id": 491,
+      "id": 473,
       "name": "kblocks",
       "description": "KBlocks Game",
       "category": "Games",
@@ -3936,7 +3792,7 @@
       "entries": 100
     },
     {
-      "id": 492,
+      "id": 474,
       "name": "kbounce",
       "description": "KBounce Game",
       "category": "Games",
@@ -3944,7 +3800,7 @@
       "entries": 100
     },
     {
-      "id": 493,
+      "id": 475,
       "name": "kbreakout",
       "description": "KBreakOut Game",
       "category": "Games",
@@ -3952,7 +3808,7 @@
       "entries": 100
     },
     {
-      "id": 494,
+      "id": 476,
       "name": "kchart",
       "description": "KChart",
       "category": "Office",
@@ -3960,7 +3816,7 @@
       "entries": 280
     },
     {
-      "id": 495,
+      "id": 477,
       "name": "kde-config-screenlocker",
       "description": "Screen Locker",
       "category": "Desktop",
@@ -3968,7 +3824,7 @@
       "entries": 120
     },
     {
-      "id": 496,
+      "id": 478,
       "name": "kde-config-sddm",
       "description": "SDDM Config",
       "category": "Desktop",
@@ -3976,7 +3832,7 @@
       "entries": 100
     },
     {
-      "id": 497,
+      "id": 479,
       "name": "kde-spectacle",
       "description": "Spectacle Screenshot",
       "category": "Desktop",
@@ -3984,7 +3840,7 @@
       "entries": 240
     },
     {
-      "id": 498,
+      "id": 480,
       "name": "kdegames",
       "description": "KDE Games Collection",
       "category": "Games",
@@ -3992,7 +3848,7 @@
       "entries": 800
     },
     {
-      "id": 499,
+      "id": 481,
       "name": "kdegraphics",
       "description": "KDE Graphics",
       "category": "Apps",
@@ -4000,7 +3856,7 @@
       "entries": 600
     },
     {
-      "id": 500,
+      "id": 482,
       "name": "kdemultimedia",
       "description": "KDE Multimedia",
       "category": "Apps",
@@ -4008,7 +3864,7 @@
       "entries": 520
     },
     {
-      "id": 501,
+      "id": 483,
       "name": "kdenetwork",
       "description": "KDE Network",
       "category": "Apps",
@@ -4016,7 +3872,7 @@
       "entries": 480
     },
     {
-      "id": 502,
+      "id": 484,
       "name": "kdepim",
       "description": "KDE PIM",
       "category": "Apps",
@@ -4024,7 +3880,7 @@
       "entries": 1200
     },
     {
-      "id": 503,
+      "id": 485,
       "name": "kdeplasma-addons",
       "description": "Plasma Addons",
       "category": "Desktop",
@@ -4032,7 +3888,7 @@
       "entries": 480
     },
     {
-      "id": 504,
+      "id": 486,
       "name": "kdiamond",
       "description": "KDiamond Game",
       "category": "Games",
@@ -4040,7 +3896,7 @@
       "entries": 100
     },
     {
-      "id": 505,
+      "id": 487,
       "name": "kdf",
       "description": "KDiskFree",
       "category": "System",
@@ -4048,7 +3904,7 @@
       "entries": 100
     },
     {
-      "id": 506,
+      "id": 488,
       "name": "kdialog",
       "description": "KDialog",
       "category": "Desktop",
@@ -4056,7 +3912,7 @@
       "entries": 80
     },
     {
-      "id": 507,
+      "id": 489,
       "name": "kfilereplace",
       "description": "KFileReplace",
       "category": "Dev",
@@ -4064,7 +3920,7 @@
       "entries": 140
     },
     {
-      "id": 508,
+      "id": 490,
       "name": "kfourinline",
       "description": "KFourInLine Game",
       "category": "Games",
@@ -4072,7 +3928,7 @@
       "entries": 100
     },
     {
-      "id": 509,
+      "id": 491,
       "name": "kgamma",
       "description": "KGamma Display",
       "category": "Desktop",
@@ -4080,15 +3936,7 @@
       "entries": 80
     },
     {
-      "id": 510,
-      "name": "kgeography",
-      "description": "KGeography",
-      "category": "Education",
-      "priority": "low",
-      "entries": 480
-    },
-    {
-      "id": 511,
+      "id": 492,
       "name": "kget",
       "description": "KGet Download",
       "category": "Apps",
@@ -4096,7 +3944,7 @@
       "entries": 220
     },
     {
-      "id": 512,
+      "id": 493,
       "name": "kgoldrunner",
       "description": "KGoldrunner Game",
       "category": "Games",
@@ -4104,7 +3952,7 @@
       "entries": 120
     },
     {
-      "id": 513,
+      "id": 494,
       "name": "kgpg",
       "description": "KGpg Encryption",
       "category": "System",
@@ -4112,7 +3960,7 @@
       "entries": 220
     },
     {
-      "id": 514,
+      "id": 495,
       "name": "kgraphviewer",
       "description": "KGraphViewer",
       "category": "Dev",
@@ -4120,7 +3968,7 @@
       "entries": 140
     },
     {
-      "id": 515,
+      "id": 496,
       "name": "kigo",
       "description": "Kigo Go Game",
       "category": "Games",
@@ -4128,7 +3976,7 @@
       "entries": 100
     },
     {
-      "id": 516,
+      "id": 497,
       "name": "killbots",
       "description": "Killbots Game",
       "category": "Games",
@@ -4136,7 +3984,7 @@
       "entries": 100
     },
     {
-      "id": 517,
+      "id": 498,
       "name": "kimagemapeditor",
       "description": "KImageMapEditor",
       "category": "Dev",
@@ -4144,7 +3992,7 @@
       "entries": 140
     },
     {
-      "id": 518,
+      "id": 499,
       "name": "kio",
       "description": "KIO Framework",
       "category": "Core",
@@ -4152,7 +4000,7 @@
       "entries": 480
     },
     {
-      "id": 519,
+      "id": 500,
       "name": "kiriki",
       "description": "Kiriki Dice Game",
       "category": "Games",
@@ -4160,15 +4008,7 @@
       "entries": 80
     },
     {
-      "id": 520,
-      "name": "kiten",
-      "description": "Kiten Japanese Dict",
-      "category": "Education",
-      "priority": "low",
-      "entries": 320
-    },
-    {
-      "id": 521,
+      "id": 501,
       "name": "kjots",
       "description": "KJots Notes",
       "category": "Apps",
@@ -4176,7 +4016,7 @@
       "entries": 180
     },
     {
-      "id": 522,
+      "id": 502,
       "name": "kjumpingcube",
       "description": "KJumpingCube Game",
       "category": "Games",
@@ -4184,7 +4024,7 @@
       "entries": 100
     },
     {
-      "id": 523,
+      "id": 503,
       "name": "klettres",
       "description": "KLettres Alphabet",
       "category": "Education",
@@ -4192,7 +4032,7 @@
       "entries": 140
     },
     {
-      "id": 524,
+      "id": 504,
       "name": "klickety",
       "description": "Klickety Game",
       "category": "Games",
@@ -4200,7 +4040,7 @@
       "entries": 80
     },
     {
-      "id": 525,
+      "id": 505,
       "name": "klines",
       "description": "KLines Game",
       "category": "Games",
@@ -4208,7 +4048,7 @@
       "entries": 80
     },
     {
-      "id": 526,
+      "id": 506,
       "name": "kmag",
       "description": "KMag Screen Magnifier",
       "category": "Accessibility",
@@ -4216,7 +4056,7 @@
       "entries": 100
     },
     {
-      "id": 527,
+      "id": 507,
       "name": "kmahjongg",
       "description": "KMahjongg Game",
       "category": "Games",
@@ -4224,15 +4064,7 @@
       "entries": 140
     },
     {
-      "id": 528,
-      "name": "kmail",
-      "description": "KMail Email",
-      "category": "Apps",
-      "priority": "low",
-      "entries": 680
-    },
-    {
-      "id": 529,
+      "id": 508,
       "name": "kmousetool",
       "description": "KMouseTool",
       "category": "Accessibility",
@@ -4240,7 +4072,7 @@
       "entries": 80
     },
     {
-      "id": 530,
+      "id": 509,
       "name": "kmouth",
       "description": "KMouth Speech",
       "category": "Accessibility",
@@ -4248,7 +4080,7 @@
       "entries": 120
     },
     {
-      "id": 531,
+      "id": 510,
       "name": "kmplot",
       "description": "KmPlot Math Graph",
       "category": "Education",
@@ -4256,7 +4088,7 @@
       "entries": 220
     },
     {
-      "id": 532,
+      "id": 511,
       "name": "knavalbattle",
       "description": "Naval Battle Game",
       "category": "Games",
@@ -4264,7 +4096,7 @@
       "entries": 100
     },
     {
-      "id": 533,
+      "id": 512,
       "name": "knetwalk",
       "description": "KNetWalk Game",
       "category": "Games",
@@ -4272,7 +4104,7 @@
       "entries": 100
     },
     {
-      "id": 534,
+      "id": 513,
       "name": "knights",
       "description": "Knights Chess Game",
       "category": "Games",
@@ -4280,7 +4112,7 @@
       "entries": 120
     },
     {
-      "id": 535,
+      "id": 514,
       "name": "knotes",
       "description": "KNotes Sticky Notes",
       "category": "Apps",
@@ -4288,7 +4120,7 @@
       "entries": 140
     },
     {
-      "id": 536,
+      "id": 515,
       "name": "kolf",
       "description": "Kolf Golf Game",
       "category": "Games",
@@ -4296,7 +4128,7 @@
       "entries": 100
     },
     {
-      "id": 537,
+      "id": 516,
       "name": "kollision",
       "description": "Kollision Game",
       "category": "Games",
@@ -4304,23 +4136,7 @@
       "entries": 80
     },
     {
-      "id": 538,
-      "name": "kolourpaint",
-      "description": "Kolourpaint",
-      "category": "Apps",
-      "priority": "low",
-      "entries": 220
-    },
-    {
-      "id": 539,
-      "name": "kompare",
-      "description": "Kompare Diff",
-      "category": "Dev",
-      "priority": "low",
-      "entries": 180
-    },
-    {
-      "id": 540,
+      "id": 517,
       "name": "konquest",
       "description": "Konquest Strategy",
       "category": "Games",
@@ -4328,7 +4144,7 @@
       "entries": 100
     },
     {
-      "id": 541,
+      "id": 518,
       "name": "kontact",
       "description": "Kontact PIM",
       "category": "Apps",
@@ -4336,7 +4152,7 @@
       "entries": 680
     },
     {
-      "id": 542,
+      "id": 519,
       "name": "kopete",
       "description": "Kopete Messenger",
       "category": "Apps",
@@ -4344,15 +4160,7 @@
       "entries": 520
     },
     {
-      "id": 543,
-      "name": "korganizer",
-      "description": "KOrganizer Calendar",
-      "category": "Apps",
-      "priority": "low",
-      "entries": 480
-    },
-    {
-      "id": 544,
+      "id": 520,
       "name": "kpat",
       "description": "KPatience Solitaire",
       "category": "Games",
@@ -4360,7 +4168,7 @@
       "entries": 120
     },
     {
-      "id": 545,
+      "id": 521,
       "name": "krdc",
       "description": "KRDC Remote Desktop",
       "category": "Apps",
@@ -4368,7 +4176,7 @@
       "entries": 280
     },
     {
-      "id": 546,
+      "id": 522,
       "name": "kremotecontrol",
       "description": "KRemoteControl",
       "category": "System",
@@ -4376,7 +4184,7 @@
       "entries": 120
     },
     {
-      "id": 547,
+      "id": 523,
       "name": "kreversi",
       "description": "KReversi Game",
       "category": "Games",
@@ -4384,7 +4192,7 @@
       "entries": 100
     },
     {
-      "id": 548,
+      "id": 524,
       "name": "krfb",
       "description": "Krfb Desktop Sharing",
       "category": "Apps",
@@ -4392,7 +4200,7 @@
       "entries": 180
     },
     {
-      "id": 549,
+      "id": 525,
       "name": "kruler",
       "description": "KRuler Screen Ruler",
       "category": "Apps",
@@ -4400,7 +4208,7 @@
       "entries": 80
     },
     {
-      "id": 550,
+      "id": 526,
       "name": "ksame",
       "description": "KSame Game",
       "category": "Games",
@@ -4408,7 +4216,7 @@
       "entries": 80
     },
     {
-      "id": 551,
+      "id": 527,
       "name": "kscd",
       "description": "KSCD CD Player",
       "category": "Apps",
@@ -4416,7 +4224,7 @@
       "entries": 120
     },
     {
-      "id": 552,
+      "id": 528,
       "name": "kshisen",
       "description": "KShisen Mahjong",
       "category": "Games",
@@ -4424,7 +4232,7 @@
       "entries": 100
     },
     {
-      "id": 553,
+      "id": 529,
       "name": "ksirk",
       "description": "KSirk Risk Game",
       "category": "Games",
@@ -4432,7 +4240,7 @@
       "entries": 120
     },
     {
-      "id": 554,
+      "id": 530,
       "name": "ksnakeduel",
       "description": "KSnakeDuel",
       "category": "Games",
@@ -4440,7 +4248,7 @@
       "entries": 80
     },
     {
-      "id": 555,
+      "id": 531,
       "name": "kspaceduel",
       "description": "KSpaceDuel",
       "category": "Games",
@@ -4448,7 +4256,7 @@
       "entries": 80
     },
     {
-      "id": 556,
+      "id": 532,
       "name": "ksquares",
       "description": "KSquares Game",
       "category": "Games",
@@ -4456,47 +4264,7 @@
       "entries": 80
     },
     {
-      "id": 557,
-      "name": "kstars",
-      "description": "KStars Astronomy",
-      "category": "Education",
-      "priority": "low",
-      "entries": 920
-    },
-    {
-      "id": 558,
-      "name": "ksudoku",
-      "description": "KSudoku",
-      "category": "Games",
-      "priority": "low",
-      "entries": 140
-    },
-    {
-      "id": 559,
-      "name": "kteatime",
-      "description": "KTeaTime",
-      "category": "Games",
-      "priority": "low",
-      "entries": 80
-    },
-    {
-      "id": 560,
-      "name": "ktimer",
-      "description": "KTimer",
-      "category": "Desktop",
-      "priority": "low",
-      "entries": 80
-    },
-    {
-      "id": 561,
-      "name": "ktouch",
-      "description": "KTouch Typing",
-      "category": "Education",
-      "priority": "low",
-      "entries": 380
-    },
-    {
-      "id": 562,
+      "id": 533,
       "name": "ktuberling",
       "description": "Tuberling Game",
       "category": "Games",
@@ -4504,7 +4272,7 @@
       "entries": 100
     },
     {
-      "id": 563,
+      "id": 534,
       "name": "kturtle",
       "description": "KTurtle Logo",
       "category": "Education",
@@ -4512,7 +4280,7 @@
       "entries": 180
     },
     {
-      "id": 564,
+      "id": 535,
       "name": "kubrick",
       "description": "Kubrick Rubik",
       "category": "Games",
@@ -4520,7 +4288,7 @@
       "entries": 80
     },
     {
-      "id": 565,
+      "id": 536,
       "name": "kuser",
       "description": "KUser Manager",
       "category": "System",
@@ -4528,15 +4296,7 @@
       "entries": 120
     },
     {
-      "id": 566,
-      "name": "kwallet",
-      "description": "KWallet Manager",
-      "category": "Desktop",
-      "priority": "medium",
-      "entries": 180
-    },
-    {
-      "id": 567,
+      "id": 537,
       "name": "kwordquiz",
       "description": "KWordQuiz Flashcards",
       "category": "Education",
@@ -4544,7 +4304,7 @@
       "entries": 140
     },
     {
-      "id": 568,
+      "id": 538,
       "name": "libkcddb",
       "description": "KCDDB CD Database",
       "category": "Apps",
@@ -4552,7 +4312,7 @@
       "entries": 100
     },
     {
-      "id": 569,
+      "id": 539,
       "name": "libkcompactdisc",
       "description": "KCompactDisc",
       "category": "Apps",
@@ -4560,7 +4320,7 @@
       "entries": 60
     },
     {
-      "id": 570,
+      "id": 540,
       "name": "lskat",
       "description": "LSkat Card Game",
       "category": "Games",
@@ -4568,7 +4328,7 @@
       "entries": 80
     },
     {
-      "id": 571,
+      "id": 541,
       "name": "palapeli",
       "description": "Palapeli Jigsaw",
       "category": "Games",
@@ -4576,15 +4336,7 @@
       "entries": 100
     },
     {
-      "id": 572,
-      "name": "parley",
-      "description": "Parley Vocabulary",
-      "category": "Education",
-      "priority": "low",
-      "entries": 380
-    },
-    {
-      "id": 573,
+      "id": 542,
       "name": "picmi",
       "description": "Picmi Nonogram",
       "category": "Games",
@@ -4592,15 +4344,7 @@
       "entries": 80
     },
     {
-      "id": 574,
-      "name": "rocs",
-      "description": "Rocs Graph Theory",
-      "category": "Education",
-      "priority": "low",
-      "entries": 280
-    },
-    {
-      "id": 575,
+      "id": 543,
       "name": "skanlite",
       "description": "Skanlite Scanner",
       "category": "Apps",
@@ -4608,7 +4352,7 @@
       "entries": 140
     },
     {
-      "id": 576,
+      "id": 544,
       "name": "skrooge",
       "description": "Skrooge Finance",
       "category": "Apps",
@@ -4616,7 +4360,7 @@
       "entries": 380
     },
     {
-      "id": 577,
+      "id": 545,
       "name": "smplayer",
       "description": "SMPlayer Media",
       "category": "Apps",
@@ -4624,7 +4368,7 @@
       "entries": 320
     },
     {
-      "id": 578,
+      "id": 546,
       "name": "sonnet",
       "description": "Sonnet Spellcheck",
       "category": "Core",
@@ -4632,36 +4376,12 @@
       "entries": 80
     },
     {
-      "id": 579,
-      "name": "step",
-      "description": "Step Physics Sim",
-      "category": "Education",
-      "priority": "low",
-      "entries": 420
-    },
-    {
-      "id": 580,
+      "id": 547,
       "name": "svgpart",
       "description": "SVG Part",
       "category": "Core",
       "priority": "low",
       "entries": 40
-    },
-    {
-      "id": 581,
-      "name": "sweeper",
-      "description": "Sweeper Privacy",
-      "category": "System",
-      "priority": "low",
-      "entries": 140
-    },
-    {
-      "id": 582,
-      "name": "umbrello",
-      "description": "Umbrello UML",
-      "category": "Dev",
-      "priority": "low",
-      "entries": 380
     }
   ]
 }
