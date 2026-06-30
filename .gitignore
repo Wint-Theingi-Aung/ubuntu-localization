@@ -17,6 +17,10 @@ exports/
 # Session data (generated at runtime)
 .claude/session/
 
+# Next.js / Node
+node_modules/
+.next/
+
 # OS files
 .DS_Store
 Thumbs.db

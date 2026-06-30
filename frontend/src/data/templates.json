@@ -1,0 +1,4667 @@
+{
+  "meta": {
+    "version": "2.0.0",
+    "lastUpdated": "2026-06-30",
+    "description": "Ubuntu translation templates - core packages requiring localization",
+    "totalPackages": 582,
+    "source": "https://translations.launchpad.net/ubuntu"
+  },
+  "packages": [
+    {
+      "id": 1,
+      "name": "gnome-control-center",
+      "description": "GNOME Settings",
+      "category": "Core",
+      "priority": "high",
+      "entries": 2450
+    },
+    {
+      "id": 2,
+      "name": "gnome-shell",
+      "description": "GNOME Shell",
+      "category": "Core",
+      "priority": "high",
+      "entries": 1890
+    },
+    {
+      "id": 3,
+      "name": "gnome-session",
+      "description": "GNOME Session",
+      "category": "Core",
+      "priority": "high",
+      "entries": 420
+    },
+    {
+      "id": 4,
+      "name": "gnome-settings-daemon",
+      "description": "GNOME Settings Daemon",
+      "category": "Core",
+      "priority": "high",
+      "entries": 680
+    },
+    {
+      "id": 5,
+      "name": "gnome-desktop",
+      "description": "GNOME Desktop",
+      "category": "Core",
+      "priority": "medium",
+      "entries": 520
+    },
+    {
+      "id": 6,
+      "name": "gnome-panel",
+      "description": "GNOME Panel",
+      "category": "Core",
+      "priority": "medium",
+      "entries": 380
+    },
+    {
+      "id": 7,
+      "name": "gnome-menus",
+      "description": "GNOME Menus",
+      "category": "Core",
+      "priority": "medium",
+      "entries": 180
+    },
+    {
+      "id": 8,
+      "name": "gnome-applets",
+      "description": "GNOME Applets",
+      "category": "Core",
+      "priority": "low",
+      "entries": 640
+    },
+    {
+      "id": 9,
+      "name": "gnome-backgrounds",
+      "description": "GNOME Backgrounds",
+      "category": "Core",
+      "priority": "low",
+      "entries": 120
+    },
+    {
+      "id": 10,
+      "name": "gnome-color-manager",
+      "description": "GNOME Color Manager",
+      "category": "Core",
+      "priority": "low",
+      "entries": 280
+    },
+    {
+      "id": 11,
+      "name": "gnome-font-viewer",
+      "description": "GNOME Font Viewer",
+      "category": "Core",
+      "priority": "low",
+      "entries": 160
+    },
+    {
+      "id": 12,
+      "name": "gnome-screenshot",
+      "description": "GNOME Screenshot",
+      "category": "Core",
+      "priority": "low",
+      "entries": 180
+    },
+    {
+      "id": 13,
+      "name": "gnome-system-monitor",
+      "description": "System Monitor",
+      "category": "Core",
+      "priority": "low",
+      "entries": 380
+    },
+    {
+      "id": 14,
+      "name": "gnome-terminal",
+      "description": "GNOME Terminal",
+      "category": "Core",
+      "priority": "high",
+      "entries": 680
+    },
+    {
+      "id": 15,
+      "name": "gnome-text-editor",
+      "description": "Text Editor",
+      "category": "Core",
+      "priority": "medium",
+      "entries": 280
+    },
+    {
+      "id": 16,
+      "name": "gnome-user-share",
+      "description": "GNOME User Share",
+      "category": "Core",
+      "priority": "low",
+      "entries": 140
+    },
+    {
+      "id": 17,
+      "name": "gnome-video-effects",
+      "description": "GNOME Video Effects",
+      "category": "Core",
+      "priority": "low",
+      "entries": 80
+    },
+    {
+      "id": 18,
+      "name": "gnome-weather",
+      "description": "GNOME Weather",
+      "category": "Apps",
+      "priority": "low",
+      "entries": 280
+    },
+    {
+      "id": 19,
+      "name": "gnome-contacts",
+      "description": "GNOME Contacts",
+      "category": "Apps",
+      "priority": "low",
+      "entries": 380
+    },
+    {
+      "id": 20,
+      "name": "gnome-calendar",
+      "description": "GNOME Calendar",
+      "category": "Apps",
+      "priority": "low",
+      "entries": 520
+    },
+    {
+      "id": 21,
+      "name": "gnome-clocks",
+      "description": "GNOME Clocks",
+      "category": "Apps",
+      "priority": "low",
+      "entries": 320
+    },
+    {
+      "id": 22,
+      "name": "gnome-calculator",
+      "description": "GNOME Calculator",
+      "category": "Apps",
+      "priority": "low",
+      "entries": 340
+    },
+    {
+      "id": 23,
+      "name": "gnome-characters",
+      "description": "GNOME Characters",
+      "category": "Apps",
+      "priority": "low",
+      "entries": 160
+    },
+    {
+      "id": 24,
+      "name": "gnome-maps",
+      "description": "GNOME Maps",
+      "category": "Apps",
+      "priority": "low",
+      "entries": 640
+    },
+    {
+      "id": 25,
+      "name": "gnome-music",
+      "description": "GNOME Music",
+      "category": "Apps",
+      "priority": "low",
+      "entries": 380
+    },
+    {
+      "id": 26,
+      "name": "gnome-photos",
+      "description": "GNOME Photos",
+      "category": "Apps",
+      "priority": "low",
+      "entries": 420
+    },
+    {
+      "id": 27,
+      "name": "gnome-remote-desktop",
+      "description": "Remote Desktop",
+      "category": "System",
+      "priority": "low",
+      "entries": 280
+    },
+    {
+      "id": 28,
+      "name": "gnome-software",
+      "description": "GNOME Software",
+      "category": "Core",
+      "priority": "high",
+      "entries": 1650
+    },
+    {
+      "id": 29,
+      "name": "gnome-disk-utility",
+      "description": "Disks",
+      "category": "System",
+      "priority": "medium",
+      "entries": 560
+    },
+    {
+      "id": 30,
+      "name": "gnome-bluetooth",
+      "description": "GNOME Bluetooth",
+      "category": "System",
+      "priority": "medium",
+      "entries": 320
+    },
+    {
+      "id": 31,
+      "name": "gnome-nettool",
+      "description": "GNOME Nettool",
+      "category": "System",
+      "priority": "low",
+      "entries": 180
+    },
+    {
+      "id": 32,
+      "name": "gnome-power-manager",
+      "description": "Power Manager",
+      "category": "System",
+      "priority": "medium",
+      "entries": 280
+    },
+    {
+      "id": 33,
+      "name": "gnome-sound-recorder",
+      "description": "Sound Recorder",
+      "category": "Apps",
+      "priority": "low",
+      "entries": 160
+    },
+    {
+      "id": 34,
+      "name": "gnome-tweaks",
+      "description": "GNOME Tweaks",
+      "category": "Apps",
+      "priority": "medium",
+      "entries": 240
+    },
+    {
+      "id": 35,
+      "name": "gnome-usage",
+      "description": "GNOME Usage",
+      "category": "Apps",
+      "priority": "low",
+      "entries": 200
+    },
+    {
+      "id": 36,
+      "name": "gnome-logs",
+      "description": "GNOME Logs",
+      "category": "System",
+      "priority": "low",
+      "entries": 220
+    },
+    {
+      "id": 37,
+      "name": "gnome-builder",
+      "description": "GNOME Builder",
+      "category": "Dev",
+      "priority": "low",
+      "entries": 1200
+    },
+    {
+      "id": 38,
+      "name": "gnome-sudoku",
+      "description": "GNOME Sudoku",
+      "category": "Games",
+      "priority": "low",
+      "entries": 280
+    },
+    {
+      "id": 39,
+      "name": "gnome-mahjongg",
+      "description": "GNOME Mahjongg",
+      "category": "Games",
+      "priority": "low",
+      "entries": 180
+    },
+    {
+      "id": 40,
+      "name": "gnome-mines",
+      "description": "GNOME Mines",
+      "category": "Games",
+      "priority": "low",
+      "entries": 200
+    },
+    {
+      "id": 41,
+      "name": "gnome-chess",
+      "description": "GNOME Chess",
+      "category": "Games",
+      "priority": "low",
+      "entries": 340
+    },
+    {
+      "id": 42,
+      "name": "gnome-2048",
+      "description": "GNOME 2048",
+      "category": "Games",
+      "priority": "low",
+      "entries": 140
+    },
+    {
+      "id": 43,
+      "name": "gnome-robots",
+      "description": "GNOME Robots",
+      "category": "Games",
+      "priority": "low",
+      "entries": 160
+    },
+    {
+      "id": 44,
+      "name": "gnome-nibbles",
+      "description": "GNOME Nibbles",
+      "category": "Games",
+      "priority": "low",
+      "entries": 180
+    },
+    {
+      "id": 45,
+      "name": "gnome-taquin",
+      "description": "GNOME Taquin",
+      "category": "Games",
+      "priority": "low",
+      "entries": 140
+    },
+    {
+      "id": 46,
+      "name": "gnome-tetravex",
+      "description": "GNOME Tetravex",
+      "category": "Games",
+      "priority": "low",
+      "entries": 120
+    },
+    {
+      "id": 47,
+      "name": "gnome-klotski",
+      "description": "GNOME Klotski",
+      "category": "Games",
+      "priority": "low",
+      "entries": 120
+    },
+    {
+      "id": 48,
+      "name": "gnome-iagno",
+      "description": "GNOME Iagno",
+      "category": "Games",
+      "priority": "low",
+      "entries": 120
+    },
+    {
+      "id": 49,
+      "name": "gnome-hitori",
+      "description": "GNOME Hitori",
+      "category": "Games",
+      "priority": "low",
+      "entries": 100
+    },
+    {
+      "id": 50,
+      "name": "gnome-quadrapassel",
+      "description": "GNOME Quadrapassel",
+      "category": "Games",
+      "priority": "low",
+      "entries": 140
+    },
+    {
+      "id": 51,
+      "name": "gnome-swell-foop",
+      "description": "GNOME Swell Foop",
+      "category": "Games",
+      "priority": "low",
+      "entries": 100
+    },
+    {
+      "id": 52,
+      "name": "gnome-lightsoff",
+      "description": "GNOME Lights Off",
+      "category": "Games",
+      "priority": "low",
+      "entries": 100
+    },
+    {
+      "id": 53,
+      "name": "nautilus",
+      "description": "Files (Nautilus)",
+      "category": "Core",
+      "priority": "high",
+      "entries": 1240
+    },
+    {
+      "id": 54,
+      "name": "nautilus-sendto",
+      "description": "Nautilus Send To",
+      "category": "Core",
+      "priority": "low",
+      "entries": 120
+    },
+    {
+      "id": 55,
+      "name": "file-roller",
+      "description": "Archive Manager",
+      "category": "Apps",
+      "priority": "low",
+      "entries": 340
+    },
+    {
+      "id": 56,
+      "name": "baobab",
+      "description": "Disk Usage Analyzer",
+      "category": "System",
+      "priority": "low",
+      "entries": 220
+    },
+    {
+      "id": 57,
+      "name": "eog",
+      "description": "Image Viewer (Eye of GNOME)",
+      "category": "Apps",
+      "priority": "medium",
+      "entries": 380
+    },
+    {
+      "id": 58,
+      "name": "evince",
+      "description": "Document Viewer",
+      "category": "Apps",
+      "priority": "high",
+      "entries": 680
+    },
+    {
+      "id": 59,
+      "name": "evolution",
+      "description": "Evolution Mail",
+      "category": "Apps",
+      "priority": "medium",
+      "entries": 3200
+    },
+    {
+      "id": 60,
+      "name": "totem",
+      "description": "Videos (Totem)",
+      "category": "Apps",
+      "priority": "medium",
+      "entries": 560
+    },
+    {
+      "id": 61,
+      "name": "rhythmbox",
+      "description": "Rhythmbox",
+      "category": "Apps",
+      "priority": "low",
+      "entries": 890
+    },
+    {
+      "id": 62,
+      "name": "cheese",
+      "description": "Cheese Webcam",
+      "category": "Apps",
+      "priority": "low",
+      "entries": 280
+    },
+    {
+      "id": 63,
+      "name": "seahorse",
+      "description": "Passwords and Keys",
+      "category": "System",
+      "priority": "medium",
+      "entries": 480
+    },
+    {
+      "id": 64,
+      "name": "dconf-editor",
+      "description": "Dconf Editor",
+      "category": "System",
+      "priority": "low",
+      "entries": 240
+    },
+    {
+      "id": 65,
+      "name": "gucharmap",
+      "description": "Character Map",
+      "category": "Apps",
+      "priority": "low",
+      "entries": 280
+    },
+    {
+      "id": 66,
+      "name": "vinagre",
+      "description": "Remote Desktop Viewer",
+      "category": "Apps",
+      "priority": "low",
+      "entries": 320
+    },
+    {
+      "id": 67,
+      "name": "vino",
+      "description": "Vino VNC Server",
+      "category": "System",
+      "priority": "low",
+      "entries": 180
+    },
+    {
+      "id": 68,
+      "name": "simple-scan",
+      "description": "Simple Scan",
+      "category": "Apps",
+      "priority": "medium",
+      "entries": 280
+    },
+    {
+      "id": 69,
+      "name": "transmission",
+      "description": "Transmission",
+      "category": "Apps",
+      "priority": "low",
+      "entries": 520
+    },
+    {
+      "id": 70,
+      "name": "remmina",
+      "description": "Remmina",
+      "category": "Apps",
+      "priority": "low",
+      "entries": 780
+    },
+    {
+      "id": 71,
+      "name": "shotwell",
+      "description": "Shotwell",
+      "category": "Apps",
+      "priority": "low",
+      "entries": 680
+    },
+    {
+      "id": 72,
+      "name": "gimp",
+      "description": "GIMP",
+      "category": "Apps",
+      "priority": "low",
+      "entries": 5600
+    },
+    {
+      "id": 73,
+      "name": "inkscape",
+      "description": "Inkscape",
+      "category": "Apps",
+      "priority": "low",
+      "entries": 4800
+    },
+    {
+      "id": 74,
+      "name": "blender",
+      "description": "Blender",
+      "category": "Apps",
+      "priority": "low",
+      "entries": 6200
+    },
+    {
+      "id": 75,
+      "name": "audacity",
+      "description": "Audacity",
+      "category": "Apps",
+      "priority": "low",
+      "entries": 1800
+    },
+    {
+      "id": 76,
+      "name": "vlc",
+      "description": "VLC Media Player",
+      "category": "Apps",
+      "priority": "low",
+      "entries": 1200
+    },
+    {
+      "id": 77,
+      "name": "filezilla",
+      "description": "FileZilla",
+      "category": "Apps",
+      "priority": "low",
+      "entries": 920
+    },
+    {
+      "id": 78,
+      "name": "thunderbird",
+      "description": "Thunderbird",
+      "category": "Apps",
+      "priority": "medium",
+      "entries": 2800
+    },
+    {
+      "id": 79,
+      "name": "firefox",
+      "description": "Firefox",
+      "category": "Apps",
+      "priority": "high",
+      "entries": 3200
+    },
+    {
+      "id": 80,
+      "name": "chromium",
+      "description": "Chromium Browser",
+      "category": "Apps",
+      "priority": "medium",
+      "entries": 2400
+    },
+    {
+      "id": 81,
+      "name": "libreoffice-writer",
+      "description": "LibreOffice Writer",
+      "category": "Apps",
+      "priority": "high",
+      "entries": 4500
+    },
+    {
+      "id": 82,
+      "name": "libreoffice-calc",
+      "description": "LibreOffice Calc",
+      "category": "Apps",
+      "priority": "high",
+      "entries": 3800
+    },
+    {
+      "id": 83,
+      "name": "libreoffice-impress",
+      "description": "LibreOffice Impress",
+      "category": "Apps",
+      "priority": "medium",
+      "entries": 2100
+    },
+    {
+      "id": 84,
+      "name": "libreoffice-draw",
+      "description": "LibreOffice Draw",
+      "category": "Apps",
+      "priority": "medium",
+      "entries": 1800
+    },
+    {
+      "id": 85,
+      "name": "libreoffice-base",
+      "description": "LibreOffice Base",
+      "category": "Apps",
+      "priority": "low",
+      "entries": 1600
+    },
+    {
+      "id": 86,
+      "name": "libreoffice-math",
+      "description": "LibreOffice Math",
+      "category": "Apps",
+      "priority": "low",
+      "entries": 680
+    },
+    {
+      "id": 87,
+      "name": "libreoffice-common",
+      "description": "LibreOffice Common",
+      "category": "Apps",
+      "priority": "high",
+      "entries": 1200
+    },
+    {
+      "id": 88,
+      "name": "libreoffice-gtk3",
+      "description": "LibreOffice GTK3",
+      "category": "Apps",
+      "priority": "low",
+      "entries": 180
+    },
+    {
+      "id": 89,
+      "name": "libreoffice-help",
+      "description": "LibreOffice Help",
+      "category": "Apps",
+      "priority": "medium",
+      "entries": 8000
+    },
+    {
+      "id": 90,
+      "name": "system-config-printer",
+      "description": "Printer Configuration",
+      "category": "System",
+      "priority": "medium",
+      "entries": 780
+    },
+    {
+      "id": 91,
+      "name": "systemd",
+      "description": "systemd",
+      "category": "System",
+      "priority": "high",
+      "entries": 560
+    },
+    {
+      "id": 92,
+      "name": "apt",
+      "description": "APT Package Manager",
+      "category": "System",
+      "priority": "high",
+      "entries": 420
+    },
+    {
+      "id": 93,
+      "name": "dpkg",
+      "description": "dpkg",
+      "category": "System",
+      "priority": "medium",
+      "entries": 280
+    },
+    {
+      "id": 94,
+      "name": "snap-store",
+      "description": "Snap Store",
+      "category": "Core",
+      "priority": "high",
+      "entries": 1200
+    },
+    {
+      "id": 95,
+      "name": "software-properties",
+      "description": "Software & Updates",
+      "category": "System",
+      "priority": "medium",
+      "entries": 480
+    },
+    {
+      "id": 96,
+      "name": "update-manager",
+      "description": "Software Updater",
+      "category": "System",
+      "priority": "high",
+      "entries": 620
+    },
+    {
+      "id": 97,
+      "name": "ubiquity",
+      "description": "Ubuntu Installer",
+      "category": "System",
+      "priority": "high",
+      "entries": 1800
+    },
+    {
+      "id": 98,
+      "name": "gnome-initial-setup",
+      "description": "Initial Setup",
+      "category": "System",
+      "priority": "high",
+      "entries": 840
+    },
+    {
+      "id": 99,
+      "name": "gdm3",
+      "description": "GNOME Display Manager",
+      "category": "System",
+      "priority": "medium",
+      "entries": 280
+    },
+    {
+      "id": 100,
+      "name": "network-manager",
+      "description": "NetworkManager",
+      "category": "System",
+      "priority": "high",
+      "entries": 920
+    },
+    {
+      "id": 101,
+      "name": "blueman",
+      "description": "Bluetooth Manager",
+      "category": "System",
+      "priority": "medium",
+      "entries": 380
+    },
+    {
+      "id": 102,
+      "name": "pulseaudio",
+      "description": "PulseAudio",
+      "category": "System",
+      "priority": "medium",
+      "entries": 240
+    },
+    {
+      "id": 103,
+      "name": "pipewire",
+      "description": "PipeWire",
+      "category": "System",
+      "priority": "medium",
+      "entries": 180
+    },
+    {
+      "id": 104,
+      "name": "apparmor",
+      "description": "AppArmor",
+      "category": "System",
+      "priority": "low",
+      "entries": 320
+    },
+    {
+      "id": 105,
+      "name": "ufw",
+      "description": "Uncomplicated Firewall",
+      "category": "System",
+      "priority": "medium",
+      "entries": 280
+    },
+    {
+      "id": 106,
+      "name": "grub",
+      "description": "GRUB Bootloader",
+      "category": "System",
+      "priority": "medium",
+      "entries": 380
+    },
+    {
+      "id": 107,
+      "name": "adduser",
+      "description": "Add User",
+      "category": "System",
+      "priority": "medium",
+      "entries": 120
+    },
+    {
+      "id": 108,
+      "name": "sudo",
+      "description": "Sudo",
+      "category": "System",
+      "priority": "medium",
+      "entries": 180
+    },
+    {
+      "id": 109,
+      "name": "shadow",
+      "description": "Shadow Utils",
+      "category": "System",
+      "priority": "low",
+      "entries": 160
+    },
+    {
+      "id": 110,
+      "name": "passwd",
+      "description": "Passwd",
+      "category": "System",
+      "priority": "medium",
+      "entries": 100
+    },
+    {
+      "id": 111,
+      "name": "login",
+      "description": "Login",
+      "category": "System",
+      "priority": "medium",
+      "entries": 80
+    },
+    {
+      "id": 112,
+      "name": "cron",
+      "description": "Cron",
+      "category": "System",
+      "priority": "low",
+      "entries": 140
+    },
+    {
+      "id": 113,
+      "name": "logrotate",
+      "description": "Logrotate",
+      "category": "System",
+      "priority": "low",
+      "entries": 80
+    },
+    {
+      "id": 114,
+      "name": "rsyslog",
+      "description": "Rsyslog",
+      "category": "System",
+      "priority": "low",
+      "entries": 120
+    },
+    {
+      "id": 115,
+      "name": "openssh",
+      "description": "OpenSSH",
+      "category": "System",
+      "priority": "medium",
+      "entries": 280
+    },
+    {
+      "id": 116,
+      "name": "samba",
+      "description": "Samba",
+      "category": "System",
+      "priority": "low",
+      "entries": 620
+    },
+    {
+      "id": 117,
+      "name": "cups",
+      "description": "CUPS Printing",
+      "category": "System",
+      "priority": "medium",
+      "entries": 520
+    },
+    {
+      "id": 118,
+      "name": "avahi",
+      "description": "Avahi",
+      "category": "System",
+      "priority": "low",
+      "entries": 180
+    },
+    {
+      "id": 119,
+      "name": "accounts-service",
+      "description": "Accounts Service",
+      "category": "System",
+      "priority": "low",
+      "entries": 120
+    },
+    {
+      "id": 120,
+      "name": "colord",
+      "description": "Color Management",
+      "category": "System",
+      "priority": "low",
+      "entries": 120
+    },
+    {
+      "id": 121,
+      "name": "udisks",
+      "description": "UDisks",
+      "category": "System",
+      "priority": "low",
+      "entries": 140
+    },
+    {
+      "id": 122,
+      "name": "upower",
+      "description": "UPower",
+      "category": "System",
+      "priority": "low",
+      "entries": 120
+    },
+    {
+      "id": 123,
+      "name": "modemmanager",
+      "description": "ModemManager",
+      "category": "System",
+      "priority": "low",
+      "entries": 220
+    },
+    {
+      "id": 124,
+      "name": "usb-creator",
+      "description": "USB Creator",
+      "category": "System",
+      "priority": "medium",
+      "entries": 180
+    },
+    {
+      "id": 125,
+      "name": "jockey",
+      "description": "Additional Drivers",
+      "category": "System",
+      "priority": "medium",
+      "entries": 240
+    },
+    {
+      "id": 126,
+      "name": "gdebi",
+      "description": "GDebi Package Installer",
+      "category": "System",
+      "priority": "low",
+      "entries": 160
+    },
+    {
+      "id": 127,
+      "name": "synaptic",
+      "description": "Synaptic Package Manager",
+      "category": "System",
+      "priority": "low",
+      "entries": 680
+    },
+    {
+      "id": 128,
+      "name": "tasksel",
+      "description": "Task Selector",
+      "category": "System",
+      "priority": "low",
+      "entries": 80
+    },
+    {
+      "id": 129,
+      "name": "unattended-upgrades",
+      "description": "Unattended Upgrades",
+      "category": "System",
+      "priority": "medium",
+      "entries": 180
+    },
+    {
+      "id": 130,
+      "name": "apport",
+      "description": "Apport Crash Handler",
+      "category": "System",
+      "priority": "low",
+      "entries": 240
+    },
+    {
+      "id": 131,
+      "name": "ubuntu-bug",
+      "description": "Ubuntu Bug Reporter",
+      "category": "System",
+      "priority": "low",
+      "entries": 120
+    },
+    {
+      "id": 132,
+      "name": "landscape-client",
+      "description": "Landscape Client",
+      "category": "System",
+      "priority": "low",
+      "entries": 280
+    },
+    {
+      "id": 133,
+      "name": "ubuntu-release-upgrader",
+      "description": "Release Upgrader",
+      "category": "System",
+      "priority": "high",
+      "entries": 420
+    },
+    {
+      "id": 134,
+      "name": "do-release-upgrade",
+      "description": "Release Upgrade",
+      "category": "System",
+      "priority": "high",
+      "entries": 280
+    },
+    {
+      "id": 135,
+      "name": "netplan",
+      "description": "Netplan",
+      "category": "System",
+      "priority": "medium",
+      "entries": 240
+    },
+    {
+      "id": 136,
+      "name": "resolvconf",
+      "description": "Resolvconf",
+      "category": "System",
+      "priority": "low",
+      "entries": 80
+    },
+    {
+      "id": 137,
+      "name": "hostapd",
+      "description": "Hostapd",
+      "category": "System",
+      "priority": "low",
+      "entries": 180
+    },
+    {
+      "id": 138,
+      "name": "wpa-supplicant",
+      "description": "WPA Supplicant",
+      "category": "System",
+      "priority": "low",
+      "entries": 220
+    },
+    {
+      "id": 139,
+      "name": "iptables",
+      "description": "Iptables",
+      "category": "System",
+      "priority": "low",
+      "entries": 280
+    },
+    {
+      "id": 140,
+      "name": "nmap",
+      "description": "Nmap",
+      "category": "System",
+      "priority": "low",
+      "entries": 480
+    },
+    {
+      "id": 141,
+      "name": "wireshark",
+      "description": "Wireshark",
+      "category": "System",
+      "priority": "low",
+      "entries": 1200
+    },
+    {
+      "id": 142,
+      "name": "curl",
+      "description": "cURL",
+      "category": "System",
+      "priority": "low",
+      "entries": 180
+    },
+    {
+      "id": 143,
+      "name": "wget",
+      "description": "Wget",
+      "category": "System",
+      "priority": "low",
+      "entries": 140
+    },
+    {
+      "id": 144,
+      "name": "bind9",
+      "description": "BIND9 DNS",
+      "category": "System",
+      "priority": "low",
+      "entries": 380
+    },
+    {
+      "id": 145,
+      "name": "postfix",
+      "description": "Postfix Mail",
+      "category": "System",
+      "priority": "low",
+      "entries": 520
+    },
+    {
+      "id": 146,
+      "name": "dovecot",
+      "description": "Dovecot IMAP",
+      "category": "System",
+      "priority": "low",
+      "entries": 420
+    },
+    {
+      "id": 147,
+      "name": "apache2",
+      "description": "Apache HTTP Server",
+      "category": "System",
+      "priority": "low",
+      "entries": 680
+    },
+    {
+      "id": 148,
+      "name": "nginx",
+      "description": "Nginx",
+      "category": "System",
+      "priority": "low",
+      "entries": 420
+    },
+    {
+      "id": 149,
+      "name": "php",
+      "description": "PHP",
+      "category": "Dev",
+      "priority": "low",
+      "entries": 1200
+    },
+    {
+      "id": 150,
+      "name": "python3",
+      "description": "Python 3",
+      "category": "Dev",
+      "priority": "low",
+      "entries": 680
+    },
+    {
+      "id": 151,
+      "name": "nodejs",
+      "description": "Node.js",
+      "category": "Dev",
+      "priority": "low",
+      "entries": 420
+    },
+    {
+      "id": 152,
+      "name": "ruby",
+      "description": "Ruby",
+      "category": "Dev",
+      "priority": "low",
+      "entries": 820
+    },
+    {
+      "id": 153,
+      "name": "golang",
+      "description": "Go",
+      "category": "Dev",
+      "priority": "low",
+      "entries": 480
+    },
+    {
+      "id": 154,
+      "name": "rustc",
+      "description": "Rust Compiler",
+      "category": "Dev",
+      "priority": "low",
+      "entries": 520
+    },
+    {
+      "id": 155,
+      "name": "gcc",
+      "description": "GCC Compiler",
+      "category": "Dev",
+      "priority": "low",
+      "entries": 680
+    },
+    {
+      "id": 156,
+      "name": "gdb",
+      "description": "GNU Debugger",
+      "category": "Dev",
+      "priority": "low",
+      "entries": 480
+    },
+    {
+      "id": 157,
+      "name": "git",
+      "description": "Git",
+      "category": "Dev",
+      "priority": "medium",
+      "entries": 520
+    },
+    {
+      "id": 158,
+      "name": "mercurial",
+      "description": "Mercurial",
+      "category": "Dev",
+      "priority": "low",
+      "entries": 420
+    },
+    {
+      "id": 159,
+      "name": "subversion",
+      "description": "Subversion",
+      "category": "Dev",
+      "priority": "low",
+      "entries": 380
+    },
+    {
+      "id": 160,
+      "name": "docker",
+      "description": "Docker",
+      "category": "Dev",
+      "priority": "medium",
+      "entries": 680
+    },
+    {
+      "id": 161,
+      "name": "virtualbox",
+      "description": "VirtualBox",
+      "category": "Dev",
+      "priority": "low",
+      "entries": 920
+    },
+    {
+      "id": 162,
+      "name": "qemu",
+      "description": "QEMU",
+      "category": "Dev",
+      "priority": "low",
+      "entries": 520
+    },
+    {
+      "id": 163,
+      "name": "ubuntu-docs",
+      "description": "Ubuntu Documentation",
+      "category": "Docs",
+      "priority": "high",
+      "entries": 3200
+    },
+    {
+      "id": 164,
+      "name": "ubuntu-wallpapers",
+      "description": "Ubuntu Wallpapers",
+      "category": "Core",
+      "priority": "low",
+      "entries": 80
+    },
+    {
+      "id": 165,
+      "name": "ubuntu-sounds",
+      "description": "Ubuntu Sounds",
+      "category": "Core",
+      "priority": "low",
+      "entries": 60
+    },
+    {
+      "id": 166,
+      "name": "ubuntu-artwork",
+      "description": "Ubuntu Artwork",
+      "category": "Core",
+      "priority": "low",
+      "entries": 120
+    },
+    {
+      "id": 167,
+      "name": "ubuntu-mono",
+      "description": "Ubuntu Mono Icons",
+      "category": "Core",
+      "priority": "low",
+      "entries": 80
+    },
+    {
+      "id": 168,
+      "name": "ubuntu-sdk",
+      "description": "Ubuntu SDK",
+      "category": "Dev",
+      "priority": "low",
+      "entries": 1200
+    },
+    {
+      "id": 169,
+      "name": "ubuntu-touch",
+      "description": "Ubuntu Touch",
+      "category": "System",
+      "priority": "low",
+      "entries": 4800
+    },
+    {
+      "id": 170,
+      "name": "ubuntu-core",
+      "description": "Ubuntu Core",
+      "category": "System",
+      "priority": "low",
+      "entries": 680
+    },
+    {
+      "id": 171,
+      "name": "ubuntu-restricted-extras",
+      "description": "Ubuntu Restricted Extras",
+      "category": "System",
+      "priority": "low",
+      "entries": 80
+    },
+    {
+      "id": 172,
+      "name": "ubuntu-defaults",
+      "description": "Ubuntu Defaults",
+      "category": "Core",
+      "priority": "medium",
+      "entries": 180
+    },
+    {
+      "id": 173,
+      "name": "ubiquity-slideshow",
+      "description": "Installer Slideshow",
+      "category": "System",
+      "priority": "medium",
+      "entries": 320
+    },
+    {
+      "id": 174,
+      "name": "jockey",
+      "description": "Additional Drivers",
+      "category": "System",
+      "priority": "medium",
+      "entries": 240
+    },
+    {
+      "id": 175,
+      "name": "language-selector",
+      "description": "Language Support",
+      "category": "System",
+      "priority": "high",
+      "entries": 320
+    },
+    {
+      "id": 176,
+      "name": "im-config",
+      "description": "Input Method Config",
+      "category": "System",
+      "priority": "medium",
+      "entries": 180
+    },
+    {
+      "id": 177,
+      "name": "onboard",
+      "description": "Onboard Keyboard",
+      "category": "Accessibility",
+      "priority": "medium",
+      "entries": 520
+    },
+    {
+      "id": 178,
+      "name": "orca",
+      "description": "Orca Screen Reader",
+      "category": "Accessibility",
+      "priority": "medium",
+      "entries": 920
+    },
+    {
+      "id": 179,
+      "name": "mousetweaks",
+      "description": "Mouse Tweaks",
+      "category": "Accessibility",
+      "priority": "low",
+      "entries": 120
+    },
+    {
+      "id": 180,
+      "name": "dasher",
+      "description": "Dasher",
+      "category": "Accessibility",
+      "priority": "low",
+      "entries": 380
+    },
+    {
+      "id": 181,
+      "name": "caribou",
+      "description": "Caribou Keyboard",
+      "category": "Accessibility",
+      "priority": "low",
+      "entries": 280
+    },
+    {
+      "id": 182,
+      "name": "accerciser",
+      "description": "Accerciser",
+      "category": "Accessibility",
+      "priority": "low",
+      "entries": 220
+    },
+    {
+      "id": 183,
+      "name": "at-spi2",
+      "description": "AT-SPI2",
+      "category": "Accessibility",
+      "priority": "low",
+      "entries": 180
+    },
+    {
+      "id": 184,
+      "name": "xfce4-panel",
+      "description": "Xfce Panel",
+      "category": "Desktop",
+      "priority": "medium",
+      "entries": 520
+    },
+    {
+      "id": 185,
+      "name": "xfce4-settings",
+      "description": "Xfce Settings",
+      "category": "Desktop",
+      "priority": "medium",
+      "entries": 420
+    },
+    {
+      "id": 186,
+      "name": "xfce4-terminal",
+      "description": "Xfce Terminal",
+      "category": "Desktop",
+      "priority": "medium",
+      "entries": 280
+    },
+    {
+      "id": 187,
+      "name": "xfce4-appfinder",
+      "description": "Xfce App Finder",
+      "category": "Desktop",
+      "priority": "low",
+      "entries": 180
+    },
+    {
+      "id": 188,
+      "name": "xfce4-power-manager",
+      "description": "Xfce Power Manager",
+      "category": "Desktop",
+      "priority": "medium",
+      "entries": 320
+    },
+    {
+      "id": 189,
+      "name": "xfce4-notifyd",
+      "description": "Xfce Notifications",
+      "category": "Desktop",
+      "priority": "low",
+      "entries": 140
+    },
+    {
+      "id": 190,
+      "name": "xfce4-screensaver",
+      "description": "Xfce Screensaver",
+      "category": "Desktop",
+      "priority": "low",
+      "entries": 180
+    },
+    {
+      "id": 191,
+      "name": "xfce4-session",
+      "description": "Xfce Session",
+      "category": "Desktop",
+      "priority": "medium",
+      "entries": 220
+    },
+    {
+      "id": 192,
+      "name": "xfce4-whiskermenu",
+      "description": "Whisker Menu",
+      "category": "Desktop",
+      "priority": "low",
+      "entries": 180
+    },
+    {
+      "id": 193,
+      "name": "thunar",
+      "description": "Thunar File Manager",
+      "category": "Desktop",
+      "priority": "medium",
+      "entries": 520
+    },
+    {
+      "id": 194,
+      "name": "xfdashboard",
+      "description": "Xfdashboard",
+      "category": "Desktop",
+      "priority": "low",
+      "entries": 180
+    },
+    {
+      "id": 195,
+      "name": "ristretto",
+      "description": "Ristretto Image Viewer",
+      "category": "Desktop",
+      "priority": "low",
+      "entries": 180
+    },
+    {
+      "id": 196,
+      "name": "mousepad",
+      "description": "Mousepad Text Editor",
+      "category": "Desktop",
+      "priority": "low",
+      "entries": 180
+    },
+    {
+      "id": 197,
+      "name": "parole",
+      "description": "Parole Media Player",
+      "category": "Desktop",
+      "priority": "low",
+      "entries": 220
+    },
+    {
+      "id": 198,
+      "name": "xfburn",
+      "description": "Xfburn",
+      "category": "Desktop",
+      "priority": "low",
+      "entries": 140
+    },
+    {
+      "id": 199,
+      "name": "orage",
+      "description": "Orage Calendar",
+      "category": "Desktop",
+      "priority": "low",
+      "entries": 220
+    },
+    {
+      "id": 200,
+      "name": "galculator",
+      "description": "Galculator",
+      "category": "Desktop",
+      "priority": "low",
+      "entries": 160
+    },
+    {
+      "id": 201,
+      "name": "plasma-desktop",
+      "description": "KDE Plasma Desktop",
+      "category": "Desktop",
+      "priority": "medium",
+      "entries": 2400
+    },
+    {
+      "id": 202,
+      "name": "plasma-workspace",
+      "description": "KDE Plasma Workspace",
+      "category": "Desktop",
+      "priority": "medium",
+      "entries": 1800
+    },
+    {
+      "id": 203,
+      "name": "systemsettings",
+      "description": "KDE System Settings",
+      "category": "Desktop",
+      "priority": "medium",
+      "entries": 1200
+    },
+    {
+      "id": 204,
+      "name": "dolphin",
+      "description": "Dolphin File Manager",
+      "category": "Desktop",
+      "priority": "medium",
+      "entries": 820
+    },
+    {
+      "id": 205,
+      "name": "konsole",
+      "description": "Konsole Terminal",
+      "category": "Desktop",
+      "priority": "medium",
+      "entries": 520
+    },
+    {
+      "id": 206,
+      "name": "kate",
+      "description": "Kate Text Editor",
+      "category": "Desktop",
+      "priority": "medium",
+      "entries": 680
+    },
+    {
+      "id": 207,
+      "name": "okular",
+      "description": "Okular Document Viewer",
+      "category": "Desktop",
+      "priority": "medium",
+      "entries": 520
+    },
+    {
+      "id": 208,
+      "name": "gwenview",
+      "description": "Gwenview Image Viewer",
+      "category": "Desktop",
+      "priority": "low",
+      "entries": 380
+    },
+    {
+      "id": 209,
+      "name": "spectacle",
+      "description": "Spectacle Screenshot",
+      "category": "Desktop",
+      "priority": "low",
+      "entries": 240
+    },
+    {
+      "id": 210,
+      "name": "ark",
+      "description": "Ark Archive Manager",
+      "category": "Desktop",
+      "priority": "low",
+      "entries": 280
+    },
+    {
+      "id": 211,
+      "name": "kcalc",
+      "description": "KCalc Calculator",
+      "category": "Desktop",
+      "priority": "low",
+      "entries": 220
+    },
+    {
+      "id": 212,
+      "name": "kmail",
+      "description": "KMail",
+      "category": "Desktop",
+      "priority": "low",
+      "entries": 680
+    },
+    {
+      "id": 213,
+      "name": "korganizer",
+      "description": "KOrganizer Calendar",
+      "category": "Desktop",
+      "priority": "low",
+      "entries": 480
+    },
+    {
+      "id": 214,
+      "name": "kaddressbook",
+      "description": "KAddressBook",
+      "category": "Desktop",
+      "priority": "low",
+      "entries": 280
+    },
+    {
+      "id": 215,
+      "name": "dragon",
+      "description": "Dragon Player",
+      "category": "Desktop",
+      "priority": "low",
+      "entries": 180
+    },
+    {
+      "id": 216,
+      "name": "juk",
+      "description": "Juk Music Player",
+      "category": "Desktop",
+      "priority": "low",
+      "entries": 240
+    },
+    {
+      "id": 217,
+      "name": "kamoso",
+      "description": "Kamoso Webcam",
+      "category": "Desktop",
+      "priority": "low",
+      "entries": 140
+    },
+    {
+      "id": 218,
+      "name": "kdeconnect",
+      "description": "KDE Connect",
+      "category": "Desktop",
+      "priority": "medium",
+      "entries": 380
+    },
+    {
+      "id": 219,
+      "name": "plasma-nm",
+      "description": "Plasma Network Manager",
+      "category": "Desktop",
+      "priority": "medium",
+      "entries": 320
+    },
+    {
+      "id": 220,
+      "name": "plasma-pa",
+      "description": "Plasma Audio",
+      "category": "Desktop",
+      "priority": "low",
+      "entries": 140
+    },
+    {
+      "id": 221,
+      "name": "plasma-browser-integration",
+      "description": "Browser Integration",
+      "category": "Desktop",
+      "priority": "low",
+      "entries": 120
+    },
+    {
+      "id": 222,
+      "name": "kde-gtk-config",
+      "description": "KDE GTK Config",
+      "category": "Desktop",
+      "priority": "low",
+      "entries": 80
+    },
+    {
+      "id": 223,
+      "name": "breeze",
+      "description": "Breeze Theme",
+      "category": "Desktop",
+      "priority": "low",
+      "entries": 180
+    },
+    {
+      "id": 224,
+      "name": "oxygen",
+      "description": "Oxygen Theme",
+      "category": "Desktop",
+      "priority": "low",
+      "entries": 140
+    },
+    {
+      "id": 225,
+      "name": "discover",
+      "description": "Discover Software Center",
+      "category": "Desktop",
+      "priority": "medium",
+      "entries": 620
+    },
+    {
+      "id": 226,
+      "name": "sddm",
+      "description": "SDDM Login Manager",
+      "category": "Desktop",
+      "priority": "medium",
+      "entries": 180
+    },
+    {
+      "id": 227,
+      "name": "partitionmanager",
+      "description": "KDE Partition Manager",
+      "category": "Desktop",
+      "priority": "low",
+      "entries": 320
+    },
+    {
+      "id": 228,
+      "name": "filelight",
+      "description": "Filelight Disk Usage",
+      "category": "Desktop",
+      "priority": "low",
+      "entries": 180
+    },
+    {
+      "id": 229,
+      "name": "ksysguard",
+      "description": "KSysGuard",
+      "category": "Desktop",
+      "priority": "low",
+      "entries": 280
+    },
+    {
+      "id": 230,
+      "name": "yakuake",
+      "description": "Yakuake Terminal",
+      "category": "Desktop",
+      "priority": "low",
+      "entries": 180
+    },
+    {
+      "id": 231,
+      "name": "maas",
+      "description": "MAAS",
+      "category": "Server",
+      "priority": "low",
+      "entries": 1800
+    },
+    {
+      "id": 232,
+      "name": "juju",
+      "description": "Juju",
+      "category": "Server",
+      "priority": "low",
+      "entries": 1200
+    },
+    {
+      "id": 233,
+      "name": "openstack",
+      "description": "OpenStack",
+      "category": "Server",
+      "priority": "low",
+      "entries": 8000
+    },
+    {
+      "id": 234,
+      "name": "cloud-init",
+      "description": "Cloud Init",
+      "category": "Server",
+      "priority": "medium",
+      "entries": 420
+    },
+    {
+      "id": 235,
+      "name": "landscape-server",
+      "description": "Landscape Server",
+      "category": "Server",
+      "priority": "low",
+      "entries": 820
+    },
+    {
+      "id": 236,
+      "name": "multipass",
+      "description": "Multipass",
+      "category": "Server",
+      "priority": "medium",
+      "entries": 380
+    },
+    {
+      "id": 237,
+      "name": "lxd",
+      "description": "LXD",
+      "category": "Server",
+      "priority": "medium",
+      "entries": 680
+    },
+    {
+      "id": 238,
+      "name": "microk8s",
+      "description": "MicroK8s",
+      "category": "Server",
+      "priority": "low",
+      "entries": 420
+    },
+    {
+      "id": 239,
+      "name": "snapd",
+      "description": "Snapd",
+      "category": "System",
+      "priority": "high",
+      "entries": 620
+    },
+    {
+      "id": 240,
+      "name": "netplan.io",
+      "description": "Netplan IO",
+      "category": "System",
+      "priority": "medium",
+      "entries": 240
+    },
+    {
+      "id": 241,
+      "name": "curtin",
+      "description": "Curtin",
+      "category": "Server",
+      "priority": "low",
+      "entries": 180
+    },
+    {
+      "id": 242,
+      "name": "subiquity",
+      "description": "Subiquity Installer",
+      "category": "Server",
+      "priority": "high",
+      "entries": 920
+    },
+    {
+      "id": 243,
+      "name": "pro",
+      "description": "Ubuntu Pro",
+      "category": "Server",
+      "priority": "medium",
+      "entries": 320
+    },
+    {
+      "id": 244,
+      "name": "livepatch",
+      "description": "Livepatch",
+      "category": "Server",
+      "priority": "low",
+      "entries": 180
+    },
+    {
+      "id": 245,
+      "name": "ubuntu-advantage-tools",
+      "description": "Advantage Tools",
+      "category": "Server",
+      "priority": "low",
+      "entries": 280
+    },
+    {
+      "id": 246,
+      "name": "gufw",
+      "description": "Gufw Firewall",
+      "category": "System",
+      "priority": "low",
+      "entries": 280
+    },
+    {
+      "id": 247,
+      "name": "clamav",
+      "description": "ClamAV Antivirus",
+      "category": "System",
+      "priority": "low",
+      "entries": 420
+    },
+    {
+      "id": 248,
+      "name": "fail2ban",
+      "description": "Fail2Ban",
+      "category": "System",
+      "priority": "low",
+      "entries": 280
+    },
+    {
+      "id": 249,
+      "name": "aide",
+      "description": "AIDE",
+      "category": "System",
+      "priority": "low",
+      "entries": 180
+    },
+    {
+      "id": 250,
+      "name": "lynis",
+      "description": "Lynis Security",
+      "category": "System",
+      "priority": "low",
+      "entries": 220
+    },
+    {
+      "id": 251,
+      "name": "rkhunter",
+      "description": "RKHunter",
+      "category": "System",
+      "priority": "low",
+      "entries": 180
+    },
+    {
+      "id": 252,
+      "name": "chkrootkit",
+      "description": "Chkrootkit",
+      "category": "System",
+      "priority": "low",
+      "entries": 120
+    },
+    {
+      "id": 253,
+      "name": "john",
+      "description": "John the Ripper",
+      "category": "System",
+      "priority": "low",
+      "entries": 280
+    },
+    {
+      "id": 254,
+      "name": "hydra",
+      "description": "THC Hydra",
+      "category": "System",
+      "priority": "low",
+      "entries": 220
+    },
+    {
+      "id": 255,
+      "name": "aircrack-ng",
+      "description": "Aircrack-ng",
+      "category": "System",
+      "priority": "low",
+      "entries": 320
+    },
+    {
+      "id": 256,
+      "name": "nikto",
+      "description": "Nikto",
+      "category": "System",
+      "priority": "low",
+      "entries": 180
+    },
+    {
+      "id": 257,
+      "name": "burpsuite",
+      "description": "Burp Suite",
+      "category": "System",
+      "priority": "low",
+      "entries": 680
+    },
+    {
+      "id": 258,
+      "name": "stellarium",
+      "description": "Stellarium",
+      "category": "Education",
+      "priority": "low",
+      "entries": 1200
+    },
+    {
+      "id": 259,
+      "name": "gcompris",
+      "description": "GCompris",
+      "category": "Education",
+      "priority": "low",
+      "entries": 1800
+    },
+    {
+      "id": 260,
+      "name": "scratch",
+      "description": "Scratch",
+      "category": "Education",
+      "priority": "low",
+      "entries": 820
+    },
+    {
+      "id": 261,
+      "name": "geogebra",
+      "description": "GeoGebra",
+      "category": "Education",
+      "priority": "low",
+      "entries": 1400
+    },
+    {
+      "id": 262,
+      "name": "kalzium",
+      "description": "Kalzium",
+      "category": "Education",
+      "priority": "low",
+      "entries": 680
+    },
+    {
+      "id": 263,
+      "name": "ktouch",
+      "description": "KTouch Typing",
+      "category": "Education",
+      "priority": "low",
+      "entries": 380
+    },
+    {
+      "id": 264,
+      "name": "kstars",
+      "description": "KStars Astronomy",
+      "category": "Education",
+      "priority": "low",
+      "entries": 920
+    },
+    {
+      "id": 265,
+      "name": "marble",
+      "description": "Marble Globe",
+      "category": "Education",
+      "priority": "low",
+      "entries": 620
+    },
+    {
+      "id": 266,
+      "name": "step",
+      "description": "Step Physics",
+      "category": "Education",
+      "priority": "low",
+      "entries": 420
+    },
+    {
+      "id": 267,
+      "name": "cantor",
+      "description": "Cantor Math",
+      "category": "Education",
+      "priority": "low",
+      "entries": 480
+    },
+    {
+      "id": 268,
+      "name": "rocs",
+      "description": "Rocs Graph Theory",
+      "category": "Education",
+      "priority": "low",
+      "entries": 280
+    },
+    {
+      "id": 269,
+      "name": "blinken",
+      "description": "Blinken Memory",
+      "category": "Education",
+      "priority": "low",
+      "entries": 120
+    },
+    {
+      "id": 270,
+      "name": "kanagram",
+      "description": "Kanagram Anagram",
+      "category": "Education",
+      "priority": "low",
+      "entries": 140
+    },
+    {
+      "id": 271,
+      "name": "khangman",
+      "description": "KHangman",
+      "category": "Education",
+      "priority": "low",
+      "entries": 120
+    },
+    {
+      "id": 272,
+      "name": "kgeography",
+      "description": "KGeography",
+      "category": "Education",
+      "priority": "low",
+      "entries": 480
+    },
+    {
+      "id": 273,
+      "name": "kiten",
+      "description": "Kiten Japanese",
+      "category": "Education",
+      "priority": "low",
+      "entries": 320
+    },
+    {
+      "id": 274,
+      "name": "parley",
+      "description": "Parley Vocabulary",
+      "category": "Education",
+      "priority": "low",
+      "entries": 380
+    },
+    {
+      "id": 275,
+      "name": "artikulate",
+      "description": "Artikulate Pronunciation",
+      "category": "Education",
+      "priority": "low",
+      "entries": 220
+    },
+    {
+      "id": 276,
+      "name": "kdenlive",
+      "description": "Kdenlive Video Editor",
+      "category": "Apps",
+      "priority": "low",
+      "entries": 1800
+    },
+    {
+      "id": 277,
+      "name": "pitivi",
+      "description": "PiTiVi Video Editor",
+      "category": "Apps",
+      "priority": "low",
+      "entries": 820
+    },
+    {
+      "id": 278,
+      "name": "handbrake",
+      "description": "HandBrake",
+      "category": "Apps",
+      "priority": "low",
+      "entries": 620
+    },
+    {
+      "id": 279,
+      "name": "obs-studio",
+      "description": "OBS Studio",
+      "category": "Apps",
+      "priority": "low",
+      "entries": 920
+    },
+    {
+      "id": 280,
+      "name": "ardour",
+      "description": "Ardour Audio",
+      "category": "Apps",
+      "priority": "low",
+      "entries": 1400
+    },
+    {
+      "id": 281,
+      "name": "lmms",
+      "description": "LMMS Music",
+      "category": "Apps",
+      "priority": "low",
+      "entries": 680
+    },
+    {
+      "id": 282,
+      "name": "hydrogen",
+      "description": "Hydrogen Drums",
+      "category": "Apps",
+      "priority": "low",
+      "entries": 420
+    },
+    {
+      "id": 283,
+      "name": "musescore",
+      "description": "MuseScore",
+      "category": "Apps",
+      "priority": "low",
+      "entries": 1200
+    },
+    {
+      "id": 284,
+      "name": "openshot",
+      "description": "OpenShot Video",
+      "category": "Apps",
+      "priority": "low",
+      "entries": 680
+    },
+    {
+      "id": 285,
+      "name": "freemind",
+      "description": "FreeMind Mindmap",
+      "category": "Apps",
+      "priority": "low",
+      "entries": 420
+    },
+    {
+      "id": 286,
+      "name": "scribus",
+      "description": "Scribus Publishing",
+      "category": "Apps",
+      "priority": "low",
+      "entries": 1800
+    },
+    {
+      "id": 287,
+      "name": "mypaint",
+      "description": "MyPaint",
+      "category": "Apps",
+      "priority": "low",
+      "entries": 420
+    },
+    {
+      "id": 288,
+      "name": "krita",
+      "description": "Krita Painting",
+      "category": "Apps",
+      "priority": "low",
+      "entries": 2400
+    },
+    {
+      "id": 289,
+      "name": "darktable",
+      "description": "Darktable Photography",
+      "category": "Apps",
+      "priority": "low",
+      "entries": 1800
+    },
+    {
+      "id": 290,
+      "name": "rawtherapee",
+      "description": "RawTherapee",
+      "category": "Apps",
+      "priority": "low",
+      "entries": 1200
+    },
+    {
+      "id": 291,
+      "name": "hugin",
+      "description": "Hugin Panorama",
+      "category": "Apps",
+      "priority": "low",
+      "entries": 680
+    },
+    {
+      "id": 292,
+      "name": "brasero",
+      "description": "Brasero Disc Burner",
+      "category": "Apps",
+      "priority": "low",
+      "entries": 420
+    },
+    {
+      "id": 293,
+      "name": "deja-dup",
+      "description": "Backups (D\u00e9j\u00e0 Dup)",
+      "category": "Apps",
+      "priority": "medium",
+      "entries": 320
+    },
+    {
+      "id": 294,
+      "name": "gnome-builder",
+      "description": "GNOME Builder",
+      "category": "Dev",
+      "priority": "low",
+      "entries": 1200
+    },
+    {
+      "id": 295,
+      "name": "meld",
+      "description": "Meld Diff Viewer",
+      "category": "Dev",
+      "priority": "low",
+      "entries": 420
+    },
+    {
+      "id": 296,
+      "name": "glade",
+      "description": "Glade UI Designer",
+      "category": "Dev",
+      "priority": "low",
+      "entries": 520
+    },
+    {
+      "id": 297,
+      "name": "anjuta",
+      "description": "Anjuta IDE",
+      "category": "Dev",
+      "priority": "low",
+      "entries": 680
+    },
+    {
+      "id": 298,
+      "name": "geany",
+      "description": "Geany IDE",
+      "category": "Dev",
+      "priority": "low",
+      "entries": 520
+    },
+    {
+      "id": 299,
+      "name": "codeblocks",
+      "description": "Code::Blocks",
+      "category": "Dev",
+      "priority": "low",
+      "entries": 680
+    },
+    {
+      "id": 300,
+      "name": "netbeans",
+      "description": "NetBeans IDE",
+      "category": "Dev",
+      "priority": "low",
+      "entries": 1800
+    },
+    {
+      "id": 301,
+      "name": "spyder",
+      "description": "Spyder Python IDE",
+      "category": "Dev",
+      "priority": "low",
+      "entries": 620
+    },
+    {
+      "id": 302,
+      "name": "thonny",
+      "description": "Thonny Python IDE",
+      "category": "Dev",
+      "priority": "low",
+      "entries": 320
+    },
+    {
+      "id": 303,
+      "name": "idle3",
+      "description": "IDLE Python",
+      "category": "Dev",
+      "priority": "low",
+      "entries": 280
+    },
+    {
+      "id": 304,
+      "name": "sqlitebrowser",
+      "description": "SQLite Browser",
+      "category": "Dev",
+      "priority": "low",
+      "entries": 380
+    },
+    {
+      "id": 305,
+      "name": "d-feet",
+      "description": "D-Feet D-Bus",
+      "category": "Dev",
+      "priority": "low",
+      "entries": 180
+    },
+    {
+      "id": 306,
+      "name": "sysprof",
+      "description": "Sysprof Profiler",
+      "category": "Dev",
+      "priority": "low",
+      "entries": 220
+    },
+    {
+      "id": 307,
+      "name": "valgrind",
+      "description": "Valgrind",
+      "category": "Dev",
+      "priority": "low",
+      "entries": 320
+    },
+    {
+      "id": 308,
+      "name": "strace",
+      "description": "Strace",
+      "category": "Dev",
+      "priority": "low",
+      "entries": 180
+    },
+    {
+      "id": 309,
+      "name": "ltrace",
+      "description": "Ltrace",
+      "category": "Dev",
+      "priority": "low",
+      "entries": 120
+    },
+    {
+      "id": 310,
+      "name": "cmake",
+      "description": "CMake",
+      "category": "Dev",
+      "priority": "low",
+      "entries": 280
+    },
+    {
+      "id": 311,
+      "name": "meson",
+      "description": "Meson Build",
+      "category": "Dev",
+      "priority": "low",
+      "entries": 220
+    },
+    {
+      "id": 312,
+      "name": "ninja",
+      "description": "Ninja Build",
+      "category": "Dev",
+      "priority": "low",
+      "entries": 120
+    },
+    {
+      "id": 313,
+      "name": "autotools",
+      "description": "GNU Autotools",
+      "category": "Dev",
+      "priority": "low",
+      "entries": 280
+    },
+    {
+      "id": 314,
+      "name": "make",
+      "description": "GNU Make",
+      "category": "Dev",
+      "priority": "low",
+      "entries": 180
+    },
+    {
+      "id": 315,
+      "name": "autoconf",
+      "description": "Autoconf",
+      "category": "Dev",
+      "priority": "low",
+      "entries": 140
+    },
+    {
+      "id": 316,
+      "name": "automake",
+      "description": "Automake",
+      "category": "Dev",
+      "priority": "low",
+      "entries": 120
+    },
+    {
+      "id": 317,
+      "name": "libtool",
+      "description": "Libtool",
+      "category": "Dev",
+      "priority": "low",
+      "entries": 120
+    },
+    {
+      "id": 318,
+      "name": "pkg-config",
+      "description": "pkg-config",
+      "category": "Dev",
+      "priority": "low",
+      "entries": 80
+    },
+    {
+      "id": 319,
+      "name": "doxygen",
+      "description": "Doxygen",
+      "category": "Dev",
+      "priority": "low",
+      "entries": 280
+    },
+    {
+      "id": 320,
+      "name": "gettext",
+      "description": "GNU Gettext",
+      "category": "Dev",
+      "priority": "high",
+      "entries": 180
+    },
+    {
+      "id": 321,
+      "name": "intltool",
+      "description": "Intltool",
+      "category": "Dev",
+      "priority": "low",
+      "entries": 80
+    },
+    {
+      "id": 322,
+      "name": "itstool",
+      "description": "ITS Tool",
+      "category": "Dev",
+      "priority": "low",
+      "entries": 60
+    },
+    {
+      "id": 323,
+      "name": "xml2po",
+      "description": "xml2po",
+      "category": "Dev",
+      "priority": "low",
+      "entries": 60
+    },
+    {
+      "id": 324,
+      "name": "po4a",
+      "description": "Po4a",
+      "category": "Dev",
+      "priority": "low",
+      "entries": 120
+    },
+    {
+      "id": 325,
+      "name": "pootle",
+      "description": "Pootle",
+      "category": "Dev",
+      "priority": "low",
+      "entries": 480
+    },
+    {
+      "id": 326,
+      "name": "weblate",
+      "description": "Weblate",
+      "category": "Dev",
+      "priority": "low",
+      "entries": 820
+    },
+    {
+      "id": 327,
+      "name": "transifex",
+      "description": "Transifex Client",
+      "category": "Dev",
+      "priority": "low",
+      "entries": 120
+    },
+    {
+      "id": 328,
+      "name": "zanata",
+      "description": "Zanata",
+      "category": "Dev",
+      "priority": "low",
+      "entries": 420
+    },
+    {
+      "id": 329,
+      "name": "lokalize",
+      "description": "Lokalize",
+      "category": "Dev",
+      "priority": "low",
+      "entries": 320
+    },
+    {
+      "id": 330,
+      "name": "poedit",
+      "description": "Poedit",
+      "category": "Dev",
+      "priority": "low",
+      "entries": 280
+    },
+    {
+      "id": 331,
+      "name": "virt-manager",
+      "description": "Virt Manager",
+      "category": "Dev",
+      "priority": "low",
+      "entries": 520
+    },
+    {
+      "id": 332,
+      "name": "gnome-boxes",
+      "description": "GNOME Boxes",
+      "category": "Apps",
+      "priority": "low",
+      "entries": 320
+    },
+    {
+      "id": 333,
+      "name": "deja-dup",
+      "description": "D\u00e9j\u00e0 Dup Backups",
+      "category": "Apps",
+      "priority": "medium",
+      "entries": 320
+    },
+    {
+      "id": 334,
+      "name": "timeshift",
+      "description": "Timeshift",
+      "category": "System",
+      "priority": "low",
+      "entries": 380
+    },
+    {
+      "id": 335,
+      "name": "stacer",
+      "description": "Stacer System",
+      "category": "System",
+      "priority": "low",
+      "entries": 280
+    },
+    {
+      "id": 336,
+      "name": "bleachbit",
+      "description": "BleachBit",
+      "category": "System",
+      "priority": "low",
+      "entries": 220
+    },
+    {
+      "id": 337,
+      "name": "gparted",
+      "description": "GParted",
+      "category": "System",
+      "priority": "medium",
+      "entries": 480
+    },
+    {
+      "id": 338,
+      "name": "testdisk",
+      "description": "TestDisk",
+      "category": "System",
+      "priority": "low",
+      "entries": 180
+    },
+    {
+      "id": 339,
+      "name": "clamtk",
+      "description": "ClamTk Antivirus",
+      "category": "System",
+      "priority": "low",
+      "entries": 220
+    },
+    {
+      "id": 340,
+      "name": "sweeper",
+      "description": "Sweeper",
+      "category": "System",
+      "priority": "low",
+      "entries": 140
+    },
+    {
+      "id": 341,
+      "name": "ksystemlog",
+      "description": "KSystemLog",
+      "category": "System",
+      "priority": "low",
+      "entries": 180
+    },
+    {
+      "id": 342,
+      "name": "kdiff3",
+      "description": "KDiff3",
+      "category": "Dev",
+      "priority": "low",
+      "entries": 220
+    },
+    {
+      "id": 343,
+      "name": "kompare",
+      "description": "Kompare",
+      "category": "Dev",
+      "priority": "low",
+      "entries": 180
+    },
+    {
+      "id": 344,
+      "name": "kcachegrind",
+      "description": "KCachegrind",
+      "category": "Dev",
+      "priority": "low",
+      "entries": 220
+    },
+    {
+      "id": 345,
+      "name": "massif-visualizer",
+      "description": "Massif Visualizer",
+      "category": "Dev",
+      "priority": "low",
+      "entries": 140
+    },
+    {
+      "id": 346,
+      "name": "heaptrack",
+      "description": "Heaptrack",
+      "category": "Dev",
+      "priority": "low",
+      "entries": 180
+    },
+    {
+      "id": 347,
+      "name": "hotspot",
+      "description": "Hotspot Profiler",
+      "category": "Dev",
+      "priority": "low",
+      "entries": 180
+    },
+    {
+      "id": 348,
+      "name": "eog-plugins",
+      "description": "Eye of GNOME Plugins",
+      "category": "Apps",
+      "priority": "low",
+      "entries": 180
+    },
+    {
+      "id": 349,
+      "name": "evolution-ews",
+      "description": "Evolution EWS",
+      "category": "Apps",
+      "priority": "low",
+      "entries": 420
+    },
+    {
+      "id": 350,
+      "name": "evolution-rss",
+      "description": "Evolution RSS",
+      "category": "Apps",
+      "priority": "low",
+      "entries": 180
+    },
+    {
+      "id": 351,
+      "name": "file-roller",
+      "description": "File Roller",
+      "category": "Apps",
+      "priority": "low",
+      "entries": 340
+    },
+    {
+      "id": 352,
+      "name": "foliate",
+      "description": "Foliate Ebook Reader",
+      "category": "Apps",
+      "priority": "low",
+      "entries": 320
+    },
+    {
+      "id": 353,
+      "name": "fractal",
+      "description": "Fractal Matrix Client",
+      "category": "Apps",
+      "priority": "low",
+      "entries": 420
+    },
+    {
+      "id": 354,
+      "name": "gfeeds",
+      "description": "Feeds RSS Reader",
+      "category": "Apps",
+      "priority": "low",
+      "entries": 220
+    },
+    {
+      "id": 355,
+      "name": "ghex",
+      "description": "GHex Hex Editor",
+      "category": "Dev",
+      "priority": "low",
+      "entries": 180
+    },
+    {
+      "id": 356,
+      "name": "gitg",
+      "description": "Gitg Git Viewer",
+      "category": "Dev",
+      "priority": "low",
+      "entries": 280
+    },
+    {
+      "id": 357,
+      "name": "glom",
+      "description": "Glom Database",
+      "category": "Dev",
+      "priority": "low",
+      "entries": 380
+    },
+    {
+      "id": 358,
+      "name": "gnome-authenticator",
+      "description": "Authenticator",
+      "category": "Apps",
+      "priority": "low",
+      "entries": 220
+    },
+    {
+      "id": 359,
+      "name": "gnome-crypto-toolkit",
+      "description": "Crypto Toolkit",
+      "category": "System",
+      "priority": "low",
+      "entries": 180
+    },
+    {
+      "id": 360,
+      "name": "gnome-decoder",
+      "description": "Decoder QR",
+      "category": "Apps",
+      "priority": "low",
+      "entries": 160
+    },
+    {
+      "id": 361,
+      "name": "gnome-epub-thumbnailer",
+      "description": "EPUB Thumbnailer",
+      "category": "Apps",
+      "priority": "low",
+      "entries": 60
+    },
+    {
+      "id": 362,
+      "name": "gnome-flashback",
+      "description": "GNOME Flashback",
+      "category": "Core",
+      "priority": "low",
+      "entries": 420
+    },
+    {
+      "id": 363,
+      "name": "gnome-firmware",
+      "description": "Firmware Updater",
+      "category": "System",
+      "priority": "low",
+      "entries": 180
+    },
+    {
+      "id": 364,
+      "name": "gnome-multi-writer",
+      "description": "Multi Writer",
+      "category": "Apps",
+      "priority": "low",
+      "entries": 120
+    },
+    {
+      "id": 365,
+      "name": "gnome-nettool",
+      "description": "Network Tool",
+      "category": "System",
+      "priority": "low",
+      "entries": 180
+    },
+    {
+      "id": 366,
+      "name": "gnome-network-displays",
+      "description": "Network Displays",
+      "category": "Apps",
+      "priority": "low",
+      "entries": 160
+    },
+    {
+      "id": 367,
+      "name": "gnome-notes",
+      "description": "GNOME Notes",
+      "category": "Apps",
+      "priority": "low",
+      "entries": 180
+    },
+    {
+      "id": 368,
+      "name": "gnome-online-accounts",
+      "description": "Online Accounts",
+      "category": "Core",
+      "priority": "medium",
+      "entries": 280
+    },
+    {
+      "id": 369,
+      "name": "gnome-podcasts",
+      "description": "Podcasts",
+      "category": "Apps",
+      "priority": "low",
+      "entries": 220
+    },
+    {
+      "id": 370,
+      "name": "gnome-recorder",
+      "description": "Recorder",
+      "category": "Apps",
+      "priority": "low",
+      "entries": 140
+    },
+    {
+      "id": 371,
+      "name": "gnome-remote-desktop",
+      "description": "Remote Desktop",
+      "category": "System",
+      "priority": "low",
+      "entries": 280
+    },
+    {
+      "id": 372,
+      "name": "gnome-shell-extensions",
+      "description": "Shell Extensions",
+      "category": "Core",
+      "priority": "low",
+      "entries": 280
+    },
+    {
+      "id": 373,
+      "name": "gnome-tour",
+      "description": "GNOME Tour",
+      "category": "Core",
+      "priority": "low",
+      "entries": 120
+    },
+    {
+      "id": 374,
+      "name": "gnome-tweaks",
+      "description": "Tweaks",
+      "category": "Apps",
+      "priority": "medium",
+      "entries": 240
+    },
+    {
+      "id": 375,
+      "name": "gnome-user-docs",
+      "description": "User Docs",
+      "category": "Docs",
+      "priority": "medium",
+      "entries": 1200
+    },
+    {
+      "id": 376,
+      "name": "gthumb",
+      "description": "gThumb Image Viewer",
+      "category": "Apps",
+      "priority": "low",
+      "entries": 480
+    },
+    {
+      "id": 377,
+      "name": "gtkatlantic",
+      "description": "GTK Atlantic",
+      "category": "Games",
+      "priority": "low",
+      "entries": 180
+    },
+    {
+      "id": 378,
+      "name": "gtkdialer",
+      "description": "GTK Dialer",
+      "category": "Apps",
+      "priority": "low",
+      "entries": 120
+    },
+    {
+      "id": 379,
+      "name": "gtkhash",
+      "description": "GTK Hash",
+      "category": "System",
+      "priority": "low",
+      "entries": 140
+    },
+    {
+      "id": 380,
+      "name": "gtranslator",
+      "description": "Gtranslator",
+      "category": "Dev",
+      "priority": "low",
+      "entries": 280
+    },
+    {
+      "id": 381,
+      "name": "guake",
+      "description": "Guake Terminal",
+      "category": "Dev",
+      "priority": "low",
+      "entries": 220
+    },
+    {
+      "id": 382,
+      "name": "gufw",
+      "description": "Gufw Firewall",
+      "category": "System",
+      "priority": "low",
+      "entries": 280
+    },
+    {
+      "id": 383,
+      "name": "hexchat",
+      "description": "HexChat IRC",
+      "category": "Apps",
+      "priority": "low",
+      "entries": 380
+    },
+    {
+      "id": 384,
+      "name": "hplip",
+      "description": "HP Printer Driver",
+      "category": "System",
+      "priority": "medium",
+      "entries": 680
+    },
+    {
+      "id": 385,
+      "name": "ibus",
+      "description": "IBus Input",
+      "category": "System",
+      "priority": "medium",
+      "entries": 520
+    },
+    {
+      "id": 386,
+      "name": "ibus-anthy",
+      "description": "IBus Anthy Japanese",
+      "category": "System",
+      "priority": "low",
+      "entries": 380
+    },
+    {
+      "id": 387,
+      "name": "ibus-chewing",
+      "description": "IBus Chewing Chinese",
+      "category": "System",
+      "priority": "low",
+      "entries": 280
+    },
+    {
+      "id": 388,
+      "name": "ibus-hangul",
+      "description": "IBus Hangul Korean",
+      "category": "System",
+      "priority": "low",
+      "entries": 280
+    },
+    {
+      "id": 389,
+      "name": "ibus-libpinyin",
+      "description": "IBus Pinyin",
+      "category": "System",
+      "priority": "low",
+      "entries": 320
+    },
+    {
+      "id": 390,
+      "name": "ibus-m17n",
+      "description": "IBus m17n",
+      "category": "System",
+      "priority": "low",
+      "entries": 280
+    },
+    {
+      "id": 391,
+      "name": "ibus-unikey",
+      "description": "IBus Unikey Vietnamese",
+      "category": "System",
+      "priority": "low",
+      "entries": 220
+    },
+    {
+      "id": 392,
+      "name": "im-chooser",
+      "description": "IM Chooser",
+      "category": "System",
+      "priority": "low",
+      "entries": 120
+    },
+    {
+      "id": 393,
+      "name": "indicator-application",
+      "description": "App Indicator",
+      "category": "Core",
+      "priority": "low",
+      "entries": 120
+    },
+    {
+      "id": 394,
+      "name": "indicator-bluetooth",
+      "description": "Bluetooth Indicator",
+      "category": "Core",
+      "priority": "low",
+      "entries": 100
+    },
+    {
+      "id": 395,
+      "name": "indicator-datetime",
+      "description": "Datetime Indicator",
+      "category": "Core",
+      "priority": "low",
+      "entries": 140
+    },
+    {
+      "id": 396,
+      "name": "indicator-keyboard",
+      "description": "Keyboard Indicator",
+      "category": "Core",
+      "priority": "low",
+      "entries": 100
+    },
+    {
+      "id": 397,
+      "name": "indicator-messages",
+      "description": "Messages Indicator",
+      "category": "Core",
+      "priority": "low",
+      "entries": 100
+    },
+    {
+      "id": 398,
+      "name": "indicator-network",
+      "description": "Network Indicator",
+      "category": "Core",
+      "priority": "low",
+      "entries": 120
+    },
+    {
+      "id": 399,
+      "name": "indicator-power",
+      "description": "Power Indicator",
+      "category": "Core",
+      "priority": "low",
+      "entries": 100
+    },
+    {
+      "id": 400,
+      "name": "indicator-printers",
+      "description": "Printers Indicator",
+      "category": "Core",
+      "priority": "low",
+      "entries": 80
+    },
+    {
+      "id": 401,
+      "name": "indicator-session",
+      "description": "Session Indicator",
+      "category": "Core",
+      "priority": "low",
+      "entries": 100
+    },
+    {
+      "id": 402,
+      "name": "indicator-sound",
+      "description": "Sound Indicator",
+      "category": "Core",
+      "priority": "low",
+      "entries": 100
+    },
+    {
+      "id": 403,
+      "name": "kazam",
+      "description": "Kazam Screencast",
+      "category": "Apps",
+      "priority": "low",
+      "entries": 280
+    },
+    {
+      "id": 404,
+      "name": "kdeconnect",
+      "description": "KDE Connect",
+      "category": "Desktop",
+      "priority": "medium",
+      "entries": 380
+    },
+    {
+      "id": 405,
+      "name": "keepassxc",
+      "description": "KeePassXC",
+      "category": "Apps",
+      "priority": "low",
+      "entries": 420
+    },
+    {
+      "id": 406,
+      "name": "kdenlive",
+      "description": "Kdenlive Video",
+      "category": "Apps",
+      "priority": "low",
+      "entries": 1800
+    },
+    {
+      "id": 407,
+      "name": "kile",
+      "description": "Kile LaTeX",
+      "category": "Dev",
+      "priority": "low",
+      "entries": 680
+    },
+    {
+      "id": 408,
+      "name": "kolourpaint",
+      "description": "Kolourpaint",
+      "category": "Apps",
+      "priority": "low",
+      "entries": 220
+    },
+    {
+      "id": 409,
+      "name": "konversation",
+      "description": "Konversation IRC",
+      "category": "Apps",
+      "priority": "low",
+      "entries": 380
+    },
+    {
+      "id": 410,
+      "name": "kphotoalbum",
+      "description": "KPhotoAlbum",
+      "category": "Apps",
+      "priority": "low",
+      "entries": 420
+    },
+    {
+      "id": 411,
+      "name": "krita",
+      "description": "Krita Painting",
+      "category": "Apps",
+      "priority": "low",
+      "entries": 2400
+    },
+    {
+      "id": 412,
+      "name": "kscreen",
+      "description": "KScreen",
+      "category": "Desktop",
+      "priority": "low",
+      "entries": 140
+    },
+    {
+      "id": 413,
+      "name": "ksudoku",
+      "description": "KSudoku",
+      "category": "Games",
+      "priority": "low",
+      "entries": 140
+    },
+    {
+      "id": 414,
+      "name": "kteatime",
+      "description": "KTeaTime",
+      "category": "Games",
+      "priority": "low",
+      "entries": 80
+    },
+    {
+      "id": 415,
+      "name": "ktimer",
+      "description": "KTimer",
+      "category": "Desktop",
+      "priority": "low",
+      "entries": 80
+    },
+    {
+      "id": 416,
+      "name": "ktorrent",
+      "description": "KTorrent",
+      "category": "Apps",
+      "priority": "low",
+      "entries": 420
+    },
+    {
+      "id": 417,
+      "name": "kwallet",
+      "description": "KWallet",
+      "category": "Desktop",
+      "priority": "medium",
+      "entries": 180
+    },
+    {
+      "id": 418,
+      "name": "kwin",
+      "description": "KWin Window Manager",
+      "category": "Desktop",
+      "priority": "medium",
+      "entries": 680
+    },
+    {
+      "id": 419,
+      "name": "libreoffice-l10n",
+      "description": "LibreOffice L10n",
+      "category": "Apps",
+      "priority": "high",
+      "entries": 200
+    },
+    {
+      "id": 420,
+      "name": "lightdm",
+      "description": "LightDM",
+      "category": "System",
+      "priority": "medium",
+      "entries": 280
+    },
+    {
+      "id": 421,
+      "name": "lightdm-gtk-greeter",
+      "description": "LightDM GTK Greeter",
+      "category": "System",
+      "priority": "medium",
+      "entries": 180
+    },
+    {
+      "id": 422,
+      "name": "lp-appinstall",
+      "description": "App Install",
+      "category": "System",
+      "priority": "low",
+      "entries": 80
+    },
+    {
+      "id": 423,
+      "name": "lubuntu-defaults",
+      "description": "Lubuntu Defaults",
+      "category": "Desktop",
+      "priority": "low",
+      "entries": 120
+    },
+    {
+      "id": 424,
+      "name": "lubuntu-software-center",
+      "description": "Lubuntu Software",
+      "category": "Desktop",
+      "priority": "low",
+      "entries": 320
+    },
+    {
+      "id": 425,
+      "name": "mate-applets",
+      "description": "MATE Applets",
+      "category": "Desktop",
+      "priority": "low",
+      "entries": 380
+    },
+    {
+      "id": 426,
+      "name": "mate-control-center",
+      "description": "MATE Control Center",
+      "category": "Desktop",
+      "priority": "medium",
+      "entries": 480
+    },
+    {
+      "id": 427,
+      "name": "mate-desktop",
+      "description": "MATE Desktop",
+      "category": "Desktop",
+      "priority": "low",
+      "entries": 280
+    },
+    {
+      "id": 428,
+      "name": "mate-indicator-applet",
+      "description": "MATE Indicator",
+      "category": "Desktop",
+      "priority": "low",
+      "entries": 120
+    },
+    {
+      "id": 429,
+      "name": "mate-media",
+      "description": "MATE Media",
+      "category": "Desktop",
+      "priority": "low",
+      "entries": 180
+    },
+    {
+      "id": 430,
+      "name": "mate-menus",
+      "description": "MATE Menus",
+      "category": "Desktop",
+      "priority": "low",
+      "entries": 140
+    },
+    {
+      "id": 431,
+      "name": "mate-panel",
+      "description": "MATE Panel",
+      "category": "Desktop",
+      "priority": "low",
+      "entries": 320
+    },
+    {
+      "id": 432,
+      "name": "mate-screensaver",
+      "description": "MATE Screensaver",
+      "category": "Desktop",
+      "priority": "low",
+      "entries": 180
+    },
+    {
+      "id": 433,
+      "name": "mate-session-manager",
+      "description": "MATE Session",
+      "category": "Desktop",
+      "priority": "low",
+      "entries": 180
+    },
+    {
+      "id": 434,
+      "name": "mate-settings-daemon",
+      "description": "MATE Settings",
+      "category": "Desktop",
+      "priority": "low",
+      "entries": 280
+    },
+    {
+      "id": 435,
+      "name": "mate-system-monitor",
+      "description": "MATE System Monitor",
+      "category": "Desktop",
+      "priority": "low",
+      "entries": 220
+    },
+    {
+      "id": 436,
+      "name": "mate-terminal",
+      "description": "MATE Terminal",
+      "category": "Desktop",
+      "priority": "low",
+      "entries": 220
+    },
+    {
+      "id": 437,
+      "name": "mate-utils",
+      "description": "MATE Utils",
+      "category": "Desktop",
+      "priority": "low",
+      "entries": 280
+    },
+    {
+      "id": 438,
+      "name": "mozo",
+      "description": "Mozo Menu Editor",
+      "category": "Desktop",
+      "priority": "low",
+      "entries": 120
+    },
+    {
+      "id": 439,
+      "name": "pluma",
+      "description": "Pluma Text Editor",
+      "category": "Desktop",
+      "priority": "low",
+      "entries": 280
+    },
+    {
+      "id": 440,
+      "name": "caja",
+      "description": "Caja File Manager",
+      "category": "Desktop",
+      "priority": "medium",
+      "entries": 520
+    },
+    {
+      "id": 441,
+      "name": "atril",
+      "description": "Atril Document Viewer",
+      "category": "Desktop",
+      "priority": "low",
+      "entries": 320
+    },
+    {
+      "id": 442,
+      "name": "eom",
+      "description": "Eye of MATE",
+      "category": "Desktop",
+      "priority": "low",
+      "entries": 220
+    },
+    {
+      "id": 443,
+      "name": "engrampa",
+      "description": "Engrampa Archive",
+      "category": "Desktop",
+      "priority": "low",
+      "entries": 220
+    },
+    {
+      "id": 444,
+      "name": "cheese",
+      "description": "Cheese Webcam",
+      "category": "Apps",
+      "priority": "low",
+      "entries": 280
+    },
+    {
+      "id": 445,
+      "name": "deja-dup",
+      "description": "D\u00e9j\u00e0 Dup",
+      "category": "Apps",
+      "priority": "medium",
+      "entries": 320
+    },
+    {
+      "id": 446,
+      "name": "empathy",
+      "description": "Empathy Chat",
+      "category": "Apps",
+      "priority": "low",
+      "entries": 520
+    },
+    {
+      "id": 447,
+      "name": "epiphany",
+      "description": "Epiphany Web Browser",
+      "category": "Apps",
+      "priority": "medium",
+      "entries": 680
+    },
+    {
+      "id": 448,
+      "name": "fcitx",
+      "description": "Fcitx Input",
+      "category": "System",
+      "priority": "low",
+      "entries": 380
+    },
+    {
+      "id": 449,
+      "name": "fcitx5",
+      "description": "Fcitx5 Input",
+      "category": "System",
+      "priority": "low",
+      "entries": 420
+    },
+    {
+      "id": 450,
+      "name": "freerdp",
+      "description": "FreeRDP",
+      "category": "System",
+      "priority": "low",
+      "entries": 420
+    },
+    {
+      "id": 451,
+      "name": "gadmin",
+      "description": "GAdmin Tools",
+      "category": "System",
+      "priority": "low",
+      "entries": 280
+    },
+    {
+      "id": 452,
+      "name": "gbrainy",
+      "description": "GBrainy Brain Game",
+      "category": "Games",
+      "priority": "low",
+      "entries": 180
+    },
+    {
+      "id": 453,
+      "name": "gcstar",
+      "description": "GCstar Collection",
+      "category": "Apps",
+      "priority": "low",
+      "entries": 280
+    },
+    {
+      "id": 454,
+      "name": "gfeeds",
+      "description": "Feeds RSS",
+      "category": "Apps",
+      "priority": "low",
+      "entries": 220
+    },
+    {
+      "id": 455,
+      "name": "gftp",
+      "description": "gFTP",
+      "category": "Apps",
+      "priority": "low",
+      "entries": 220
+    },
+    {
+      "id": 456,
+      "name": "glipper",
+      "description": "Glipper Clipboard",
+      "category": "Apps",
+      "priority": "low",
+      "entries": 120
+    },
+    {
+      "id": 457,
+      "name": "gnome-aisleriot",
+      "description": "AisleRiot Solitaire",
+      "category": "Games",
+      "priority": "low",
+      "entries": 220
+    },
+    {
+      "id": 458,
+      "name": "gnome-break-timer",
+      "description": "Break Timer",
+      "category": "Apps",
+      "priority": "low",
+      "entries": 140
+    },
+    {
+      "id": 459,
+      "name": "gnome-chemistry",
+      "description": "GNOME Chemistry",
+      "category": "Education",
+      "priority": "low",
+      "entries": 280
+    },
+    {
+      "id": 460,
+      "name": "gnome-friends",
+      "description": "GNOME Friends",
+      "category": "Apps",
+      "priority": "low",
+      "entries": 120
+    },
+    {
+      "id": 461,
+      "name": "gnome-gmail",
+      "description": "Gmail Integration",
+      "category": "Apps",
+      "priority": "low",
+      "entries": 120
+    },
+    {
+      "id": 462,
+      "name": "gnome-hexgl",
+      "description": "HexGL",
+      "category": "Games",
+      "priority": "low",
+      "entries": 80
+    },
+    {
+      "id": 463,
+      "name": "gnome-internet-radio-locator",
+      "description": "Internet Radio",
+      "category": "Apps",
+      "priority": "low",
+      "entries": 180
+    },
+    {
+      "id": 464,
+      "name": "gnome-latex",
+      "description": "GNOME LaTeX",
+      "category": "Dev",
+      "priority": "low",
+      "entries": 380
+    },
+    {
+      "id": 465,
+      "name": "gnome-paint",
+      "description": "GNOME Paint",
+      "category": "Apps",
+      "priority": "low",
+      "entries": 180
+    },
+    {
+      "id": 466,
+      "name": "gnome-pomodoro",
+      "description": "Pomodoro Timer",
+      "category": "Apps",
+      "priority": "low",
+      "entries": 180
+    },
+    {
+      "id": 467,
+      "name": "gnome-rdp",
+      "description": "GNOME RDP",
+      "category": "System",
+      "priority": "low",
+      "entries": 140
+    },
+    {
+      "id": 468,
+      "name": "gnome-shell-pomodoro",
+      "description": "Shell Pomodoro",
+      "category": "Apps",
+      "priority": "low",
+      "entries": 120
+    },
+    {
+      "id": 469,
+      "name": "gnome-subtitles",
+      "description": "GNOME Subtitles",
+      "category": "Apps",
+      "priority": "low",
+      "entries": 220
+    },
+    {
+      "id": 470,
+      "name": "gnome-todo",
+      "description": "GNOME Todo",
+      "category": "Apps",
+      "priority": "low",
+      "entries": 180
+    },
+    {
+      "id": 471,
+      "name": "grisbi",
+      "description": "Grisbi Finance",
+      "category": "Apps",
+      "priority": "low",
+      "entries": 520
+    },
+    {
+      "id": 472,
+      "name": "gtimelog",
+      "description": "GTimeLog",
+      "category": "Apps",
+      "priority": "low",
+      "entries": 140
+    },
+    {
+      "id": 473,
+      "name": "gtuber",
+      "description": "GTuber",
+      "category": "Apps",
+      "priority": "low",
+      "entries": 120
+    },
+    {
+      "id": 474,
+      "name": "gufw",
+      "description": "Gufw Firewall",
+      "category": "System",
+      "priority": "low",
+      "entries": 280
+    },
+    {
+      "id": 475,
+      "name": "guitarix",
+      "description": "Guitarix Amp",
+      "category": "Apps",
+      "priority": "low",
+      "entries": 320
+    },
+    {
+      "id": 476,
+      "name": "gvfs",
+      "description": "GVfs Virtual FS",
+      "category": "Core",
+      "priority": "medium",
+      "entries": 280
+    },
+    {
+      "id": 477,
+      "name": "hardinfo",
+      "description": "HardInfo System",
+      "category": "System",
+      "priority": "low",
+      "entries": 220
+    },
+    {
+      "id": 478,
+      "name": "indicator-stickynotes",
+      "description": "Sticky Notes",
+      "category": "Apps",
+      "priority": "low",
+      "entries": 120
+    },
+    {
+      "id": 479,
+      "name": "inkscape",
+      "description": "Inkscape Vector",
+      "category": "Apps",
+      "priority": "low",
+      "entries": 4800
+    },
+    {
+      "id": 480,
+      "name": "iodine",
+      "description": "Iodine DNS Tunnel",
+      "category": "System",
+      "priority": "low",
+      "entries": 120
+    },
+    {
+      "id": 481,
+      "name": "k3b",
+      "description": "K3b Disc Burner",
+      "category": "Apps",
+      "priority": "low",
+      "entries": 680
+    },
+    {
+      "id": 482,
+      "name": "kaffeine",
+      "description": "Kaffeine Media",
+      "category": "Apps",
+      "priority": "low",
+      "entries": 280
+    },
+    {
+      "id": 483,
+      "name": "kalgebra",
+      "description": "KAlgebra Math",
+      "category": "Education",
+      "priority": "low",
+      "entries": 280
+    },
+    {
+      "id": 484,
+      "name": "kalzium",
+      "description": "Kalzium Chemistry",
+      "category": "Education",
+      "priority": "low",
+      "entries": 680
+    },
+    {
+      "id": 485,
+      "name": "kamera",
+      "description": "Kamera",
+      "category": "Apps",
+      "priority": "low",
+      "entries": 120
+    },
+    {
+      "id": 486,
+      "name": "kanagram",
+      "description": "Kanagram",
+      "category": "Education",
+      "priority": "low",
+      "entries": 140
+    },
+    {
+      "id": 487,
+      "name": "kapman",
+      "description": "Kapman Game",
+      "category": "Games",
+      "priority": "low",
+      "entries": 100
+    },
+    {
+      "id": 488,
+      "name": "kbackup",
+      "description": "KBackup",
+      "category": "Apps",
+      "priority": "low",
+      "entries": 140
+    },
+    {
+      "id": 489,
+      "name": "kbibtex",
+      "description": "KBibTeX",
+      "category": "Dev",
+      "priority": "low",
+      "entries": 320
+    },
+    {
+      "id": 490,
+      "name": "kblackbox",
+      "description": "KBlackBox Game",
+      "category": "Games",
+      "priority": "low",
+      "entries": 100
+    },
+    {
+      "id": 491,
+      "name": "kblocks",
+      "description": "KBlocks Game",
+      "category": "Games",
+      "priority": "low",
+      "entries": 100
+    },
+    {
+      "id": 492,
+      "name": "kbounce",
+      "description": "KBounce Game",
+      "category": "Games",
+      "priority": "low",
+      "entries": 100
+    },
+    {
+      "id": 493,
+      "name": "kbreakout",
+      "description": "KBreakOut Game",
+      "category": "Games",
+      "priority": "low",
+      "entries": 100
+    },
+    {
+      "id": 494,
+      "name": "kchart",
+      "description": "KChart",
+      "category": "Office",
+      "priority": "low",
+      "entries": 280
+    },
+    {
+      "id": 495,
+      "name": "kde-config-screenlocker",
+      "description": "Screen Locker",
+      "category": "Desktop",
+      "priority": "low",
+      "entries": 120
+    },
+    {
+      "id": 496,
+      "name": "kde-config-sddm",
+      "description": "SDDM Config",
+      "category": "Desktop",
+      "priority": "low",
+      "entries": 100
+    },
+    {
+      "id": 497,
+      "name": "kde-spectacle",
+      "description": "Spectacle Screenshot",
+      "category": "Desktop",
+      "priority": "low",
+      "entries": 240
+    },
+    {
+      "id": 498,
+      "name": "kdegames",
+      "description": "KDE Games Collection",
+      "category": "Games",
+      "priority": "low",
+      "entries": 800
+    },
+    {
+      "id": 499,
+      "name": "kdegraphics",
+      "description": "KDE Graphics",
+      "category": "Apps",
+      "priority": "low",
+      "entries": 600
+    },
+    {
+      "id": 500,
+      "name": "kdemultimedia",
+      "description": "KDE Multimedia",
+      "category": "Apps",
+      "priority": "low",
+      "entries": 520
+    },
+    {
+      "id": 501,
+      "name": "kdenetwork",
+      "description": "KDE Network",
+      "category": "Apps",
+      "priority": "low",
+      "entries": 480
+    },
+    {
+      "id": 502,
+      "name": "kdepim",
+      "description": "KDE PIM",
+      "category": "Apps",
+      "priority": "low",
+      "entries": 1200
+    },
+    {
+      "id": 503,
+      "name": "kdeplasma-addons",
+      "description": "Plasma Addons",
+      "category": "Desktop",
+      "priority": "low",
+      "entries": 480
+    },
+    {
+      "id": 504,
+      "name": "kdiamond",
+      "description": "KDiamond Game",
+      "category": "Games",
+      "priority": "low",
+      "entries": 100
+    },
+    {
+      "id": 505,
+      "name": "kdf",
+      "description": "KDiskFree",
+      "category": "System",
+      "priority": "low",
+      "entries": 100
+    },
+    {
+      "id": 506,
+      "name": "kdialog",
+      "description": "KDialog",
+      "category": "Desktop",
+      "priority": "low",
+      "entries": 80
+    },
+    {
+      "id": 507,
+      "name": "kfilereplace",
+      "description": "KFileReplace",
+      "category": "Dev",
+      "priority": "low",
+      "entries": 140
+    },
+    {
+      "id": 508,
+      "name": "kfourinline",
+      "description": "KFourInLine Game",
+      "category": "Games",
+      "priority": "low",
+      "entries": 100
+    },
+    {
+      "id": 509,
+      "name": "kgamma",
+      "description": "KGamma Display",
+      "category": "Desktop",
+      "priority": "low",
+      "entries": 80
+    },
+    {
+      "id": 510,
+      "name": "kgeography",
+      "description": "KGeography",
+      "category": "Education",
+      "priority": "low",
+      "entries": 480
+    },
+    {
+      "id": 511,
+      "name": "kget",
+      "description": "KGet Download",
+      "category": "Apps",
+      "priority": "low",
+      "entries": 220
+    },
+    {
+      "id": 512,
+      "name": "kgoldrunner",
+      "description": "KGoldrunner Game",
+      "category": "Games",
+      "priority": "low",
+      "entries": 120
+    },
+    {
+      "id": 513,
+      "name": "kgpg",
+      "description": "KGpg Encryption",
+      "category": "System",
+      "priority": "low",
+      "entries": 220
+    },
+    {
+      "id": 514,
+      "name": "kgraphviewer",
+      "description": "KGraphViewer",
+      "category": "Dev",
+      "priority": "low",
+      "entries": 140
+    },
+    {
+      "id": 515,
+      "name": "kigo",
+      "description": "Kigo Go Game",
+      "category": "Games",
+      "priority": "low",
+      "entries": 100
+    },
+    {
+      "id": 516,
+      "name": "killbots",
+      "description": "Killbots Game",
+      "category": "Games",
+      "priority": "low",
+      "entries": 100
+    },
+    {
+      "id": 517,
+      "name": "kimagemapeditor",
+      "description": "KImageMapEditor",
+      "category": "Dev",
+      "priority": "low",
+      "entries": 140
+    },
+    {
+      "id": 518,
+      "name": "kio",
+      "description": "KIO Framework",
+      "category": "Core",
+      "priority": "low",
+      "entries": 480
+    },
+    {
+      "id": 519,
+      "name": "kiriki",
+      "description": "Kiriki Dice Game",
+      "category": "Games",
+      "priority": "low",
+      "entries": 80
+    },
+    {
+      "id": 520,
+      "name": "kiten",
+      "description": "Kiten Japanese Dict",
+      "category": "Education",
+      "priority": "low",
+      "entries": 320
+    },
+    {
+      "id": 521,
+      "name": "kjots",
+      "description": "KJots Notes",
+      "category": "Apps",
+      "priority": "low",
+      "entries": 180
+    },
+    {
+      "id": 522,
+      "name": "kjumpingcube",
+      "description": "KJumpingCube Game",
+      "category": "Games",
+      "priority": "low",
+      "entries": 100
+    },
+    {
+      "id": 523,
+      "name": "klettres",
+      "description": "KLettres Alphabet",
+      "category": "Education",
+      "priority": "low",
+      "entries": 140
+    },
+    {
+      "id": 524,
+      "name": "klickety",
+      "description": "Klickety Game",
+      "category": "Games",
+      "priority": "low",
+      "entries": 80
+    },
+    {
+      "id": 525,
+      "name": "klines",
+      "description": "KLines Game",
+      "category": "Games",
+      "priority": "low",
+      "entries": 80
+    },
+    {
+      "id": 526,
+      "name": "kmag",
+      "description": "KMag Screen Magnifier",
+      "category": "Accessibility",
+      "priority": "low",
+      "entries": 100
+    },
+    {
+      "id": 527,
+      "name": "kmahjongg",
+      "description": "KMahjongg Game",
+      "category": "Games",
+      "priority": "low",
+      "entries": 140
+    },
+    {
+      "id": 528,
+      "name": "kmail",
+      "description": "KMail Email",
+      "category": "Apps",
+      "priority": "low",
+      "entries": 680
+    },
+    {
+      "id": 529,
+      "name": "kmousetool",
+      "description": "KMouseTool",
+      "category": "Accessibility",
+      "priority": "low",
+      "entries": 80
+    },
+    {
+      "id": 530,
+      "name": "kmouth",
+      "description": "KMouth Speech",
+      "category": "Accessibility",
+      "priority": "low",
+      "entries": 120
+    },
+    {
+      "id": 531,
+      "name": "kmplot",
+      "description": "KmPlot Math Graph",
+      "category": "Education",
+      "priority": "low",
+      "entries": 220
+    },
+    {
+      "id": 532,
+      "name": "knavalbattle",
+      "description": "Naval Battle Game",
+      "category": "Games",
+      "priority": "low",
+      "entries": 100
+    },
+    {
+      "id": 533,
+      "name": "knetwalk",
+      "description": "KNetWalk Game",
+      "category": "Games",
+      "priority": "low",
+      "entries": 100
+    },
+    {
+      "id": 534,
+      "name": "knights",
+      "description": "Knights Chess Game",
+      "category": "Games",
+      "priority": "low",
+      "entries": 120
+    },
+    {
+      "id": 535,
+      "name": "knotes",
+      "description": "KNotes Sticky Notes",
+      "category": "Apps",
+      "priority": "low",
+      "entries": 140
+    },
+    {
+      "id": 536,
+      "name": "kolf",
+      "description": "Kolf Golf Game",
+      "category": "Games",
+      "priority": "low",
+      "entries": 100
+    },
+    {
+      "id": 537,
+      "name": "kollision",
+      "description": "Kollision Game",
+      "category": "Games",
+      "priority": "low",
+      "entries": 80
+    },
+    {
+      "id": 538,
+      "name": "kolourpaint",
+      "description": "Kolourpaint",
+      "category": "Apps",
+      "priority": "low",
+      "entries": 220
+    },
+    {
+      "id": 539,
+      "name": "kompare",
+      "description": "Kompare Diff",
+      "category": "Dev",
+      "priority": "low",
+      "entries": 180
+    },
+    {
+      "id": 540,
+      "name": "konquest",
+      "description": "Konquest Strategy",
+      "category": "Games",
+      "priority": "low",
+      "entries": 100
+    },
+    {
+      "id": 541,
+      "name": "kontact",
+      "description": "Kontact PIM",
+      "category": "Apps",
+      "priority": "low",
+      "entries": 680
+    },
+    {
+      "id": 542,
+      "name": "kopete",
+      "description": "Kopete Messenger",
+      "category": "Apps",
+      "priority": "low",
+      "entries": 520
+    },
+    {
+      "id": 543,
+      "name": "korganizer",
+      "description": "KOrganizer Calendar",
+      "category": "Apps",
+      "priority": "low",
+      "entries": 480
+    },
+    {
+      "id": 544,
+      "name": "kpat",
+      "description": "KPatience Solitaire",
+      "category": "Games",
+      "priority": "low",
+      "entries": 120
+    },
+    {
+      "id": 545,
+      "name": "krdc",
+      "description": "KRDC Remote Desktop",
+      "category": "Apps",
+      "priority": "low",
+      "entries": 280
+    },
+    {
+      "id": 546,
+      "name": "kremotecontrol",
+      "description": "KRemoteControl",
+      "category": "System",
+      "priority": "low",
+      "entries": 120
+    },
+    {
+      "id": 547,
+      "name": "kreversi",
+      "description": "KReversi Game",
+      "category": "Games",
+      "priority": "low",
+      "entries": 100
+    },
+    {
+      "id": 548,
+      "name": "krfb",
+      "description": "Krfb Desktop Sharing",
+      "category": "Apps",
+      "priority": "low",
+      "entries": 180
+    },
+    {
+      "id": 549,
+      "name": "kruler",
+      "description": "KRuler Screen Ruler",
+      "category": "Apps",
+      "priority": "low",
+      "entries": 80
+    },
+    {
+      "id": 550,
+      "name": "ksame",
+      "description": "KSame Game",
+      "category": "Games",
+      "priority": "low",
+      "entries": 80
+    },
+    {
+      "id": 551,
+      "name": "kscd",
+      "description": "KSCD CD Player",
+      "category": "Apps",
+      "priority": "low",
+      "entries": 120
+    },
+    {
+      "id": 552,
+      "name": "kshisen",
+      "description": "KShisen Mahjong",
+      "category": "Games",
+      "priority": "low",
+      "entries": 100
+    },
+    {
+      "id": 553,
+      "name": "ksirk",
+      "description": "KSirk Risk Game",
+      "category": "Games",
+      "priority": "low",
+      "entries": 120
+    },
+    {
+      "id": 554,
+      "name": "ksnakeduel",
+      "description": "KSnakeDuel",
+      "category": "Games",
+      "priority": "low",
+      "entries": 80
+    },
+    {
+      "id": 555,
+      "name": "kspaceduel",
+      "description": "KSpaceDuel",
+      "category": "Games",
+      "priority": "low",
+      "entries": 80
+    },
+    {
+      "id": 556,
+      "name": "ksquares",
+      "description": "KSquares Game",
+      "category": "Games",
+      "priority": "low",
+      "entries": 80
+    },
+    {
+      "id": 557,
+      "name": "kstars",
+      "description": "KStars Astronomy",
+      "category": "Education",
+      "priority": "low",
+      "entries": 920
+    },
+    {
+      "id": 558,
+      "name": "ksudoku",
+      "description": "KSudoku",
+      "category": "Games",
+      "priority": "low",
+      "entries": 140
+    },
+    {
+      "id": 559,
+      "name": "kteatime",
+      "description": "KTeaTime",
+      "category": "Games",
+      "priority": "low",
+      "entries": 80
+    },
+    {
+      "id": 560,
+      "name": "ktimer",
+      "description": "KTimer",
+      "category": "Desktop",
+      "priority": "low",
+      "entries": 80
+    },
+    {
+      "id": 561,
+      "name": "ktouch",
+      "description": "KTouch Typing",
+      "category": "Education",
+      "priority": "low",
+      "entries": 380
+    },
+    {
+      "id": 562,
+      "name": "ktuberling",
+      "description": "Tuberling Game",
+      "category": "Games",
+      "priority": "low",
+      "entries": 100
+    },
+    {
+      "id": 563,
+      "name": "kturtle",
+      "description": "KTurtle Logo",
+      "category": "Education",
+      "priority": "low",
+      "entries": 180
+    },
+    {
+      "id": 564,
+      "name": "kubrick",
+      "description": "Kubrick Rubik",
+      "category": "Games",
+      "priority": "low",
+      "entries": 80
+    },
+    {
+      "id": 565,
+      "name": "kuser",
+      "description": "KUser Manager",
+      "category": "System",
+      "priority": "low",
+      "entries": 120
+    },
+    {
+      "id": 566,
+      "name": "kwallet",
+      "description": "KWallet Manager",
+      "category": "Desktop",
+      "priority": "medium",
+      "entries": 180
+    },
+    {
+      "id": 567,
+      "name": "kwordquiz",
+      "description": "KWordQuiz Flashcards",
+      "category": "Education",
+      "priority": "low",
+      "entries": 140
+    },
+    {
+      "id": 568,
+      "name": "libkcddb",
+      "description": "KCDDB CD Database",
+      "category": "Apps",
+      "priority": "low",
+      "entries": 100
+    },
+    {
+      "id": 569,
+      "name": "libkcompactdisc",
+      "description": "KCompactDisc",
+      "category": "Apps",
+      "priority": "low",
+      "entries": 60
+    },
+    {
+      "id": 570,
+      "name": "lskat",
+      "description": "LSkat Card Game",
+      "category": "Games",
+      "priority": "low",
+      "entries": 80
+    },
+    {
+      "id": 571,
+      "name": "palapeli",
+      "description": "Palapeli Jigsaw",
+      "category": "Games",
+      "priority": "low",
+      "entries": 100
+    },
+    {
+      "id": 572,
+      "name": "parley",
+      "description": "Parley Vocabulary",
+      "category": "Education",
+      "priority": "low",
+      "entries": 380
+    },
+    {
+      "id": 573,
+      "name": "picmi",
+      "description": "Picmi Nonogram",
+      "category": "Games",
+      "priority": "low",
+      "entries": 80
+    },
+    {
+      "id": 574,
+      "name": "rocs",
+      "description": "Rocs Graph Theory",
+      "category": "Education",
+      "priority": "low",
+      "entries": 280
+    },
+    {
+      "id": 575,
+      "name": "skanlite",
+      "description": "Skanlite Scanner",
+      "category": "Apps",
+      "priority": "low",
+      "entries": 140
+    },
+    {
+      "id": 576,
+      "name": "skrooge",
+      "description": "Skrooge Finance",
+      "category": "Apps",
+      "priority": "low",
+      "entries": 380
+    },
+    {
+      "id": 577,
+      "name": "smplayer",
+      "description": "SMPlayer Media",
+      "category": "Apps",
+      "priority": "low",
+      "entries": 320
+    },
+    {
+      "id": 578,
+      "name": "sonnet",
+      "description": "Sonnet Spellcheck",
+      "category": "Core",
+      "priority": "low",
+      "entries": 80
+    },
+    {
+      "id": 579,
+      "name": "step",
+      "description": "Step Physics Sim",
+      "category": "Education",
+      "priority": "low",
+      "entries": 420
+    },
+    {
+      "id": 580,
+      "name": "svgpart",
+      "description": "SVG Part",
+      "category": "Core",
+      "priority": "low",
+      "entries": 40
+    },
+    {
+      "id": 581,
+      "name": "sweeper",
+      "description": "Sweeper Privacy",
+      "category": "System",
+      "priority": "low",
+      "entries": 140
+    },
+    {
+      "id": 582,
+      "name": "umbrello",
+      "description": "Umbrello UML",
+      "category": "Dev",
+      "priority": "low",
+      "entries": 380
+    }
+  ]
+}

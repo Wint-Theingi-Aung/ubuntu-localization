@@ -1,0 +1,369 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@import url('https://fonts.googleapis.com/css2?family=Ubuntu:wght@300;400;500;700&family=Ubuntu+Mono:wght@400;700&display=swap');
+
+:root {
+  --ubuntu-orange: #E95420;
+  --ubuntu-aubergine: #772953;
+  --ubuntu-dark: #300A24;
+  --ubuntu-warm-grey: #AEA79F;
+  --ubuntu-cool-grey: #333333;
+  --ubuntu-mid-aubergine: #4C1635;
+}
+
+@layer base {
+  body {
+    @apply bg-ubuntu-dark text-white antialiased;
+  }
+
+  .font-myanmar {
+    font-family: 'Pyidaungsu', 'Noto Sans Myanmar', sans-serif;
+    line-height: 1.8;
+  }
+
+  /* Glass card — base */
+  .glass-card {
+    @apply bg-white/[0.04] backdrop-blur-xl border border-white/[0.08] rounded-2xl shadow-lg shadow-black/20;
+  }
+
+  /* Glass card — hover lift */
+  .glass-card-hover {
+    @apply glass-card hover:bg-white/[0.08] hover:border-white/[0.15] hover:shadow-xl hover:shadow-black/30 transition-all duration-300;
+  }
+
+  /* Card lift on hover */
+  .card-lift {
+    @apply transition-all duration-300 hover:-translate-y-1 hover:shadow-xl hover:shadow-black/30;
+  }
+}
+
+@layer components {
+  /* ── Sidebar Links ── */
+  .sidebar-link {
+    @apply flex items-center gap-3 px-4 py-3 rounded-xl text-white/60 hover:text-white hover:bg-white/[0.08] transition-all duration-200 text-sm font-medium relative;
+  }
+
+  .sidebar-link.active {
+    @apply bg-ubuntu-orange/20 text-ubuntu-orange font-semibold;
+  }
+
+  .sidebar-link.active::before {
+    content: '';
+    @apply absolute left-0 top-1/2 -translate-y-1/2 w-1 h-6 bg-ubuntu-orange rounded-r;
+  }
+
+  /* ── Data Table ── */
+  .data-table {
+    @apply w-full text-sm text-left;
+  }
+
+  .data-table thead {
+    @apply text-xs text-white/40 uppercase bg-white/[0.03];
+  }
+
+  .data-table tbody tr {
+    @apply border-b border-white/[0.06] hover:bg-white/[0.04] transition-colors;
+  }
+
+  .data-table td, .data-table th {
+    @apply px-4 py-3.5;
+  }
+
+  /* ── Buttons ── */
+  .btn-primary {
+    @apply bg-ubuntu-orange hover:bg-ubuntu-orange/90 text-white font-semibold py-2.5 px-5 rounded-xl transition-all duration-200 shadow-lg shadow-ubuntu-orange/20 hover:shadow-ubuntu-orange/30 active:scale-[0.98];
+  }
+
+  .btn-secondary {
+    @apply bg-white/[0.06] hover:bg-white/[0.12] text-white font-medium py-2.5 px-5 rounded-xl transition-all duration-200 border border-white/[0.08] active:scale-[0.98];
+  }
+
+  .btn-outline {
+    @apply border border-ubuntu-orange text-ubuntu-orange hover:bg-ubuntu-orange/10 font-semibold py-2.5 px-5 rounded-xl transition-all duration-200 active:scale-[0.98];
+  }
+
+  .btn-ghost {
+    @apply text-white/60 hover:text-white hover:bg-white/[0.06] py-2 px-3 rounded-lg transition-all duration-200;
+  }
+
+  /* ── Input ── */
+  .input-field {
+    @apply bg-white/[0.04] border border-white/[0.1] rounded-xl px-4 py-2.5 text-white placeholder-white/30 focus:outline-none focus:border-ubuntu-orange/50 focus:ring-2 focus:ring-ubuntu-orange/20 transition-all;
+  }
+
+  /* ── Badges ── */
+  .badge {
+    @apply inline-flex items-center px-2.5 py-1 rounded-lg text-xs font-semibold;
+  }
+
+  .badge-orange {
+    @apply badge bg-ubuntu-orange/15 text-ubuntu-orange border border-ubuntu-orange/20;
+  }
+
+  .badge-green {
+    @apply badge bg-emerald-500/15 text-emerald-400 border border-emerald-500/20;
+  }
+
+  .badge-yellow {
+    @apply badge bg-amber-500/15 text-amber-400 border border-amber-500/20;
+  }
+
+  .badge-blue {
+    @apply badge bg-blue-500/15 text-blue-400 border border-blue-500/20;
+  }
+
+  .badge-purple {
+    @apply badge bg-purple-500/15 text-purple-400 border border-purple-500/20;
+  }
+
+  .badge-red {
+    @apply badge bg-red-500/15 text-red-400 border border-red-500/20;
+  }
+
+  /* Status badges for glossary */
+  .status-translated {
+    @apply badge bg-emerald-500/10 text-emerald-400 border border-emerald-500/15;
+  }
+
+  .status-pending {
+    @apply badge bg-white/[0.04] text-white/30 border border-white/[0.08];
+  }
+
+  .status-partial {
+    @apply badge bg-amber-500/10 text-amber-400 border border-amber-500/15;
+  }
+
+  /* ── Accordion ── */
+  .accordion-header {
+    @apply w-full flex items-center justify-between p-5 text-left rounded-xl hover:bg-white/[0.04] transition-all duration-200;
+  }
+
+  .accordion-header[aria-expanded="true"] {
+    @apply bg-white/[0.04];
+  }
+
+  .accordion-content {
+    @apply overflow-hidden transition-all duration-300 ease-in-out;
+  }
+
+  .accordion-arrow {
+    @apply transition-transform duration-300 text-white/40;
+  }
+
+  .accordion-header[aria-expanded="true"] .accordion-arrow {
+    @apply rotate-90 text-ubuntu-orange;
+  }
+
+  /* ── Language Toggle ── */
+  .lang-toggle-btn {
+    @apply px-2.5 py-1.5 rounded-lg text-[11px] font-medium transition-all duration-200 border;
+  }
+
+  .lang-toggle-btn.active {
+    @apply bg-ubuntu-orange/20 text-ubuntu-orange border-ubuntu-orange/30;
+  }
+
+  .lang-toggle-btn:not(.active) {
+    @apply bg-white/[0.03] text-white/40 border-white/[0.06] hover:bg-white/[0.06] hover:text-white/60;
+  }
+
+  /* ── Launchpad Link Buttons ── */
+  .lp-link {
+    @apply px-2 py-1 text-[10px] font-semibold rounded-lg bg-white/[0.04] hover:bg-ubuntu-orange/20 hover:text-ubuntu-orange transition-all duration-200 flex items-center gap-1 border border-white/[0.06];
+  }
+
+  /* ── Guide Chapter Card ── */
+  .chapter-card {
+    @apply glass-card overflow-hidden transition-all duration-300;
+  }
+
+  .chapter-card:hover {
+    @apply border-white/[0.12];
+  }
+
+  .chapter-icon-box {
+    @apply w-10 h-10 rounded-xl flex items-center justify-center transition-all duration-300;
+  }
+
+  .chapter-icon-box.active {
+    @apply bg-ubuntu-orange/20 text-ubuntu-orange;
+  }
+
+  .chapter-icon-box:not(.active) {
+    @apply bg-white/[0.06] text-white/40;
+  }
+
+  /* ── Section Item ── */
+  .section-item {
+    @apply w-full flex items-center gap-3 px-5 py-3.5 text-left hover:bg-white/[0.03] transition-all duration-200;
+  }
+
+  .section-item:hover .section-icon {
+    @apply text-white/50;
+  }
+
+  .section-icon {
+    @apply transition-colors duration-200;
+  }
+
+  /* ── Tips Box ── */
+  .tips-box {
+    @apply bg-white/[0.03] rounded-xl p-4 border border-white/[0.06];
+  }
+
+  .tips-box .tip-item {
+    @apply flex items-start gap-2 text-sm text-white/60 py-0.5;
+  }
+
+  .tips-box .tip-bullet {
+    @apply text-ubuntu-orange mt-1.5 text-[8px];
+  }
+
+  /* ── Stat Card ── */
+  .stat-card {
+    @apply glass-card p-4 transition-all duration-300 hover:bg-white/[0.06];
+  }
+
+  /* ── Contributor Card ── */
+  .contributor-card {
+    @apply glass-card-hover p-5 card-lift;
+  }
+
+  .contributor-avatar {
+    @apply rounded-xl ring-2 ring-white/10 transition-all duration-300;
+  }
+
+  .contributor-card:hover .contributor-avatar {
+    @apply ring-ubuntu-orange/30;
+  }
+
+  /* ── Timeline Item ── */
+  .timeline-item {
+    @apply relative flex gap-6;
+  }
+
+  .timeline-icon {
+    @apply relative z-10 w-16 h-16 rounded-full flex items-center justify-center flex-shrink-0;
+  }
+
+  .timeline-content {
+    @apply flex-1 glass-card p-4;
+  }
+
+  /* ── Step Indicator ── */
+  .step-dot {
+    @apply w-10 h-10 rounded-full flex items-center justify-center transition-all duration-300;
+  }
+
+  .step-dot.active {
+    @apply bg-ubuntu-orange text-white;
+  }
+
+  .step-dot.completed {
+    @apply bg-green-500/20 text-green-400;
+  }
+
+  .step-dot.pending {
+    @apply bg-white/10 text-white/30;
+  }
+
+  .step-line {
+    @apply w-12 h-px bg-white/20;
+  }
+
+  .step-line.completed {
+    @apply bg-green-500/40;
+  }
+
+  /* ── Upload Zone ── */
+  .upload-zone {
+    @apply flex flex-col items-center justify-center w-full h-48 border-2 border-dashed border-white/20 rounded-xl cursor-pointer hover:border-ubuntu-orange/50 hover:bg-white/[0.03] transition-all duration-300;
+  }
+
+  .upload-zone.has-file {
+    @apply border-ubuntu-orange/40 bg-ubuntu-orange/[0.03];
+  }
+
+  /* ── Progress Bar ── */
+  .progress-bar {
+    @apply w-full bg-white/10 rounded-full h-3 overflow-hidden;
+  }
+
+  .progress-bar-fill {
+    @apply bg-ubuntu-orange h-3 rounded-full transition-all duration-500 ease-out;
+  }
+
+  /* ── Tooltip ── */
+  .tooltip {
+    @apply absolute z-50 px-3 py-2 text-xs font-medium text-white bg-ubuntu-cool-grey rounded-lg shadow-xl opacity-0 invisible transition-all duration-200;
+  }
+
+  .group:hover .tooltip {
+    @apply opacity-100 visible;
+  }
+}
+
+/* ── Responsive Table → Card Layout ── */
+@media (max-width: 768px) {
+  .responsive-table thead {
+    @apply hidden;
+  }
+
+  .responsive-table tbody tr {
+    @apply block mb-4 glass-card p-4;
+  }
+
+  .responsive-table tbody td {
+    @apply block text-right relative pl-[50%] py-2;
+  }
+
+  .responsive-table tbody td::before {
+    @apply absolute left-4 top-2 text-left text-white/40 font-medium text-xs uppercase;
+    content: attr(data-label);
+  }
+
+  /* Stack launchpad links vertically on mobile */
+  .lp-links-cell {
+    @apply flex flex-wrap justify-end gap-1.5;
+  }
+}
+
+/* ── Scrollbar ── */
+::-webkit-scrollbar {
+  width: 6px;
+  height: 6px;
+}
+
+::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+::-webkit-scrollbar-thumb {
+  background: rgba(255, 255, 255, 0.15);
+  border-radius: 3px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: rgba(255, 255, 255, 0.25);
+}
+
+/* ── Reduced Motion ── */
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+  }
+}
+
+/* ── Focus Visible ── */
+:focus-visible {
+  @apply outline-2 outline-offset-2 outline-ubuntu-orange/50;
+}
+
+/* ── Selection ── */
+::selection {
+  @apply bg-ubuntu-orange/30 text-white;
+}
