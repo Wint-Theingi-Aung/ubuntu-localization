@@ -26,7 +26,7 @@ export default function Dashboard() {
 
   const quickActions = [
     { href: '/translate', icon: Languages, iconColor: 'text-ubuntu-orange', hoverColor: 'group-hover:text-ubuntu-orange', title: t('dashboard_ai_translation', 'AI Translation'), desc: t('dashboard_ai_desc', 'Upload .po files and translate with Gemini AI') },
-    { href: '/templates', icon: FileCode, iconColor: 'text-purple-400', hoverColor: 'group-hover:text-purple-400', title: t('dashboard_browse_templates', 'Templates'), desc: t('dashboard_browse_desc', 'Browse 547 Ubuntu packages on Launchpad') },
+    { href: '/templates', icon: FileCode, iconColor: 'text-purple-400', hoverColor: 'group-hover:text-purple-400', title: t('dashboard_browse_templates', 'Templates'), desc: t('dashboard_browse_desc', `Browse ${DASHBOARD_STATS.templates} Ubuntu packages on Launchpad`) },
     { href: '/glossary', icon: BookOpen, iconColor: 'text-emerald-400', hoverColor: 'group-hover:text-emerald-400', title: t('dashboard_glossary_action', 'Glossary'), desc: t('dashboard_glossary_desc', '153 standardized terms across 4 languages') },
     { href: '/guide', icon: BookOpen, iconColor: 'text-blue-400', hoverColor: 'group-hover:text-blue-400', title: t('dashboard_guide_action', 'Translation Guide'), desc: t('dashboard_guide_desc', 'Best practices for Ubuntu localization') },
   ]

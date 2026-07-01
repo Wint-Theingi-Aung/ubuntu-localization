@@ -4382,6 +4382,30 @@
       "category": "Core",
       "priority": "low",
       "entries": 40
+    },
+    {
+      "id": 548,
+      "name": "bash",
+      "description": "GNU Bourne Again SHell - Default Ubuntu shell",
+      "category": "Base System",
+      "priority": "high",
+      "entries": 589
+    },
+    {
+      "id": 549,
+      "name": "nano",
+      "description": "Small, friendly text editor inspired by Pico",
+      "category": "Editors",
+      "priority": "high",
+      "entries": 642
+    },
+    {
+      "id": 550,
+      "name": "vim",
+      "description": "Vi IMproved - Enhanced vi editor",
+      "category": "Editors",
+      "priority": "high",
+      "entries": 2156
     }
   ]
 }

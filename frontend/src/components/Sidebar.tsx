@@ -162,7 +162,7 @@ export default function Sidebar() {
             </a>
             <div className="mt-3 px-4 flex items-center justify-between">
               <p className="text-[10px] text-[var(--tx-faint)]">
-                v3.1.0
+                v4.0.0
               </p>
               <VisitorCounter />
               <p className="text-[10px] text-[var(--tx-faint)]">
