@@ -21,6 +21,10 @@ An AI-powered localization tool for translating Ubuntu `.po` files into indigeno
 - **Single-page workflow** — upload, translate, and export all on one unified page
 - **Interactive guide** — 6-chapter walkthrough for new translators
 - **Contributors** — per-language contributor rankings and stats
+- **Templates** — browse 550+ Ubuntu packages on Launchpad
+- **Glossary** — 153 standardized translation terms across 4 languages
+- **Dark/Light theme** — Ubuntu-themed UI with system preference detection
+- **i18n** — UI available in English, Myanmar, Shan, Mon, and S'gaw Karen
 
 ## Screenshots
 
@@ -38,42 +42,98 @@ An AI-powered localization tool for translating Ubuntu `.po` files into indigeno
 
 ## Tech Stack
 
-- **Web UI**: FastAPI + Jinja2 + htmx (Ubuntu-themed)
+- **Framework**: Next.js 14 (App Router)
+- **UI**: React 18 + TypeScript
+- **Styling**: Tailwind CSS 3.4
 - **AI**: Google Gemini 2.5 Flash
-- **PO parsing**: polib
-- **Package manager**: uv
+- **Icons**: Lucide React
+- **Deployment**: Vercel
 
-## Quick Start
+## Folder Structure
+
+```
+ubuntu-localization/
+├── frontend/                  # Next.js application
+│   ├── src/
+│   │   ├── app/               # App Router pages
+│   │   │   ├── api/           # API routes (translate, upload, export)
+│   │   │   ├── contributors/  # Contributors leaderboard
+│   │   │   ├── glossary/      # Translation glossary
+│   │   │   ├── guide/         # Translation guide
+│   │   │   ├── history/       # Export history
+│   │   │   ├── templates/     # Ubuntu package browser
+│   │   │   └── translate/     # Main translation workspace
+│   │   ├── components/        # Reusable React components
+│   │   ├── data/              # Static JSON data (translations, glossary, etc.)
+│   │   └── lib/               # Utilities (translate, po-parser, i18n, constants)
+│   ├── public/                # Static assets
+│   ├── package.json           # Dependencies and scripts
+│   ├── tailwind.config.ts     # Tailwind configuration
+│   └── tsconfig.json          # TypeScript configuration
+├── .claude/                   # Claude Code configuration
+│   ├── agents/                # Subagent definitions (translate-batch, qa-reviewer)
+│   ├── skills/                # Slash command skills
+│   └── workflows/             # Orchestration workflows
+├── screenshots/               # Application screenshots
+├── slides/                    # Presentation materials
+├── .mcp.json                  # MCP server configuration
+└── CLAUDE.md                  # Project instructions for Claude Code
+```
+
+## Installation
 
 ```bash
 git clone https://github.com/Wint-Theingi-Aung/ubuntu-localization.git
-cd ubuntu-localization
+cd ubuntu-localization/frontend
 
 # Install dependencies
-uv sync
+npm install
 
 # Set your Gemini API key
 echo "GOOGLE_API_KEY=your_key_here" > .env
-
-# Start the server
-uv run uvicorn backend.main:app --reload
 ```
 
-Open **http://localhost:8501/translate/** — upload a `.po` file, translate with AI, and download the result.
+## Development
 
-## Web UI Routes
+```bash
+cd frontend
 
-| Route | Purpose |
-|-------|---------|
-| `/` | Dashboard — language overview, recent sessions |
-| `/translate/` | Unified pipeline: upload → AI/manual translate → export |
-| `/guide/` | 6-chapter interactive user guide |
-| `/contributors/` | Top contributors per language |
-| `/contributors/contributor/{name}` | Individual contributor stats |
-| `/export/history` | Export history |
-| `/health` | Health check endpoint |
+# Start development server
+npm run dev
+```
 
-## CLI Skills (Claude Code)
+Open **http://localhost:3000** — the app hot-reloads on file changes.
+
+## Build
+
+```bash
+cd frontend
+
+# Production build
+npm run build
+
+# Start production server
+npm start
+```
+
+## Deployment (Vercel)
+
+The project is configured for Vercel deployment:
+
+```bash
+vercel --prod
+```
+
+Set `GOOGLE_API_KEY` as an environment variable in the Vercel dashboard.
+
+## Localization Workflow
+
+1. **Upload** — Drop a `.po` or `.pot` file on the translate page
+2. **Translate** — Use AI batch translation or edit manually
+3. **QA Check** — Automatic placeholder, newline, and length verification
+4. **Export** — Download the translated `.po` file
+
+### CLI Skills (Claude Code)
 
 | Command | Purpose |
 |---------|---------|
@@ -84,13 +144,22 @@ Open **http://localhost:8501/translate/** — upload a `.po` file, translate wit
 | `/po-description` | Generate human-readable .po file summaries and stats |
 | `/pr-description` | Auto-generate structured pull request descriptions |
 
-## Deployment (Vercel)
+## API Routes
 
-```bash
-vercel --prod
-```
+| Route | Method | Purpose |
+|-------|--------|---------|
+| `/api/upload` | POST | Parse uploaded .po file |
+| `/api/translate` | POST | Batch translate with Gemini AI |
+| `/api/export` | POST | Generate downloadable .po file |
+| `/api/progress` | GET/POST | Translation session progress |
 
-Entry point: `index.py` — imports the FastAPI app from `backend.main`.
+## Contributing
+
+1. Fork the repository
+2. Create a feature branch (`git checkout -b feature/amazing-feature`)
+3. Commit your changes (`git commit -m 'Add amazing feature'`)
+4. Push to the branch (`git push origin feature/amazing-feature`)
+5. Open a Pull Request
 
 ## License
 

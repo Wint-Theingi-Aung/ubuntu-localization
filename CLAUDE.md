@@ -7,28 +7,38 @@ A localization tool for translating Ubuntu `.po` files into indigenous languages
 - Myanmar (my), Shan (shn), Mon (mnw), S'gaw Karen (ksw)
 
 ## Tech Stack
-- **Web UI**: FastAPI + Jinja2 + htmx (Ubuntu-themed)
-- **Legacy UI**: Streamlit (`streamlit_app.py` — still available)
+- **Framework**: Next.js 14 (App Router)
+- **UI**: React 18 + TypeScript
+- **Styling**: Tailwind CSS 3.4
 - **AI**: Google Gemini 2.5 Flash
-- **Package Manager**: uv (available in requirements.txt)
+- **Icons**: Lucide React
+- **Deployment**: Vercel
 
-## Web UI (FastAPI)
+## Web UI (Next.js)
 ```
-uv run uvicorn backend.main:app --reload
-→ http://localhost:8501
+cd frontend
+npm run dev
+→ http://localhost:3000
 ```
 
 | Route | Purpose |
 |-------|---------|
-| `/` | Landing page — language cards, recent sessions, CTA to translate |
+| `/` | Dashboard — language overview, quick actions, recent activity |
 | `/translate/` | Unified pipeline: upload .po → AI + manual translate → export |
-| `/export/history` | Export history |
+| `/templates/` | Browse 550+ Ubuntu packages on Launchpad |
+| `/glossary/` | 153 standardized translation terms |
 | `/guide/` | 6-chapter interactive user guide |
 | `/guide/quickref` | Quick reference card |
 | `/contributors/` | Top contributors, per-language rankings |
-| `/contributors/contributor/{name}` | Individual contributor stats |
-| `/auth/` | Launchpad login, profile, karma, teams |
-| `/health` | Health check endpoint |
+| `/history/` | Export history |
+
+### API Routes
+| Route | Method | Purpose |
+|-------|--------|---------|
+| `/api/upload` | POST | Parse uploaded .po file |
+| `/api/translate` | POST | Batch translate with Gemini AI |
+| `/api/export` | POST | Generate downloadable .po file |
+| `/api/progress` | GET/POST | Translation session progress |
 
 ## Skills (Claude Code Slash Commands)
 - `/po-upload` — Parse .po files, extract untranslated strings
@@ -40,13 +50,11 @@ uv run uvicorn backend.main:app --reload
 
 ## MCP Servers
 - **GitHub MCP** — Repository access for file browsing (read-only)
-- **Filesystem MCP** — Safe file I/O restricted to project directory
 - **Launchpad Bridge MCP** — Custom MCP server wrapping launchpadlib
   - 8 tools: auth check, profile, karma, teams, translation groups, top contributors, search, progress
   - Setup: `python ~/.claude/mcp-servers/launchpad-bridge/setup_auth.py`
-  - Source: `~/.claude/mcp-servers/launchpad-bridge/server.py` (392 lines)
+  - Source: `.claude/mcp-servers/launchpad-bridge/server.py`
   - Anonymous read access works without setup
-  - Authenticated access enables Launchpad profile dashboard at `/auth/`
 
 ## Subagent Architecture ✅ ACTIVE
 - `translate-batch` — Gemini batch translator (`.claude/agents/translate-batch.md`)
@@ -75,13 +83,20 @@ uv run uvicorn backend.main:app --reload
 /po-export  # Pure file generation, downloadable .po
 ```
 
+## Key Source Files
+- `frontend/src/lib/translate.ts` — Gemini API client + QA verification
+- `frontend/src/lib/po-parser.ts` — .po file parser and generator
+- `frontend/src/lib/constants.ts` — Languages, URLs, config
+- `frontend/src/lib/i18n.tsx` — UI internationalization (5 languages)
+- `frontend/src/app/translate/page.tsx` — Main translation workspace
+- `frontend/src/components/Sidebar.tsx` — Navigation sidebar
+
 ## Deployment (Vercel)
-- Entry point: `index.py` — imports the FastAPI app from `backend.main`
-- Set `GOOGLE_API_KEY` and `SECRET_KEY` as environment variables in Vercel dashboard
-- Exports and sessions auto-store in `/tmp` (the only writable directory on Vercel)
+- Entry point: `frontend/` directory (Next.js)
+- Set `GOOGLE_API_KEY` as environment variable in Vercel dashboard
 
 ## Quick Start
-1. `uv sync` or `pip install -r requirements.txt`
-2. Set `GOOGLE_API_KEY` in `.env`
-3. `uv run uvicorn backend.main:app --reload`
-4. Open http://localhost:8501/translate/ — upload, translate, and download exported .po
+1. `cd frontend && npm install`
+2. Set `GOOGLE_API_KEY` in `frontend/.env`
+3. `npm run dev`
+4. Open http://localhost:3000/translate/ — upload, translate, and download exported .po
