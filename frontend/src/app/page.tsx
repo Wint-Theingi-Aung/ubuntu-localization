@@ -1,27 +1,27 @@
 'use client'
-
 import { useState } from 'react'
 import LanguageCard from '@/components/LanguageCard'
 import { Languages, FileCode, BookOpen, Users, ArrowRight, Sparkles, ExternalLink, Github } from 'lucide-react'
 import Link from 'next/link'
 import { useI18n } from '@/lib/i18n'
-
-const languages = [
-  { code: 'my', name: 'Myanmar', native: 'မြန်မာ', progress: 42, totalEntries: 48500, translatedEntries: 20370 },
-  { code: 'shn', name: 'Shan', native: 'ရှမ်း', progress: 8, totalEntries: 48500, translatedEntries: 3880 },
-  { code: 'mnw', name: 'Mon', native: 'မွန်', progress: 5, totalEntries: 48500, translatedEntries: 2425 },
-  { code: 'ksw', name: 'S\'gaw Karen', native: 'စကောကရင်', progress: 3, totalEntries: 48500, translatedEntries: 1455 },
-]
+import { LANGUAGES, TRANSLATION_STATS, DASHBOARD_STATS, lpLanguageUrl } from '@/lib/constants'
 
 export default function Dashboard() {
-  const [selectedLang, setSelectedLang] = useState<string | null>(null)
   const { t } = useI18n()
 
+  const languageData = LANGUAGES.map(lang => {
+    const stats = TRANSLATION_STATS.find(s => s.code === lang.code)!
+    return {
+      ...lang,
+      ...stats,
+    }
+  })
+
   const stats = [
-    { label: t('dashboard_languages', 'Languages'), value: '4', icon: Languages, color: 'text-ubuntu-orange', bg: 'bg-ubuntu-orange/10' },
-    { label: t('dashboard_templates', 'Templates'), value: '547', icon: FileCode, color: 'text-purple-400', bg: 'bg-purple-500/10' },
-    { label: t('dashboard_glossary_terms', 'Glossary Terms'), value: '153', icon: BookOpen, color: 'text-emerald-400', bg: 'bg-emerald-500/10' },
-    { label: t('dashboard_contributors', 'Contributors'), value: '161', icon: Users, color: 'text-blue-400', bg: 'bg-blue-500/10' },
+    { label: t('dashboard_languages', 'Languages'), value: String(DASHBOARD_STATS.languages), icon: Languages, color: 'text-ubuntu-orange', bg: 'bg-ubuntu-orange/10' },
+    { label: t('dashboard_templates', 'Templates'), value: String(DASHBOARD_STATS.templates), icon: FileCode, color: 'text-purple-400', bg: 'bg-purple-500/10' },
+    { label: t('dashboard_glossary_terms', 'Glossary Terms'), value: String(DASHBOARD_STATS.glossaryTerms), icon: BookOpen, color: 'text-emerald-400', bg: 'bg-emerald-500/10' },
+    { label: t('dashboard_contributors', 'Contributors'), value: String(DASHBOARD_STATS.contributors), icon: Users, color: 'text-blue-400', bg: 'bg-blue-500/10' },
   ]
 
   const quickActions = [
@@ -39,7 +39,7 @@ export default function Dashboard() {
             <h1 className="text-3xl font-bold text-[var(--tx-primary)]">{t('dashboard_title', 'Dashboard')}</h1>
             <Sparkles className="text-ubuntu-orange animate-pulse-slow" size={24} />
           </div>
-          <p className="text-[var(--tx-muted)] mt-1">{t('dashboard_subtitle', 'AI-powered Ubuntu localization for indigenous Myanmar languages')}</p>
+          <p className="text-[var(--tx-secondary)] mt-1">{t('dashboard_subtitle', 'AI-powered Ubuntu localization for indigenous Myanmar languages')}</p>
         </div>
         <Link href="/translate" className="btn-primary flex items-center gap-2 w-fit">
           <Languages size={18} />
@@ -57,7 +57,7 @@ export default function Dashboard() {
               </div>
               <div>
                 <p className="text-2xl font-bold text-[var(--tx-primary)]">{stat.value}</p>
-                <p className="text-sm text-[var(--tx-muted)]">{stat.label}</p>
+                <p className="text-sm text-[var(--tx-secondary)]">{stat.label}</p>
               </div>
             </div>
           </div>
@@ -67,10 +67,24 @@ export default function Dashboard() {
       <div>
         <h2 className="text-xl font-semibold text-[var(--tx-primary)] mb-4">{t('dashboard_translation_progress', 'Translation Progress')}</h2>
         <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-          {languages.map((lang) => (
-            <div key={lang.code} onClick={() => setSelectedLang(lang.code)}>
-              <LanguageCard {...lang} />
-            </div>
+          {languageData.map((lang) => (
+            <a
+              key={lang.code}
+              href={lpLanguageUrl(lang.code)}
+              target="_blank"
+              rel="noopener noreferrer"
+              title={`${t('dashboard_view_launchpad', 'View on Launchpad')} — ${lang.name}`}
+            >
+              <LanguageCard
+                code={lang.code}
+                name={lang.name}
+                native={lang.native}
+                color={lang.color}
+                progress={lang.progress}
+                totalEntries={lang.totalEntries}
+                translatedEntries={lang.translatedEntries}
+              />
+            </a>
           ))}
         </div>
       </div>
@@ -84,7 +98,7 @@ export default function Dashboard() {
               <h3 className={`font-semibold text-[var(--tx-primary)] ${action.hoverColor} transition-colors`}>
                 {action.title}
               </h3>
-              <p className="text-sm text-[var(--tx-muted)] mt-1">{action.desc}</p>
+              <p className="text-sm text-[var(--tx-secondary)] mt-1">{action.desc}</p>
             </Link>
           ))}
         </div>
@@ -115,7 +129,7 @@ export default function Dashboard() {
           <Github className="text-[var(--tx-dim)]" size={32} />
           <div>
             <h3 className="font-semibold text-[var(--tx-primary)]">{t('dashboard_open_source', 'Open Source Project')}</h3>
-            <p className="text-sm text-[var(--tx-muted)]">{t('dashboard_contribute_cta', 'Contribute on GitHub — star, fork, and help translate Ubuntu')}</p>
+            <p className="text-sm text-[var(--tx-secondary)]">{t('dashboard_contribute_cta', 'Contribute on GitHub — star, fork, and help translate Ubuntu')}</p>
           </div>
         </div>
         <a href="https://github.com/Wint-Theingi-Aung/ubuntu-localization" target="_blank" rel="noopener noreferrer" className="btn-outline flex items-center gap-2 text-sm">

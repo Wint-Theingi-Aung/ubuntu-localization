@@ -55,24 +55,24 @@
   --surface-sidebar:         #1e293b;           /* Slate 800 */
   --surface-card:            #1e293b;           /* Slate 800 */
   --surface-card-hover:      #263348;           /* Slate 700/800 blend */
-  --surface-input:           #0f172a;           /* Slate 950 inputs */
+  --surface-input:           #1e293b;           /* Slate 800 inputs — lighter for visibility */
   --surface-table-header:    #162032;           /* Slate 900/800 */
   --surface-table-row:       #1e293b;           /* Slate 800 */
   --surface-table-row-hover: #263348;           /* Row hover */
-  --surface-overlay:         rgba(255,255,255,0.05);
-  --surface-progress:        rgba(255,255,255,0.08);
+  --surface-overlay:         rgba(255,255,255,0.06);
+  --surface-progress:        rgba(255,255,255,0.10);
   --surface-glass:           rgba(30,41,59,0.92);
 
-  /* ── Text ── */
-  --tx-primary:              #f1f5f9;           /* Slate 100 */
-  --tx-secondary:            #94a3b8;           /* Slate 400 */
-  --tx-muted:                #64748b;           /* Slate 500 */
-  --tx-dim:                  #475569;           /* Slate 600 */
-  --tx-faint:                #334155;           /* Slate 700 */
+  /* ── Text — High Contrast Upgrade ── */
+  --tx-primary:              #f8fafc;           /* Slate 50  — MAX visibility */
+  --tx-secondary:            #cbd5e1;           /* Slate 300 — brighter than before */
+  --tx-muted:                #94a3b8;           /* Slate 400 — lifted from dim */
+  --tx-dim:                  #64748b;           /* Slate 500 — lifted from 600 */
+  --tx-faint:                #475569;           /* Slate 600 — lifted from 700 */
 
   /* ── Borders ── */
-  --border-theme:            #334155;           /* Slate 700 */
-  --border-light:            #1e293b;           /* Slate 800 */
+  --border-theme:            #475569;           /* Slate 600 — more visible */
+  --border-light:            #334155;           /* Slate 700 */
 
   /* ── Shadows ── */
   --shadow-card:             0 4px 12px rgba(0,0,0,0.30);
@@ -80,8 +80,8 @@
   --shadow-sidebar:          2px 0 16px rgba(0,0,0,0.40);
 
   /* ── Scrollbar ── */
-  --scrollbar-thumb:         #334155;           /* Slate 700 */
-  --scrollbar-thumb-hover:   #475569;           /* Slate 600 */
+  --scrollbar-thumb:         #475569;           /* Slate 600 — visible */
+  --scrollbar-thumb-hover:   #64748b;           /* Slate 500 */
 }
 
 /* ═══════════════════════════════════════════════════════════════════

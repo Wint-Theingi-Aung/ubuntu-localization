@@ -1,35 +1,29 @@
 'use client'
-
 import { CircularProgressbar, buildStyles } from 'react-circular-progressbar'
 import 'react-circular-progressbar/dist/styles.css'
+import { ExternalLink } from 'lucide-react'
 
 interface LanguageCardProps {
   code: string
   name: string
   native: string
+  color: string
   progress: number
   totalEntries: number
   translatedEntries: number
 }
 
-export default function LanguageCard({ code, name, native, progress, totalEntries, translatedEntries }: LanguageCardProps) {
-  const colorMap: Record<string, string> = {
-    my: '#E95420',
-    shn: '#772953',
-    mnw: '#0E8420',
-    ksw: '#007AA6',
-  }
-
-  const color = colorMap[code] || '#E95420'
-
+export default function LanguageCard({
+  code, name, native, color, progress, totalEntries, translatedEntries,
+}: LanguageCardProps) {
   return (
-    <div className="glass-card glass-card-hover p-6 card-lift cursor-pointer">
+    <div className="glass-card glass-card-hover p-6 card-lift cursor-pointer group">
       <div className="flex items-center justify-between mb-4">
         <div>
           <h3 className="font-bold text-lg text-[var(--tx-primary)]">{name}</h3>
           <p className="text-2xl font-myanmar text-[var(--tx-secondary)]">{native}</p>
         </div>
-        <div className="w-20 h-20">
+        <div className="w-20 h-20 relative">
           <CircularProgressbar
             value={progress}
             text={`${progress}%`}
@@ -43,7 +37,7 @@ export default function LanguageCard({ code, name, native, progress, totalEntrie
         </div>
       </div>
 
-      <div className="flex justify-between text-sm text-[var(--tx-muted)]">
+      <div className="flex justify-between text-sm text-[var(--tx-secondary)]">
         <span>{translatedEntries.toLocaleString()} translated</span>
         <span>{totalEntries.toLocaleString()} total</span>
       </div>
@@ -53,6 +47,11 @@ export default function LanguageCard({ code, name, native, progress, totalEntrie
           className="h-2 rounded-full transition-all duration-500"
           style={{ width: `${progress}%`, backgroundColor: color }}
         />
+      </div>
+
+      <div className="mt-4 flex items-center justify-end gap-1 text-xs text-[var(--tx-dim)] group-hover:text-[var(--tx-primary)] transition-colors">
+        <ExternalLink size={12} />
+        <span>View on Launchpad</span>
       </div>
     </div>
   )

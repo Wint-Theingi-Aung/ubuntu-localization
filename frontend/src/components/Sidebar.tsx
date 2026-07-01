@@ -20,6 +20,7 @@ import {
 import TuxLogo from './TuxLogo'
 import ThemeToggle from './ThemeToggle'
 import { useI18n, type LanguageCode } from '@/lib/i18n'
+import { UI_LANGUAGES } from '@/lib/constants'
 
 function VisitorCounter() {
   const [count, setCount] = useState<number | null>(null)
@@ -46,13 +47,7 @@ const navItems = [
   { href: '/history', labelKey: 'sidebar_history', icon: History, fallback: 'History' },
 ]
 
-const uiLanguages: { code: LanguageCode; label: string; name: string; native: string }[] = [
-  { code: 'my', label: 'MY', name: 'Myanmar', native: 'မြန်မာ' },
-  { code: 'shn', label: 'SHN', name: 'Shan', native: 'ရှမ်း' },
-  { code: 'mnw', label: 'MNW', name: 'Mon', native: 'မွန်' },
-  { code: 'ksw', label: 'KSW', name: 'Karen', native: 'စကောကရင်' },
-  { code: 'en', label: 'EN', name: 'English', native: 'English' },
-]
+const uiLanguages = UI_LANGUAGES
 
 export default function Sidebar() {
   const [isOpen, setIsOpen] = useState(false)

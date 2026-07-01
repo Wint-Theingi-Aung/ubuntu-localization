@@ -5,6 +5,7 @@ import SearchInput from '@/components/SearchInput'
 import Pagination from '@/components/Pagination'
 import { ExternalLink, Package, ArrowUpDown, Filter } from 'lucide-react'
 import { useI18n } from '@/lib/i18n'
+import { lpTranslateUrl, lpUbuntuUrl, LANGUAGES, UBUNTU_RELEASE } from '@/lib/constants'
 import templatesData from '@/data/templates.json'
 
 const ITEMS_PER_PAGE = 20
@@ -13,21 +14,12 @@ const allPkgCategories = Array.from(new Set(templatesData.packages.map((p: { cat
 const categories = ['All', ...allPkgCategories] as string[]
 const priorities = ['All', 'high', 'medium', 'low']
 
-const langLinks = [
-  { code: 'my', label: 'MY', name: 'Myanmar' },
-  { code: 'shn', label: 'SHN', name: 'Shan' },
-  { code: 'mnw', label: 'MNW', name: 'Mon' },
-  { code: 'ksw', label: 'KSW', name: 'Karen' },
-]
+const langLinks = LANGUAGES.map(l => ({ code: l.code, label: l.code.toUpperCase(), name: l.name }))
 
 const priorityColors: Record<string, string> = {
   high: 'badge-orange',
   medium: 'badge-yellow',
   low: 'badge-green',
-}
-
-function lpUrl(pkgName: string, langCode: string) {
-  return `https://translations.launchpad.net/ubuntu/stonking/+source/${pkgName}/+pots/${pkgName}/${langCode}/+translate`
 }
 
 export default function TemplatesPage() {
@@ -79,8 +71,8 @@ export default function TemplatesPage() {
             {t('templates_subtitle', 'Ubuntu packages requiring translation')} — {templatesData.packages.length} {t('templates_total', 'total')}
           </p>
         </div>
-        <a href="https://translations.launchpad.net/ubuntu" target="_blank" rel="noopener noreferrer" className="btn-secondary inline-flex items-center gap-2 text-sm">
-          {t('templates_view_launchpad', 'View on Launchpad')}
+        <a href={lpUbuntuUrl()} target="_blank" rel="noopener noreferrer" className="btn-secondary inline-flex items-center gap-2 text-sm">
+          {t('templates_view_launchpad', 'View on Launchpad')} ({UBUNTU_RELEASE})
           <ExternalLink size={14} />
         </a>
       </div>
@@ -163,7 +155,7 @@ export default function TemplatesPage() {
                   <td data-label={t('templates_translate', 'Translate')}>
                     <div className="flex gap-1">
                       {langLinks.map((lang) => (
-                        <a key={lang.code} href={lpUrl(pkg.name, lang.code)} target="_blank" rel="noopener noreferrer" className="lp-link"
+                        <a key={lang.code} href={lpTranslateUrl(pkg.name, lang.code)} target="_blank" rel="noopener noreferrer" className="lp-link"
                           title={`${t('templates_translate', 'Translate')} ${pkg.name} → ${lang.name}`}>
                           {lang.label}
                           <ExternalLink size={8} />
@@ -196,7 +188,7 @@ export default function TemplatesPage() {
               <span className="font-mono text-xs text-[var(--tx-dim)]">{pkg.entries.toLocaleString()} {t('templates_entries_label', 'entries')}</span>
               <div className="flex gap-1.5 lp-links-cell">
                 {langLinks.map((lang) => (
-                  <a key={lang.code} href={lpUrl(pkg.name, lang.code)} target="_blank" rel="noopener noreferrer" className="lp-link"
+                  <a key={lang.code} href={lpTranslateUrl(pkg.name, lang.code)} target="_blank" rel="noopener noreferrer" className="lp-link"
                     title={`${t('templates_translate', 'Translate')} → ${lang.name}`}>
                     {lang.label}
                     <ExternalLink size={8} />

@@ -7,6 +7,7 @@ import {
   ChevronDown, ChevronUp, RotateCcw,
 } from 'lucide-react'
 import { useI18n } from '@/lib/i18n'
+import { LANGUAGES, TRANSLATION_CONFIG } from '@/lib/constants'
 
 interface TranslationEntry {
   index: number
@@ -26,24 +27,20 @@ export default function TranslatePage() {
   const [error, setError] = useState<string | null>(null)
   const [expandedEntry, setExpandedEntry] = useState<number | null>(null)
 
-  const languages = [
-    { code: 'my', name: 'Myanmar', native: 'မြန်မာ' },
-    { code: 'shn', name: 'Shan', native: 'ရှမ်း' },
-    { code: 'mnw', name: 'Mon', native: 'မွန်' },
-    { code: 'ksw', name: "S'gaw Karen", native: 'စကောကရင်' },
-  ]
+  const languages = LANGUAGES
 
   const handleFileSelect = useCallback((e: React.ChangeEvent<HTMLInputElement>) => {
     const f = e.target.files?.[0]
     if (!f) return
-    if (!f.name.endsWith('.po') && !f.name.endsWith('.pot')) {
-      setError('Only .po and .pot files are supported'); return
+    const allowed = TRANSLATION_CONFIG.ALLOWED_EXTENSIONS
+    if (!allowed.some(ext => f.name.endsWith(ext))) {
+      setError(t('translation_invalid_file', `Only ${allowed.join(', ')} files are supported`)); return
     }
-    if (f.size > 50 * 1024 * 1024) {
-      setError('File too large. Maximum size is 50 MB.'); return
+    if (f.size > TRANSLATION_CONFIG.MAX_FILE_SIZE_MB * 1024 * 1024) {
+      setError(t('translation_file_too_large', `File too large. Maximum size is ${TRANSLATION_CONFIG.MAX_FILE_SIZE_MB} MB.`)); return
     }
     setFile(f); setError(null)
-  }, [])
+  }, [t])
 
   const handleUpload = useCallback(async () => {
     if (!file) return
@@ -163,10 +160,10 @@ export default function TranslatePage() {
       {/* Step indicator */}
       <div className="flex items-center justify-center gap-2 sm:gap-4 flex-wrap">
         {[
-          { key: 'upload', label: 'Upload', icon: Upload },
-          { key: 'translate', label: 'Translate', icon: Languages },
-          { key: 'review', label: 'Review', icon: Eye },
-          { key: 'export', label: 'Export', icon: Download },
+          { key: 'upload', label: t('translation_step_upload', 'Upload'), icon: Upload },
+          { key: 'translate', label: t('translation_step_translate', 'Translate'), icon: Languages },
+          { key: 'review', label: t('translation_step_review', 'Review'), icon: Eye },
+          { key: 'export', label: t('translation_step_export', 'Export'), icon: Download },
         ].map((s, idx) => {
           const steps = ['upload', 'translate', 'review', 'export']
           const stepIdx = steps.indexOf(step)
