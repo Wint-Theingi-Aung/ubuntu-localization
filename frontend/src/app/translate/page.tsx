@@ -1,6 +1,6 @@
 'use client'
 
-import { useState, useCallback, useMemo } from 'react'
+import { useState, useCallback, useMemo, useEffect } from 'react'
 import {
   Upload, Languages, Download, FileText, Loader2, CheckCircle,
   AlertCircle, X, Play, Sparkles, Shield, Edit3, Eye, Check,
@@ -33,6 +33,16 @@ export default function TranslatePage() {
 
   const languages = LANGUAGES
 
+  // Auto-save entries to localStorage (debounced)
+  useEffect(() => {
+    if (!file || entries.length === 0) return
+    const key = `ubuntu-translate-${file.name}-${targetLang}`
+    const timeout = setTimeout(() => {
+      localStorage.setItem(key, JSON.stringify(entries))
+    }, 500)
+    return () => clearTimeout(timeout)
+  }, [entries, file, targetLang])
+
   const handleFileSelect = useCallback((e: React.ChangeEvent<HTMLInputElement>) => {
     const f = e.target.files?.[0]
     if (!f) return
@@ -56,7 +66,24 @@ export default function TranslatePage() {
       const r = await fetch('/api/upload', { method: 'POST', body: fd })
       if (!r.ok) { const d = await r.json(); throw new Error(d.error || 'Upload failed') }
       const d = await r.json()
-      setEntries(d.entries.map((e: any) => ({ ...e, status: 'pending' as const })))
+      // Check for saved progress
+      const saveKey = `ubuntu-translate-${file!.name}-${targetLang}`
+      const saved = localStorage.getItem(saveKey)
+      let merged: TranslationEntry[]
+      if (saved) {
+        try {
+          const savedEntries: TranslationEntry[] = JSON.parse(saved)
+          merged = d.entries.map((e: any) => {
+            const s = savedEntries.find((se: TranslationEntry) => se.msgid === e.msgid)
+            return s ? { ...e, msgstr: s.msgstr, status: s.status } : { ...e, msgstr: '', status: 'pending' as const }
+          })
+        } catch {
+          merged = d.entries.map((e: any) => ({ ...e, msgstr: '', status: 'pending' as const }))
+        }
+      } else {
+        merged = d.entries.map((e: any) => ({ ...e, msgstr: '', status: 'pending' as const }))
+      }
+      setEntries(merged)
       setCurrentPage(1)
       setStep('translate')
     } catch (err: any) { setError(err.message) }
@@ -65,30 +92,24 @@ export default function TranslatePage() {
 
   const handleTranslate = useCallback(async () => {
     setIsTranslating(true); setProgress(0); setError(null)
-    const untranslated = entries.filter(e => e.status === 'pending')
-    let translated = 0
+    const batch = entries.filter(e => e.status === 'pending').slice(0, ENTRIES_PER_PAGE)
+    if (batch.length === 0) { setIsTranslating(false); return }
     try {
-      for (let i = 0; i < untranslated.length; i += 15) {
-        const batch = untranslated.slice(i, i + 15)
-        const r = await fetch('/api/translate', {
-          method: 'POST',
-          headers: { 'Content-Type': 'application/json' },
-          body: JSON.stringify({
-            entries: batch.map(e => ({ index: e.index, msgid: e.msgid })),
-            target_lang: targetLang,
-          }),
-        })
-        if (!r.ok) { const d = await r.json(); throw new Error(d.error || 'Translation failed') }
-        const d = await r.json()
-        setEntries(prev => prev.map(e => {
-          const m = d.translations.find((t: any) => t.index === e.index)
-          return m ? { ...e, msgstr: m.translated, status: 'reviewing' as const } : e
-        }))
-        translated += batch.length
-        setProgress(Math.round((translated / untranslated.length) * 100))
-      }
-      setCurrentPage(1)
-      setStep('review')
+      const r = await fetch('/api/translate', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          entries: batch.map(e => ({ index: e.index, msgid: e.msgid })),
+          target_lang: targetLang,
+        }),
+      })
+      if (!r.ok) { const d = await r.json(); throw new Error(d.error || 'Translation failed') }
+      const d = await r.json()
+      setEntries(prev => prev.map(e => {
+        const m = d.translations.find((t: any) => t.index === e.index)
+        return m ? { ...e, msgstr: m.translated, status: 'reviewing' as const } : e
+      }))
+      setProgress(100)
     } catch (err: any) { setError(err.message) }
     finally { setIsTranslating(false) }
   }, [entries, targetLang])
@@ -153,6 +174,7 @@ export default function TranslatePage() {
   const translatedCount = entries.filter(e => e.status === 'translated' || e.status === 'reviewing' || e.status === 'confirmed').length
   const confirmedCount = entries.filter(e => e.status === 'confirmed').length
   const reviewingCount = entries.filter(e => e.status === 'reviewing').length
+  const untranslatedCount = entries.filter(e => e.status === 'pending').length
   const totalCount = entries.length
 
   const totalPages = Math.ceil(entries.length / ENTRIES_PER_PAGE)
@@ -275,7 +297,7 @@ export default function TranslatePage() {
             <div className="flex items-center justify-between mb-2">
               <span className="text-[var(--tx-muted)]">{t('translation_progress', 'Progress')}</span>
               <span className="text-[var(--tx-primary)] font-medium">
-                {translatedCount} / {totalCount} {t('translation_strings', 'strings')}
+                {confirmedCount} confirmed / {totalCount} total ({untranslatedCount} untranslated)
               </span>
             </div>
             <div className="progress-bar">
@@ -286,12 +308,12 @@ export default function TranslatePage() {
           <div className="flex flex-wrap gap-3">
             <button
               onClick={handleTranslate}
-              disabled={isTranslating || translatedCount === totalCount}
+              disabled={isTranslating || untranslatedCount === 0}
               className="btn-primary flex items-center gap-2"
             >
               {isTranslating
-                ? <><Loader2 size={18} className="animate-spin" />Translating... {progress}%</>
-                : <><Sparkles size={18} />AI Translate ({totalCount - translatedCount} remaining)</>}
+                ? <><Loader2 size={18} className="animate-spin" />Translating {Math.min(ENTRIES_PER_PAGE, untranslatedCount)} strings...</>
+                : <><Sparkles size={18} />AI Translate (next {Math.min(ENTRIES_PER_PAGE, untranslatedCount)})</>}
             </button>
             {translatedCount > 0 && (
               <button onClick={() => setStep('review')} className="btn-secondary flex items-center gap-2">
@@ -336,12 +358,15 @@ export default function TranslatePage() {
           {/* Summary bar */}
           <div className="glass-card p-4">
             <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-3">
-              <div className="flex items-center gap-4 text-sm">
+              <div className="flex items-center gap-4 text-sm flex-wrap">
                 <span className="text-[var(--tx-muted)]">
                   <span className="text-amber-400 font-semibold">{reviewingCount}</span> awaiting review
                 </span>
                 <span className="text-[var(--tx-muted)]">
                   <span className="text-emerald-400 font-semibold">{confirmedCount}</span> confirmed
+                </span>
+                <span className="text-[var(--tx-muted)]">
+                  <span className="text-[var(--tx-dim)] font-semibold">{untranslatedCount}</span> untranslated
                 </span>
                 <span className="text-[var(--tx-muted)]">
                   <span className="text-[var(--tx-primary)] font-semibold">{totalCount}</span> total
@@ -509,7 +534,10 @@ export default function TranslatePage() {
             <button onClick={handleExport} className="btn-primary flex items-center justify-center gap-2">
               <Download size={18} />{t('translation_download_po', 'Download .po File')}
             </button>
-            <button onClick={() => { setStep('upload'); setFile(null); setEntries([]) }} className="btn-secondary">
+            <button onClick={() => {
+              if (file) localStorage.removeItem(`ubuntu-translate-${file.name}-${targetLang}`)
+              setStep('upload'); setFile(null); setEntries([])
+            }} className="btn-secondary">
               {t('translation_start_new', 'Start New')}
             </button>
           </div>
