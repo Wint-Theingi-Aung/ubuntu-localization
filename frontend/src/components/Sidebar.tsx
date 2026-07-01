@@ -56,13 +56,15 @@ export default function Sidebar() {
 
   return (
     <>
-      {/* Mobile hamburger */}
+      {/* Mobile hamburger — hidden when sidebar is open */}
       <button
-        onClick={() => setIsOpen(!isOpen)}
-        className="lg:hidden fixed top-4 left-4 z-50 p-2.5 rounded-xl bg-[var(--surface-overlay)] backdrop-blur-sm text-[var(--tx-primary)] hover:bg-[var(--surface-card-hover)] transition-colors border border-[var(--border-theme)]"
-        aria-label="Toggle menu"
+        onClick={() => setIsOpen(true)}
+        className={`lg:hidden fixed top-4 left-4 z-50 p-2.5 rounded-xl bg-[var(--surface-overlay)] backdrop-blur-sm text-[var(--tx-primary)] hover:bg-[var(--surface-card-hover)] transition-colors border border-[var(--border-theme)] ${
+          isOpen ? 'invisible' : ''
+        }`}
+        aria-label="Open menu"
       >
-        {isOpen ? <X size={20} /> : <Menu size={20} />}
+        <Menu size={20} />
       </button>
 
       {/* Backdrop */}
@@ -80,8 +82,16 @@ export default function Sidebar() {
         }`}
       >
         <div className="flex flex-col h-full sidebar-logo-bg">
-          {/* Logo */}
-          <div className="p-5 border-b border-[var(--border-theme)]">
+          {/* Logo + Close */}
+          <div className="relative p-5 pr-12 border-b border-[var(--border-theme)]">
+            {/* Mobile close button — top-right of header */}
+            <button
+              onClick={() => setIsOpen(false)}
+              className="lg:hidden absolute top-3 right-3 p-2 rounded-lg text-[var(--tx-muted)] hover:text-[var(--tx-primary)] hover:bg-[var(--surface-card-hover)] transition-colors"
+              aria-label="Close menu"
+            >
+              <X size={20} />
+            </button>
             <Link href="/" className="flex items-center gap-3 group">
               <div className="relative">
                 <TuxLogo size={40} />
