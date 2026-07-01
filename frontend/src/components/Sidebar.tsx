@@ -95,7 +95,6 @@ export default function Sidebar() {
             <Link href="/" className="flex items-center gap-3 group">
               <div className="relative">
                 <TuxLogo size={40} />
-                <div className="absolute -bottom-0.5 -right-0.5 w-3 h-3 bg-ubuntu-orange rounded-full border-2 border-[var(--surface-sidebar)]" />
               </div>
               <div>
                 <h1 className="font-bold text-[var(--tx-primary)] text-base group-hover:text-ubuntu-orange transition-colors">
