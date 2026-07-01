@@ -1,20 +1,30 @@
 'use client'
 
 import { useState, useCallback } from 'react'
-import { Upload, Languages, Download, FileText, Loader2, CheckCircle, AlertCircle, X, Play, Sparkles, Shield } from 'lucide-react'
+import {
+  Upload, Languages, Download, FileText, Loader2, CheckCircle,
+  AlertCircle, X, Play, Sparkles, Shield, Edit3, Eye, Check,
+  ChevronDown, ChevronUp, RotateCcw,
+} from 'lucide-react'
 import { useI18n } from '@/lib/i18n'
 
-interface TranslationEntry { index: number; msgid: string; msgstr: string; status: 'pending' | 'translated' | 'reviewing' }
+interface TranslationEntry {
+  index: number
+  msgid: string
+  msgstr: string
+  status: 'pending' | 'translated' | 'reviewing' | 'confirmed'
+}
 
 export default function TranslatePage() {
   const { t } = useI18n()
-  const [step, setStep] = useState<'upload' | 'translate' | 'export'>('upload')
+  const [step, setStep] = useState<'upload' | 'translate' | 'review' | 'export'>('upload')
   const [file, setFile] = useState<File | null>(null)
   const [targetLang, setTargetLang] = useState('my')
   const [entries, setEntries] = useState<TranslationEntry[]>([])
   const [isTranslating, setIsTranslating] = useState(false)
   const [progress, setProgress] = useState(0)
   const [error, setError] = useState<string | null>(null)
+  const [expandedEntry, setExpandedEntry] = useState<number | null>(null)
 
   const languages = [
     { code: 'my', name: 'Myanmar', native: 'မြန်မာ' },
@@ -26,19 +36,27 @@ export default function TranslatePage() {
   const handleFileSelect = useCallback((e: React.ChangeEvent<HTMLInputElement>) => {
     const f = e.target.files?.[0]
     if (!f) return
-    if (!f.name.endsWith('.po') && !f.name.endsWith('.pot')) { setError('Only .po and .pot files are supported'); return }
-    if (f.size > 50 * 1024 * 1024) { setError('File too large. Maximum size is 50 MB.'); return }
+    if (!f.name.endsWith('.po') && !f.name.endsWith('.pot')) {
+      setError('Only .po and .pot files are supported'); return
+    }
+    if (f.size > 50 * 1024 * 1024) {
+      setError('File too large. Maximum size is 50 MB.'); return
+    }
     setFile(f); setError(null)
   }, [])
 
   const handleUpload = useCallback(async () => {
     if (!file) return
     setIsTranslating(true); setError(null)
-    const fd = new FormData(); fd.append('file', file); fd.append('target_lang', targetLang)
+    const fd = new FormData()
+    fd.append('file', file)
+    fd.append('target_lang', targetLang)
     try {
       const r = await fetch('/api/upload', { method: 'POST', body: fd })
       if (!r.ok) { const d = await r.json(); throw new Error(d.error || 'Upload failed') }
-      const d = await r.json(); setEntries(d.entries); setStep('translate')
+      const d = await r.json()
+      setEntries(d.entries.map((e: any) => ({ ...e, status: 'pending' as const })))
+      setStep('translate')
     } catch (err: any) { setError(err.message) }
     finally { setIsTranslating(false) }
   }, [file, targetLang])
@@ -50,29 +68,86 @@ export default function TranslatePage() {
     try {
       for (let i = 0; i < untranslated.length; i += 15) {
         const batch = untranslated.slice(i, i + 15)
-        const r = await fetch('/api/translate', { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify({ entries: batch.map(e => ({ index: e.index, msgid: e.msgid })), target_lang: targetLang }) })
+        const r = await fetch('/api/translate', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({
+            entries: batch.map(e => ({ index: e.index, msgid: e.msgid })),
+            target_lang: targetLang,
+          }),
+        })
         if (!r.ok) { const d = await r.json(); throw new Error(d.error || 'Translation failed') }
         const d = await r.json()
-        setEntries(prev => prev.map(e => { const m = d.translations.find((t: any) => t.index === e.index); return m ? { ...e, msgstr: m.translated, status: 'translated' as const } : e }))
+        setEntries(prev => prev.map(e => {
+          const m = d.translations.find((t: any) => t.index === e.index)
+          return m ? { ...e, msgstr: m.translated, status: 'reviewing' as const } : e
+        }))
         translated += batch.length
         setProgress(Math.round((translated / untranslated.length) * 100))
       }
-      setStep('export')
+      setStep('review')
     } catch (err: any) { setError(err.message) }
     finally { setIsTranslating(false) }
   }, [entries, targetLang])
 
+  const handleEditTranslation = useCallback((index: number, newMsgstr: string) => {
+    setEntries(prev => prev.map(e =>
+      e.index === index ? { ...e, msgstr: newMsgstr } : e
+    ))
+  }, [])
+
+  const handleConfirmEntry = useCallback((index: number) => {
+    setEntries(prev => prev.map(e =>
+      e.index === index ? { ...e, status: 'confirmed' as const } : e
+    ))
+  }, [])
+
+  const handleUnconfirmEntry = useCallback((index: number) => {
+    setEntries(prev => prev.map(e =>
+      e.index === index ? { ...e, status: 'reviewing' as const } : e
+    ))
+  }, [])
+
+  const handleConfirmAll = useCallback(() => {
+    setEntries(prev => prev.map(e =>
+      e.status === 'reviewing' || e.status === 'translated'
+        ? { ...e, status: 'confirmed' as const }
+        : e
+    ))
+  }, [])
+
+  const handleResetToAI = useCallback((index: number) => {
+    // Re-trigger single entry translation would be expensive; mark as pending for re-translate
+    setEntries(prev => prev.map(e =>
+      e.index === index ? { ...e, msgstr: '', status: 'pending' as const } : e
+    ))
+  }, [])
+
   const handleExport = useCallback(async () => {
     try {
-      const r = await fetch('/api/export', { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify({ entries: entries.map(e => ({ index: e.index, msgid: e.msgid, msgstr: e.msgstr })), language_code: targetLang, filename: file?.name || 'messages.po' }) })
+      const r = await fetch('/api/export', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          entries: entries.map(e => ({ index: e.index, msgid: e.msgid, msgstr: e.msgstr })),
+          language_code: targetLang,
+          filename: file?.name || 'messages.po',
+        }),
+      })
       if (!r.ok) throw new Error('Export failed')
-      const blob = await r.blob(); const url = URL.createObjectURL(blob)
-      const a = document.createElement('a'); a.href = url; a.download = `translated_${targetLang}_${file?.name || 'messages.po'}`
-      document.body.appendChild(a); a.click(); document.body.removeChild(a); URL.revokeObjectURL(url)
+      const blob = await r.blob()
+      const url = URL.createObjectURL(blob)
+      const a = document.createElement('a')
+      a.href = url
+      a.download = `translated_${targetLang}_${file?.name || 'messages.po'}`
+      document.body.appendChild(a); a.click(); document.body.removeChild(a)
+      URL.revokeObjectURL(url)
     } catch (err: any) { setError(err.message) }
   }, [entries, targetLang, file])
 
-  const translatedCount = entries.filter(e => e.status === 'translated').length
+  const translatedCount = entries.filter(e => e.status === 'translated' || e.status === 'reviewing' || e.status === 'confirmed').length
+  const confirmedCount = entries.filter(e => e.status === 'confirmed').length
+  const reviewingCount = entries.filter(e => e.status === 'reviewing').length
   const totalCount = entries.length
 
   return (
@@ -85,17 +160,27 @@ export default function TranslatePage() {
         <p className="text-[var(--tx-muted)] mt-1">{t('translation_subtitle', 'AI-powered translation using Google Gemini 2.5 Flash')}</p>
       </div>
 
-      <div className="flex items-center justify-center gap-4">
-        {[{ key: 'upload', label: t('translation_upload_step', 'Upload'), icon: Upload }, { key: 'translate', label: t('translation_translate_step', 'Translate'), icon: Languages }, { key: 'export', label: t('translation_export_step', 'Export'), icon: Download }].map((s, idx) => {
-          const stepIdx = ['upload', 'translate', 'export'].indexOf(step)
-          const isCompleted = idx < stepIdx; const isActive = step === s.key
+      {/* Step indicator */}
+      <div className="flex items-center justify-center gap-2 sm:gap-4 flex-wrap">
+        {[
+          { key: 'upload', label: 'Upload', icon: Upload },
+          { key: 'translate', label: 'Translate', icon: Languages },
+          { key: 'review', label: 'Review', icon: Eye },
+          { key: 'export', label: 'Export', icon: Download },
+        ].map((s, idx) => {
+          const steps = ['upload', 'translate', 'review', 'export']
+          const stepIdx = steps.indexOf(step)
+          const isCompleted = idx < stepIdx
+          const isActive = step === s.key
           return (
             <div key={s.key} className="flex items-center gap-2">
               <div className={`step-dot ${isActive ? 'active' : isCompleted ? 'completed' : 'pending'}`}>
-                {isCompleted ? <CheckCircle size={20} /> : <s.icon size={20} />}
+                {isCompleted ? <CheckCircle size={16} /> : <s.icon size={16} />}
               </div>
-              <span className={`text-sm ${isActive ? 'text-[var(--tx-primary)] font-medium' : 'text-[var(--tx-dim)]'}`}>{s.label}</span>
-              {idx < 2 && <div className={`step-line ${isCompleted ? 'completed' : ''}`} />}
+              <span className={`text-xs sm:text-sm ${isActive ? 'text-[var(--tx-primary)] font-medium' : 'text-[var(--tx-dim)]'}`}>
+                {s.label}
+              </span>
+              {idx < 3 && <div className={`step-line ${isCompleted ? 'completed' : ''} hidden sm:block`} />}
             </div>
           )
         })}
@@ -105,19 +190,24 @@ export default function TranslatePage() {
         <div className="glass-card p-4 border-l-4 border-red-500/50">
           <div className="flex items-center gap-3">
             <AlertCircle className="text-red-400" size={20} />
-            <p className="text-[var(--tx-primary)] text-sm">{error}</p>
-            <button onClick={() => setError(null)} className="ml-auto"><X size={18} className="text-[var(--tx-muted)] hover:text-[var(--tx-primary)]" /></button>
+            <p className="text-[var(--tx-primary)] text-sm flex-1">{error}</p>
+            <button onClick={() => setError(null)}>
+              <X size={18} className="text-[var(--tx-muted)] hover:text-[var(--tx-primary)]" />
+            </button>
           </div>
         </div>
       )}
 
+      {/* ════════════════ UPLOAD STEP ════════════════ */}
       {step === 'upload' && (
         <div className="glass-card p-8">
           <div className="max-w-md mx-auto space-y-6">
             <div>
               <label className="block text-sm text-[var(--tx-muted)] mb-2">{t('translation_target_language', 'Target Language')}</label>
               <select value={targetLang} onChange={(e) => setTargetLang(e.target.value)} className="input-field w-full">
-                {languages.map(l => (<option key={l.code} value={l.code}>{l.name} ({l.native})</option>))}
+                {languages.map(l => (
+                  <option key={l.code} value={l.code}>{l.name} ({l.native})</option>
+                ))}
               </select>
             </div>
             <div>
@@ -140,11 +230,22 @@ export default function TranslatePage() {
               </label>
             </div>
             <button onClick={handleUpload} disabled={!file || isTranslating} className="btn-primary w-full flex items-center justify-center gap-2">
-              {isTranslating ? <><Loader2 size={18} className="animate-spin" />{t('translation_parsing', 'Parsing...')}</> : <><Upload size={18} />{t('translation_upload_parse', 'Upload & Parse')}</>}
+              {isTranslating
+                ? <><Loader2 size={18} className="animate-spin" />{t('translation_parsing', 'Parsing...')}</>
+                : <><Upload size={18} />{t('translation_upload_parse', 'Upload & Parse')}</>}
             </button>
             <div className="text-center">
               <p className="text-sm text-[var(--tx-dim)] mb-2">{t('translation_no_file', 'No .po file handy?')}</p>
-              <button onClick={() => { setEntries([{ index: 0, msgid: 'Power Off', msgstr: '', status: 'pending' }, { index: 1, msgid: 'Suspend', msgstr: '', status: 'pending' }, { index: 2, msgid: 'Restart...', msgstr: '', status: 'pending' }, { index: 3, msgid: 'Power Off...', msgstr: '', status: 'pending' }, { index: 4, msgid: 'Log Out...', msgstr: '', status: 'pending' }]); setStep('translate') }} className="btn-secondary flex items-center gap-2 mx-auto">
+              <button onClick={() => {
+                setEntries([
+                  { index: 0, msgid: 'Power Off', msgstr: '', status: 'pending' },
+                  { index: 1, msgid: 'Suspend', msgstr: '', status: 'pending' },
+                  { index: 2, msgid: 'Restart...', msgstr: '', status: 'pending' },
+                  { index: 3, msgid: 'Power Off...', msgstr: '', status: 'pending' },
+                  { index: 4, msgid: 'Log Out...', msgstr: '', status: 'pending' },
+                ])
+                setStep('translate')
+              }} className="btn-secondary flex items-center gap-2 mx-auto">
                 <Play size={16} />{t('translation_try_demo', 'Try Demo')}
               </button>
             </div>
@@ -152,35 +253,58 @@ export default function TranslatePage() {
         </div>
       )}
 
+      {/* ════════════════ TRANSLATE STEP ════════════════ */}
       {step === 'translate' && (
         <div className="space-y-4">
           <div className="glass-card p-4">
             <div className="flex items-center justify-between mb-2">
               <span className="text-[var(--tx-muted)]">{t('translation_progress', 'Progress')}</span>
-              <span className="text-[var(--tx-primary)] font-medium">{translatedCount} / {totalCount} {t('translation_strings', 'strings')}</span>
+              <span className="text-[var(--tx-primary)] font-medium">
+                {translatedCount} / {totalCount} {t('translation_strings', 'strings')}
+              </span>
             </div>
-            <div className="progress-bar"><div className="progress-bar-fill" style={{ width: `${(translatedCount / totalCount) * 100}%` }} /></div>
+            <div className="progress-bar">
+              <div className="progress-bar-fill" style={{ width: `${totalCount ? (translatedCount / totalCount) * 100 : 0}%` }} />
+            </div>
           </div>
-          <div className="flex flex-wrap gap-4">
-            <button onClick={handleTranslate} disabled={isTranslating || translatedCount === totalCount} className="btn-primary flex items-center gap-2">
-              {isTranslating ? <><Loader2 size={18} className="animate-spin" />{t('translation_translating', 'Translating...')} {progress}%</> : <><Sparkles size={18} />{t('translation_ai_translate', 'AI Translate')} ({totalCount - translatedCount} {t('translation_remaining', 'remaining')})</>}
+
+          <div className="flex flex-wrap gap-3">
+            <button
+              onClick={handleTranslate}
+              disabled={isTranslating || translatedCount === totalCount}
+              className="btn-primary flex items-center gap-2"
+            >
+              {isTranslating
+                ? <><Loader2 size={18} className="animate-spin" />Translating... {progress}%</>
+                : <><Sparkles size={18} />AI Translate ({totalCount - translatedCount} remaining)</>}
             </button>
-            {translatedCount > 0 && <button onClick={() => setStep('export')} className="btn-secondary flex items-center gap-2"><Download size={18} />{t('translation_export', 'Export')}</button>}
+            {translatedCount > 0 && (
+              <button onClick={() => setStep('review')} className="btn-secondary flex items-center gap-2">
+                <Eye size={18} />Review Translations
+              </button>
+            )}
           </div>
+
           <div className="glass-card overflow-hidden">
             <div className="divide-y divide-[var(--border-light)]">
               {entries.map(entry => (
                 <div key={entry.index} className="p-4 hover:bg-[var(--surface-overlay)] transition-colors">
                   <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                     <div>
-                      <p className="text-xs text-[var(--tx-dim)] mb-1 flex items-center gap-1"><FileText size={10} />{t('translation_source', 'Source')}</p>
-                      <p className="text-[var(--tx-primary)] font-mono text-sm bg-[var(--surface-overlay)] p-2.5 rounded-lg border border-[var(--border-light)]">{entry.msgid}</p>
+                      <p className="text-xs text-[var(--tx-dim)] mb-1 flex items-center gap-1">
+                        <FileText size={10} />Source
+                      </p>
+                      <p className="text-[var(--tx-primary)] font-mono text-sm bg-[var(--surface-overlay)] p-2.5 rounded-lg border border-[var(--border-light)]">
+                        {entry.msgid}
+                      </p>
                     </div>
                     <div>
-                      <p className="text-xs text-[var(--tx-dim)] mb-1 flex items-center gap-1"><Languages size={10} />{t('translation_translation', 'Translation')}</p>
-                      {entry.status === 'translated'
+                      <p className="text-xs text-[var(--tx-dim)] mb-1 flex items-center gap-1">
+                        <Languages size={10} />Translation
+                      </p>
+                      {entry.status === 'translated' || entry.status === 'reviewing'
                         ? <p className="text-emerald-400 font-myanmar text-sm bg-emerald-500/10 p-2.5 rounded-lg border border-emerald-500/15">{entry.msgstr}</p>
-                        : <p className="text-[var(--tx-faint)] italic text-sm p-2.5">{t('translation_pending', 'Pending translation')}</p>}
+                        : <p className="text-[var(--tx-faint)] italic text-sm p-2.5">Pending translation</p>}
                     </div>
                   </div>
                 </div>
@@ -190,17 +314,194 @@ export default function TranslatePage() {
         </div>
       )}
 
+      {/* ════════════════ REVIEW STEP ════════════════ */}
+      {step === 'review' && (
+        <div className="space-y-4">
+          {/* Summary bar */}
+          <div className="glass-card p-4">
+            <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-3">
+              <div className="flex items-center gap-4 text-sm">
+                <span className="text-[var(--tx-muted)]">
+                  <span className="text-amber-400 font-semibold">{reviewingCount}</span> awaiting review
+                </span>
+                <span className="text-[var(--tx-muted)]">
+                  <span className="text-emerald-400 font-semibold">{confirmedCount}</span> confirmed
+                </span>
+                <span className="text-[var(--tx-muted)]">
+                  <span className="text-[var(--tx-primary)] font-semibold">{totalCount}</span> total
+                </span>
+              </div>
+              <div className="flex gap-2">
+                <button
+                  onClick={handleConfirmAll}
+                  disabled={reviewingCount === 0}
+                  className="btn-primary flex items-center gap-2 text-sm"
+                >
+                  <Check size={16} />Confirm All ({reviewingCount})
+                </button>
+                <button
+                  onClick={() => setStep('export')}
+                  disabled={confirmedCount === 0}
+                  className="btn-secondary flex items-center gap-2 text-sm"
+                >
+                  <Download size={16} />Export ({confirmedCount} confirmed)
+                </button>
+              </div>
+            </div>
+            <div className="progress-bar mt-3">
+              <div
+                className="progress-bar-fill bg-emerald-500"
+                style={{ width: `${totalCount ? (confirmedCount / totalCount) * 100 : 0}%` }}
+              />
+            </div>
+          </div>
+
+          {/* Editable translation entries */}
+          <div className="space-y-3">
+            {entries.map(entry => {
+              const isExpanded = expandedEntry === entry.index
+              const isConfirmed = entry.status === 'confirmed'
+              const isReviewing = entry.status === 'reviewing'
+
+              return (
+                <div
+                  key={entry.index}
+                  className={`glass-card overflow-hidden transition-all duration-200 ${
+                    isConfirmed
+                      ? 'border-l-4 border-l-emerald-500/50'
+                      : isReviewing
+                        ? 'border-l-4 border-l-amber-400/50'
+                        : 'border-l-4 border-l-[var(--border-theme)]'
+                  }`}
+                >
+                  {/* Header row */}
+                  <button
+                    onClick={() => setExpandedEntry(isExpanded ? null : entry.index)}
+                    className="w-full flex items-center gap-3 p-4 text-left hover:bg-[var(--surface-overlay)] transition-colors"
+                  >
+                    <div className={`w-6 h-6 rounded-full flex items-center justify-center flex-shrink-0 ${
+                      isConfirmed
+                        ? 'bg-emerald-500/20 text-emerald-400'
+                        : isReviewing
+                          ? 'bg-amber-400/20 text-amber-400'
+                          : 'bg-[var(--surface-overlay)] text-[var(--tx-dim)]'
+                    }`}>
+                      {isConfirmed ? <Check size={14} /> : isReviewing ? <Edit3 size={14} /> : <FileText size={14} />}
+                    </div>
+                    <div className="flex-1 min-w-0">
+                      <p className="text-sm font-mono text-[var(--tx-secondary)] truncate">{entry.msgid}</p>
+                      <p className={`text-sm font-myanmar truncate mt-0.5 ${
+                        isConfirmed ? 'text-emerald-400' : 'text-amber-300'
+                      }`}>
+                        {entry.msgstr || '(empty)'}
+                      </p>
+                    </div>
+                    <span className={`badge flex-shrink-0 ${
+                      isConfirmed ? 'badge-green' : isReviewing ? 'badge-yellow' : 'badge-orange'
+                    }`}>
+                      {isConfirmed ? 'Confirmed' : isReviewing ? 'Needs Review' : 'Pending'}
+                    </span>
+                    {isExpanded ? <ChevronUp size={16} className="text-[var(--tx-dim)]" /> : <ChevronDown size={16} className="text-[var(--tx-dim)]" />}
+                  </button>
+
+                  {/* Expanded editor */}
+                  {isExpanded && (
+                    <div className="px-4 pb-4 border-t border-[var(--border-light)]">
+                      <div className="grid grid-cols-1 lg:grid-cols-2 gap-4 mt-4">
+                        {/* Source */}
+                        <div>
+                          <label className="text-xs text-[var(--tx-dim)] mb-2 block flex items-center gap-1">
+                            <FileText size={10} />Source Text
+                          </label>
+                          <div className="font-mono text-sm bg-[var(--surface-overlay)] p-3 rounded-lg border border-[var(--border-light)] text-[var(--tx-primary)] whitespace-pre-wrap">
+                            {entry.msgid}
+                          </div>
+                        </div>
+
+                        {/* Editable translation */}
+                        <div>
+                          <label className="text-xs text-[var(--tx-dim)] mb-2 block flex items-center gap-1">
+                            <Edit3 size={10} />
+                            Translation {isReviewing && <span className="text-amber-400">(AI-generated — review & edit)</span>}
+                          </label>
+                          <textarea
+                            value={entry.msgstr}
+                            onChange={(e) => handleEditTranslation(entry.index, e.target.value)}
+                            className={`input-field w-full font-myanmar text-sm min-h-[5rem] resize-y ${
+                              isReviewing
+                                ? 'bg-amber-400/5 border-amber-400/30 focus:border-amber-400/60'
+                                : ''
+                            }`}
+                            rows={3}
+                            placeholder="Enter translation..."
+                          />
+                        </div>
+                      </div>
+
+                      {/* Action buttons */}
+                      <div className="flex flex-wrap gap-2 mt-4">
+                        {isConfirmed ? (
+                          <button
+                            onClick={() => handleUnconfirmEntry(entry.index)}
+                            className="btn-ghost flex items-center gap-1.5 text-sm text-amber-400 hover:text-amber-300"
+                          >
+                            <RotateCcw size={14} />Unconfirm
+                          </button>
+                        ) : (
+                          <button
+                            onClick={() => handleConfirmEntry(entry.index)}
+                            disabled={!entry.msgstr}
+                            className="btn-primary flex items-center gap-1.5 text-sm"
+                          >
+                            <Check size={14} />Confirm Translation
+                          </button>
+                        )}
+                        <button
+                          onClick={() => handleResetToAI(entry.index)}
+                          className="btn-ghost flex items-center gap-1.5 text-sm text-[var(--tx-muted)] hover:text-[var(--tx-primary)]"
+                        >
+                          <RotateCcw size={14} />Reset
+                        </button>
+                      </div>
+                    </div>
+                  )}
+                </div>
+              )
+            })}
+          </div>
+        </div>
+      )}
+
+      {/* ════════════════ EXPORT STEP ════════════════ */}
       {step === 'export' && (
         <div className="glass-card p-8 text-center max-w-lg mx-auto">
-          <div className="w-16 h-16 rounded-full bg-emerald-500/20 flex items-center justify-center mx-auto mb-4"><CheckCircle className="text-emerald-400" size={32} /></div>
-          <h2 className="text-2xl font-bold text-[var(--tx-primary)] mb-2">{t('translation_complete', 'Translation Complete!')}</h2>
-          <p className="text-[var(--tx-muted)] mb-6">{translatedCount} {t('translation_translated_to', 'strings translated to')} {languages.find(l => l.code === targetLang)?.name}</p>
-          <div className="flex flex-col sm:flex-row justify-center gap-3">
-            <button onClick={handleExport} className="btn-primary flex items-center justify-center gap-2"><Download size={18} />{t('translation_download_po', 'Download .po File')}</button>
-            <button onClick={() => { setStep('upload'); setFile(null); setEntries([]) }} className="btn-secondary">{t('translation_start_new', 'Start New')}</button>
+          <div className="w-16 h-16 rounded-full bg-emerald-500/20 flex items-center justify-center mx-auto mb-4">
+            <CheckCircle className="text-emerald-400" size={32} />
           </div>
+          <h2 className="text-2xl font-bold text-[var(--tx-primary)] mb-2">
+            {t('translation_complete', 'Translation Complete!')}
+          </h2>
+          <p className="text-[var(--tx-muted)] mb-1">
+            {confirmedCount} strings confirmed and ready to export
+          </p>
+          <p className="text-[var(--tx-dim)] text-sm mb-6">
+            Translated to {languages.find(l => l.code === targetLang)?.name} ({languages.find(l => l.code === targetLang)?.native})
+          </p>
+
+          <div className="flex flex-col sm:flex-row justify-center gap-3">
+            <button onClick={handleExport} className="btn-primary flex items-center justify-center gap-2">
+              <Download size={18} />{t('translation_download_po', 'Download .po File')}
+            </button>
+            <button onClick={() => { setStep('upload'); setFile(null); setEntries([]) }} className="btn-secondary">
+              {t('translation_start_new', 'Start New')}
+            </button>
+          </div>
+
           <div className="mt-6 pt-4 border-t border-[var(--border-light)]">
-            <div className="flex items-center justify-center gap-2 text-xs text-[var(--tx-dim)]"><Shield size={12} /><span>{t('translation_qa_verified', 'QA verified with placeholder integrity checks')}</span></div>
+            <div className="flex items-center justify-center gap-2 text-xs text-[var(--tx-dim)]">
+              <Shield size={12} />
+              <span>{t('translation_qa_verified', 'QA verified with placeholder integrity checks')}</span>
+            </div>
           </div>
         </div>
       )}

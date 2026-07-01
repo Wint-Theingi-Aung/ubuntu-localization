@@ -13,12 +13,18 @@ const config: Config = {
         ubuntu: {
           orange: '#E95420',
           aubergine: '#772953',
-          dark: '#2c001e',
-          'dark-deep': '#11000c',
-          'dark-sidebar': '#3d052d',
-          'dark-card': '#4f0e3f',
           'warm-grey': '#AEA79F',
           'cool-grey': '#333333',
+        },
+        midnight: {
+          950: '#0f172a',
+          900: '#162032',
+          800: '#1e293b',
+          700: '#334155',
+          600: '#475569',
+          500: '#64748b',
+          400: '#94a3b8',
+          300: '#cbd5e1',
         },
         /* Semantic theme colors point to CSS custom properties */
         tx: {

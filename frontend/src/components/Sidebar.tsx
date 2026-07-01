@@ -1,6 +1,6 @@
 'use client'
 
-import { useState } from 'react'
+import { useState, useEffect } from 'react'
 import Link from 'next/link'
 import { usePathname } from 'next/navigation'
 import {
@@ -20,6 +20,21 @@ import {
 import TuxLogo from './TuxLogo'
 import ThemeToggle from './ThemeToggle'
 import { useI18n, type LanguageCode } from '@/lib/i18n'
+
+function VisitorCounter() {
+  const [count, setCount] = useState<number | null>(null)
+  useEffect(() => {
+    fetch('https://api.countapi.xyz/hit/ubuntu-localization/visits')
+      .then(r => r.json())
+      .then(d => setCount(d.value))
+      .catch(() => {})
+  }, [])
+  return count !== null ? (
+    <span className="text-[10px] text-[var(--tx-faint)]" title="Total visitors">
+      👁 {count.toLocaleString()}
+    </span>
+  ) : null
+}
 
 const navItems = [
   { href: '/', labelKey: 'sidebar_dashboard', icon: LayoutDashboard, fallback: 'Dashboard' },
@@ -111,8 +126,8 @@ export default function Sidebar() {
             })}
           </nav>
 
-          {/* Theme Toggle */}
-          <div className="p-3 border-t border-[var(--border-theme)]">
+          {/* Theme Toggle — icon only */}
+          <div className="p-3 border-t border-[var(--border-theme)] flex justify-center">
             <ThemeToggle />
           </div>
 
@@ -154,6 +169,7 @@ export default function Sidebar() {
               <p className="text-[10px] text-[var(--tx-faint)]">
                 v3.1.0
               </p>
+              <VisitorCounter />
               <p className="text-[10px] text-[var(--tx-faint)]">
                 Next.js + Tailwind
               </p>

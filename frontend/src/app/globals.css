@@ -50,38 +50,38 @@
 }
 
 .dark {
-  /* ── Surfaces — solid aubergine stack (no transparency bleed) ── */
-  --surface-page:            #11000c;           /* Deep dark */
-  --surface-sidebar:         #3d052d;           /* Medium Aubergine sidebar */
-  --surface-card:            #4f0e3f;           /* Lighter Aubergine tint */
-  --surface-card-hover:      #5a1549;           /* Slightly lighter on hover */
-  --surface-input:           #3d052d;           /* Solid input background */
-  --surface-table-header:    #3d052d;           /* Solid table header */
-  --surface-table-row:       #4f0e3f;           /* Solid row background */
-  --surface-table-row-hover: #5a1549;           /* Row hover */
-  --surface-overlay:         rgba(255,255,255,0.06);
-  --surface-progress:        rgba(255,255,255,0.10);
-  --surface-glass:           rgba(61,5,45,0.92);
+  /* ── Surfaces — Midnight Slate palette ── */
+  --surface-page:            #0f172a;           /* Slate 950 */
+  --surface-sidebar:         #1e293b;           /* Slate 800 */
+  --surface-card:            #1e293b;           /* Slate 800 */
+  --surface-card-hover:      #263348;           /* Slate 700/800 blend */
+  --surface-input:           #0f172a;           /* Slate 950 inputs */
+  --surface-table-header:    #162032;           /* Slate 900/800 */
+  --surface-table-row:       #1e293b;           /* Slate 800 */
+  --surface-table-row-hover: #263348;           /* Row hover */
+  --surface-overlay:         rgba(255,255,255,0.05);
+  --surface-progress:        rgba(255,255,255,0.08);
+  --surface-glass:           rgba(30,41,59,0.92);
 
   /* ── Text ── */
-  --tx-primary:              #ffffff;           /* Pure white */
-  --tx-secondary:            #aea79f;           /* Ubuntu Warm Grey */
-  --tx-muted:                #aea79f;           /* Warm Grey for muted too */
-  --tx-dim:                  rgba(255,255,255,0.45);
-  --tx-faint:                rgba(255,255,255,0.25);
+  --tx-primary:              #f1f5f9;           /* Slate 100 */
+  --tx-secondary:            #94a3b8;           /* Slate 400 */
+  --tx-muted:                #64748b;           /* Slate 500 */
+  --tx-dim:                  #475569;           /* Slate 600 */
+  --tx-faint:                #334155;           /* Slate 700 */
 
   /* ── Borders ── */
-  --border-theme:            rgba(255,255,255,0.10);
-  --border-light:            rgba(255,255,255,0.05);
+  --border-theme:            #334155;           /* Slate 700 */
+  --border-light:            #1e293b;           /* Slate 800 */
 
   /* ── Shadows ── */
-  --shadow-card:             0 4px 12px rgba(0,0,0,0.40);
-  --shadow-card-hover:       0 8px 24px rgba(0,0,0,0.50);
-  --shadow-sidebar:          2px 0 16px rgba(0,0,0,0.50);
+  --shadow-card:             0 4px 12px rgba(0,0,0,0.30);
+  --shadow-card-hover:       0 8px 24px rgba(0,0,0,0.40);
+  --shadow-sidebar:          2px 0 16px rgba(0,0,0,0.40);
 
   /* ── Scrollbar ── */
-  --scrollbar-thumb:         rgba(255,255,255,0.15);
-  --scrollbar-thumb-hover:   rgba(255,255,255,0.25);
+  --scrollbar-thumb:         #334155;           /* Slate 700 */
+  --scrollbar-thumb-hover:   #475569;           /* Slate 600 */
 }
 
 /* ═══════════════════════════════════════════════════════════════════

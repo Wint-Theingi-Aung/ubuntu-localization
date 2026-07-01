@@ -32,24 +32,11 @@ export default function ThemeToggle() {
   return (
     <button
       onClick={toggle}
-      className="w-full flex items-center justify-between px-4 py-2.5 rounded-xl text-[var(--tx-muted)] hover:text-[var(--tx-primary)] hover:bg-[var(--surface-overlay)] transition-all duration-200 text-sm"
+      className="flex items-center justify-center w-10 h-10 rounded-xl text-[var(--tx-muted)] hover:text-ubuntu-orange hover:bg-[var(--surface-overlay)] transition-all duration-200"
       aria-label={isDark ? 'Switch to light mode' : 'Switch to dark mode'}
+      title={isDark ? 'Switch to light mode' : 'Switch to dark mode'}
     >
-      <span className="flex items-center gap-3">
-        {isDark ? <Moon size={16} /> : <Sun size={16} className="text-amber-400" />}
-        <span>{isDark ? 'Dark' : 'Light'}</span>
-      </span>
-      <div
-        className={`relative w-9 h-5 rounded-full transition-colors duration-300 ${
-          isDark ? 'bg-white/20' : 'bg-amber-400/30'
-        }`}
-      >
-        <div
-          className={`absolute top-0.5 w-4 h-4 rounded-full bg-white shadow-md transition-all duration-300 ${
-            isDark ? 'left-0.5' : 'left-[18px]'
-          }`}
-        />
-      </div>
+      {isDark ? <Moon size={18} /> : <Sun size={18} className="text-amber-400" />}
     </button>
   )
 }
