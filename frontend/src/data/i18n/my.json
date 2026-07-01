@@ -1,7 +1,7 @@
 {
   "sidebar_navigation": "လမ်းညွှန်",
   "sidebar_dashboard": "ပင်မစာမျက်နှာ",
-  "sidebar_templates": "ဘာသာပြန်ဆိုမည့်ဖိုင်များ",
+  "sidebar_templates": "ဘာသာပြန်မည့်ဖိုင်များ",
   "sidebar_translation": "ဘာသာပြန်ခြင်း",
   "sidebar_glossary": "ဝေါဟာရ",
   "sidebar_guide": "လမ်းညွှန်",
@@ -32,7 +32,7 @@
   "dashboard_guide_action": "ဘာသာပြန်လမ်းညွှန်",
   "dashboard_guide_desc": "Ubuntu ဘာသာပြန်ခြင်းအတွက် ညွှန်ကြားချက်များ",
   "dashboard_view_launchpad": "Launchpad တွင် ကြည့်ရန်",
-  "templates_title": "ဘာသာပြန်ဆိုမည့်ဖိုင်များ",
+  "templates_title": "ဘာသာပြန်မည့်ဖိုင်များ",
   "templates_subtitle": "ဘာသာပြန်ရန် Ubuntu ပက်ကေ့ဂျ်များ",
   "templates_total": "စုစုပေါင်း",
   "templates_view_launchpad": "Launchpad တွင် ကြည့်ရန်",
