@@ -1,0 +1,677 @@
+{
+  "en": {
+    "chapters": [
+      {
+        "id": "getting-started",
+        "title": "Getting Started",
+        "sectionCount": 2,
+        "sections": [
+          {
+            "id": "overview",
+            "title": "What is Ubuntu Localization?",
+            "content": "The Ubuntu Localization Tool helps translate Ubuntu into indigenous languages — Myanmar (my), Shan (shn), Mon (mnw), and S'gaw Karen (ksw) — using Google Gemini AI. It works with .po files, the standard format for Linux translations exported from Launchpad.",
+            "tips": [
+              "Ubuntu uses Launchpad for translations",
+              ".po files contain translatable strings",
+              "Each string has a source (English) and target"
+            ]
+          },
+          {
+            "id": "quick-start",
+            "title": "Quick Start Guide",
+            "content": "Follow these steps to start translating Ubuntu into your language.",
+            "tips": [
+              "1. Go to the Translation page",
+              "2. Upload a .po file from Launchpad",
+              "3. Select your target language",
+              "4. Click AI Translate",
+              "5. Review and edit translations",
+              "6. Export the translated .po file",
+              "7. Upload back to Launchpad"
+            ]
+          }
+        ]
+      },
+      {
+        "id": "translation-guide",
+        "title": "Translation Rules",
+        "sectionCount": 3,
+        "sections": [
+          {
+            "id": "placeholders",
+            "title": "Preserving Placeholders",
+            "content": "Placeholders must be preserved exactly as they appear in the source string. They are replaced with real values at runtime. Breaking a placeholder will crash the application.",
+            "tips": [
+              "%s — string placeholder",
+              "%d — integer placeholder",
+              "%f — float placeholder",
+              "%(name)s — named placeholder",
+              "{0} {1} — positional placeholders"
+            ]
+          },
+          {
+            "id": "html-tags",
+            "title": "Preserving HTML Tags",
+            "content": "HTML and XML tags must be preserved exactly. Only translate the text content inside the tags, never the tag names or attributes.",
+            "tips": [
+              "<b>bold</b> — keep tags",
+              "<i>italic</i> — preserve structure",
+              "<a href=\"...\">link</a> — keep href unchanged",
+              "&amp; &lt; &gt; — HTML entities must stay intact"
+            ]
+          },
+          {
+            "id": "technical-terms",
+            "title": "Technical Terms (Do NOT Translate)",
+            "content": "Technical terms, brand names, and tool names must stay in English. Translating them breaks search, documentation, and user support.",
+            "tips": [
+              "Brands: Ubuntu, Canonical, Debian, Firefox",
+              "System: Kernel, GRUB, systemd, dbus",
+              "Tools: sudo, apt, dpkg, snap, flatpak",
+              "Network: SSH, VPN, TCP, UDP, DNS, HTTP",
+              "Storage: ext4, Btrfs, LVM, RAID"
+            ]
+          }
+        ]
+      },
+      {
+        "id": "ai-features",
+        "title": "AI Translation",
+        "sectionCount": 2,
+        "sections": [
+          {
+            "id": "gemini",
+            "title": "How AI Translation Works",
+            "content": "The tool uses Google Gemini 2.5 Flash to generate Ubuntu-specific translations. It processes strings in batches, applies language-specific scripts, and preserves all placeholders and markup automatically.",
+            "tips": [
+              "AI translates batches of 15 strings",
+              "QA-verified for placeholder integrity",
+              "Manually edit any AI translation",
+              "Rate limits: 15 requests/min on free tier"
+            ]
+          },
+          {
+            "id": "qa",
+            "title": "QA Verification",
+            "content": "Every AI translation passes through automated quality checks before it is accepted. Failed translations are flagged for manual review.",
+            "tips": [
+              "Placeholder check — %s %d {0} preserved",
+              "Newline count — matching source",
+              "Non-empty — translation must not be blank",
+              "Length ratio — 0.3x to 4.0x of source"
+            ]
+          }
+        ]
+      },
+      {
+        "id": "contributing",
+        "title": "Contributing",
+        "sectionCount": 2,
+        "sections": [
+          {
+            "id": "glossary-usage",
+            "title": "Using the Glossary",
+            "content": "The Glossary page provides standardized translations for common Ubuntu terms. Use it to keep terminology consistent across all translations.",
+            "tips": [
+              "Check Glossary before translating common terms",
+              "Consistent terminology improves UX",
+              "Shan and Mon terms already available",
+              "Contributions welcome via GitHub"
+            ]
+          },
+          {
+            "id": "community",
+            "title": "Join the Community",
+            "content": "Ubuntu translation is a community effort. Join the Ubuntu Translators team on Launchpad to collaborate with other translators and get help with your language.",
+            "tips": [
+              "Launchpad: translations.launchpad.net/ubuntu",
+              "Team: Ubuntu Translators",
+              "Mailing list: ubuntu-translators@lists.ubuntu.com",
+              "GitHub: Wint-Theingi-Aung/ubuntu-localization"
+            ]
+          }
+        ]
+      }
+    ]
+  },
+  "my": {
+    "chapters": [
+      {
+        "id": "getting-started",
+        "title": "စတင်အသုံးပြုခြင်း",
+        "sectionCount": 2,
+        "sections": [
+          {
+            "id": "overview",
+            "title": "Ubuntu ဘာသာပြန်ဆိုခြင်းဆိုတာ ဘာလဲ",
+            "content": "ဤကိရိယာသည် Ubuntu ကို ဒေသတွင်း ဘာသာစကားများဖြစ်သော မြန်မာ၊ ရှမ်း၊ မွန်၊ ကညီ (S'gaw Karen) ဘာသာစကားများသို့ ဘာသာပြန်ဆိုရာတွင် ကူညီပေးပါသည်။ Google Gemini AI ကို အသုံးပြု၍ .po ဖိုင်များနှင့် အလုပ်လုပ်ပါသည်။ .po ဖိုင်များသည် Linux ဆော့ဖ်ဝဲလ် ဘာသာပြန်ဆိုခြင်းအတွက် စံနှုန်းဖိုင်ပုံစံဖြစ်ပြီး ဘာသာပြန်ဆိုနိုင်သော စာသားများ ပါဝင်ပါသည်။",
+            "tips": [
+              "Ubuntu သည် Launchpad ကို ဘာသာပြန်ဆိုရာတွင် အသုံးပြုသည်",
+              ".po ဖိုင်များတွင် ဘာသာပြန်ဆိုနိုင်သော စာသားများ ပါဝင်သည်",
+              "စာသားတစ်ခုချင်းစီတွင် မူရင်း (အင်္ဂလိပ်) နှင့် ပစ်မှတ် ပါဝင်သည်"
+            ]
+          },
+          {
+            "id": "quick-start",
+            "title": "အမြန်စတင်နည်း",
+            "content": "ဘာသာပြန်ဆိုခြင်းကို စတင်ရန် အောက်ပါအဆင့်များကို လုပ်ဆောင်ပါ။ ပထမ ဘာသာပြန် စာမျက်နှာသို့ သွားပါ။ ထို့နောက် Launchpad မှ .po ဖိုင် တင်သွင်းပါ။ ပစ်မှတ် ဘာသာစကား ရွေးချယ်ပြီး AI ဘာသာပြန် ခလုတ်ကို နှိပ်ပါ။ ဘာသာပြန်ချက်များကို ပြန်လည်သုံးသပ်ပြီး လိုအပ်ပါက ပြင်ဆင်ပါ။ နောက်ဆုံးတွင် ဘာသာပြန်ပြီးသော .po ဖိုင်ကို ထုတ်ယူပြီး Launchpad သို့ ပြန်လည်တင်သွင်းပါ။",
+            "tips": [
+              "၁။ ဘာသာပြန် စာမျက်နှာသို့ သွားပါ",
+              "၂။ Launchpad မှ .po ဖိုင် တင်သွင်းပါ",
+              "၃။ ပစ်မှတ် ဘာသာစကား ရွေးချယ်ပါ",
+              "၄။ AI ဘာသာပြန် နှိပ်ပါ",
+              "၅။ ပြန်လည်သုံးသပ်ပြီး ပြင်ဆင်ပါ",
+              "၆။ ဘာသာပြန်ပြီးသော .po ဖိုင် ထုတ်ယူပါ",
+              "၇။ Launchpad သို့ ပြန်လည်တင်သွင်းပါ"
+            ]
+          }
+        ]
+      },
+      {
+        "id": "translation-guide",
+        "title": "ဘာသာပြန်ဆိုခြင်း စည်းမျဉ်းများ",
+        "sectionCount": 3,
+        "sections": [
+          {
+            "id": "placeholders",
+            "title": "နေရာယူ အမှတ်အသားများ ထိန်းသိမ်းခြင်း",
+            "content": "နေရာယူ အမှတ်အသားများ (placeholders) သည် ဆော့ဖ်ဝဲလ်က အသုံးပြုသူ အချက်အလက်များကို ထည့်သွင်းရန် အသုံးပြုသော အထူးကုဒ်များဖြစ်ပါသည်။ ဤအမှတ်အသားများကို ဘာသာပြန်ဆိုသောအခါ တိကျစွာ ထိန်းသိမ်းထားရပါမည်။ ပြောင်းလဲခြင်း သို့မဟုတ် ဖျက်ခြင်းပြုပါက ဆော့ဖ်ဝဲလ် ပျက်သွားနိုင်ပါသည်။",
+            "tips": [
+              "%s — စာသား နေရာယူအမှတ်အသား",
+              "%d — ကိန်းဂဏန်း နေရာယူအမှတ်အသား",
+              "%f — ဒသမ နေရာယူအမှတ်အသား",
+              "%(name)s — အမည်တပ် နေရာယူအမှတ်အသား",
+              "{0} {1} — နေရာချ နေရာယူအမှတ်အသားများ"
+            ]
+          },
+          {
+            "id": "html-tags",
+            "title": "HTML Tags များ ထိန်းသိမ်းခြင်း",
+            "content": "HTML နှင့် XML tags များသည် ဆော့ဖ်ဝဲလ် အင်တာဖေ့စ်တွင် စာသား ပုံစံချခြင်းအတွက် အသုံးပြုပါသည်။ ဤ tags များကို ဘာသာပြန်ဆိုသောအခါ တိကျစွာ ထိန်းသိမ်းထားရပါမည်။ Tag အမည်များ၊ attributes များကို ပြောင်းလဲခြင်း မပြုပါနှင့်။",
+            "tips": [
+              "<b>bold</b> — tags များ ထားရှိပါ",
+              "<i>italic</i> — ဖွဲ့စည်းပုံ ထိန်းသိမ်းပါ",
+              "<a href=\"...\">link</a> — href ထားရှိပါ",
+              "&amp; &lt; &gt; — HTML entities များ ထိန်းသိမ်းပါ"
+            ]
+          },
+          {
+            "id": "technical-terms",
+            "title": "နည်းပညာဆိုင်ရာ ဝေါဟာရများ (ဘာသာမပြန်ရ)",
+            "content": "နည်းပညာဆိုင်ရာ ဝေါဟာရများနှင့် ကုန်အမှတ်တံဆိပ် အမည်များကို အင်္ဂလိပ်ဘာသာဖြင့်သာ ထားရှိရပါမည်။ ဤဝေါဟာရများကို ဘာသာပြန်ဆိုခြင်း မပြုပါနှင့်။ အကယ်၍ တည်ထောင်ထားသော ဘာသာပြန်ချက် မရှိပါက အင်္ဂလိပ်ဝေါဟာရကိုသာ အသုံးပြုပါ။",
+            "tips": [
+              "ကုန်အမှတ်တံဆိပ်: Ubuntu, Canonical, Debian, Firefox",
+              "စနစ်: Kernel, GRUB, systemd, dbus",
+              "ကိရိယာများ: sudo, apt, dpkg, snap, flatpak",
+              "ကွန်ရက်: SSH, VPN, TCP, UDP, DNS, HTTP",
+              "သိုလှောင်မှု: ext4, Btrfs, LVM, RAID"
+            ]
+          }
+        ]
+      },
+      {
+        "id": "ai-features",
+        "title": "AI ဘာသာပြန်ဆိုခြင်း",
+        "sectionCount": 2,
+        "sections": [
+          {
+            "id": "gemini",
+            "title": "AI ဘာသာပြန်ဆိုပုံ",
+            "content": "ဤကိရိယာသည် Google Gemini 2.5 Flash ကို အသုံးပြု၍ အင်္ဂလိပ်ဘာသာစာသားများကို ပစ်မှတ်ဘာသာစကားသို့ ဘာသာပြန်ဆိုပါသည်။ AI သည် Ubuntu နှင့် Linux ဆော့ဖ်ဝဲလ်၏ အကြောင်းအရာကို နားလည်ပြီး သဘာဝကျပြီး နည်းပညာအရ တိကျသော ဘာသာပြန်ချက်များကို ထုတ်ပေးပါသည်။ ဘာသာပြန်ချက်တိုင်းကို အလိုအလျောက် အရည်အသွေး စစ်ဆေးပေးပါသည်။",
+            "tips": [
+              "AI သည် စာသား ၁၅ ခုစီ ဘာသာပြန်ဆိုသည်",
+              "နေရာယူအမှတ်အသား စစ်ဆေးပြီး",
+              "AI ဘာသာပြန်ချက်ကို ကိုယ်တိုင် ပြင်ဆင်နိုင်သည်",
+              "အခမဲ့အဆင့်တွင် မိနစ်တစ်မိနစ်လျှင် တောင်းဆိုမှု ၁၅ ခု"
+            ]
+          },
+          {
+            "id": "qa",
+            "title": "QA စစ်ဆေးခြင်း",
+            "content": "ဘာသာပြန်ချက်တိုင်းကို အလိုအလျောက် အရည်အသွေး စစ်ဆေးပေးပါသည်။ စစ်ဆေးချက်များတွင် နေရာယူအမှတ်အသား စစ်ဆေးခြင်း၊ စာကြောင်းအသစ် အရေအတွက် ကိုက်ညီမှု၊ အလွတ်မဖြစ်ရခြင်း၊ နှင့် အရှည် အချိုး စစ်ဆေးခြင်းတို့ ပါဝင်ပါသည်။ စစ်ဆေးချက် အားလုံး အောင်မြင်ပါက ✅ ဖြင့် ပြပေးပြီး တစ်ခုခု မအောင်မြင်ပါက ⚠️ ဖြင့် သတိပေးပါသည်။",
+            "tips": [
+              "နေရာယူအမှတ်အသား စစ်ဆေးချက် — %s %d {0} ထိန်းသိမ်းထားသည်",
+              "စာကြောင်းအသစ် အရေအတွက် — မူရင်းနှင့် ကိုက်ညီသည်",
+              "အလွတ်မဖြစ်ရ — ဘာသာပြန်ချက် ဗလာမဖြစ်ရ",
+              "အရှည် အချိုး — မူရင်း၏ ၀.၃ ဆမှ ၄.၀ ဆ"
+            ]
+          }
+        ]
+      },
+      {
+        "id": "contributing",
+        "title": "ပံ့ပိုးကူညီခြင်း",
+        "sectionCount": 2,
+        "sections": [
+          {
+            "id": "glossary-usage",
+            "title": "ဝေါဟာရ အသုံးပြုပုံ",
+            "content": "ဝေါဟာရ စာမျက်နှာတွင် စံနှုန်းချမှတ်ထားသော ဘာသာပြန်ချက်များ ရှိပါသည်။ ဘုံဝေါဟာရများကို ဘာသာမပြန်မီ ဝေါဟာရစာရင်းကို စစ်ဆေးပါ။ တသမတ်တည်း ဝေါဟာရသုံးစွဲခြင်းသည် အသုံးပြုသူ အတွေ့အကြုံကို တိုးတက်စေပါသည်။ ရှမ်းနှင့် မွန် ဝေါဟာရများလည်း ရရှိနိုင်ပြီဖြစ်ပါသည်။ GitHub မှတစ်ဆင့် ပံ့ပိုးနိုင်ပါသည်။",
+            "tips": [
+              "ဘုံဝေါဟာရများ ဘာသာမပြန်မီ ဝေါဟာရစာရင်းကို စစ်ဆေးပါ",
+              "တသမတ်တည်း ဝေါဟာရသည် UX ကို တိုးတက်စေသည်",
+              "ရှမ်းနှင့် မွန် ဝေါဟာရများ ရရှိနိုင်ပြီ",
+              "GitHub မှတစ်ဆင့် ပံ့ပိုးနိုင်သည်"
+            ]
+          },
+          {
+            "id": "community",
+            "title": "အသိုင်းအဝိုင်းတွင် ပါဝင်ခြင်း",
+            "content": "Ubuntu ဘာသာပြန်ဆိုခြင်းသည် အသိုင်းအဝိုင်း ကြိုးပမ်းမှုဖြစ်ပါသည်။ Launchpad တွင် ဘာသာပြန်ဆိုခြင်း အသိုင်းအဝိုင်းတွင် ပါဝင်ပြီး Ubuntu Translators အဖွဲ့တွင် စာရင်းသွင်းနိုင်ပါသည်။ စာပို့စာရင်းမှတစ်ဆင့် အခြားဘာသာပြန်ဆိုသူများနှင့် ချိတ်ဆက်နိုင်ပါသည်။ GitHub မှတစ်ဆင့်လည်း ပံ့ပိုးနိုင်ပါသည်။",
+            "tips": [
+              "Launchpad: translations.launchpad.net/ubuntu",
+              "အဖွဲ့: Ubuntu Translators",
+              "စာပို့စာရင်း: ubuntu-translators@lists.ubuntu.com",
+              "GitHub: Wint-Theingi-Aung/ubuntu-localization"
+            ]
+          }
+        ]
+      }
+    ]
+  },
+  "shn": {
+    "chapters": [
+      {
+        "id": "getting-started",
+        "title": "တႄႇၸႂ်ႉတိုဝ်း",
+        "sectionCount": 2,
+        "sections": [
+          {
+            "id": "overview",
+            "title": "Ubuntu ပိၼ်ႇၽႃႇသႃႇ ပဵၼ်သင်",
+            "content": "ၶိူင်ႈ Ubuntu Localization ၼႆႉ ၸွႆႈထႅမ်ပိၼ်ႇၽႃႇသႃႇ Ubuntu ၸူး ၽႃႇသႃႇတႆး၊ ၽႃႇသႃႇမၢၼ်ႈ၊ ၽႃႇသႃႇမွၼ်း လႄႈ ၽႃႇသႃႇယၢင်း ၸွမ်းၼင်ႇ Google Gemini AI။ မၼ်းႁဵတ်းၵၢၼ်တင်း ၾၢႆႇ .po — ဢၼ်ပဵၼ် ပိူင်မၢႆ Linux၊ ဢွၵ်ႇတီႈ Launchpad။",
+            "tips": [
+              "Ubuntu ၸႂ်ႉ Launchpad တႃႇပိၼ်ႇၽႃႇသႃႇ",
+              "ၾၢႆႇ .po ၶဝ်ႈပႃး ၶေႃႈၵႂၢမ်းပိၼ်ႇလႆႈ",
+              "ၶေႃႈၵႂၢမ်းၵူႈဢၼ် မီးငဝ်ႈ (ဢင်းၵိတ်း) လႄႈ ၽၢႆႇပိၼ်ႇ"
+            ]
+          },
+          {
+            "id": "quick-start",
+            "title": "လၢႆးႁဵတ်းႁႂ်ႈၽႂ်း",
+            "content": "ၸွမ်းလူၺ်ႈ လၢႆးၸိူဝ်းၼႆႉ တႃႇတႄႇပိၼ်ႇၽႃႇသႃႇ Ubuntu ၸူး ၽႃႇသႃႇၸဝ်ႈၵဝ်ႇ။",
+            "tips": [
+              "1. ၵႂႃႇတီႈ ၼႃႈလိၵ်ႈပိၼ်ႇ",
+              "2. လူတ်ႇၶိုၼ်ႈ ၾၢႆႇ .po တီႈ Launchpad",
+              "3. လိူၵ်ႈ ၽႃႇသႃႇတႃႇပိၼ်ႇ",
+              "4. ၵျိပ်ႉ AI Translate",
+              "5. တူၺ်းၶိုၼ်းသေ မႄးထတ်းၶေႃႈပိၼ်ႇ",
+              "6. ဢွၵ်ႇၾၢႆႇ .po ဢၼ်ပိၼ်ႇယဝ်ႉ",
+              "7. လူတ်ႇၶိုၼ်ႈၶိုၼ်း Launchpad"
+            ]
+          }
+        ]
+      },
+      {
+        "id": "translation-guide",
+        "title": "မၢႆမီႈ ပိၼ်ႇၽႃႇသႃႇ",
+        "sectionCount": 3,
+        "sections": [
+          {
+            "id": "placeholders",
+            "title": "ဝႆႉ တီႈယိပ်း မၢႆၸၼ် (Placeholders)",
+            "content": "တီႈယိပ်း မၢႆၸၼ် ၸိူဝ်းၼႆႉ တေလႆႈဝႆႉ မိူၼ်ငဝ်ႈမၼ်းၼင်ႇၵဝ်ႇ။ မၼ်းတေၶိုၼ်းပိၼ်ႇပဵၼ် တူဝ်မႆၢတႄႉ ၶၢဝ်းယၢမ်းႁဵတ်းၵၢၼ်။ သင်မႄး မၢႆၸၼ်ၸိူဝ်းၼႆႉၸိုင် ပရူဝ်ႇၵရမ်ႇ တေလူႉလႅဝ်ၵႂႃႇ။",
+            "tips": [
+              "%s — မၢႆၸၼ် ၶေႃႈၵႂၢမ်း",
+              "%d — မၢႆၸၼ် တူဝ်ၼပ်ႉ",
+              "%f — မၢႆၸၼ် တူဝ်ၼပ်ႉထႅၵ်ႈ",
+              "%(name)s — မၢႆၸၼ် မီးၸိုဝ်ႈ",
+              "{0} {1} — မၢႆၸၼ် တီႈယိပ်း"
+            ]
+          },
+          {
+            "id": "html-tags",
+            "title": "ဝႆႉ HTML Tags",
+            "content": "HTML လႄႈ XML tags ၸိူဝ်းၼႆႉ တေလႆႈဝႆႉ မိူၼ်ငဝ်ႈမၼ်းၼင်ႇၵဝ်ႇ။ ပိၼ်ႇပႅတ်ႈ ၶေႃႈၵႂၢမ်း ၼႂ်း tags ၵူၺ်း၊ ယႃႇပိၼ်ႇ ၸိုဝ်ႈ tag လႄႈ attributes။",
+            "tips": [
+              "<b>bold</b> — ဝႆႉ tags",
+              "<i>italic</i> — ဝႆႉ ပိူင်ၽၢင်",
+              "<a href=\"...\">link</a> — ဝႆႉ href မၼ်းၼင်ႇၵဝ်ႇ",
+              "&amp; &lt; &gt; — HTML entities တေလႆႈဝႆႉ"
+            ]
+          },
+          {
+            "id": "technical-terms",
+            "title": "ၶေႃႈၵႂၢမ်း ပၢႆးၸၢင်ႈ (ယႃႇပိၼ်ႇ)",
+            "content": "ၶေႃႈၵႂၢမ်းပၢႆးၸၢင်ႈ၊ ၸိုဝ်ႈၶူဝ်းၶွင် လႄႈ ၸိုဝ်ႈၶိူင်ႈ တေလႆႈဝႆႉ ပဵၼ်ဢင်းၵိတ်းၼင်ႇၵဝ်ႇ။ သင်ပိၼ်ႇၸိုင် ႁႃၶေႃႈမုၼ်း၊ ၽိုၼ်လိၵ်ႈ လႄႈ ၸွႆႈထႅမ်ၸႂ်ႉၶိူင်ႈ တေလူႉလႅဝ်ၵႂႃႇ။",
+            "tips": [
+              "ၸိုဝ်ႈၶူဝ်းၶွင်: Ubuntu, Canonical, Debian, Firefox",
+              "လွင်ႈၸၼ်ႉထၢၼ်ႈ: Kernel, GRUB, systemd, dbus",
+              "ၶိူင်ႈ: sudo, apt, dpkg, snap, flatpak",
+              "ၶွမ်း: SSH, VPN, TCP, UDP, DNS, HTTP",
+              "သိမ်းဝႆႉ: ext4, Btrfs, LVM, RAID"
+            ]
+          }
+        ]
+      },
+      {
+        "id": "ai-features",
+        "title": "AI ပိၼ်ႇၽႃႇသႃႇ",
+        "sectionCount": 2,
+        "sections": [
+          {
+            "id": "gemini",
+            "title": "AI ပိၼ်ႇၽႃႇသႃႇ ႁဵတ်းၵၢၼ်ၸိူင်ႉႁိုဝ်",
+            "content": "ၶိူင်ႈၼႆႉ ၸႂ်ႉ Google Gemini 2.5 Flash တႃႇသၢင်ႈ ၶေႃႈပိၼ်ႇၽႃႇသႃႇ Ubuntu။ မၼ်းႁဵတ်းၵၢၼ် ၶေႃႈၵႂၢမ်း ၸွမ်းၸုမ်း၊ ၸႂ်ႉလိၵ်ႈ ႁႂ်ႈမၢၼ်ႇမႅၼ်ႈၸွမ်းၽႃႇသႃႇ လႄႈ ဝႆႉပၼ် တီႈယိပ်းမၢႆၸၼ် တင်းသဵင်ႈ ႁင်းၶေႃ။",
+            "tips": [
+              "AI ပိၼ်ႇၶေႃႈၵႂၢမ်း 15 ၶေႃႈ ၼိုင်ႈၸုမ်း",
+              "QA တူၺ်းပၼ် တီႈယိပ်းမၢႆၸၼ်",
+              "ၸၢင်ႈမႄးထတ်း ၶေႃႈပိၼ်ႇ AI ႁင်းၸဝ်ႈၵဝ်ႇ",
+              "မၢႆၸိင်ႈ: 15 တွၼ်ႈ/မဵတ်ႉ ၼႂ်းလၢႆး free"
+            ]
+          },
+          {
+            "id": "qa",
+            "title": "လွင်ႈၸွတ်ႇတူၺ်းၸၼ်ႉၸၢဝ်ႈ (QA)",
+            "content": "ၶေႃႈပိၼ်ႇ AI ၵူႈဢၼ် တေလႆႈၶဝ်ႈၸွတ်ႇတူၺ်း ၸၼ်ႉၸၢဝ်ႈ ႁင်းၶေႃ ၵွၼ်ႇတေႁပ်ႉဢဝ်။ သင်ဢမ်ႇၶႅမ်ႉၸိုင် တေၸၢင်ႈမၢႆၸၼ်ဝႆႉ တႃႇတူၺ်းၶိုၼ်း။",
+            "tips": [
+              "ၸွတ်ႇတူၺ်းမၢႆၸၼ် — %s %d {0} တေလႆႈမီးဝႆႉ",
+              "တူဝ်ၼပ်ႉ newline — မိူၼ်ၵၼ်တင်း ငဝ်ႈမၼ်း",
+              "ယႃႇႁႂ်ႈပဝ်ႇ — တေလႆႈမီးၶေႃႈပိၼ်ႇ",
+              "ဢၶႄႇတူဝ်လိၵ်ႈ — 0.3 တေႃႇ 4.0 တေႃႇငဝ်ႈမၼ်း"
+            ]
+          }
+        ]
+      },
+      {
+        "id": "contributing",
+        "title": "ၸွႆႈထႅမ်",
+        "sectionCount": 2,
+        "sections": [
+          {
+            "id": "glossary-usage",
+            "title": "ၸႂ်ႉ သဵၼ်ႈၵႂၢမ်း (Glossary)",
+            "content": "ၼႃႈလိၵ်ႈသဵၼ်ႈၵႂၢမ်း ၼႆႉ ပၼ် ၶေႃႈပိၼ်ႇ ဢၼ်မၢၼ်ႇမႅၼ်ႈ တွၼ်ႈတႃႇ ၶေႃႈၵႂၢမ်း Ubuntu ၸွမ်းၼင်ႇ။ ၸႂ်ႉတိုဝ်းသေ ႁႂ်ႈၶေႃႈၵႂၢမ်း မၢၼ်ႇမႅၼ်ႈ ၼႂ်းၶေႃႈပိၼ်ႇ တင်းသဵင်ႈ။",
+            "tips": [
+              "တူၺ်းသဵၼ်ႈၵႂၢမ်း ၵွၼ်ႇတေ ပိၼ်ႇၶေႃႈၵႂၢမ်း",
+              "ၶေႃႈၵႂၢမ်း မၢၼ်ႇမႅၼ်ႈ ၸွႆႈ UX ႁႂ်ႈၶႅမ်ႉ",
+              "ၶေႃႈၵႂၢမ်းတႆး လႄႈ မွၼ်း မီးဝႆႉယဝ်ႉ",
+              "ပိုတ်ႇႁပ်ႉ ၶေႃႈၸွႆႈထႅမ် တီႈ GitHub"
+            ]
+          },
+          {
+            "id": "community",
+            "title": "ၶဝ်ႈႁူမ်ႈ ၸုမ်း",
+            "content": "Ubuntu ပိၼ်ႇၽႃႇသႃႇ ၼႆႉ ပဵၼ် ၵၢၼ်ၸုမ်း။ ၶဝ်ႈႁူမ်ႈ ၸုမ်း Ubuntu Translators တီႈ Launchpad သေ ႁဵတ်းၵၢၼ်ႁူမ်ႈၵၼ် တင်း ၽူႈပိၼ်ႇၽႃႇသႃႇတၢင်ႇၵေႃႉ လႄႈ ၸွႆႈထႅမ် ၽႃႇသႃႇၸဝ်ႈၵဝ်ႇ။",
+            "tips": [
+              "Launchpad: translations.launchpad.net/ubuntu",
+              "ၸုမ်း: Ubuntu Translators",
+              "ဢီးမေးလ်: ubuntu-translators@lists.ubuntu.com",
+              "GitHub: Wint-Theingi-Aung/ubuntu-localization"
+            ]
+          }
+        ]
+      }
+    ]
+  },
+  "mnw": {
+    "chapters": [
+      {
+        "id": "getting-started",
+        "title": "စကၠောန်",
+        "sectionCount": 2,
+        "sections": [
+          {
+            "id": "overview",
+            "title": "Ubuntu ကၠာဲဘာသာဂှ် မုရော",
+            "content": "ကရိယာဏံ ထံက်ပၚ Ubuntu သွက်ပြန်ဘာသာသွံရ။ ဍေဟ်စကာ Google Gemini AI သွက်ပြန်လိက်ဟွံပြန်ဏီ ပ္ဍဲဝှာင် .po — မဒှ်ဗီုပြၚ်ကောန်ပရဝ်ဂရာမ် Linux တံ။ ဘာသာမထံက်ပၚ — ဗၟာ (my), သေံ (shn), မန် (mnw), ကရေၚ် (ksw)။",
+            "tips": [
+              "Ubuntu စကာ Launchpad ပြန်ဘာသာ",
+              "ဝှာင် .po မပံၚ်လိက်ဟွံပြန်ဏီ",
+              "လိက်တမ်ဂှ် အၚ်လိက် (မူရင်း) ပါ ဘာသာဗှ်ေပါ"
+            ]
+          },
+          {
+            "id": "quick-start",
+            "title": "လၟေၚ်စကၠောန်ပြဟ်",
+            "content": "သွက်ပြန်ဘာသာ Ubuntu ပ္ဍဲဘာသာနွံဂှ် — ကမၠောန်အဆင့်ဂှ်ကို လိုက်နာစမ။",
+            "tips": [
+              "1. အာပ္ဍဲ မုက်လိက်ပြန်ဘာသာ",
+              "2. ပၠောပ်ဝှာင် .po နူ Launchpad",
+              "3. ယဝ်ဟွံတီဘာသာ",
+              "4. ဍဵု AI ကၠာဲဘာသာ",
+              "5. စမ်ရံၚ်ပါ ပလေဝ်လိက်ပြန်",
+              "6. တိတ်ဝှာင် .po သွက်ဒေါင်လုဒ်",
+              "7. ပလံၚ်ပြန် Launchpad"
+            ]
+          }
+        ]
+      },
+      {
+        "id": "translation-guide",
+        "title": "သၞောတ်ကၠာဲဘာသာ",
+        "sectionCount": 3,
+        "sections": [
+          {
+            "id": "placeholders",
+            "title": "စွံလဝ် Placeholder တံ",
+            "content": "Placeholder တံဂှ် ဒးစွံလဝ်အတိအကျကဵု ပေါ်လာတုဲ မူရင်းလိက်ဂှ်။ ၎င်းဂှ် အစားထို်ကဵုတန်ဖို်အမှန်တကယ် လုပ်ဆောင်ချိန်ဂှ်။ Placeholder တံကို ချိုးဖောက်ရေၚ် application ရပ်တန့်သွံမာန်။",
+            "tips": [
+              "%s — လိက် placeholder",
+              "%d — ကိန်းဂဏန်း placeholder",
+              "%f — ဒသမ placeholder",
+              "%(name)s — အမည်တပ် placeholder",
+              "{0} {1} — နေရာချ placeholder တံ"
+            ]
+          },
+          {
+            "id": "html-tags",
+            "title": "စွံလဝ် HTML Tags",
+            "content": "HTML ပါ XML tags တံဂှ် ဒးစွံလဝ်အတိအကျ။ လိက်ပ္ဍဲ tags ဂှ်ကို ပြန်ဘာသာပါ၊ tag အမည်ဂှ် attributes ဂှ်ကို လ္ပပြန်ဘာသာ။",
+            "tips": [
+              "<b>bold</b> — စွံလဝ် tags",
+              "<i>italic</i> — စွံလဝ်ဗီုပြၚ်",
+              "<a href=\"...\">link</a> — စွံလဝ် href မပြောင်း",
+              "&amp; &lt; &gt; — HTML entities ဒးစွံလဝ်"
+            ]
+          },
+          {
+            "id": "technical-terms",
+            "title": "ဝေါဟာရနဲကဲ (လ္ပကၠာဲ)",
+            "content": "ဝေါဟာရနဲကဲဂှ် အမည်ကုန်အမှတ်တံဆိပ်ဂှ် ကရိယာအမည်ဂှ်ကို အၚ်လိက်ဂှ် စွံထားရှိဒး။ ၎င်းဂှ်ကို ကၠာဲဘာသ်ရေၚ် ရှာဖွေခြင်းဂှ် စာရွက်စာတမ်းဂှ် အသုံးပြုသူ ရီုင်ဂှ် ပျက်စီးသွံမာန်။",
+            "tips": [
+              "ကုန်အမှတ်တံဆိပ်: Ubuntu, Canonical, Debian, Firefox",
+              "စနစ်: Kernel, GRUB, systemd, dbus",
+              "ကရိယာ: sudo, apt, dpkg, snap, flatpak",
+              "ကွန်ရက်: SSH, VPN, TCP, UDP, DNS, HTTP",
+              "သိုလှောင်မှု: ext4, Btrfs, LVM, RAID"
+            ]
+          }
+        ]
+      },
+      {
+        "id": "ai-features",
+        "title": "AI ကၠာဲဘာသာ",
+        "sectionCount": 2,
+        "sections": [
+          {
+            "id": "gemini",
+            "title": "AI ကၠာဲဘာသာ ကၠောန်ဗီုလဵု",
+            "content": "ကရိယာဏံစကာ Google Gemini 2.5 Flash ပြန်လိက် Ubuntu ကဵု။ လိက်ဂှ်ကို အုပ်စုဖွဲ့ လုပ်ဆောင်ပြီး ဘာသာစကား-တိကျသော စာလုံးဂှ်ကို စကာကာ placeholder တံဂှ် markup ဂှ်ကို အလိုအလျောက် စွံလဝ်သည်။",
+            "tips": [
+              "AI ကၠာဲဘာသ်လိက် 15 တမ်",
+              "စမ်ရံၚ် QA ပ္ဍဲ placeholder",
+              "ပလေဝ်လိက်ပြန် AI ကိုယ်တိုင်",
+              "အခမဲ့အဆင့်: မိနစ်တမ် တောင်းဆို 15"
+            ]
+          },
+          {
+            "id": "qa",
+            "title": "စမ်ရံၚ် QA",
+            "content": "လိက်ပြန် AI တမ်တမ်ဂှ် လက်ခံမတိုင်မီ အလိုအလျောက် စမ်ရံၚ်အရည်အသွေ်ကဵု ဖြတ်သန်းဒး။ မအောင်မြင်သော လိက်ပြန်ဂှ်ကို ကိုယ်တိုင် ပြန်လည်စမ်ရံၚ်ရန် အမှတ်အသာ်ပြုလုပ်ထားသည်။",
+            "tips": [
+              "စမ်ရံၚ် placeholder — %s %d {0} စွံလဝ်ထား",
+              "လၟိဟ် newline တုပ် — မူရင််တုပ်",
+              "မဟွံလွတ် — လိက်ပြန်မဟွံဗလာ",
+              "ဇမၞော်အချိုး — 0.3x မှ 4.0x မူရင််"
+            ]
+          }
+        ]
+      },
+      {
+        "id": "contributing",
+        "title": "ပါလုပ်",
+        "sectionCount": 2,
+        "sections": [
+          {
+            "id": "glossary-usage",
+            "title": "စကာ ဝေါဟာရ (Glossary)",
+            "content": "မုက်လိက်ဝေါဟာရဂှ် ပေးလိက်ဘာသာစံချိန်စံညွှန််ကဵု Ubuntu ဝေါဟာရဂှ်။ စကာကာ ဝေါဟာရတသမတ်တည််ဖြစ်စေရန် လိက်ပြန်တမ်ဂှ်။",
+            "tips": [
+              "စမ်ရံၚ်ဝေါဟာရမတိုင်မီ ကၠာဲဘာသ်ဝေါဟာရဂှ်",
+              "ဝေါဟာရတသမတ်တည်း UX တိုးတက်",
+              "ဝေါဟာရသေံပါ မန်ပါ ဂွံပြီ",
+              "ပါလုပ်ကဵု GitHub မှတစ်ဆင့်"
+            ]
+          },
+          {
+            "id": "community",
+            "title": "ပါပ္ဍဲဂကောံ",
+            "content": "Ubuntu ကၠာဲဘာသာဂှ် ကြိုးပမ်းမှုဂကောံဂှ်။ ပါပ္ဍဲအဖွဲ့ Ubuntu Translators ပ္ဍဲ Launchpad — ကၠောန်ပူးပေါင််ပါ ပြန်ဘာသ်ဂှ် ရီုင်ဘာသာနွံဂှ်။",
+            "tips": [
+              "Launchpad: translations.launchpad.net/ubuntu",
+              "အဖွဲ့: Ubuntu Translators",
+              "စာပို့စာရင်း: ubuntu-translators@lists.ubuntu.com",
+              "GitHub: Wint-Theingi-Aung/ubuntu-localization"
+            ]
+          }
+        ]
+      }
+    ]
+  },
+  "ksw": {
+    "chapters": [
+      {
+        "id": "getting-started",
+        "title": "တၢ်စမၤတၢ်",
+        "sectionCount": 2,
+        "sections": [
+          {
+            "id": "overview",
+            "title": "Ubuntu တၢ်ကွဲးကျဲၤမ့ၢ်တၢ်မနုၤလဲၣ်",
+            "content": "ပှၤကွဲးကျဲၤ Ubuntu တဖၣ် Ubuntu ကို မနုၤလဲၣ် ကျိာ်လၢ်တၢ်တိၣ် — မြန်မာ (my)၊ ရှမ်း (shn)၊ မွန် (mnw) နူ ကညီကျိာ် (ksw) — ကို တၢ်ကွဲးကျဲၤ မၤစၢၤလဲၣ်။ Google Gemini AI ကို စိးထီၣ်ပြီး .po လံာ်တိၣ်န့ၢ် မၤတၢ်လဲၣ်။ .po လံာ်တဖၣ် Linux တၢ်ကွဲးကျဲၤအတၢ် Launchpad မ့ၢ် ဟဲထလဲၣ် စံလံာ်ဖြစ်လဲၣ်။",
+            "tips": [
+              "Ubuntu တဖၣ် တၢ်ကွဲးကျဲၤအတၢ် Launchpad ကို စိးထီၣ်လဲၣ်",
+              ".po လံာ်တိၣ်တွင် ကွဲးကျဲၤနိုၣ် စာသားတိၣ် ပါဝင်လဲၣ်",
+              "စာသားတၢ်လီၢ်တဖၣ် မူရင်း (အံကလံ) နူ ပစ်မှတ် ပါဝင်လဲၣ်"
+            ]
+          },
+          {
+            "id": "quick-start",
+            "title": "တၢ်မၤတၢ်ခဲအါထီၣ်",
+            "content": "ကညီကျိာ်န့ၢ် Ubuntu ကွဲးကျဲၤ စမၤတၢ်အတၢ် အောက်ပါ အဆင့်တိၣ်ကို လိုက်မၤပါ။",
+            "tips": [
+              "၁။ တၢ်ကွဲးကျဲၤ ကဘျံကို သွားပါ",
+              "၂။ Launchpad မ့ၢ် .po လံာ် ဒီထံပါ",
+              "၃။ ပစ်မှတ် ဘာသာစကား ရွေးပါ",
+              "၄။ AI ကွဲးကျဲၤ ဒုးကို နှိပ်ပါ",
+              "၅။ ပြန်ကွၢ်ပြီး သီထီၣ်ပါ",
+              "၆။ ကွဲးကျဲၤပြီး .po လံာ် ဟဲထပါ",
+              "၇။ Launchpad ကို ပြန်ဒီထံပါ"
+            ]
+          }
+        ]
+      },
+      {
+        "id": "translation-guide",
+        "title": "တၢ်ကွဲးကျဲၤအတၢ်မၤလိၣ်",
+        "sectionCount": 3,
+        "sections": [
+          {
+            "id": "placeholders",
+            "title": "ပာ်ဝဲ Placeholder တဖၣ်",
+            "content": "Placeholder တိၣ်ကို မူရင်းစာသားမ့ၢ် ပေါ်လာလဲၣ် ပုံစံအတိုင်း တိတိကျကျ ပာ်ဝဲထားရမည်။ မၤတၢ်ချိန်မ့ၢ် တန်ဖိုးအမှန်တိၣ်န့ၢ် အစားထိုးလဲၣ်။ Placeholder တဖၣ် ပျက်သွားပါက application ရပ်သွားနိုင်လဲၣ်။",
+            "tips": [
+              "%s — စာသား placeholder",
+              "%d — ကိန်းဂဏန်း placeholder",
+              "%f — ဒသမ placeholder",
+              "%(name)s — အမည်တပ် placeholder",
+              "{0} {1} — နေရာချ placeholder တိၣ်"
+            ]
+          },
+          {
+            "id": "html-tags",
+            "title": "ပာ်ဝဲ HTML Tags",
+            "content": "HTML နူ XML tags တိၣ်ကို တိတိကျကျ ပာ်ဝဲထားရမည်။ tags တိၣ် အတွင်းမ့ၢ် ရှိလဲၣ် စာသားကိုသာ ကွဲးကျဲၤပါ။ tag အမည်တိၣ် နူ attributes တိၣ်ကို မကွဲးကျဲၤရ။",
+            "tips": [
+              "<b>bold</b> — tags တိၣ် ပာ်ဝဲပါ",
+              "<i>italic</i> — ဖွဲ့စည်းပုံ ပာ်ဝဲပါ",
+              "<a href=\"...\">link</a> — href ကို မပြောင်းရ",
+              "&amp; &lt; &gt; — HTML entities တိၣ် ပာ်ဝဲထားပါ"
+            ]
+          },
+          {
+            "id": "technical-terms",
+            "title": "တၢ်ကတိာ်နဲၣ်ကျဲအဂ့ၢ် (တကွဲးကျဲၤတဂ့ၤ)",
+            "content": "တၢ်ကတိာ်နဲၣ်ကျဲအဂ့ၢ် ဝေါဟာရတိၣ်၊ ကုန်အမှတ်တံဆိပ် အမည်တိၣ် နူ ကိရိယာ အမည်တိၣ်ကို အံကလံဘာသာမ့ၢ် ပာ်ဝဲထားရမည်။ သွဲတိၣ်ကို ကွဲးကျဲၤပါက ရှာဖွေခြင်း၊ စာရွက်စာတမ်း နူ အသုံးပြုသူ အကူအညီတိၣ် ပျက်သွားနိုင်လဲၣ်။",
+            "tips": [
+              "ကုန်အမှတ်တံဆိပ်: Ubuntu, Canonical, Debian, Firefox",
+              "စနစ်: Kernel, GRUB, systemd, dbus",
+              "ကိရိယာတိၣ်: sudo, apt, dpkg, snap, flatpak",
+              "ကွန်ရက်: SSH, VPN, TCP, UDP, DNS, HTTP",
+              "သိုလှောင်မှု: ext4, Btrfs, LVM, RAID"
+            ]
+          }
+        ]
+      },
+      {
+        "id": "ai-features",
+        "title": "AI တၢ်ကွဲးကျဲၤ",
+        "sectionCount": 2,
+        "sections": [
+          {
+            "id": "gemini",
+            "title": "AI တၢ်ကွဲးကျဲၤမၤတၢ်ဒ်လဲၣ်",
+            "content": "ပှၤကွဲးကျဲၤတဖၣ် Ubuntu အတၢ် သီးသန့် တၢ်ကွဲးကျဲၤတိၣ် ဖန်တီးဖို့ Google Gemini 2.5 Flash ကို စိးထီၣ်လဲၣ်။ စာသားတိၣ်ကို အစုလိုက် မၤတၢ်ပြီး ကျိာ်လၢ်တၢ် အလိုက် စာလုံးတိၣ် စိးထီၣ်ကာ placeholder တိၣ် နူ markup တိၣ်ကို အလိုအလျောက် ပာ်ဝဲလဲၣ်။",
+            "tips": [
+              "AI တဖၣ် စာသား ၁၅ ခုစီ ကွဲးကျဲၤလဲၣ်",
+              "တၢ်ဃံၤဃဲၤ placeholder စစ်ဆေးပြီး",
+              "AI တၢ်ကွဲးကျဲၤကို ကိုယ်တိုင် သီထီၣ်နိုင်လဲၣ်",
+              "အခမဲ့အဆင့်မ့ၢ် မိနစ်တၢ်လီၢ် တောင်းဆိုမှု ၁၅ ခု"
+            ]
+          },
+          {
+            "id": "qa",
+            "title": "တၢ်ဃံၤဃဲၤ QA",
+            "content": "AI တၢ်ကွဲးကျဲၤ တၢ်လီၢ်တိုင်း လက်ခံမတိုင်မီ အလိုအလျောက် အရည်အသွေး စစ်ဆေးချက်တိၣ် ဖြတ်သွားရလဲၣ်။ မအောင်မြင်လဲၣ် တၢ်ကွဲးကျဲၤတိၣ်ကို ကိုယ်တိုင် ပြန်ကွၢ်ဖို့ အမှတ်အသား မၤထားလဲၣ်။",
+            "tips": [
+              "Placeholder စစ်ဆေးချက် — %s %d {0} ပာ်ဝဲထားလဲၣ်",
+              "စာကြောင်းအသစ် အရေအတွက် — မူရင်းန့ၢ် ကိုက်ညီလဲၣ်",
+              "အလွတ်မဖြစ်ရ — တၢ်ကွဲးကျဲၤ ဗလာမဖြစ်ရ",
+              "အရှည် အချိုး — မူရင်း၏ ၀.၃ ဆမှ ၄.၀ ဆ"
+            ]
+          }
+        ]
+      },
+      {
+        "id": "contributing",
+        "title": "တၢ်မၤစၢၤ",
+        "sectionCount": 2,
+        "sections": [
+          {
+            "id": "glossary-usage",
+            "title": "သူဝဲ Glossary",
+            "content": "Glossary ကဘျံတဖၣ် ဘုံ Ubuntu ဝေါဟာရတိၣ်အတၢ် စံသတ်မှတ်ထားလဲၣ် တၢ်ကွဲးကျဲၤတိၣ် ပေးလဲၣ်။ ဝေါဟာရ တသမတ်တည်း ဖြစ်စေဖို့ စိးထီၣ်ပါ။ တၢ်ကွဲးကျဲၤ မတိုင်မီ ဘုံဝေါဟာရတိၣ်ကို Glossary မ့ၢ် ကွၢ်ပါ။",
+            "tips": [
+              "ဘုံဝေါဟာရတိၣ် ကွဲးကျဲၤမတိုင်မီ Glossary ကွၢ်ပါ",
+              "ဝေါဟာရ တသမတ်တည်းဖြစ်ခြင်း UX ကို ဒိၣ်ထီၣ်ဆူညါစေလဲၣ်",
+              "ရှမ်း နူ မွန် ဝေါဟာရတိၣ် ရနိုင်ပြီ",
+              "GitHub မှတစ်ဆင့် ပှၤမၤစၢၤ နိုင်လဲၣ်"
+            ]
+          },
+          {
+            "id": "community",
+            "title": "ဘၣ်ဃးပှၤဂၤတဖၣ်",
+            "content": "Ubuntu တၢ်ကွဲးကျဲၤတဖၣ် ဘၣ်ဃးပှၤဂၤ အတူမၤတၢ်လဲၣ်။ Launchpad မ့ၢ် Ubuntu Translators ဘၣ်ဃးမ့ၢ် ပါဝင်ပြီး အခြား ပှၤကွဲးကျဲၤတိၣ်န့ၢ် အတူမၤတၢ်နိုင်လဲၣ်။ မိမိ ကျိာ်လၢ်တၢ်အတၢ် မၤစၢၤ ရယူနိုင်လဲၣ်။",
+            "tips": [
+              "Launchpad: translations.launchpad.net/ubuntu",
+              "ဘၣ်ဃး: Ubuntu Translators",
+              "စာပို့စာရင်း: ubuntu-translators@lists.ubuntu.com",
+              "GitHub: Wint-Theingi-Aung/ubuntu-localization"
+            ]
+          }
+        ]
+      }
+    ]
+  }
+}
