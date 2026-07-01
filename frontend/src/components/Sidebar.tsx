@@ -109,9 +109,6 @@ export default function Sidebar() {
 
           {/* Navigation */}
           <nav className="flex-1 p-3 space-y-0.5 overflow-y-auto">
-            <p className="text-[10px] text-[var(--tx-faint)] font-semibold uppercase tracking-wider px-4 py-2">
-              {t('sidebar_navigation', 'Navigation')}
-            </p>
             {navItems.map((item) => {
               const isActive = pathname === item.href ||
                 (item.href !== '/' && pathname.startsWith(item.href))
