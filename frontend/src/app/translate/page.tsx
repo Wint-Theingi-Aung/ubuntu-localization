@@ -1,6 +1,6 @@
 'use client'
 
-import { useState, useCallback } from 'react'
+import { useState, useCallback, useMemo } from 'react'
 import {
   Upload, Languages, Download, FileText, Loader2, CheckCircle,
   AlertCircle, X, Play, Sparkles, Shield, Edit3, Eye, Check,
@@ -8,6 +8,9 @@ import {
 } from 'lucide-react'
 import { useI18n } from '@/lib/i18n'
 import { LANGUAGES, TRANSLATION_CONFIG } from '@/lib/constants'
+import Pagination from '@/components/Pagination'
+
+const ENTRIES_PER_PAGE = 10
 
 interface TranslationEntry {
   index: number
@@ -26,6 +29,7 @@ export default function TranslatePage() {
   const [progress, setProgress] = useState(0)
   const [error, setError] = useState<string | null>(null)
   const [expandedEntry, setExpandedEntry] = useState<number | null>(null)
+  const [currentPage, setCurrentPage] = useState(1)
 
   const languages = LANGUAGES
 
@@ -53,6 +57,7 @@ export default function TranslatePage() {
       if (!r.ok) { const d = await r.json(); throw new Error(d.error || 'Upload failed') }
       const d = await r.json()
       setEntries(d.entries.map((e: any) => ({ ...e, status: 'pending' as const })))
+      setCurrentPage(1)
       setStep('translate')
     } catch (err: any) { setError(err.message) }
     finally { setIsTranslating(false) }
@@ -82,6 +87,7 @@ export default function TranslatePage() {
         translated += batch.length
         setProgress(Math.round((translated / untranslated.length) * 100))
       }
+      setCurrentPage(1)
       setStep('review')
     } catch (err: any) { setError(err.message) }
     finally { setIsTranslating(false) }
@@ -106,12 +112,14 @@ export default function TranslatePage() {
   }, [])
 
   const handleConfirmAll = useCallback(() => {
-    setEntries(prev => prev.map(e =>
-      e.status === 'reviewing' || e.status === 'translated'
+    const pageStart = (currentPage - 1) * ENTRIES_PER_PAGE
+    const pageEnd = currentPage * ENTRIES_PER_PAGE
+    setEntries(prev => prev.map((e, i) =>
+      i >= pageStart && i < pageEnd && (e.status === 'reviewing' || e.status === 'translated')
         ? { ...e, status: 'confirmed' as const }
         : e
     ))
-  }, [])
+  }, [currentPage])
 
   const handleResetToAI = useCallback((index: number) => {
     // Re-trigger single entry translation would be expensive; mark as pending for re-translate
@@ -146,6 +154,16 @@ export default function TranslatePage() {
   const confirmedCount = entries.filter(e => e.status === 'confirmed').length
   const reviewingCount = entries.filter(e => e.status === 'reviewing').length
   const totalCount = entries.length
+
+  const totalPages = Math.ceil(entries.length / ENTRIES_PER_PAGE)
+  const paginatedEntries = useMemo(
+    () => entries.slice((currentPage - 1) * ENTRIES_PER_PAGE, currentPage * ENTRIES_PER_PAGE),
+    [entries, currentPage]
+  )
+  const pageReviewingCount = useMemo(
+    () => paginatedEntries.filter(e => e.status === 'reviewing').length,
+    [paginatedEntries]
+  )
 
   return (
     <div className="max-w-6xl mx-auto space-y-6">
@@ -284,7 +302,7 @@ export default function TranslatePage() {
 
           <div className="glass-card overflow-hidden">
             <div className="divide-y divide-[var(--border-light)]">
-              {entries.map(entry => (
+              {paginatedEntries.map(entry => (
                 <div key={entry.index} className="p-4 hover:bg-[var(--surface-overlay)] transition-colors">
                   <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                     <div>
@@ -308,6 +326,7 @@ export default function TranslatePage() {
               ))}
             </div>
           </div>
+          <Pagination currentPage={currentPage} totalPages={totalPages} onPageChange={setCurrentPage} />
         </div>
       )}
 
@@ -334,7 +353,7 @@ export default function TranslatePage() {
                   disabled={reviewingCount === 0}
                   className="btn-primary flex items-center gap-2 text-sm"
                 >
-                  <Check size={16} />Confirm All ({reviewingCount})
+                  <Check size={16} />Confirm Page ({pageReviewingCount})
                 </button>
                 <button
                   onClick={() => setStep('export')}
@@ -355,7 +374,7 @@ export default function TranslatePage() {
 
           {/* Editable translation entries */}
           <div className="space-y-3">
-            {entries.map(entry => {
+            {paginatedEntries.map(entry => {
               const isExpanded = expandedEntry === entry.index
               const isConfirmed = entry.status === 'confirmed'
               const isReviewing = entry.status === 'reviewing'
@@ -466,6 +485,7 @@ export default function TranslatePage() {
               )
             })}
           </div>
+          <Pagination currentPage={currentPage} totalPages={totalPages} onPageChange={setCurrentPage} />
         </div>
       )}
 
