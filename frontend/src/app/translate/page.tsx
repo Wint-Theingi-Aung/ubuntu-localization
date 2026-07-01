@@ -426,7 +426,7 @@ export default function TranslatePage() {
                             onChange={(e) => handleEditTranslation(entry.index, e.target.value)}
                             className={`input-field w-full font-myanmar text-sm min-h-[5rem] resize-y ${
                               isReviewing
-                                ? 'bg-amber-400/5 border-amber-400/30 focus:border-amber-400/60'
+                                ? 'bg-[rgba(233,84,32,0.05)] border-[rgba(233,84,32,0.3)] focus:border-[rgba(233,84,32,0.6)]'
                                 : ''
                             }`}
                             rows={3}

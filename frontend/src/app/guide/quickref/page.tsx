@@ -9,19 +9,19 @@ export default function QuickReferencePage() {
       <div className="flex items-center gap-4">
         <Link
           href="/guide"
-          className="p-2 rounded-lg bg-white/5 hover:bg-white/10 transition-colors"
+          className="p-2 rounded-lg bg-[var(--surface-overlay)] hover:bg-[var(--surface-card-hover)] transition-colors"
         >
           <ArrowLeft size={20} />
         </Link>
         <div>
-          <h1 className="text-3xl font-bold text-white">Quick Reference</h1>
-          <p className="text-white/50 mt-1">
+          <h1 className="text-3xl font-bold text-[var(--tx-primary)]">Quick Reference</h1>
+          <p className="text-[var(--tx-dim)] mt-1">
             Essential rules for Ubuntu localization
           </p>
         </div>
         <button
           onClick={() => window.print()}
-          className="ml-auto p-2 rounded-lg bg-white/5 hover:bg-white/10 transition-colors"
+          className="ml-auto p-2 rounded-lg bg-[var(--surface-overlay)] hover:bg-[var(--surface-card-hover)] transition-colors"
           title="Print"
         >
           <Printer size={20} />
@@ -30,7 +30,7 @@ export default function QuickReferencePage() {
 
       {/* Reference Card */}
       <div className="glass-card p-8 font-mono text-sm">
-        <pre className="whitespace-pre-wrap text-white/80 leading-relaxed">
+        <pre className="whitespace-pre-wrap text-[var(--tx-secondary)] leading-relaxed">
 {`╔══════════════════════════════════════════════════════════════╗
 ║          UBUNTU LOCALIZATION QUICK REFERENCE CARD           ║
 ╠══════════════════════════════════════════════════════════════╣
@@ -88,45 +88,45 @@ export default function QuickReferencePage() {
       {/* Common Patterns */}
       <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
         <div className="glass-card p-6">
-          <h3 className="font-semibold text-white mb-4">Common UI Patterns</h3>
+          <h3 className="font-semibold text-[var(--tx-primary)] mb-4">Common UI Patterns</h3>
           <div className="space-y-3 text-sm">
             <div>
-              <p className="text-white/50">File menu</p>
-              <p className="text-white font-myanmar">ဖိုင်</p>
+              <p className="text-[var(--tx-dim)]">File menu</p>
+              <p className="text-[var(--tx-primary)] font-myanmar">ဖိုင်</p>
             </div>
             <div>
-              <p className="text-white/50">Edit menu</p>
-              <p className="text-white font-myanmar">တည်းဖြတ်</p>
+              <p className="text-[var(--tx-dim)]">Edit menu</p>
+              <p className="text-[var(--tx-primary)] font-myanmar">တည်းဖြတ်</p>
             </div>
             <div>
-              <p className="text-white/50">View menu</p>
-              <p className="text-white font-myanmar">ကြည့်ရှု</p>
+              <p className="text-[var(--tx-dim)]">View menu</p>
+              <p className="text-[var(--tx-primary)] font-myanmar">ကြည့်ရှု</p>
             </div>
             <div>
-              <p className="text-white/50">Help menu</p>
-              <p className="text-white font-myanmar">အကူအညီ</p>
+              <p className="text-[var(--tx-dim)]">Help menu</p>
+              <p className="text-[var(--tx-primary)] font-myanmar">အကူအညီ</p>
             </div>
           </div>
         </div>
 
         <div className="glass-card p-6">
-          <h3 className="font-semibold text-white mb-4">Button Labels</h3>
+          <h3 className="font-semibold text-[var(--tx-primary)] mb-4">Button Labels</h3>
           <div className="space-y-3 text-sm">
             <div>
-              <p className="text-white/50">OK / Apply</p>
-              <p className="text-white font-myanmar">အိုကေ / အသုံးပြု</p>
+              <p className="text-[var(--tx-dim)]">OK / Apply</p>
+              <p className="text-[var(--tx-primary)] font-myanmar">အိုကေ / အသုံးပြု</p>
             </div>
             <div>
-              <p className="text-white/50">Cancel</p>
-              <p className="text-white font-myanmar">ပယ်ဖျက်</p>
+              <p className="text-[var(--tx-dim)]">Cancel</p>
+              <p className="text-[var(--tx-primary)] font-myanmar">ပယ်ဖျက်</p>
             </div>
             <div>
-              <p className="text-white/50">Save</p>
-              <p className="text-white font-myanmar">သိမ်းဆည်း</p>
+              <p className="text-[var(--tx-dim)]">Save</p>
+              <p className="text-[var(--tx-primary)] font-myanmar">သိမ်းဆည်း</p>
             </div>
             <div>
-              <p className="text-white/50">Close</p>
-              <p className="text-white font-myanmar">ပိတ်</p>
+              <p className="text-[var(--tx-dim)]">Close</p>
+              <p className="text-[var(--tx-primary)] font-myanmar">ပိတ်</p>
             </div>
           </div>
         </div>

@@ -40,7 +40,7 @@ export default function HistoryPage() {
         <p className="text-[var(--tx-muted)] mt-1">{t('history_subtitle', 'Recent translation activities')}</p>
       </div>
 
-      <div className="flex gap-2 overflow-x-auto pb-2">
+      <div className="flex gap-2 flex-wrap">
         {filterOptions.map(opt => (
           <button key={opt.key || 'all'} onClick={() => setFilter(opt.key)}
             className={`px-4 py-2 rounded-lg text-sm font-medium transition-all duration-200 whitespace-nowrap ${filter === opt.key ? 'bg-ubuntu-orange text-white shadow-lg shadow-ubuntu-orange/20' : 'bg-[var(--surface-overlay)] text-[var(--tx-muted)] hover:text-[var(--tx-primary)]'}`}>

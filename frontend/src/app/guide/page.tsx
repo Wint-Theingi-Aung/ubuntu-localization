@@ -70,7 +70,7 @@ export default function GuidePage() {
       </div>
 
       {/* Chapter tabs */}
-      <div className="flex gap-2 overflow-x-auto pb-2">
+      <div className="flex gap-2 flex-wrap">
         {chapters.map((ch, idx) => {
           const active = openChapter === ch.id
           return (
