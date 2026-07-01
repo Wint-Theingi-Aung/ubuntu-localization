@@ -1,7 +1,11 @@
 'use client'
 
 import { createContext, useContext, useState, useEffect, useCallback, type ReactNode } from 'react'
-import translationsData from '@/data/translations.json'
+import en from '@/data/i18n/en.json'
+import my from '@/data/i18n/my.json'
+import shn from '@/data/i18n/shn.json'
+import mnw from '@/data/i18n/mnw.json'
+import ksw from '@/data/i18n/ksw.json'
 
 type LanguageCode = 'en' | 'my' | 'shn' | 'mnw' | 'ksw'
 
@@ -14,8 +18,14 @@ interface I18nContextType {
 
 const I18nContext = createContext<I18nContextType | null>(null)
 
-const translations: Record<string, Record<string, string>> = translationsData.translations
-const langNames: Record<string, string> = translationsData.languages
+const translations: Record<string, Record<string, string>> = { en, my, shn, mnw, ksw }
+const langNames: Record<string, string> = {
+  en: 'English',
+  my: 'မြန်မာ',
+  shn: 'တႆး',
+  mnw: 'မန်',
+  ksw: 'စှီၤကရိ',
+}
 
 export function I18nProvider({ children }: { children: ReactNode }) {
   const [lang, setLangState] = useState<LanguageCode>('en')
