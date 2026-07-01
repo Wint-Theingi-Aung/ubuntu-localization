@@ -38,11 +38,16 @@ export async function POST(request: NextRequest) {
       headers
     )
 
+    // Build timestamped filename
+    const now = new Date()
+    const ts = `${now.getFullYear()}-${String(now.getMonth() + 1).padStart(2, '0')}-${String(now.getDate()).padStart(2, '0')}-${String(now.getHours()).padStart(2, '0')}${String(now.getMinutes()).padStart(2, '0')}${String(now.getSeconds()).padStart(2, '0')}`
+    const baseName = (filename || 'messages.po').replace(/\.pot?$/, '')
+
     // Return as downloadable file
     return new NextResponse(poContent, {
       headers: {
         'Content-Type': 'text/x-gettext-translation; charset=utf-8',
-        'Content-Disposition': `attachment; filename="translated_${language_code}_${filename || 'messages.po'}"`,
+        'Content-Disposition': `attachment; filename="${baseName}-${ts}.po"`,
       },
     })
   } catch (error) {
