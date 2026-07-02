@@ -17,7 +17,7 @@ I want to use this for a personal project (https://ubuntu-localization.vercel.ap
 
 | # | Issue title | GitHub link | From (user/feedback) | Priority |
 |---|---|---|---|---|
-| 1 | Custom .po File Upload for i18n | https://github.com/<you>/<repo>/issues/<n> | kohtun386 | high |
+| 1 | Custom .po File Upload for i18n | https://github.com/Wint-Theingi-Aung/ubuntu-localization/issues/6 | kohtun386 | high |
 | 2 |  |  |  |  |
 | 3 |  |  |  |  |
 
