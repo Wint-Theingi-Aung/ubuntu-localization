@@ -9,11 +9,15 @@ then list them here. (These are what you'll close in Chapter 6.)
 ## Feature Request: Custom .po File Upload for i18n
 
 ### Description
-I want to use this for a personal project (https://ubuntu-localization.vercel.app/) rather than Ubuntu Launchpad localization. I would like to implement a feature that allows users to upload a `.po` file and apply those translations to the project.
+Allow users to upload a custom .po file and apply its translations at runtime.
+
+This feature is primarily intended for Ubuntu Localization, but any valid gettext .po file should work for local preview and testing.
 
 ### Expected Behavior
-- Users can upload their own `.po` file.
-- The application parses the uploaded file and dynamically updates the UI text based on those translations.
+- Upload a valid .po file.
+- Apply translations immediately.
+- Changes are local to the current session only.
+- Do not modify the project's bundled translations.
 
 | # | Issue title | GitHub link | From (user/feedback) | Priority |
 |---|---|---|---|---|
