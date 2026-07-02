@@ -5,8 +5,10 @@ then list them here. (These are what you'll close in Chapter 6.)
 
 | # | Issue title | GitHub link | From (user/feedback) | Priority |
 |---|---|---|---|---|
-| 1 | Custom .po File Upload for i18n | https://github.com/Wint-Theingi-Aung/ubuntu-localization/issues/6 | @kohtun386 | high |
+| 1 | Show real-time translation status on Templates page | https://github.com/Wint-Theingi-Aung/ubuntu-localization/issues/6 | @Wint-Theingi-Aung | high |
+| 2 | Add Translated and Untranslated columns to Templates page | https://github.com/Wint-Theingi-Aung/ubuntu-localization/issues/6 | @Wint-Theingi-Aung | high |
+| 3 | Make it easy to see which templates are complete vs. need work | https://github.com/Wint-Theingi-Aung/ubuntu-localization/issues/6 | @Wint-Theingi-Aung | medium |
 
 ## Notes
 
-Issue #6 was created to support custom .po file uploads, allowing users to dynamically apply translations to the project. This was identified as a key feature gap during testing of the translation pipeline.
+All three issues originate from GitHub issue #6 — **Improve Template Progress Tracking**. The goal is to update the Templates page so translators can quickly assess progress per template: real-time status, explicit translated/untranslated counts, and a clear visual indicator of completion.
