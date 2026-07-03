@@ -27,8 +27,8 @@ export default function Dashboard() {
   const quickActions = [
     { href: '/translate', icon: Languages, iconColor: 'text-ubuntu-orange', hoverColor: 'group-hover:text-ubuntu-orange', title: t('dashboard_ai_translation', 'AI Translation'), desc: t('dashboard_ai_desc', 'Upload .po files and translate with Gemini AI') },
     { href: '/guide', icon: BookOpen, iconColor: 'text-blue-400', hoverColor: 'group-hover:text-blue-400', title: t('dashboard_guide_action', 'Translation Guide'), desc: t('dashboard_guide_desc', 'Best practices for Ubuntu localization') },
-    { href: '/contributors', icon: Users, iconColor: 'text-purple-400', hoverColor: 'group-hover:text-purple-400', title: t('dashboard_join_contributors', 'Join Contributors'), desc: t('dashboard_join_contributors_desc', 'Connect with the translation community') },
-    { href: '/guide', icon: Rocket, iconColor: 'text-emerald-400', hoverColor: 'group-hover:text-emerald-400', title: t('dashboard_get_started', 'Get Started'), desc: t('dashboard_get_started_desc', 'Create account, join team, make your first translation') },
+    { href: 'https://launchpad.net/', icon: Users, iconColor: 'text-purple-400', hoverColor: 'group-hover:text-purple-400', title: t('dashboard_join_contributors', 'Join Contributors'), desc: t('dashboard_join_contributors_desc', 'Connect with the translation community'), external: true },
+    { href: '/get-started', icon: Rocket, iconColor: 'text-emerald-400', hoverColor: 'group-hover:text-emerald-400', title: t('dashboard_get_started', 'Get Started'), desc: t('dashboard_get_started_desc', 'Create account, join team, make your first translation') },
   ]
 
   return (
@@ -93,13 +93,23 @@ export default function Dashboard() {
         <h2 className="text-xl font-semibold text-[var(--tx-primary)] mb-4">{t('dashboard_quick_actions', 'Quick Actions')}</h2>
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
           {quickActions.map((action) => (
-            <Link key={action.href} href={action.href} className="glass-card glass-card-hover p-6 group">
-              <action.icon className={`${action.iconColor} mb-3`} size={32} />
-              <h3 className={`font-semibold text-[var(--tx-primary)] ${action.hoverColor} transition-colors`}>
-                {action.title}
-              </h3>
-              <p className="text-sm text-[var(--tx-secondary)] mt-1">{action.desc}</p>
-            </Link>
+            action.external ? (
+              <a key={action.href} href={action.href} target="_blank" rel="noopener noreferrer" className="glass-card glass-card-hover p-6 group">
+                <action.icon className={`${action.iconColor} mb-3`} size={32} />
+                <h3 className={`font-semibold text-[var(--tx-primary)] ${action.hoverColor} transition-colors`}>
+                  {action.title}
+                </h3>
+                <p className="text-sm text-[var(--tx-secondary)] mt-1">{action.desc}</p>
+              </a>
+            ) : (
+              <Link key={action.href} href={action.href} className="glass-card glass-card-hover p-6 group">
+                <action.icon className={`${action.iconColor} mb-3`} size={32} />
+                <h3 className={`font-semibold text-[var(--tx-primary)] ${action.hoverColor} transition-colors`}>
+                  {action.title}
+                </h3>
+                <p className="text-sm text-[var(--tx-secondary)] mt-1">{action.desc}</p>
+              </Link>
+            )
           ))}
         </div>
       </div>
