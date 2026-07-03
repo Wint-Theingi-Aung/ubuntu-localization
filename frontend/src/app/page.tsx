@@ -1,7 +1,7 @@
 'use client'
 import { useState } from 'react'
 import LanguageCard from '@/components/LanguageCard'
-import { Languages, FileCode, BookOpen, Users, ArrowRight, Sparkles, ExternalLink, Github } from 'lucide-react'
+import { Languages, FileCode, BookOpen, Users, ArrowRight, Sparkles, ExternalLink, Github, Rocket } from 'lucide-react'
 import Link from 'next/link'
 import { useI18n } from '@/lib/i18n'
 import { LANGUAGES, TRANSLATION_STATS, DASHBOARD_STATS, lpLanguageUrl } from '@/lib/constants'
@@ -26,9 +26,9 @@ export default function Dashboard() {
 
   const quickActions = [
     { href: '/translate', icon: Languages, iconColor: 'text-ubuntu-orange', hoverColor: 'group-hover:text-ubuntu-orange', title: t('dashboard_ai_translation', 'AI Translation'), desc: t('dashboard_ai_desc', 'Upload .po files and translate with Gemini AI') },
-    { href: '/templates', icon: FileCode, iconColor: 'text-purple-400', hoverColor: 'group-hover:text-purple-400', title: t('dashboard_browse_templates', 'Templates'), desc: t('dashboard_browse_desc', `Browse ${DASHBOARD_STATS.templates} Ubuntu packages on Launchpad`) },
-    { href: '/glossary', icon: BookOpen, iconColor: 'text-emerald-400', hoverColor: 'group-hover:text-emerald-400', title: t('dashboard_glossary_action', 'Glossary'), desc: t('dashboard_glossary_desc', '153 standardized terms across 4 languages') },
     { href: '/guide', icon: BookOpen, iconColor: 'text-blue-400', hoverColor: 'group-hover:text-blue-400', title: t('dashboard_guide_action', 'Translation Guide'), desc: t('dashboard_guide_desc', 'Best practices for Ubuntu localization') },
+    { href: '/contributors', icon: Users, iconColor: 'text-purple-400', hoverColor: 'group-hover:text-purple-400', title: t('dashboard_join_contributors', 'Join Contributors'), desc: t('dashboard_join_contributors_desc', 'Connect with the translation community') },
+    { href: '/guide', icon: Rocket, iconColor: 'text-emerald-400', hoverColor: 'group-hover:text-emerald-400', title: t('dashboard_get_started', 'Get Started'), desc: t('dashboard_get_started_desc', 'Create account, join team, make your first translation') },
   ]
 
   return (
