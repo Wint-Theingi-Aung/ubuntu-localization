@@ -96,6 +96,10 @@ export default function GlossaryPage() {
           <SearchInput value={search} onChange={(v) => { setSearch(v); setCurrentPage(1) }} placeholder={t('glossary_search', 'Search glossary terms...')} />
         </div>
         <div className="flex gap-2 flex-wrap">
+          <button onClick={() => { setSelectedLang(null); setCurrentPage(1) }}
+            className={`px-3 py-2 rounded-lg text-sm font-medium transition-all duration-200 ${selectedLang === null ? 'bg-ubuntu-orange text-white shadow-lg shadow-ubuntu-orange/20' : 'bg-[var(--surface-overlay)] text-[var(--tx-muted)] hover:text-[var(--tx-primary)]'}`}>
+            {t('glossary_all', 'All')}
+          </button>
           {langColumns.slice(1).map(lang => (
             <button key={lang.code} onClick={() => { setSelectedLang(selectedLang === lang.code ? null : lang.code); setCurrentPage(1) }}
               className={`px-3 py-2 rounded-lg text-sm font-medium transition-all duration-200 ${selectedLang === lang.code ? 'bg-ubuntu-orange text-white shadow-lg shadow-ubuntu-orange/20' : 'bg-[var(--surface-overlay)] text-[var(--tx-muted)] hover:text-[var(--tx-primary)]'}`}>
@@ -152,8 +156,8 @@ export default function GlossaryPage() {
                 {s === 'partial' && <span className="status-partial"><Clock size={10} className="mr-1" />{c}/4</span>}
                 {s === 'pending' && <span className="status-pending">{t('glossary_pending', 'Pending')}</span>}
               </div>
-              <div className="grid grid-cols-2 gap-2">
-                {[{ code: 'my', label: t('glossary_myanmar', 'Myanmar'), value: entry.my }, { code: 'shn', label: t('glossary_shan', 'Shan'), value: entry.shn }, { code: 'mnw', label: t('glossary_mon', 'Mon'), value: entry.mnw }, { code: 'ksw', label: t('glossary_karen', 'Karen'), value: entry.ksw }].map(l => (
+              <div className={`grid gap-2 ${selectedLang ? 'grid-cols-1' : 'grid-cols-2'}`}>
+                {[{ code: 'my', label: t('glossary_myanmar', 'Myanmar'), value: entry.my }, { code: 'shn', label: t('glossary_shan', 'Shan'), value: entry.shn }, { code: 'mnw', label: t('glossary_mon', 'Mon'), value: entry.mnw }, { code: 'ksw', label: t('glossary_karen', 'Karen'), value: entry.ksw }].filter(l => !selectedLang || l.code === selectedLang).map(l => (
                   <div key={l.code} className="text-xs">
                     <span className="text-[var(--tx-dim)]">{l.label}: </span>
                     {l.value ? <span className="font-myanmar text-[var(--tx-secondary)]">{l.value}</span> : <span className="text-[var(--tx-faint)] italic">—</span>}
