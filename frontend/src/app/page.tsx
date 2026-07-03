@@ -18,10 +18,10 @@ export default function Dashboard() {
   })
 
   const stats = [
-    { label: t('dashboard_languages', 'Languages'), value: String(DASHBOARD_STATS.languages), icon: Languages, color: 'text-ubuntu-orange', bg: 'bg-ubuntu-orange/10' },
-    { label: t('dashboard_templates', 'Templates'), value: String(DASHBOARD_STATS.templates), icon: FileCode, color: 'text-purple-400', bg: 'bg-purple-500/10' },
-    { label: t('dashboard_glossary_terms', 'Glossary Terms'), value: String(DASHBOARD_STATS.glossaryTerms), icon: BookOpen, color: 'text-emerald-400', bg: 'bg-emerald-500/10' },
-    { label: t('dashboard_contributors', 'Contributors'), value: String(DASHBOARD_STATS.contributors), icon: Users, color: 'text-blue-400', bg: 'bg-blue-500/10' },
+    { label: t('dashboard_languages', 'Languages'), value: String(DASHBOARD_STATS.languages), icon: Languages, color: 'text-ubuntu-orange', bg: 'bg-ubuntu-orange/10', href: '/translate' },
+    { label: t('dashboard_templates', 'Templates'), value: String(DASHBOARD_STATS.templates), icon: FileCode, color: 'text-purple-400', bg: 'bg-purple-500/10', href: '/templates' },
+    { label: t('dashboard_glossary_terms', 'Glossary Terms'), value: String(DASHBOARD_STATS.glossaryTerms), icon: BookOpen, color: 'text-emerald-400', bg: 'bg-emerald-500/10', href: '/glossary' },
+    { label: t('dashboard_contributors', 'Contributors'), value: String(DASHBOARD_STATS.contributors), icon: Users, color: 'text-blue-400', bg: 'bg-blue-500/10', href: '/contributors' },
   ]
 
   const quickActions = [
@@ -50,7 +50,7 @@ export default function Dashboard() {
 
       <div className="grid grid-cols-2 lg:grid-cols-4 gap-4">
         {stats.map((stat) => (
-          <div key={stat.label} className="stat-card glass-card p-4">
+          <Link key={stat.label} href={stat.href} className="stat-card glass-card p-4 glass-card-hover">
             <div className="flex items-center gap-3">
               <div className={`w-12 h-12 rounded-xl ${stat.bg} flex items-center justify-center`}>
                 <stat.icon className={stat.color} size={24} />
@@ -60,7 +60,7 @@ export default function Dashboard() {
                 <p className="text-sm text-[var(--tx-secondary)]">{stat.label}</p>
               </div>
             </div>
-          </div>
+          </Link>
         ))}
       </div>
 
