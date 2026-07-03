@@ -38,11 +38,15 @@ export default function GlossaryPage() {
     let result = glossaryData.entries as GlossaryEntry[]
     if (search) {
       const q = search.toLowerCase()
-      result = result.filter(e => e.en.toLowerCase().includes(q) || e.my.toLowerCase().includes(q) || e.shn.toLowerCase().includes(q) || e.mnw.toLowerCase().includes(q) || e.ksw.toLowerCase().includes(q))
+      if (selectedLang) {
+        result = result.filter(e => String(e[selectedLang as keyof GlossaryEntry] || '').toLowerCase().includes(q))
+      } else {
+        result = result.filter(e => e.en.toLowerCase().includes(q) || e.my.toLowerCase().includes(q) || e.shn.toLowerCase().includes(q) || e.mnw.toLowerCase().includes(q) || e.ksw.toLowerCase().includes(q))
+      }
     }
     if (statusFilter) result = result.filter(e => getTranslationStatus(e) === statusFilter)
     return result
-  }, [search, statusFilter])
+  }, [search, statusFilter, selectedLang])
 
   const totalPages = Math.ceil(filtered.length / ITEMS_PER_PAGE)
   const paginated = filtered.slice((currentPage - 1) * ITEMS_PER_PAGE, currentPage * ITEMS_PER_PAGE)
