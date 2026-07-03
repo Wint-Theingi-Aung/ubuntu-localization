@@ -65,11 +65,13 @@ export const API = {
 
 // ── Translation Stats (can be fetched from API at runtime) ──────────
 
+// Source: Launchpad translations API (fetched 2026-07-03)
+// Total ≈ 397,800 strings across all Ubuntu 26.10 (stonking) packages
 export const TRANSLATION_STATS = [
-  { code: 'my',  totalEntries: 48500, translatedEntries: 20370, progress: 42 },
-  { code: 'shn', totalEntries: 48500, translatedEntries: 3880,  progress: 8  },
-  { code: 'mnw', totalEntries: 48500, translatedEntries: 2425,  progress: 5  },
-  { code: 'ksw', totalEntries: 48500, translatedEntries: 1455,  progress: 3  },
+  { code: 'my',  totalEntries: 397800, translatedEntries: 74100,  progress: 19 },
+  { code: 'shn', totalEntries: 397800, translatedEntries: 1631,   progress: 0  },
+  { code: 'mnw', totalEntries: 397800, translatedEntries: 6882,   progress: 2  },
+  { code: 'ksw', totalEntries: 397800, translatedEntries: 0,      progress: 0  },
 ]
 
 // ── Dashboard Stats ───────────────────────────────────────────────────
