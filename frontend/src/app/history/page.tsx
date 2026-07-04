@@ -71,7 +71,7 @@ export default function HistoryPage() {
                         {entry.language && <span className="badge-orange">{entry.language}</span>}
                       </div>
                     </div>
-                    <div className="flex items-center gap-1 text-xs text-[var(--tx-dim)] flex-shrink-0 ml-4"><Clock size={12} />{formatTimestamp(entry.timestamp)}</div>
+                    <div className="flex items-center gap-1 text-xs text-[var(--tx-dim)] flex-shrink-0 ml-4"><Clock size={12} />{formatTimestamp(entry.timestamp, t)}</div>
                   </div>
                   {entry.details && <p className="text-sm text-[var(--tx-muted)] mt-2">{entry.details}</p>}
                 </div>
@@ -99,7 +99,7 @@ export default function HistoryPage() {
               </div>
               <div className="flex items-center justify-between text-xs text-[var(--tx-dim)]">
                 <span>{entry.details}</span>
-                <span className="flex items-center gap-1 flex-shrink-0"><Clock size={10} />{formatTimestamp(entry.timestamp)}</span>
+                <span className="flex items-center gap-1 flex-shrink-0"><Clock size={10} />{formatTimestamp(entry.timestamp, t)}</span>
               </div>
             </div>
           )

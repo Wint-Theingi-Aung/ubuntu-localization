@@ -70,17 +70,17 @@ function getDefaultHistory(): HistoryEntry[] {
   return defaults
 }
 
-/** Format a timestamp for display */
-export function formatTimestamp(ts: number): string {
+/** Format a timestamp for display with i18n support */
+export function formatTimestamp(ts: number, t?: (key: string, fallback?: string) => string): string {
   const diff = Date.now() - ts
   const mins = Math.floor(diff / 60000)
   const hours = Math.floor(diff / 3600000)
   const days = Math.floor(diff / 86400000)
 
-  if (mins < 1) return 'Just now'
-  if (mins < 60) return `${mins}m ago`
-  if (hours < 24) return `${hours}h ago`
-  if (days < 7) return `${days}d ago`
+  if (mins < 1) return t ? t('history_time_just_now', 'Just now') : 'Just now'
+  if (mins < 60) return `${mins}${t ? t('history_time_minutes_ago', 'm ago') : 'm ago'}`
+  if (hours < 24) return `${hours}${t ? t('history_time_hours_ago', 'h ago') : 'h ago'}`
+  if (days < 7) return `${days}${t ? t('history_time_days_ago', 'd ago') : 'd ago'}`
 
   const d = new Date(ts)
   return `${d.getFullYear()}-${String(d.getMonth() + 1).padStart(2, '0')}-${String(d.getDate()).padStart(2, '0')}`

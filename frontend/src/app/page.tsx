@@ -31,6 +31,31 @@ export default function Dashboard() {
     { href: '/get-started', icon: Rocket, iconColor: 'text-emerald-400', hoverColor: 'group-hover:text-emerald-400', title: t('dashboard_get_started', 'Get Started'), desc: t('dashboard_get_started_desc', 'Create account, join team, make your first translation') },
   ]
 
+  const recentActivity = [
+    { actionKey: 'history_activity_translated', count: 150, fileKey: 'gnome-control-center.po', lang: 'Myanmar', timeKey: 'history_time_hours_ago', timeValue: 2, user: 'wint-theingi-aung' },
+    { actionKey: 'history_activity_exported', fileKey: 'gnome-control-center.po', lang: 'Myanmar', timeKey: 'history_time_hours_ago', timeValue: 3, user: 'wint-theingi-aung' },
+    { actionKey: 'history_activity_added', count: 25, glossaryKey: 'history_activity_glossary_terms', lang: 'Shan', timeKey: 'history_time_days_ago', timeValue: 1, user: 'gipsyhnh' },
+    { actionKey: 'history_activity_translated', count: 8, fileKey: 'nautilus.po', lang: 'Mon', timeKey: 'history_time_days_ago', timeValue: 1, user: 'htetminaung2018' },
+  ]
+
+  const formatActivity = (activity: typeof recentActivity[0]) => {
+    const action = t(activity.actionKey, activity.actionKey === 'history_activity_translated' ? 'Translated' : activity.actionKey === 'history_activity_exported' ? 'Exported' : 'Added')
+    if (activity.actionKey === 'history_activity_exported') {
+      return `${action} ${activity.fileKey}`
+    }
+    if (activity.actionKey === 'history_activity_added') {
+      const glossary = t(activity.glossaryKey || 'history_activity_glossary_terms', 'glossary terms')
+      return `${action} ${activity.count} ${glossary}`
+    }
+    const strings = t('history_activity_strings', 'strings in')
+    return `${action} ${activity.count} ${strings} ${activity.fileKey}`
+  }
+
+  const formatTime = (activity: typeof recentActivity[0]) => {
+    const timeLabel = t(activity.timeKey, activity.timeKey === 'history_time_hours_ago' ? 'h ago' : 'd ago')
+    return `${activity.timeValue}${timeLabel}`
+  }
+
   return (
     <div className="max-w-7xl mx-auto space-y-8">
       <div className="flex flex-col md:flex-row md:items-center md:justify-between gap-4">
@@ -117,18 +142,13 @@ export default function Dashboard() {
       <div className="glass-card p-6">
         <h2 className="text-xl font-semibold text-[var(--tx-primary)] mb-4">{t('dashboard_recent_activity', 'Recent Activity')}</h2>
         <div className="space-y-3">
-          {[
-            { action: 'Translated 150 strings', lang: 'Myanmar', time: '2 hours ago', user: 'wint-theingi-aung' },
-            { action: 'Exported gnome-control-center.po', lang: 'Myanmar', time: '3 hours ago', user: 'wint-theingi-aung' },
-            { action: 'Added 25 glossary terms', lang: 'Shan', time: '1 day ago', user: 'gipsyhnh' },
-            { action: 'Translated 8 strings in nautilus.po', lang: 'Mon', time: '1 day ago', user: 'htetminaung2018' },
-          ].map((activity, idx) => (
+          {recentActivity.map((activity, idx) => (
             <div key={idx} className="flex items-center justify-between py-2 border-b border-[var(--border-light)] last:border-0">
               <div>
-                <p className="text-[var(--tx-primary)] text-sm">{activity.action}</p>
+                <p className="text-[var(--tx-primary)] text-sm">{formatActivity(activity)}</p>
                 <p className="text-xs text-[var(--tx-dim)]">{activity.user} • {activity.lang}</p>
               </div>
-              <span className="text-xs text-[var(--tx-faint)]">{activity.time}</span>
+              <span className="text-xs text-[var(--tx-faint)]">{formatTime(activity)}</span>
             </div>
           ))}
         </div>
