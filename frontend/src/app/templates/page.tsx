@@ -1,12 +1,13 @@
 'use client'
 
-import { useState, useMemo } from 'react'
+import { useState, useMemo, useEffect, useCallback } from 'react'
 import SearchInput from '@/components/SearchInput'
 import Pagination from '@/components/Pagination'
-import { ExternalLink, Package, ArrowUpDown, Filter } from 'lucide-react'
+import { ExternalLink, Package, ArrowUpDown, Filter, Loader2 } from 'lucide-react'
 import { useI18n } from '@/lib/i18n'
 import { lpTranslateUrl, lpUbuntuUrl, LANGUAGES, UBUNTU_RELEASE } from '@/lib/constants'
 import templatesData from '@/data/templates.json'
+import type { TranslationTemplate } from '@/app/api/translation-progress/route'
 
 const ITEMS_PER_PAGE = 20
 
@@ -22,6 +23,16 @@ const priorityColors: Record<string, string> = {
   low: 'badge-green',
 }
 
+// ── Progress bar color by percentage ──────────────────────────────────
+function statusColor(pct: number): string {
+  if (pct >= 80) return 'bg-green-500'
+  if (pct >= 50) return 'bg-amber-500'
+  return 'bg-red-500'
+}
+
+// ── Metrics type (per-package lookup) ─────────────────────────────────
+type MetricsMap = Record<string, TranslationTemplate>
+
 export default function TemplatesPage() {
   const { t } = useI18n()
   const [search, setSearch] = useState('')
@@ -30,6 +41,39 @@ export default function TemplatesPage() {
   const [currentPage, setCurrentPage] = useState(1)
   const [sortBy, setSortBy] = useState<'name' | 'entries' | 'priority'>('name')
   const [sortDir, setSortDir] = useState<'asc' | 'desc'>('asc')
+
+  // ── Localization metrics state ────────────────────────────────────
+  const [metricsLang, setMetricsLang] = useState('my')
+  const [metrics, setMetrics] = useState<MetricsMap>({})
+  const [metricsLoading, setMetricsLoading] = useState(false)
+  const [metricsError, setMetricsError] = useState(false)
+
+  const fetchMetrics = useCallback(async (lang: string) => {
+    setMetricsLoading(true)
+    setMetricsError(false)
+    try {
+      const res = await fetch(`/api/translation-progress?lang=${lang}`)
+      const data = await res.json()
+      if (data.templates && Array.isArray(data.templates)) {
+        const map: MetricsMap = {}
+        for (const tmpl of data.templates) {
+          map[tmpl.name] = tmpl
+        }
+        setMetrics(map)
+      } else {
+        setMetricsError(true)
+      }
+    } catch {
+      setMetricsError(true)
+    } finally {
+      setMetricsLoading(false)
+    }
+  }, [])
+
+  // Fetch metrics on mount and when language changes
+  useEffect(() => {
+    fetchMetrics(metricsLang)
+  }, [metricsLang, fetchMetrics])
 
   const filtered = useMemo(() => {
     let result = templatesData.packages as any[]
@@ -62,6 +106,16 @@ export default function TemplatesPage() {
     setCurrentPage(1)
   }
 
+  // Merge metrics into paginated items
+  const paginatedWithMetrics = useMemo(() => {
+    return paginated.map((pkg: any) => ({
+      ...pkg,
+      metrics: metrics[pkg.name] || null,
+    }))
+  }, [paginated, metrics])
+
+  const hasMetrics = Object.keys(metrics).length > 0
+
   return (
     <div className="max-w-7xl mx-auto space-y-6">
       <div className="flex flex-col md:flex-row md:items-center md:justify-between gap-4">
@@ -81,7 +135,18 @@ export default function TemplatesPage() {
         <div className="flex-1">
           <SearchInput value={search} onChange={(v) => { setSearch(v); setCurrentPage(1) }} placeholder={t('templates_search', 'Search packages by name or description...')} />
         </div>
-        <div className="flex gap-2">
+        <div className="flex gap-2 flex-wrap">
+          {/* Language selector for metrics */}
+          <select
+            value={metricsLang}
+            onChange={(e) => { setMetricsLang(e.target.value); setCurrentPage(1) }}
+            className="input-field text-sm"
+            title={t('templates_metrics_lang', 'Translation metrics language')}
+          >
+            {langLinks.map((l) => (
+              <option key={l.code} value={l.code}>{l.name}</option>
+            ))}
+          </select>
           <select value={category} onChange={(e) => { setCategory(e.target.value); setCurrentPage(1) }} className="input-field text-sm">
             {categories.map((c: string) => (
               <option key={c} value={c}>{c === 'All' ? t('templates_all_categories', 'All Categories') : c}</option>
@@ -98,6 +163,8 @@ export default function TemplatesPage() {
       <div className="flex items-center justify-between">
         <p className="text-xs text-[var(--tx-dim)]">
           {t('templates_showing', 'Showing')} {paginated.length} {t('templates_of', 'of')} {filtered.length} {t('templates_packages', 'packages')}
+          {metricsLoading && <span className="ml-2 inline-flex items-center gap-1"><Loader2 size={10} className="animate-spin" /> {t('templates_loading_metrics', 'Loading metrics...')}</span>}
+          {metricsError && <span className="ml-2 text-amber-500">{t('templates_metrics_unavailable', 'Metrics unavailable')}</span>}
         </p>
         <div className="flex items-center gap-2 text-xs text-[var(--tx-dim)]">
           <Filter size={12} />
@@ -131,11 +198,18 @@ export default function TemplatesPage() {
                     <ArrowUpDown size={12} />
                   </button>
                 </th>
+                {hasMetrics && (
+                  <>
+                    <th>{t('templates_status', 'Status')}</th>
+                    <th>{t('templates_untranslated', 'Untranslated')}</th>
+                    <th>{t('templates_total_strings', 'Total')}</th>
+                  </>
+                )}
                 <th>{t('templates_translate', 'Translate')}</th>
               </tr>
             </thead>
             <tbody>
-              {paginated.map((pkg: any) => (
+              {paginatedWithMetrics.map((pkg: any) => (
                 <tr key={pkg.id}>
                   <td data-label={t('templates_package', 'Package')}>
                     <div>
@@ -152,6 +226,37 @@ export default function TemplatesPage() {
                   <td data-label={t('templates_entries', 'Entries')} className="font-mono text-xs text-[var(--tx-muted)]">
                     {pkg.entries.toLocaleString()}
                   </td>
+                  {hasMetrics && (
+                    <>
+                      <td data-label={t('templates_status', 'Status')}>
+                        {pkg.metrics ? (
+                          <div className="flex items-center gap-2">
+                            <div className="w-16 h-1.5 bg-[var(--tx-faint)] rounded-full overflow-hidden">
+                              <div
+                                className={`h-full rounded-full ${statusColor(pkg.metrics.completionPct)}`}
+                                style={{ width: `${pkg.metrics.completionPct}%` }}
+                              />
+                            </div>
+                            <span className="text-[10px] font-mono text-[var(--tx-muted)]">{pkg.metrics.completionPct}%</span>
+                          </div>
+                        ) : (
+                          <span className="text-[10px] text-[var(--tx-faint)]">—</span>
+                        )}
+                      </td>
+                      <td data-label={t('templates_untranslated', 'Untranslated')} className="font-mono text-xs">
+                        {pkg.metrics ? (
+                          <span className={pkg.metrics.untranslated > 0 ? 'text-red-400 font-semibold' : 'text-[var(--tx-muted)]'}>
+                            {pkg.metrics.untranslated.toLocaleString()}
+                          </span>
+                        ) : (
+                          <span className="text-[10px] text-[var(--tx-faint)]">—</span>
+                        )}
+                      </td>
+                      <td data-label={t('templates_total_strings', 'Total')} className="font-mono text-xs text-[var(--tx-muted)]">
+                        {pkg.metrics ? pkg.metrics.total.toLocaleString() : <span className="text-[10px] text-[var(--tx-faint)]">—</span>}
+                      </td>
+                    </>
+                  )}
                   <td data-label={t('templates_translate', 'Translate')}>
                     <div className="flex gap-1">
                       {langLinks.map((lang) => (
@@ -172,7 +277,7 @@ export default function TemplatesPage() {
 
       {/* Mobile Cards */}
       <div className="md:hidden space-y-3">
-        {paginated.map((pkg: any) => (
+        {paginatedWithMetrics.map((pkg: any) => (
           <div key={pkg.id} className="glass-card p-4 space-y-3">
             <div className="flex items-start justify-between">
               <div>
@@ -184,6 +289,28 @@ export default function TemplatesPage() {
                 <span className={`${priorityColors[pkg.priority]} text-[10px]`}>{pkg.priority}</span>
               </div>
             </div>
+
+            {/* Metrics row */}
+            {hasMetrics && pkg.metrics && (
+              <div className="flex items-center gap-3 text-[11px]">
+                <div className="flex items-center gap-1.5">
+                  <div className="w-14 h-1.5 bg-[var(--tx-faint)] rounded-full overflow-hidden">
+                    <div
+                      className={`h-full rounded-full ${statusColor(pkg.metrics.completionPct)}`}
+                      style={{ width: `${pkg.metrics.completionPct}%` }}
+                    />
+                  </div>
+                  <span className="font-mono text-[var(--tx-muted)]">{pkg.metrics.completionPct}%</span>
+                </div>
+                <span className={`font-mono ${pkg.metrics.untranslated > 0 ? 'text-red-400' : 'text-[var(--tx-muted)]'}`}>
+                  {pkg.metrics.untranslated.toLocaleString()} {t('templates_untranslated_short', 'untrans')}
+                </span>
+                <span className="font-mono text-[var(--tx-muted)]">
+                  / {pkg.metrics.total.toLocaleString()} {t('templates_total_short', 'total')}
+                </span>
+              </div>
+            )}
+
             <div className="flex items-center justify-between">
               <span className="font-mono text-xs text-[var(--tx-dim)]">{pkg.entries.toLocaleString()} {t('templates_entries_label', 'entries')}</span>
               <div className="flex gap-1.5 lp-links-cell">

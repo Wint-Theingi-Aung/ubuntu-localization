@@ -173,5 +173,13 @@
   "get_started_step5_title": "ဘာသာပြန်စတင်ပါ",
   "get_started_step5_desc": "ကျွန်ုပ်တို့၏ AI-powered ဘာသာပြန်ကိရိယာကို အသုံးပြု၍ .po ဖိုင်များကို တင်ပြီး သင့်ဘာသာစကားဖြင့် Ubuntu ကို ဘာသာပြန်ပါ။",
   "get_started_ready": "ပါဝင်ဆောင်ရွက်ရန် အဆင်သင့်ဖြစ်ပြီ",
-  "get_started_ready_desc": "အဆင့်များကို ပြီးမြောက်အောင်ဆောင်ရွက်ပြီးနောက် သင့်ဘာသာစကားဖြင့် Ubuntu ကို ဘာသာပြန်စတင်နိုင်ပါပြီ။ ဘာသာပြန်မှုတိုင်းသည် Ubuntu ကို ပိုမိုလူအများအတွက် ရရှိနိုင်စေပါသည်။"
+  "get_started_ready_desc": "အဆင့်များကို ပြီးမြောက်အောင်ဆောင်ရွက်ပြီးနောက် သင့်ဘာသာစကားဖြင့် Ubuntu ကို ဘာသာပြန်စတင်နိုင်ပါပြီ။ ဘာသာပြန်မှုတိုင်းသည် Ubuntu ကို ပိုမိုလူအများအတွက် ရရှိနိုင်စေပါသည်။",
+  "templates_status": "ကောဝ်",
+  "templates_untranslated": "သုတ်ကာရာမ်",
+  "templates_total_strings": "စုဝ်ကာ",
+  "templates_metrics_lang": "ဘာသာကာ metric",
+  "templates_loading_metrics": "metric ကောဝ်...",
+  "templates_metrics_unavailable": "metric ရက်",
+  "templates_untranslated_short": "သုတ်ကာ",
+  "templates_total_short": "စုဝ်ကာ"
 }

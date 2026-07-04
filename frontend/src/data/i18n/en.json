@@ -173,5 +173,13 @@
   "get_started_step5_title": "Start Translating",
   "get_started_step5_desc": "Use our AI-powered translation tool to upload .po files and translate Ubuntu into your language.",
   "get_started_ready": "Ready to Contribute",
-  "get_started_ready_desc": "After completing the steps, you can start translating Ubuntu into your language. Every translation makes Ubuntu more accessible."
+  "get_started_ready_desc": "After completing the steps, you can start translating Ubuntu into your language. Every translation makes Ubuntu more accessible.",
+  "templates_status": "Status",
+  "templates_untranslated": "Untranslated",
+  "templates_total_strings": "Total",
+  "templates_metrics_lang": "Translation metrics language",
+  "templates_loading_metrics": "Loading metrics...",
+  "templates_metrics_unavailable": "Metrics unavailable",
+  "templates_untranslated_short": "untrans",
+  "templates_total_short": "total"
 }
