@@ -8,6 +8,7 @@ import {
 } from 'lucide-react'
 import { useI18n } from '@/lib/i18n'
 import { LANGUAGES, TRANSLATION_CONFIG } from '@/lib/constants'
+import { recordHistory } from '@/lib/history'
 import Pagination from '@/components/Pagination'
 
 const ENTRIES_PER_PAGE = 10
@@ -86,6 +87,14 @@ export default function TranslatePage() {
       setEntries(merged)
       setCurrentPage(1)
       setStep('translate')
+      const langName = LANGUAGES.find(l => l.code === targetLang)?.name || targetLang
+      recordHistory({
+        action: 'upload',
+        description: `Uploaded ${file!.name} for translation`,
+        language: langName,
+        details: `${merged.length} entries, ${merged.filter(e => e.status === 'pending').length} untranslated`,
+        user: 'local-user',
+      })
     } catch (err: any) { setError(err.message) }
     finally { setIsTranslating(false) }
   }, [file, targetLang])
@@ -110,6 +119,14 @@ export default function TranslatePage() {
         return m ? { ...e, msgstr: m.translated, status: 'reviewing' as const } : e
       }))
       setProgress(100)
+      const langName = LANGUAGES.find(l => l.code === targetLang)?.name || targetLang
+      recordHistory({
+        action: 'translate',
+        description: `Translated ${batch.length} strings with AI`,
+        language: langName,
+        details: `AI batch translation with Gemini — ${file?.name || 'demo'}`,
+        user: 'local-user',
+      })
     } catch (err: any) { setError(err.message) }
     finally { setIsTranslating(false) }
   }, [entries, targetLang])
@@ -171,6 +188,15 @@ export default function TranslatePage() {
       a.download = `${baseName}-${ts}.po`
       document.body.appendChild(a); a.click(); document.body.removeChild(a)
       URL.revokeObjectURL(url)
+      const confirmedCount = entries.filter(e => e.status === 'confirmed').length
+      const langName = LANGUAGES.find(l => l.code === targetLang)?.name || targetLang
+      recordHistory({
+        action: 'export',
+        description: `Exported translated ${file?.name || 'messages.po'}`,
+        language: langName,
+        details: `${confirmedCount} confirmed translations`,
+        user: 'local-user',
+      })
     } catch (err: any) { setError(err.message) }
   }, [entries, targetLang, file])
 
@@ -332,7 +358,7 @@ export default function TranslatePage() {
                   <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                     <div>
                       <p className="text-xs text-[var(--tx-dim)] mb-1 flex items-center gap-1">
-                        <FileText size={10} />Source
+                        <FileText size={10} />{t('translation_source', 'Source')}
                       </p>
                       <p className="text-[var(--tx-primary)] font-mono text-sm bg-[var(--surface-overlay)] p-2.5 rounded-lg border border-[var(--border-light)]">
                         {entry.msgid}
@@ -340,13 +366,31 @@ export default function TranslatePage() {
                     </div>
                     <div>
                       <p className="text-xs text-[var(--tx-dim)] mb-1 flex items-center gap-1">
-                        <Languages size={10} />Translation
+                        <Languages size={10} />
+                        {entry.status === 'translated' || entry.status === 'reviewing'
+                          ? t('translation_preview', 'AI Translation — edit to refine')
+                          : t('translation_pending', 'Pending translation')}
                       </p>
                       {entry.status === 'translated' || entry.status === 'reviewing'
-                        ? <p className="text-emerald-400 font-myanmar text-sm bg-emerald-500/10 p-2.5 rounded-lg border border-emerald-500/15">{entry.msgstr}</p>
-                        : <p className="text-[var(--tx-faint)] italic text-sm p-2.5">Pending translation</p>}
+                        ? (
+                          <textarea
+                            value={entry.msgstr}
+                            onChange={(e) => handleEditTranslation(entry.index, e.target.value)}
+                            className="input-field w-full font-myanmar text-sm min-h-[4rem] resize-y bg-emerald-500/5 border-emerald-500/20 focus:border-ubuntu-orange/50"
+                            rows={2}
+                            placeholder={t('translation_enter_translation', 'Enter or edit translation...')}
+                          />
+                        )
+                        : <p className="text-[var(--tx-faint)] italic text-sm p-2.5">{t('translation_pending_hint', 'Click AI Translate to generate')}</p>}
                     </div>
                   </div>
+                  {(entry.status === 'translated' || entry.status === 'reviewing') && (
+                    <div className="flex items-center gap-2 mt-2 ml-auto">
+                      <span className="text-[10px] text-emerald-400 flex items-center gap-1">
+                        <Sparkles size={10} />{t('translation_ai_generated', 'AI-generated — edit to refine')}
+                      </span>
+                    </div>
+                  )}
                 </div>
               ))}
             </div>

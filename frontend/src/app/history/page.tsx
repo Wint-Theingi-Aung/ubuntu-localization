@@ -1,21 +1,9 @@
 'use client'
 
-import { useState } from 'react'
-import { History, Download, Languages, FileText, Clock, BookOpen } from 'lucide-react'
+import { useState, useMemo } from 'react'
+import { History, Download, Languages, FileText, Clock, BookOpen, Trash2 } from 'lucide-react'
 import { useI18n } from '@/lib/i18n'
-
-interface HistoryEntry { id: number; timestamp: string; user: string; action: 'translate' | 'export' | 'upload' | 'glossary'; description: string; language?: string; details?: string }
-
-const historyData: HistoryEntry[] = [
-  { id: 1, timestamp: '2026-06-30 14:30', user: 'wint-theingi-aung', action: 'translate', description: 'Translated 150 strings in gnome-control-center.po', language: 'Myanmar', details: 'AI batch translation with Gemini' },
-  { id: 2, timestamp: '2026-06-30 14:25', user: 'wint-theingi-aung', action: 'export', description: 'Exported translated gnome-control-center.po', language: 'Myanmar', details: '+150 new translations, completion: 42%' },
-  { id: 3, timestamp: '2026-06-30 13:15', user: 'wint-theingi-aung', action: 'upload', description: 'Uploaded gnome-shell.po for translation', language: 'Myanmar', details: '1,890 entries, 520 untranslated' },
-  { id: 4, timestamp: '2026-06-30 10:45', user: 'gipsyhnh', action: 'translate', description: 'Translated 25 strings in nautilus.po', language: 'Shan', details: 'Manual translation' },
-  { id: 5, timestamp: '2026-06-29 16:20', user: 'wint-theingi-aung', action: 'glossary', description: 'Added 10 glossary terms', details: 'Network, Security, System terms' },
-  { id: 6, timestamp: '2026-06-29 15:00', user: 'htetminaung2018', action: 'translate', description: 'Translated 15 strings in firefox.po', language: 'Mon', details: 'Manual translation' },
-  { id: 7, timestamp: '2026-06-29 11:30', user: 'wint-theingi-aung', action: 'export', description: 'Exported translated nautilus.po', language: 'Myanmar', details: '+280 new translations, completion: 65%' },
-  { id: 8, timestamp: '2026-06-28 09:15', user: 'clementlefebvre', action: 'translate', description: 'Translated 8 strings in gnome-calculator.po', language: "S'gaw Karen", details: 'Manual translation' },
-]
+import { getHistory, clearHistory, formatTimestamp, type HistoryEntry } from '@/lib/history'
 
 const actionIcons: Record<string, typeof Languages> = { translate: Languages, export: Download, upload: FileText, glossary: BookOpen }
 const actionColors: Record<string, string> = { translate: 'text-ubuntu-orange bg-ubuntu-orange/20', export: 'text-emerald-400 bg-emerald-400/20', upload: 'text-blue-400 bg-blue-400/20', glossary: 'text-purple-400 bg-purple-400/20' }
@@ -31,13 +19,29 @@ const filterOptions: { key: string | null; labelKey: string; fallback: string }[
 export default function HistoryPage() {
   const { t } = useI18n()
   const [filter, setFilter] = useState<string | null>(null)
-  const filtered = filter ? historyData.filter(h => h.action === filter) : historyData
+  const [refreshKey, setRefreshKey] = useState(0)
+
+  // Re-read from localStorage when filter or refreshKey changes
+  const allHistory = useMemo(() => getHistory(), [refreshKey])
+  const filtered = useMemo(() => filter ? allHistory.filter(h => h.action === filter) : allHistory, [filter, allHistory])
+
+  const handleClear = () => {
+    clearHistory()
+    setRefreshKey(k => k + 1)
+  }
 
   return (
     <div className="max-w-5xl mx-auto space-y-6">
-      <div>
-        <h1 className="text-3xl font-bold text-[var(--tx-primary)]">{t('history_title', 'History')}</h1>
-        <p className="text-[var(--tx-muted)] mt-1">{t('history_subtitle', 'Recent translation activities')}</p>
+      <div className="flex flex-col md:flex-row md:items-center md:justify-between gap-4">
+        <div>
+          <h1 className="text-3xl font-bold text-[var(--tx-primary)]">{t('history_title', 'History')}</h1>
+          <p className="text-[var(--tx-muted)] mt-1">{t('history_subtitle', 'Recent translation activities')} — {allHistory.length} {t('history_entries', 'entries')}</p>
+        </div>
+        {allHistory.length > 0 && (
+          <button onClick={handleClear} className="btn-ghost flex items-center gap-2 text-sm text-[var(--tx-muted)] hover:text-red-400">
+            <Trash2 size={14} />{t('history_clear', 'Clear History')}
+          </button>
+        )}
       </div>
 
       <div className="flex gap-2 flex-wrap">
@@ -67,7 +71,7 @@ export default function HistoryPage() {
                         {entry.language && <span className="badge-orange">{entry.language}</span>}
                       </div>
                     </div>
-                    <div className="flex items-center gap-1 text-xs text-[var(--tx-dim)] flex-shrink-0 ml-4"><Clock size={12} />{entry.timestamp}</div>
+                    <div className="flex items-center gap-1 text-xs text-[var(--tx-dim)] flex-shrink-0 ml-4"><Clock size={12} />{formatTimestamp(entry.timestamp)}</div>
                   </div>
                   {entry.details && <p className="text-sm text-[var(--tx-muted)] mt-2">{entry.details}</p>}
                 </div>
@@ -95,7 +99,7 @@ export default function HistoryPage() {
               </div>
               <div className="flex items-center justify-between text-xs text-[var(--tx-dim)]">
                 <span>{entry.details}</span>
-                <span className="flex items-center gap-1 flex-shrink-0"><Clock size={10} />{entry.timestamp}</span>
+                <span className="flex items-center gap-1 flex-shrink-0"><Clock size={10} />{formatTimestamp(entry.timestamp)}</span>
               </div>
             </div>
           )

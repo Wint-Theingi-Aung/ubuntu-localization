@@ -78,7 +78,7 @@ export const TRANSLATION_STATS = [
 
 export const DASHBOARD_STATS = {
   languages:    4,
-  templates:    550,
+  templates:    547,
   glossaryTerms: 153,
   contributors: 161,
 }

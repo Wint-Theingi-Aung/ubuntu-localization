@@ -3,7 +3,7 @@
     "version": "2.0.0",
     "lastUpdated": "2026-07-01",
     "description": "Ubuntu Stonking (26.10) translation templates - official Launchpad packages",
-    "totalPackages": 546,
+    "totalPackages": 547,
     "source": "https://translations.launchpad.net/ubuntu/stonking/+index"
   },
   "packages": [
@@ -4374,6 +4374,14 @@
       "category": "Other",
       "priority": "medium",
       "entries": 0
+    },
+    {
+      "id": 547,
+      "name": "grub2",
+      "description": "GRand Unified Bootloader",
+      "category": "System",
+      "priority": "high",
+      "entries": 1245
     }
   ]
 }
