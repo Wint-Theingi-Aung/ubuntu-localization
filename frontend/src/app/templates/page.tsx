@@ -229,7 +229,7 @@ export default function TemplatesPage() {
                   {hasMetrics && (
                     <>
                       <td data-label={t('templates_status', 'Status')}>
-                        {pkg.metrics ? (
+                        {pkg.metrics && pkg.metrics.translated > 0 ? (
                           <div className="flex items-center gap-2">
                             <div className="w-16 h-1.5 bg-[var(--tx-faint)] rounded-full overflow-hidden">
                               <div
@@ -244,7 +244,7 @@ export default function TemplatesPage() {
                         )}
                       </td>
                       <td data-label={t('templates_untranslated', 'Untranslated')} className="font-mono text-xs">
-                        {pkg.metrics ? (
+                        {pkg.metrics && pkg.metrics.translated > 0 ? (
                           <span className={pkg.metrics.untranslated > 0 ? 'text-red-400 font-semibold' : 'text-[var(--tx-muted)]'}>
                             {pkg.metrics.untranslated.toLocaleString()}
                           </span>
@@ -293,20 +293,26 @@ export default function TemplatesPage() {
             {/* Metrics row */}
             {hasMetrics && pkg.metrics && (
               <div className="flex items-center gap-3 text-[11px]">
-                <div className="flex items-center gap-1.5">
-                  <div className="w-14 h-1.5 bg-[var(--tx-faint)] rounded-full overflow-hidden">
-                    <div
-                      className={`h-full rounded-full ${statusColor(pkg.metrics.completionPct)}`}
-                      style={{ width: `${pkg.metrics.completionPct}%` }}
-                    />
-                  </div>
-                  <span className="font-mono text-[var(--tx-muted)]">{pkg.metrics.completionPct}%</span>
-                </div>
-                <span className={`font-mono ${pkg.metrics.untranslated > 0 ? 'text-red-400' : 'text-[var(--tx-muted)]'}`}>
-                  {pkg.metrics.untranslated.toLocaleString()} {t('templates_untranslated_short', 'untrans')}
-                </span>
+                {pkg.metrics.translated > 0 ? (
+                  <>
+                    <div className="flex items-center gap-1.5">
+                      <div className="w-14 h-1.5 bg-[var(--tx-faint)] rounded-full overflow-hidden">
+                        <div
+                          className={`h-full rounded-full ${statusColor(pkg.metrics.completionPct)}`}
+                          style={{ width: `${pkg.metrics.completionPct}%` }}
+                        />
+                      </div>
+                      <span className="font-mono text-[var(--tx-muted)]">{pkg.metrics.completionPct}%</span>
+                    </div>
+                    <span className={`font-mono ${pkg.metrics.untranslated > 0 ? 'text-red-400' : 'text-[var(--tx-muted)]'}`}>
+                      {pkg.metrics.untranslated.toLocaleString()} {t('templates_untranslated_short', 'untrans')}
+                    </span>
+                  </>
+                ) : (
+                  <span className="text-[var(--tx-faint)]">{t('templates_lang_stats_unavailable', 'Per-language stats unavailable')}</span>
+                )}
                 <span className="font-mono text-[var(--tx-muted)]">
-                  / {pkg.metrics.total.toLocaleString()} {t('templates_total_short', 'total')}
+                  {pkg.metrics.total.toLocaleString()} {t('templates_total_short', 'total')}
                 </span>
               </div>
             )}

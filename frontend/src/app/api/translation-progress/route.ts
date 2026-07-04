@@ -12,112 +12,116 @@ const CACHE_TTL_MS = 10 * 60 * 1000 // 10 minutes
 // ── Types ─────────────────────────────────────────────────────────────
 export interface TranslationTemplate {
   name: string
+  sourcePackage: string
   total: number
   translated: number
   untranslated: number
   completionPct: number
 }
 
-interface LaunchpadEntry {
-  name: string
-  message_count?: number
-  translated_count_overview?: Record<string, number>
-  web_link?: string
-}
+// ── Launchpad web scraping helpers ─────────────────────────────────────
 
-// ── Launchpad REST API helpers ────────────────────────────────────────
-const LP_API = 'https://api.launchpad.net/devel'
+/**
+ * Scrape the Launchpad translation templates page to get per-template
+ * total string counts. The Launchpad REST API no longer exposes
+ * +translation-templates, so we parse the HTML directly.
+ *
+ * Returns a map of template name → { total, sourcePackage }
+ */
+async function scrapeTemplateTotals(): Promise<Map<string, { total: number; sourcePackage: string }>> {
+  const result = new Map<string, { total: number; sourcePackage: string }>()
+  const url = `https://translations.launchpad.net/ubuntu/${UBUNTU_RELEASE}/+templates`
 
-async function fetchJson<T>(url: string): Promise<T | null> {
   try {
     const res = await fetch(url, {
-      headers: { Accept: 'application/json' },
-      next: { revalidate: 600 },
+      headers: { 'User-Agent': 'Ubuntu-Localization-Tool/4.0' },
+      next: { revalidate: 3600 }, // 1 hour cache at Next.js level
+    })
+    if (!res.ok) return result
+
+    const html = await res.text()
+
+    // Extract template names from links like: <a href="+source/.../+pots/TEMPLATE">TEMPLATE</a>
+    const templateLinks = html.match(/<a href="\+source\/[^"]*\+pots\/([^"]+)">([^<]+)<\/a>/g) || []
+
+    // Extract source packages from <td class="sourcepackage_column">PKG</td>
+    const sourcePackages = html.match(/<td class="sourcepackage_column">([^<]+)<\/td>/g) || []
+
+    // Extract lengths from <td class="length_column">NUM</td>
+    const lengths = html.match(/<td class="length_column">([^<]+)<\/td>/g) || []
+
+    // Parse the extracted HTML fragments
+    const parseText = (s: string) => s.replace(/<[^>]*>/g, '').trim()
+
+    const names = templateLinks.map(parseText)
+
+    for (let i = 0; i < names.length; i++) {
+      const name = names[i]
+      const sourcePackage = i < sourcePackages.length ? parseText(sourcePackages[i]) : name
+      const total = i < lengths.length ? parseInt(parseText(lengths[i]), 10) || 0 : 0
+
+      if (name) {
+        result.set(name, { total, sourcePackage })
+      }
+    }
+  } catch {
+    // Scraping failed — return empty, caller handles gracefully
+  }
+
+  return result
+}
+
+/**
+ * Try to get per-language translation stats for a template by fetching
+ * its individual PO file page on Launchpad.
+ *
+ * This is slow (per-template HTTP fetch), so we limit concurrency.
+ */
+async function fetchTemplateLangStats(
+  templateName: string,
+  sourcePackage: string,
+  langCode: string
+): Promise<{ translated: number; untranslated: number; completionPct: number } | null> {
+  const url = `https://translations.launchpad.net/ubuntu/${UBUNTU_RELEASE}/+source/${sourcePackage}/+pots/${templateName}/${langCode}/+translate`
+
+  try {
+    const res = await fetch(url, {
+      headers: { 'User-Agent': 'Ubuntu-Localization-Tool/4.0' },
+      next: { revalidate: 3600 },
     })
     if (!res.ok) return null
-    return res.json() as Promise<T>
+
+    const html = await res.text()
+
+    // Look for stats in the page — Launchpad shows translated/untranslated counts
+    // Pattern: "X messages translated" or similar in the progress bar area
+    const translatedMatch = html.match(/(\d[\d,]*)\s+messages?\s+translated/i)
+    const untranslatedMatch = html.match(/(\d[\d,]*)\s+messages?\s+untranslated/i)
+    const totalMatch = html.match(/(\d[\d,]*)\s+total\s+messages?/i) ||
+                       html.match(/of\s+(\d[\d,]*)\s+messages?/i)
+
+    if (translatedMatch && totalMatch) {
+      const translated = parseInt(translatedMatch[1].replace(/,/g, ''), 10) || 0
+      const total = parseInt(totalMatch[1].replace(/,/g, ''), 10) || 0
+      const untranslated = untranslatedMatch
+        ? parseInt(untranslatedMatch[1].replace(/,/g, ''), 10) || (total - translated)
+        : total - translated
+      const completionPct = total > 0 ? Math.round((translated / total) * 100) : 0
+      return { translated, untranslated, completionPct }
+    }
+
+    // Alternative: look for percentage in progress bar
+    const pctMatch = html.match(/(\d+(?:\.\d+)?)\s*%\s*(?:translated|complete)/i)
+    if (pctMatch && totalMatch) {
+      const total = parseInt(totalMatch[1].replace(/,/g, ''), 10) || 0
+      const completionPct = Math.round(parseFloat(pctMatch[1]))
+      const translated = Math.round(total * completionPct / 100)
+      return { translated, untranslated: total - translated, completionPct }
+    }
   } catch {
-    return null
-  }
-}
-
-/**
- * Fetch all translation templates for the stonking series from Launchpad.
- * Launchpad paginates at ~50 results; we follow next_collection_link.
- */
-async function fetchAllTemplates(): Promise<LaunchpadEntry[]> {
-  const entries: LaunchpadEntry[] = []
-  // Try the distribution translation templates endpoint
-  let url = `${LP_API}/ubuntu/+translation-templates?ws.size=100&ws.op=getId`
-
-  // Fallback: try via the series
-  const seriesUrl = `${LP_API}/ubuntu/${UBUNTU_RELEASE}/+translation-templates?ws.size=100`
-
-  let currentUrl: string | null = url
-  let attempts = 0
-
-  interface TemplatePage {
-    start?: number
-    total_size?: number
-    entries?: LaunchpadEntry[]
-    next_collection_link?: string
+    // Fetch failed — return null
   }
 
-  while (currentUrl && attempts < 20) {
-    attempts++
-    const fetchUrl: string = currentUrl
-    const data = await fetchJson<TemplatePage>(fetchUrl)
-
-    if (!data) {
-      // Try the series endpoint as fallback on first failure
-      if (attempts === 1) {
-        currentUrl = seriesUrl
-        continue
-      }
-      break
-    }
-
-    if (data.entries) {
-      entries.push(...data.entries)
-    }
-
-    // Check if there are more pages
-    if (data.next_collection_link && entries.length < (data.total_size || Infinity)) {
-      currentUrl = data.next_collection_link
-    } else {
-      break
-    }
-  }
-
-  return entries
-}
-
-/**
- * For a given template, try to get per-language PO file stats.
- * This is a secondary fetch that may not be available for all templates.
- */
-async function fetchTemplateStats(
-  templateName: string,
-  langCode: string
-): Promise<{ translated: number; untranslated: number } | null> {
-  // Try to get the PO file stats from the template's translation files
-  const url = `${LP_API}/ubuntu/${UBUNTU_RELEASE}/+source/${templateName}/+pots/${templateName}/${langCode}/+translate`
-  // The translate page doesn't return JSON stats directly.
-  // Instead, try the distribution translation file endpoint
-  const poUrl = `${LP_API}/ubuntu/${UBUNTU_RELEASE}/+translation-templates?ws.size=1&ws.op=getId&name=${templateName}`
-
-  const data = await fetchJson<{ entries?: LaunchpadEntry[] }>(poUrl)
-  if (data?.entries?.[0]) {
-    const entry = data.entries[0]
-    const langStats = entry.translated_count_overview?.[langCode]
-    if (langStats !== undefined) {
-      const total = entry.message_count || 0
-      return {
-        translated: langStats,
-        untranslated: total - langStats,
-      }
-    }
-  }
   return null
 }
 
@@ -146,34 +150,55 @@ export async function GET(request: NextRequest) {
   }
 
   try {
-    const rawTemplates = await fetchAllTemplates()
+    // Step 1: Scrape template names + total counts from the listing page
+    const totals = await scrapeTemplateTotals()
 
-    if (rawTemplates.length === 0) {
-      // Launchpad API unreachable or no data — return empty gracefully
+    if (totals.size === 0) {
       return NextResponse.json({
         lang,
         templates: [],
         cached: false,
-        note: 'Launchpad API unavailable. Metrics will show as N/A.',
+        note: 'Launchpad templates page unavailable. Metrics will show as N/A.',
       })
     }
 
-    // Build the metrics array
-    const templates: TranslationTemplate[] = rawTemplates.map((t) => {
-      const total = t.message_count || 0
-      const langStats = t.translated_count_overview?.[lang]
-      const translated = langStats !== undefined ? langStats : 0
-      const untranslated = total - translated
-      const completionPct = total > 0 ? Math.round((translated / total) * 100) : 0
+    // Step 2: Build templates with total counts (no per-lang stats yet)
+    const templates: TranslationTemplate[] = []
 
-      return {
-        name: t.name,
-        total,
-        translated,
-        untranslated,
-        completionPct,
+    // For a manageable subset, try to fetch per-language stats
+    // Limit to first 20 templates to avoid hammering Launchpad
+    const entries = Array.from(totals.entries())
+    const STATS_BATCH_SIZE = 20
+
+    for (let i = 0; i < entries.length; i++) {
+      const [name, { total, sourcePackage }] = entries[i]
+
+      if (i < STATS_BATCH_SIZE) {
+        // Try to get per-language stats
+        const langStats = await fetchTemplateLangStats(name, sourcePackage, lang)
+        if (langStats) {
+          templates.push({
+            name,
+            sourcePackage,
+            total: langStats.translated + langStats.untranslated,
+            translated: langStats.translated,
+            untranslated: langStats.untranslated,
+            completionPct: langStats.completionPct,
+          })
+          continue
+        }
       }
-    })
+
+      // No per-language stats — use total only
+      templates.push({
+        name,
+        sourcePackage,
+        total,
+        translated: 0,
+        untranslated: total,
+        completionPct: 0,
+      })
+    }
 
     // Update cache
     cache.set(cacheKey, { data: templates, fetchedAt: Date.now() })
