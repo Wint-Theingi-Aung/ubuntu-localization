@@ -155,7 +155,7 @@ export default function TemplatesPage() {
                   <td data-label={t('templates_translate', 'Translate')}>
                     <div className="flex gap-1">
                       {langLinks.map((lang) => (
-                        <a key={lang.code} href={lpTranslateUrl(pkg.name, lang.code)} target="_blank" rel="noopener noreferrer" className="lp-link"
+                        <a key={lang.code} href={lpTranslateUrl(pkg.name, lang.code, pkg.sourcePackage)} target="_blank" rel="noopener noreferrer" className="lp-link"
                           title={`${t('templates_translate', 'Translate')} ${pkg.name} → ${lang.name}`}>
                           {lang.label}
                           <ExternalLink size={8} />
@@ -188,7 +188,7 @@ export default function TemplatesPage() {
               <span className="font-mono text-xs text-[var(--tx-dim)]">{pkg.entries.toLocaleString()} {t('templates_entries_label', 'entries')}</span>
               <div className="flex gap-1.5 lp-links-cell">
                 {langLinks.map((lang) => (
-                  <a key={lang.code} href={lpTranslateUrl(pkg.name, lang.code)} target="_blank" rel="noopener noreferrer" className="lp-link"
+                  <a key={lang.code} href={lpTranslateUrl(pkg.name, lang.code, pkg.sourcePackage)} target="_blank" rel="noopener noreferrer" className="lp-link"
                     title={`${t('templates_translate', 'Translate')} → ${lang.name}`}>
                     {lang.label}
                     <ExternalLink size={8} />

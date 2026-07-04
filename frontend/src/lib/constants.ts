@@ -33,10 +33,14 @@ export const UI_LANGUAGES = [
 
 /**
  * Build a Launchpad translate URL for a specific package and language.
- * Pattern: /ubuntu/${release}/+source/${pkg}/+pots/${pkg}/${lang}/+translate
+ * Pattern: /ubuntu/${release}/+source/${sourcePackage}/+pots/${templateName}/${lang}/+translate
+ * @param templateName - The translation template name (used in +pots/ and shown to users)
+ * @param langCode - The language code (e.g. 'my', 'shn')
+ * @param sourcePackage - The actual Launchpad source package name (used in +source/). Defaults to templateName.
  */
-export function lpTranslateUrl(packageName: string, langCode: string): string {
-  return `https://translations.launchpad.net/ubuntu/${UBUNTU_RELEASE}/+source/${packageName}/+pots/${packageName}/${langCode}/+translate`
+export function lpTranslateUrl(templateName: string, langCode: string, sourcePackage?: string): string {
+  const src = sourcePackage || templateName
+  return `https://translations.launchpad.net/ubuntu/${UBUNTU_RELEASE}/+source/${src}/+pots/${templateName}/${langCode}/+translate`
 }
 
 /**
