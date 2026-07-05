@@ -73,16 +73,19 @@ async function scrapeTemplateTotals(): Promise<Map<string, { total: number; sour
 
 /**
  * Try to get per-language translation stats for a template by fetching
- * its individual PO file page on Launchpad.
+ * its +details page on Launchpad.
  *
- * This is slow (per-template HTTP fetch), so we limit concurrency.
+ * Uses the +details endpoint which shows structured stats like:
+ *   "140 (36.55%) translated"
+ *   "243 (63.45%) untranslated"
+ *   "383 messages"
  */
 async function fetchTemplateLangStats(
   templateName: string,
   sourcePackage: string,
   langCode: string
 ): Promise<{ translated: number; untranslated: number; completionPct: number } | null> {
-  const url = `https://translations.launchpad.net/ubuntu/${UBUNTU_RELEASE}/+source/${sourcePackage}/+pots/${templateName}/${langCode}/+translate`
+  const url = `https://translations.launchpad.net/ubuntu/${UBUNTU_RELEASE}/+source/${sourcePackage}/+pots/${templateName}/${langCode}/+details`
 
   try {
     const res = await fetch(url, {
@@ -93,36 +96,53 @@ async function fetchTemplateLangStats(
 
     const html = await res.text()
 
-    // Look for stats in the page — Launchpad shows translated/untranslated counts
-    // Pattern: "X messages translated" or similar in the progress bar area
-    const translatedMatch = html.match(/(\d[\d,]*)\s+messages?\s+translated/i)
-    const untranslatedMatch = html.match(/(\d[\d,]*)\s+messages?\s+untranslated/i)
-    const totalMatch = html.match(/(\d[\d,]*)\s+total\s+messages?/i) ||
-                       html.match(/of\s+(\d[\d,]*)\s+messages?/i)
+    // Pattern: "N messages" for total
+    const totalMatch = html.match(/(\d[\d,]*)\s+messages/i)
+    // Pattern: "N (XX.XX%)" translated
+    const translatedMatch = html.match(/(\d[\d,]*)\s*\([^)]*\)\s*(?:translated|Translated)/i) ||
+                            html.match(/(\d[\d,]*)\s+messages?\s+translated/i)
+    // Pattern: "N (XX.XX%)" untranslated
+    const untranslatedMatch = html.match(/(\d[\d,]*)\s*\([^)]*\)\s*(?:untranslated|Untranslated)/i) ||
+                              html.match(/(\d[\d,]*)\s+messages?\s+untranslated/i)
 
-    if (translatedMatch && totalMatch) {
-      const translated = parseInt(translatedMatch[1].replace(/,/g, ''), 10) || 0
+    if (totalMatch) {
       const total = parseInt(totalMatch[1].replace(/,/g, ''), 10) || 0
+      const translated = translatedMatch
+        ? parseInt(translatedMatch[1].replace(/,/g, ''), 10) || 0
+        : 0
       const untranslated = untranslatedMatch
         ? parseInt(untranslatedMatch[1].replace(/,/g, ''), 10) || (total - translated)
         : total - translated
       const completionPct = total > 0 ? Math.round((translated / total) * 100) : 0
       return { translated, untranslated, completionPct }
     }
-
-    // Alternative: look for percentage in progress bar
-    const pctMatch = html.match(/(\d+(?:\.\d+)?)\s*%\s*(?:translated|complete)/i)
-    if (pctMatch && totalMatch) {
-      const total = parseInt(totalMatch[1].replace(/,/g, ''), 10) || 0
-      const completionPct = Math.round(parseFloat(pctMatch[1]))
-      const translated = Math.round(total * completionPct / 100)
-      return { translated, untranslated: total - translated, completionPct }
-    }
   } catch {
     // Fetch failed — return null
   }
 
   return null
+}
+
+/**
+ * Run async tasks with a concurrency limit.
+ */
+async function pMap<T, R>(
+  items: T[],
+  fn: (item: T, index: number) => Promise<R>,
+  concurrency: number
+): Promise<R[]> {
+  const results: R[] = new Array(items.length)
+  let idx = 0
+
+  async function worker() {
+    while (idx < items.length) {
+      const i = idx++
+      results[i] = await fn(items[i], i)
+    }
+  }
+
+  await Promise.all(Array.from({ length: Math.min(concurrency, items.length) }, () => worker()))
+  return results
 }
 
 // ── API Route ─────────────────────────────────────────────────────────
@@ -162,43 +182,38 @@ export async function GET(request: NextRequest) {
       })
     }
 
-    // Step 2: Build templates with total counts (no per-lang stats yet)
-    const templates: TranslationTemplate[] = []
-
-    // For a manageable subset, try to fetch per-language stats
-    // Limit to first 20 templates to avoid hammering Launchpad
+    // Step 2: Fetch per-language stats for ALL templates in parallel
     const entries = Array.from(totals.entries())
-    const STATS_BATCH_SIZE = 20
+    const CONCURRENCY = 10 // parallel requests to Launchpad
 
-    for (let i = 0; i < entries.length; i++) {
-      const [name, { total, sourcePackage }] = entries[i]
+    const langStatsResults = await pMap(
+      entries,
+      ([name, { sourcePackage }]) => fetchTemplateLangStats(name, sourcePackage, lang),
+      CONCURRENCY
+    )
 
-      if (i < STATS_BATCH_SIZE) {
-        // Try to get per-language stats
-        const langStats = await fetchTemplateLangStats(name, sourcePackage, lang)
-        if (langStats) {
-          templates.push({
-            name,
-            sourcePackage,
-            total: langStats.translated + langStats.untranslated,
-            translated: langStats.translated,
-            untranslated: langStats.untranslated,
-            completionPct: langStats.completionPct,
-          })
-          continue
+    const templates: TranslationTemplate[] = entries.map(([name, { total, sourcePackage }], i) => {
+      const langStats = langStatsResults[i]
+      if (langStats) {
+        return {
+          name,
+          sourcePackage,
+          total: langStats.translated + langStats.untranslated,
+          translated: langStats.translated,
+          untranslated: langStats.untranslated,
+          completionPct: langStats.completionPct,
         }
       }
-
       // No per-language stats — use total only
-      templates.push({
+      return {
         name,
         sourcePackage,
         total,
         translated: 0,
         untranslated: total,
         completionPct: 0,
-      })
-    }
+      }
+    })
 
     // Update cache
     cache.set(cacheKey, { data: templates, fetchedAt: Date.now() })
