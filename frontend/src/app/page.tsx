@@ -1,5 +1,5 @@
 'use client'
-import { useState } from 'react'
+import { useState, useEffect } from 'react'
 import LanguageCard from '@/components/LanguageCard'
 import { Languages, FileCode, BookOpen, Users, ArrowRight, Sparkles, ExternalLink, Github, Rocket } from 'lucide-react'
 import Link from 'next/link'
@@ -8,6 +8,8 @@ import { LANGUAGES, TRANSLATION_STATS, DASHBOARD_STATS, lpLanguageUrl } from '@/
 
 export default function Dashboard() {
   const { t, lang } = useI18n()
+  const [mounted, setMounted] = useState(false)
+  useEffect(() => setMounted(true), [])
 
   const languageData = LANGUAGES.map(lang => {
     const stats = TRANSLATION_STATS.find(s => s.code === lang.code)!
@@ -125,7 +127,23 @@ export default function Dashboard() {
                   {action.title}
                 </h3>
                 <p className="text-sm text-[var(--tx-secondary)] mt-1">{action.desc}</p>
-                {lang === 'my' && action.href === 'https://launchpad.net/' && (
+                {mounted && lang === 'en' && action.href === 'https://launchpad.net/' && (
+                  <div className="mt-3 space-y-2 border-t border-[var(--border-light)] pt-3">
+                    <a href="https://launchpad.net/~ubuntu-mm" target="_blank" rel="noopener noreferrer" className="flex items-center gap-2 text-xs text-ubuntu-orange hover:underline" onClick={(e) => e.stopPropagation()}>
+                      <ExternalLink size={12} />
+                      Ubuntu Myanmar LoCo Team
+                    </a>
+                    <a href="https://launchpad.net/~ubuntu-shn" target="_blank" rel="noopener noreferrer" className="flex items-center gap-2 text-xs text-ubuntu-orange hover:underline" onClick={(e) => e.stopPropagation()}>
+                      <ExternalLink size={12} />
+                      Ubuntu Shan LoCo Team
+                    </a>
+                    <a href="https://launchpad.net/~lp-l10n-mnw" target="_blank" rel="noopener noreferrer" className="flex items-center gap-2 text-xs text-ubuntu-orange hover:underline" onClick={(e) => e.stopPropagation()}>
+                      <ExternalLink size={12} />
+                      Launchpad Mon Translation
+                    </a>
+                  </div>
+                )}
+                {mounted && lang === 'my' && action.href === 'https://launchpad.net/' && (
                   <div className="mt-3 space-y-2 border-t border-[var(--border-light)] pt-3">
                     <a href="https://launchpad.net/~ubuntu-mm" target="_blank" rel="noopener noreferrer" className="flex items-center gap-2 text-xs text-ubuntu-orange hover:underline" onClick={(e) => e.stopPropagation()}>
                       <ExternalLink size={12} />
@@ -141,7 +159,7 @@ export default function Dashboard() {
                     </a>
                   </div>
                 )}
-                {lang === 'shn' && action.href === 'https://launchpad.net/' && (
+                {mounted && lang === 'shn' && action.href === 'https://launchpad.net/' && (
                   <div className="mt-3 space-y-2 border-t border-[var(--border-light)] pt-3">
                     <a href="https://launchpad.net/~ubuntu-shn" target="_blank" rel="noopener noreferrer" className="flex items-center gap-2 text-xs text-ubuntu-orange hover:underline" onClick={(e) => e.stopPropagation()}>
                       <ExternalLink size={12} />
@@ -157,7 +175,7 @@ export default function Dashboard() {
                     </a>
                   </div>
                 )}
-                {lang === 'mnw' && action.href === 'https://launchpad.net/' && (
+                {mounted && lang === 'mnw' && action.href === 'https://launchpad.net/' && (
                   <div className="mt-3 space-y-2 border-t border-[var(--border-light)] pt-3">
                     <a href="https://launchpad.net/~lp-l10n-mnw" target="_blank" rel="noopener noreferrer" className="flex items-center gap-2 text-xs text-ubuntu-orange hover:underline" onClick={(e) => e.stopPropagation()}>
                       <ExternalLink size={12} />
