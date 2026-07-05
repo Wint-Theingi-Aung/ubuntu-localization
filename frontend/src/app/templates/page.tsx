@@ -23,13 +23,6 @@ const priorityColors: Record<string, string> = {
   low: 'badge-green',
 }
 
-// ── Progress bar color by percentage ──────────────────────────────────
-function statusColor(pct: number): string {
-  if (pct >= 80) return 'bg-green-500'
-  if (pct >= 50) return 'bg-amber-500'
-  return 'bg-red-500'
-}
-
 // ── Metrics type (per-package lookup) ─────────────────────────────────
 type MetricsMap = Record<string, TranslationTemplate>
 
@@ -182,7 +175,6 @@ export default function TemplatesPage() {
                     <ArrowUpDown size={12} />
                   </button>
                 </th>
-                <th>{t('templates_status', 'Status')}</th>
                 <th>
                   <button onClick={() => toggleSort('untranslated')} className="flex items-center gap-1 hover:text-[var(--tx-secondary)] transition-colors">
                     {t('templates_untranslated', 'Untranslated')}
@@ -208,25 +200,10 @@ export default function TemplatesPage() {
                   <td data-label={t('templates_priority', 'Priority')}>
                     <span className={`${priorityColors[pkg.priority]} text-[10px]`}>{pkg.priority}</span>
                   </td>
-                  <td data-label={t('templates_status', 'Status')}>
-                    {pkg.metrics && pkg.metrics.translated > 0 ? (
-                      <div className="flex items-center gap-2">
-                        <div className="w-16 h-1.5 bg-[var(--tx-faint)] rounded-full overflow-hidden">
-                          <div
-                            className={`h-full rounded-full ${statusColor(pkg.metrics.completionPct)}`}
-                            style={{ width: `${pkg.metrics.completionPct}%` }}
-                          />
-                        </div>
-                        <span className="text-[10px] font-mono text-[var(--tx-muted)]">{pkg.metrics.completionPct}%</span>
-                      </div>
-                    ) : (
-                      <span className="text-[10px] text-[var(--tx-faint)]">—</span>
-                    )}
-                  </td>
                   <td data-label={t('templates_untranslated', 'Untranslated')} className="font-mono text-xs">
-                    {pkg.metrics && pkg.metrics.translated > 0 ? (
-                      <span className={pkg.metrics.untranslated > 0 ? 'text-red-400 font-semibold' : 'text-[var(--tx-muted)]'}>
-                        {pkg.metrics.untranslated.toLocaleString()}
+                    {pkg.metrics ? (
+                      <span className={pkg.metrics.untranslated > 0 ? 'text-red-400 font-semibold' : 'text-green-400'}>
+                        {pkg.metrics.untranslated > 0 ? pkg.metrics.untranslated.toLocaleString() : '0'}
                       </span>
                     ) : (
                       <span className="text-[10px] text-[var(--tx-faint)]">—</span>
@@ -271,24 +248,9 @@ export default function TemplatesPage() {
             {/* Metrics row */}
             {pkg.metrics && (
               <div className="flex items-center gap-3 text-[11px]">
-                {pkg.metrics.translated > 0 ? (
-                  <>
-                    <div className="flex items-center gap-1.5">
-                      <div className="w-14 h-1.5 bg-[var(--tx-faint)] rounded-full overflow-hidden">
-                        <div
-                          className={`h-full rounded-full ${statusColor(pkg.metrics.completionPct)}`}
-                          style={{ width: `${pkg.metrics.completionPct}%` }}
-                        />
-                      </div>
-                      <span className="font-mono text-[var(--tx-muted)]">{pkg.metrics.completionPct}%</span>
-                    </div>
-                    <span className={`font-mono ${pkg.metrics.untranslated > 0 ? 'text-red-400' : 'text-[var(--tx-muted)]'}`}>
-                      {pkg.metrics.untranslated.toLocaleString()} {t('templates_untranslated_short', 'untrans')}
-                    </span>
-                  </>
-                ) : (
-                  <span className="text-[var(--tx-faint)]">{t('templates_lang_stats_unavailable', 'Per-language stats unavailable')}</span>
-                )}
+                <span className={`font-mono ${pkg.metrics.untranslated > 0 ? 'text-red-400' : 'text-green-400'}`}>
+                  {pkg.metrics.untranslated > 0 ? pkg.metrics.untranslated.toLocaleString() : '0'} {t('templates_untranslated_short', 'untrans')}
+                </span>
                 <span className="font-mono text-[var(--tx-muted)]">
                   {pkg.metrics.total.toLocaleString()} {t('templates_total_short', 'total')}
                 </span>

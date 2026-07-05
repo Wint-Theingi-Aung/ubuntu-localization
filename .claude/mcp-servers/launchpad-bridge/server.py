@@ -708,8 +708,7 @@ async def get_translation_progress(name: str, arguments: dict) -> list[TextConte
                     except Exception:
                         pass
 
-                    if len(translation_stats) >= 20:
-                        break
+                    # No limit — fetch all templates
                 except Exception:
                     pass
         except Exception:
