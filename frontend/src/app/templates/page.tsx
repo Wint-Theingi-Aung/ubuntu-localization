@@ -119,7 +119,6 @@ export default function TemplatesPage() {
   const toggleSort = (field: 'name' | 'untranslated' | 'priority' | 'total') => {
     if (sortBy === field) setSortDir(d => d === 'asc' ? 'desc' : 'asc')
     else { setSortBy(field); setSortDir('asc') }
-    setCurrentPage(1)
   }
 
   // Merge metrics into paginated items
