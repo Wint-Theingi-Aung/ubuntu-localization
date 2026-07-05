@@ -6,7 +6,7 @@ import { ClientLayout } from '@/components/ClientLayout'
 export const metadata: Metadata = {
   title: 'Ubuntu Localization Tool',
   description: 'Ubuntu OS localization for indigenous languages',
-  icons: { icon: '/favicon.png' },
+  icons: { icon: '/favicon.ico' },
 }
 
 export default function RootLayout({
