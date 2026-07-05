@@ -9,6 +9,9 @@ interface CacheEntry {
 const cache = new Map<string, CacheEntry>()
 const CACHE_TTL_MS = 10 * 60 * 1000 // 10 minutes
 
+// ── In-flight refresh tracking ───────────────────────────────────────
+const refreshing = new Map<string, boolean>()
+
 // ── Types ─────────────────────────────────────────────────────────────
 export interface TranslationTemplate {
   name: string
@@ -96,14 +99,18 @@ async function fetchTemplateLangStats(
 
     const html = await res.text()
 
-    // Pattern: "N messages" for total
-    const totalMatch = html.match(/(\d[\d,]*)\s+messages/i)
-    // Pattern: "N (XX.XX%)" translated
-    const translatedMatch = html.match(/(\d[\d,]*)\s*\([^)]*\)\s*(?:translated|Translated)/i) ||
-                            html.match(/(\d[\d,]*)\s+messages?\s+translated/i)
-    // Pattern: "N (XX.XX%)" untranslated
-    const untranslatedMatch = html.match(/(\d[\d,]*)\s*\([^)]*\)\s*(?:untranslated|Untranslated)/i) ||
-                              html.match(/(\d[\d,]*)\s+messages?\s+untranslated/i)
+    // Strip HTML tags first for cleaner parsing
+    const text = html.replace(/<[^>]*>/g, ' ').replace(/\s+/g, ' ')
+
+    // "Messages: N" or "N messages"
+    const totalMatch = text.match(/Messages:\s*(\d[\d,]*)/i) ||
+                       text.match(/(\d[\d,]*)\s+messages/i)
+    // "Translated: N (XX%)" — number comes right after the label
+    const translatedMatch = text.match(/Translated:\s*(\d[\d,]*)\s*\(/i) ||
+                            text.match(/(\d[\d,]*)\s*\([^)]*\)\s*translated/i)
+    // "Untranslated: N (XX%)"
+    const untranslatedMatch = text.match(/Untranslated:\s*(\d[\d,]*)\s*\(/i) ||
+                              text.match(/(\d[\d,]*)\s*\([^)]*\)\s*untranslated/i)
 
     if (totalMatch) {
       const total = parseInt(totalMatch[1].replace(/,/g, ''), 10) || 0
@@ -158,9 +165,10 @@ export async function GET(request: NextRequest) {
     )
   }
 
-  // Check cache
   const cacheKey = `all-templates-${lang}`
   const cached = cache.get(cacheKey)
+
+  // If cache is fresh, return immediately
   if (cached && Date.now() - cached.fetchedAt < CACHE_TTL_MS) {
     return NextResponse.json({
       lang,
@@ -169,22 +177,35 @@ export async function GET(request: NextRequest) {
     })
   }
 
+  // If already refreshing in background, return stale cache (if available) or wait
+  if (refreshing.get(cacheKey)) {
+    if (cached) {
+      return NextResponse.json({ lang, templates: cached.data, cached: true, refreshing: true })
+    }
+    // No stale cache — must wait for first fetch
+    // Fall through to fetch below
+  }
+
+  // Start background refresh
+  refreshing.set(cacheKey, true)
+
   try {
-    // Step 1: Scrape template names + total counts from the listing page
+    // Step 1: Scrape template names + total counts from the listing page (fast, single request)
     const totals = await scrapeTemplateTotals()
 
     if (totals.size === 0) {
+      refreshing.delete(cacheKey)
       return NextResponse.json({
         lang,
-        templates: [],
-        cached: false,
+        templates: cached?.data || [],
+        cached: !!cached,
         note: 'Launchpad templates page unavailable. Metrics will show as N/A.',
       })
     }
 
     // Step 2: Fetch per-language stats for ALL templates in parallel
     const entries = Array.from(totals.entries())
-    const CONCURRENCY = 10 // parallel requests to Launchpad
+    const CONCURRENCY = 15 // increased parallel requests
 
     const langStatsResults = await pMap(
       entries,
@@ -217,6 +238,7 @@ export async function GET(request: NextRequest) {
 
     // Update cache
     cache.set(cacheKey, { data: templates, fetchedAt: Date.now() })
+    refreshing.delete(cacheKey)
 
     return NextResponse.json({
       lang,
@@ -225,10 +247,11 @@ export async function GET(request: NextRequest) {
     })
   } catch (error) {
     console.error('Translation progress fetch error:', error)
+    refreshing.delete(cacheKey)
     return NextResponse.json({
       lang,
-      templates: [],
-      cached: false,
+      templates: cached?.data || [],
+      cached: !!cached,
       error: 'Failed to fetch translation metrics from Launchpad',
     })
   }

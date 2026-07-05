@@ -144,12 +144,12 @@ export default function TemplatesPage() {
       </div>
 
       <div className="flex items-center justify-between">
-        <p className="text-xs text-[var(--tx-dim)]">
+        <p className="text-sm text-[var(--tx-dim)]">
           {t('templates_showing', 'Showing')} {paginated.length} {t('templates_of', 'of')} {filtered.length} {t('templates_packages', 'packages')}
-          {metricsLoading && <span className="ml-2 inline-flex items-center gap-1"><Loader2 size={10} className="animate-spin" /> {t('templates_loading_metrics', 'Loading metrics...')}</span>}
+          {metricsLoading && <span className="ml-2 inline-flex items-center gap-1"><Loader2 size={12} className="animate-spin" /> {t('templates_loading_metrics', 'Loading metrics...')}</span>}
           {metricsError && <span className="ml-2 text-amber-500">{t('templates_metrics_unavailable', 'Metrics unavailable')}</span>}
         </p>
-        <div className="flex items-center gap-2 text-xs text-[var(--tx-dim)]">
+        <div className="flex items-center gap-2 text-sm text-[var(--tx-dim)]">
           <Filter size={12} />
           {category !== 'All' && <span className="badge-blue">{category}</span>}
           {priority !== 'All' && <span className={priorityColors[priority]}>{priority}</span>}
@@ -190,27 +190,27 @@ export default function TemplatesPage() {
                 <tr key={pkg.id}>
                   <td data-label={t('templates_package', 'Package')}>
                     <div>
-                      <p className="font-medium text-[var(--tx-primary)] text-sm">{pkg.name}</p>
-                      <p className="text-[11px] text-[var(--tx-dim)] mt-0.5 font-mono">{pkg.description}</p>
+                      <p className="font-medium text-[var(--tx-primary)] text-[15px]">{pkg.name}</p>
+                      <p className="text-xs text-[var(--tx-dim)] mt-0.5 font-mono">{pkg.description}</p>
                     </div>
                   </td>
                   <td data-label={t('templates_category', 'Category')}>
-                    <span className="badge-blue text-[10px]">{pkg.category}</span>
+                    <span className="badge-blue text-xs">{pkg.category}</span>
                   </td>
                   <td data-label={t('templates_priority', 'Priority')}>
-                    <span className={`${priorityColors[pkg.priority]} text-[10px]`}>{pkg.priority}</span>
+                    <span className={`${priorityColors[pkg.priority]} text-xs`}>{pkg.priority}</span>
                   </td>
-                  <td data-label={t('templates_untranslated', 'Untranslated')} className="font-mono text-xs">
+                  <td data-label={t('templates_untranslated', 'Untranslated')} className="font-mono text-sm">
                     {pkg.metrics ? (
                       <span className={pkg.metrics.untranslated > 0 ? 'text-red-400 font-semibold' : 'text-green-400'}>
                         {pkg.metrics.untranslated > 0 ? pkg.metrics.untranslated.toLocaleString() : '0'}
                       </span>
                     ) : (
-                      <span className="text-[10px] text-[var(--tx-faint)]">—</span>
+                      <span className="text-xs text-[var(--tx-faint)]">—</span>
                     )}
                   </td>
-                  <td data-label={t('templates_total_strings', 'Total')} className="font-mono text-xs text-[var(--tx-muted)]">
-                    {pkg.metrics ? pkg.metrics.total.toLocaleString() : <span className="text-[10px] text-[var(--tx-faint)]">—</span>}
+                  <td data-label={t('templates_total_strings', 'Total')} className="font-mono text-sm font-semibold text-sky-400">
+                    {pkg.metrics ? pkg.metrics.total.toLocaleString() : <span className="text-xs text-[var(--tx-faint)]">—</span>}
                   </td>
                   <td data-label={t('templates_translate', 'Translate')}>
                     <div className="flex gap-1">
@@ -236,22 +236,22 @@ export default function TemplatesPage() {
           <div key={pkg.id} className="glass-card p-4 space-y-3">
             <div className="flex items-start justify-between">
               <div>
-                <p className="font-medium text-[var(--tx-primary)] text-sm">{pkg.name}</p>
-                <p className="text-[11px] text-[var(--tx-dim)] mt-0.5 font-mono">{pkg.description}</p>
+                <p className="font-medium text-[var(--tx-primary)] text-[15px]">{pkg.name}</p>
+                <p className="text-xs text-[var(--tx-dim)] mt-0.5 font-mono">{pkg.description}</p>
               </div>
               <div className="flex gap-1.5">
-                <span className="badge-blue text-[10px]">{pkg.category}</span>
-                <span className={`${priorityColors[pkg.priority]} text-[10px]`}>{pkg.priority}</span>
+                <span className="badge-blue text-xs">{pkg.category}</span>
+                <span className={`${priorityColors[pkg.priority]} text-xs`}>{pkg.priority}</span>
               </div>
             </div>
 
             {/* Metrics row */}
             {pkg.metrics && (
-              <div className="flex items-center gap-3 text-[11px]">
+              <div className="flex items-center gap-3 text-xs">
                 <span className={`font-mono ${pkg.metrics.untranslated > 0 ? 'text-red-400' : 'text-green-400'}`}>
                   {pkg.metrics.untranslated > 0 ? pkg.metrics.untranslated.toLocaleString() : '0'} {t('templates_untranslated_short', 'untrans')}
                 </span>
-                <span className="font-mono text-[var(--tx-muted)]">
+                <span className="font-mono font-semibold text-sky-400">
                   {pkg.metrics.total.toLocaleString()} {t('templates_total_short', 'total')}
                 </span>
               </div>
