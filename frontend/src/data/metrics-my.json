@@ -1,0 +1,3074 @@
+{
+  "accounts-service": {
+    "total": 12,
+    "translated": 12,
+    "untranslated": 0,
+    "completionPct": 100
+  },
+  "acl": {
+    "total": 55,
+    "translated": 9,
+    "untranslated": 46,
+    "completionPct": 16
+  },
+  "adduser": {
+    "total": 139,
+    "translated": 5,
+    "untranslated": 134,
+    "completionPct": 4
+  },
+  "adsys": {
+    "total": 88,
+    "translated": 0,
+    "untranslated": 88,
+    "completionPct": 0
+  },
+  "alsa-utils": {
+    "total": 338,
+    "translated": 0,
+    "untranslated": 338,
+    "completionPct": 0
+  },
+  "amtk-5": {
+    "total": 3,
+    "translated": 3,
+    "untranslated": 0,
+    "completionPct": 100
+  },
+  "anjuta": {
+    "total": 2062,
+    "translated": 2,
+    "untranslated": 2060,
+    "completionPct": 0
+  },
+  "anjuta-extras": {
+    "total": 119,
+    "translated": 0,
+    "untranslated": 119,
+    "completionPct": 0
+  },
+  "app-install-data": {
+    "total": 6082,
+    "translated": 6082,
+    "untranslated": 0,
+    "completionPct": 100
+  },
+  "aa-enabled": {
+    "total": 9,
+    "translated": 9,
+    "untranslated": 0,
+    "completionPct": 100
+  },
+  "apparmor-parser": {
+    "total": 207,
+    "translated": 0,
+    "untranslated": 207,
+    "completionPct": 0
+  },
+  "apparmor-utils": {
+    "total": 243,
+    "translated": 0,
+    "untranslated": 243,
+    "completionPct": 0
+  },
+  "apparmorapplet": {
+    "total": 7,
+    "translated": 4,
+    "untranslated": 3,
+    "completionPct": 57
+  },
+  "subdomain-parser": {
+    "total": 84,
+    "translated": 0,
+    "untranslated": 84,
+    "completionPct": 0
+  },
+  "apport": {
+    "total": 193,
+    "translated": 193,
+    "untranslated": 0,
+    "completionPct": 100
+  },
+  "appstream": {
+    "total": 778,
+    "translated": 0,
+    "untranslated": 778,
+    "completionPct": 0
+  },
+  "appstream-glib": {
+    "total": 97,
+    "translated": 97,
+    "untranslated": 0,
+    "completionPct": 100
+  },
+  "apt.c": {
+    "total": 411,
+    "translated": 0,
+    "untranslated": 411,
+    "completionPct": 0
+  },
+  "libapt-inst2.0": {
+    "total": 36,
+    "translated": 0,
+    "untranslated": 36,
+    "completionPct": 0
+  },
+  "libapt-pkg5.0.c": {
+    "total": 271,
+    "translated": 0,
+    "untranslated": 271,
+    "completionPct": 0
+  },
+  "libapt-pkg6.0": {
+    "total": 298,
+    "translated": 0,
+    "untranslated": 298,
+    "completionPct": 0
+  },
+  "apt": {
+    "total": 419,
+    "translated": 140,
+    "untranslated": 279,
+    "completionPct": 33
+  },
+  "apt-all": {
+    "total": 768,
+    "translated": 0,
+    "untranslated": 768,
+    "completionPct": 0
+  },
+  "apt-utils": {
+    "total": 57,
+    "translated": 0,
+    "untranslated": 57,
+    "completionPct": 0
+  },
+  "apt.sh": {
+    "total": 8,
+    "translated": 0,
+    "untranslated": 8,
+    "completionPct": 0
+  },
+  "libapt-inst": {
+    "total": 36,
+    "translated": 16,
+    "untranslated": 20,
+    "completionPct": 44
+  },
+  "libapt-pkg": {
+    "total": 271,
+    "translated": 0,
+    "untranslated": 271,
+    "completionPct": 0
+  },
+  "apt-listchanges": {
+    "total": 67,
+    "translated": 11,
+    "untranslated": 56,
+    "completionPct": 16
+  },
+  "aptdaemon": {
+    "total": 274,
+    "translated": 274,
+    "untranslated": 0,
+    "completionPct": 100
+  },
+  "aptitude": {
+    "total": 1582,
+    "translated": 9,
+    "untranslated": 1573,
+    "completionPct": 1
+  },
+  "apturl": {
+    "total": 34,
+    "translated": 34,
+    "untranslated": 0,
+    "completionPct": 100
+  },
+  "filter": {
+    "total": 0,
+    "translated": 0,
+    "untranslated": 0,
+    "completionPct": 0
+  },
+  "aspell": {
+    "total": 302,
+    "translated": 0,
+    "untranslated": 302,
+    "completionPct": 0
+  },
+  "at-spi2-core": {
+    "total": 2,
+    "translated": 2,
+    "untranslated": 0,
+    "completionPct": 100
+  },
+  "atk10": {
+    "total": 169,
+    "translated": 169,
+    "untranslated": 0,
+    "completionPct": 100
+  },
+  "attr": {
+    "total": 33,
+    "translated": 0,
+    "untranslated": 33,
+    "completionPct": 0
+  },
+  "avahi": {
+    "total": 161,
+    "translated": 161,
+    "untranslated": 0,
+    "completionPct": 100
+  },
+  "balsa": {
+    "total": 1646,
+    "translated": 0,
+    "untranslated": 1646,
+    "completionPct": 0
+  },
+  "baobab": {
+    "total": 78,
+    "translated": 69,
+    "untranslated": 9,
+    "completionPct": 88
+  },
+  "bash": {
+    "total": 612,
+    "translated": 15,
+    "untranslated": 597,
+    "completionPct": 2
+  },
+  "bfd": {
+    "total": 1997,
+    "translated": 0,
+    "untranslated": 1997,
+    "completionPct": 0
+  },
+  "binutils": {
+    "total": 2738,
+    "translated": 0,
+    "untranslated": 2738,
+    "completionPct": 0
+  },
+  "gas": {
+    "total": 4952,
+    "translated": 0,
+    "untranslated": 4952,
+    "completionPct": 0
+  },
+  "gold": {
+    "total": 933,
+    "translated": 0,
+    "untranslated": 933,
+    "completionPct": 0
+  },
+  "gprof": {
+    "total": 98,
+    "translated": 0,
+    "untranslated": 98,
+    "completionPct": 0
+  },
+  "ld": {
+    "total": 1214,
+    "translated": 0,
+    "untranslated": 1214,
+    "completionPct": 0
+  },
+  "opcodes": {
+    "total": 480,
+    "translated": 0,
+    "untranslated": 480,
+    "completionPct": 0
+  },
+  "bison-gnulib": {
+    "total": 46,
+    "translated": 0,
+    "untranslated": 46,
+    "completionPct": 0
+  },
+  "bison": {
+    "total": 253,
+    "translated": 13,
+    "untranslated": 240,
+    "completionPct": 5
+  },
+  "bison-runtime": {
+    "total": 9,
+    "translated": 9,
+    "untranslated": 0,
+    "completionPct": 100
+  },
+  "brltty": {
+    "total": 956,
+    "translated": 0,
+    "untranslated": 956,
+    "completionPct": 0
+  },
+  "byobu": {
+    "total": 44,
+    "translated": 11,
+    "untranslated": 33,
+    "completionPct": 25
+  },
+  "bzr": {
+    "total": 2380,
+    "translated": 0,
+    "untranslated": 2380,
+    "completionPct": 0
+  },
+  "checkbox": {
+    "total": 726,
+    "translated": 50,
+    "untranslated": 676,
+    "completionPct": 7
+  },
+  "nova": {
+    "total": 1313,
+    "translated": 0,
+    "untranslated": 1313,
+    "completionPct": 0
+  },
+  "cinder": {
+    "total": 2242,
+    "translated": 0,
+    "untranslated": 2242,
+    "completionPct": 0
+  },
+  "cluttergtk-1.0": {
+    "total": 1,
+    "translated": 1,
+    "untranslated": 0,
+    "completionPct": 100
+  },
+  "colord": {
+    "total": 120,
+    "translated": 34,
+    "untranslated": 86,
+    "completionPct": 28
+  },
+  "command-not-found": {
+    "total": 29,
+    "translated": 29,
+    "untranslated": 0,
+    "completionPct": 100
+  },
+  "coreutils": {
+    "total": 1902,
+    "translated": 3,
+    "untranslated": 1899,
+    "completionPct": 0
+  },
+  "cpdb-libs": {
+    "total": 78,
+    "translated": 0,
+    "untranslated": 78,
+    "completionPct": 0
+  },
+  "cpio": {
+    "total": 317,
+    "translated": 0,
+    "untranslated": 317,
+    "completionPct": 0
+  },
+  "cracklib": {
+    "total": 16,
+    "translated": 16,
+    "untranslated": 0,
+    "completionPct": 100
+  },
+  "gdb": {
+    "total": 7880,
+    "translated": 0,
+    "untranslated": 7880,
+    "completionPct": 0
+  },
+  "cryptsetup": {
+    "total": 919,
+    "translated": 0,
+    "untranslated": 919,
+    "completionPct": 0
+  },
+  "cryptsetup-luks": {
+    "total": 64,
+    "translated": 31,
+    "untranslated": 33,
+    "completionPct": 48
+  },
+  "luksformat": {
+    "total": 10,
+    "translated": 10,
+    "untranslated": 0,
+    "completionPct": 100
+  },
+  "cups": {
+    "total": 4016,
+    "translated": 0,
+    "untranslated": 4016,
+    "completionPct": 0
+  },
+  "cups-pk-helper": {
+    "total": 22,
+    "translated": 22,
+    "untranslated": 0,
+    "completionPct": 100
+  },
+  "cwidget": {
+    "total": 14,
+    "translated": 14,
+    "untranslated": 0,
+    "completionPct": 100
+  },
+  "libcwidget3": {
+    "total": 14,
+    "translated": 14,
+    "untranslated": 0,
+    "completionPct": 100
+  },
+  "dctrl-tools": {
+    "total": 107,
+    "translated": 0,
+    "untranslated": 107,
+    "completionPct": 0
+  },
+  "debconf": {
+    "total": 77,
+    "translated": 0,
+    "untranslated": 77,
+    "completionPct": 0
+  },
+  "debian-installer-help": {
+    "total": 177,
+    "translated": 177,
+    "untranslated": 0,
+    "completionPct": 100
+  },
+  "debian-installer": {
+    "total": 1729,
+    "translated": 1729,
+    "untranslated": 0,
+    "completionPct": 100
+  },
+  "deja-dup": {
+    "total": 343,
+    "translated": 298,
+    "untranslated": 45,
+    "completionPct": 87
+  },
+  "devscripts": {
+    "total": 4265,
+    "translated": 31,
+    "untranslated": 4234,
+    "completionPct": 1
+  },
+  "diffutils": {
+    "total": 265,
+    "translated": 0,
+    "untranslated": 265,
+    "completionPct": 0
+  },
+  "dnsmasq": {
+    "total": 309,
+    "translated": 0,
+    "untranslated": 309,
+    "completionPct": 0
+  },
+  "doc-base": {
+    "total": 93,
+    "translated": 0,
+    "untranslated": 93,
+    "completionPct": 0
+  },
+  "dpkg": {
+    "total": 1209,
+    "translated": 2,
+    "untranslated": 1207,
+    "completionPct": 0
+  },
+  "dpkg-dev": {
+    "total": 714,
+    "translated": 0,
+    "untranslated": 714,
+    "completionPct": 0
+  },
+  "dselect": {
+    "total": 264,
+    "translated": 10,
+    "untranslated": 254,
+    "completionPct": 4
+  },
+  "dpkg-cross": {
+    "total": 64,
+    "translated": 0,
+    "untranslated": 64,
+    "completionPct": 0
+  },
+  "duplicity": {
+    "total": 327,
+    "translated": 0,
+    "untranslated": 327,
+    "completionPct": 0
+  },
+  "e2fsprogs": {
+    "total": 1682,
+    "translated": 0,
+    "untranslated": 1682,
+    "completionPct": 0
+  },
+  "ecryptfs-utils": {
+    "total": 4,
+    "translated": 4,
+    "untranslated": 0,
+    "completionPct": 100
+  },
+  "langpack-installer": {
+    "total": 2,
+    "translated": 2,
+    "untranslated": 0,
+    "completionPct": 100
+  },
+  "edubuntu-live": {
+    "total": 15,
+    "translated": 15,
+    "untranslated": 0,
+    "completionPct": 100
+  },
+  "ltsp-live": {
+    "total": 25,
+    "translated": 25,
+    "untranslated": 0,
+    "completionPct": 100
+  },
+  "eject": {
+    "total": 78,
+    "translated": 0,
+    "untranslated": 78,
+    "completionPct": 0
+  },
+  "elfutils": {
+    "total": 1412,
+    "translated": 0,
+    "untranslated": 1412,
+    "completionPct": 0
+  },
+  "empathy": {
+    "total": 767,
+    "translated": 600,
+    "untranslated": 167,
+    "completionPct": 78
+  },
+  "empathy-tpaw": {
+    "total": 182,
+    "translated": 100,
+    "untranslated": 82,
+    "completionPct": 55
+  },
+  "epiphany": {
+    "total": 716,
+    "translated": 479,
+    "untranslated": 237,
+    "completionPct": 67
+  },
+  "evolution-data-server": {
+    "total": 3,
+    "translated": 3,
+    "untranslated": 0,
+    "completionPct": 100
+  },
+  "evolution-indicator": {
+    "total": 18,
+    "translated": 18,
+    "untranslated": 0,
+    "completionPct": 100
+  },
+  "example-content": {
+    "total": 2,
+    "translated": 2,
+    "untranslated": 0,
+    "completionPct": 100
+  },
+  "exiv2": {
+    "total": 7380,
+    "translated": 7380,
+    "untranslated": 0,
+    "completionPct": 100
+  },
+  "fakeroot": {
+    "total": 95,
+    "translated": 0,
+    "untranslated": 95,
+    "completionPct": 0
+  },
+  "fetchmail": {
+    "total": 772,
+    "translated": 5,
+    "untranslated": 767,
+    "completionPct": 1
+  },
+  "file-roller": {
+    "total": 300,
+    "translated": 299,
+    "untranslated": 1,
+    "completionPct": 100
+  },
+  "findutils": {
+    "total": 247,
+    "translated": 0,
+    "untranslated": 247,
+    "completionPct": 0
+  },
+  "flex": {
+    "total": 169,
+    "translated": 0,
+    "untranslated": 169,
+    "completionPct": 0
+  },
+  "fontconfig": {
+    "total": 112,
+    "translated": 0,
+    "untranslated": 112,
+    "completionPct": 0
+  },
+  "fontconfig-conf": {
+    "total": 33,
+    "translated": 0,
+    "untranslated": 33,
+    "completionPct": 0
+  },
+  "fontforge": {
+    "total": 7005,
+    "translated": 0,
+    "untranslated": 7005,
+    "completionPct": 0
+  },
+  "utf8": {
+    "total": 0,
+    "translated": 0,
+    "untranslated": 0,
+    "completionPct": 0
+  },
+  "fprintd": {
+    "total": 67,
+    "translated": 0,
+    "untranslated": 67,
+    "completionPct": 0
+  },
+  "friendly-recovery": {
+    "total": 46,
+    "translated": 46,
+    "untranslated": 0,
+    "completionPct": 100
+  },
+  "fwupd": {
+    "total": 851,
+    "translated": 0,
+    "untranslated": 851,
+    "completionPct": 0
+  },
+  "gawk": {
+    "total": 779,
+    "translated": 9,
+    "untranslated": 770,
+    "completionPct": 1
+  },
+  "gcab": {
+    "total": 35,
+    "translated": 0,
+    "untranslated": 35,
+    "completionPct": 0
+  },
+  "cpplib": {
+    "total": 216,
+    "translated": 0,
+    "untranslated": 216,
+    "completionPct": 0
+  },
+  "gcc": {
+    "total": 13264,
+    "translated": 0,
+    "untranslated": 13264,
+    "completionPct": 0
+  },
+  "libstdc++": {
+    "total": 10,
+    "translated": 10,
+    "untranslated": 0,
+    "completionPct": 100
+  },
+  "gcr": {
+    "total": 276,
+    "translated": 276,
+    "untranslated": 0,
+    "completionPct": 100
+  },
+  "gcr-4": {
+    "total": 189,
+    "translated": 0,
+    "untranslated": 189,
+    "completionPct": 0
+  },
+  "gdbm": {
+    "total": 307,
+    "translated": 0,
+    "untranslated": 307,
+    "completionPct": 0
+  },
+  "gdk-pixbuf": {
+    "total": 198,
+    "translated": 98,
+    "untranslated": 100,
+    "completionPct": 49
+  },
+  "patches": {
+    "total": 6,
+    "translated": 6,
+    "untranslated": 0,
+    "completionPct": 100
+  },
+  "gdm": {
+    "total": 130,
+    "translated": 118,
+    "untranslated": 12,
+    "completionPct": 91
+  },
+  "geary": {
+    "total": 663,
+    "translated": 0,
+    "untranslated": 663,
+    "completionPct": 0
+  },
+  "geoclue": {
+    "total": 21,
+    "translated": 0,
+    "untranslated": 21,
+    "completionPct": 0
+  },
+  "geocode-glib": {
+    "total": 1,
+    "translated": 1,
+    "untranslated": 0,
+    "completionPct": 100
+  },
+  "gettext-runtime": {
+    "total": 72,
+    "translated": 0,
+    "untranslated": 72,
+    "completionPct": 0
+  },
+  "gettext-tools": {
+    "total": 808,
+    "translated": 0,
+    "untranslated": 808,
+    "completionPct": 0
+  },
+  "bootloader": {
+    "total": 118,
+    "translated": 118,
+    "untranslated": 0,
+    "completionPct": 100
+  },
+  "gimp20": {
+    "total": 5667,
+    "translated": 2374,
+    "untranslated": 3293,
+    "completionPct": 42
+  },
+  "gimp20-libgimp": {
+    "total": 617,
+    "translated": 373,
+    "untranslated": 244,
+    "completionPct": 60
+  },
+  "gimp20-python": {
+    "total": 180,
+    "translated": 64,
+    "untranslated": 116,
+    "completionPct": 36
+  },
+  "gimp20-script-fu": {
+    "total": 390,
+    "translated": 322,
+    "untranslated": 68,
+    "completionPct": 83
+  },
+  "gimp20-std-plug-ins": {
+    "total": 2795,
+    "translated": 1975,
+    "untranslated": 820,
+    "completionPct": 71
+  },
+  "gimp20-tips": {
+    "total": 28,
+    "translated": 28,
+    "untranslated": 0,
+    "completionPct": 100
+  },
+  "git": {
+    "total": 5282,
+    "translated": 40,
+    "untranslated": 5242,
+    "completionPct": 1
+  },
+  "git-gui-glossary": {
+    "total": 96,
+    "translated": 0,
+    "untranslated": 96,
+    "completionPct": 0
+  },
+  "git-gui": {
+    "total": 579,
+    "translated": 0,
+    "untranslated": 579,
+    "completionPct": 0
+  },
+  "glade": {
+    "total": 12,
+    "translated": 9,
+    "untranslated": 3,
+    "completionPct": 75
+  },
+  "glance": {
+    "total": 695,
+    "translated": 0,
+    "untranslated": 695,
+    "completionPct": 0
+  },
+  "glib-networking": {
+    "total": 68,
+    "translated": 0,
+    "untranslated": 68,
+    "completionPct": 0
+  },
+  "glib20": {
+    "total": 1262,
+    "translated": 0,
+    "untranslated": 1262,
+    "completionPct": 0
+  },
+  "libc": {
+    "total": 1457,
+    "translated": 0,
+    "untranslated": 1457,
+    "completionPct": 0
+  },
+  "gnome-bluetooth-3.0": {
+    "total": 92,
+    "translated": 0,
+    "untranslated": 92,
+    "completionPct": 0
+  },
+  "gnome-bluetooth2": {
+    "total": 110,
+    "translated": 110,
+    "untranslated": 0,
+    "completionPct": 100
+  },
+  "gnome-calculator": {
+    "total": 786,
+    "translated": 465,
+    "untranslated": 321,
+    "completionPct": 59
+  },
+  "gnome-calendar": {
+    "total": 342,
+    "translated": 257,
+    "untranslated": 85,
+    "completionPct": 75
+  },
+  "org.gnome.characters": {
+    "total": 56,
+    "translated": 56,
+    "untranslated": 0,
+    "completionPct": 100
+  },
+  "gnome-clocks": {
+    "total": 187,
+    "translated": 44,
+    "untranslated": 143,
+    "completionPct": 24
+  },
+  "gnome-color-manager": {
+    "total": 168,
+    "translated": 48,
+    "untranslated": 120,
+    "completionPct": 29
+  },
+  "kgx": {
+    "total": 95,
+    "translated": 61,
+    "untranslated": 34,
+    "completionPct": 64
+  },
+  "gnome-contacts": {
+    "total": 215,
+    "translated": 115,
+    "untranslated": 100,
+    "completionPct": 53
+  },
+  "gnome-control-center-2.0": {
+    "total": 2221,
+    "translated": 2028,
+    "untranslated": 193,
+    "completionPct": 91
+  },
+  "gnome-desktop-3.0": {
+    "total": 41,
+    "translated": 41,
+    "untranslated": 0,
+    "completionPct": 100
+  },
+  "gnome-dictionary": {
+    "total": 160,
+    "translated": 0,
+    "untranslated": 160,
+    "completionPct": 0
+  },
+  "gnome-disk-utility": {
+    "total": 753,
+    "translated": 753,
+    "untranslated": 0,
+    "completionPct": 100
+  },
+  "gnome-font-viewer": {
+    "total": 206,
+    "translated": 206,
+    "untranslated": 0,
+    "completionPct": 100
+  },
+  "gnome-games": {
+    "total": 244,
+    "translated": 0,
+    "untranslated": 244,
+    "completionPct": 0
+  },
+  "gnome-icon-theme": {
+    "total": 2,
+    "translated": 2,
+    "untranslated": 0,
+    "completionPct": 100
+  },
+  "gnome-initial-setup": {
+    "total": 237,
+    "translated": 235,
+    "untranslated": 2,
+    "completionPct": 99
+  },
+  "gnome-keyring": {
+    "total": 99,
+    "translated": 99,
+    "untranslated": 0,
+    "completionPct": 100
+  },
+  "gnome-logs": {
+    "total": 127,
+    "translated": 127,
+    "untranslated": 0,
+    "completionPct": 100
+  },
+  "gnome-menus": {
+    "total": 38,
+    "translated": 38,
+    "untranslated": 0,
+    "completionPct": 100
+  },
+  "gnome-online-accounts": {
+    "total": 161,
+    "translated": 161,
+    "untranslated": 0,
+    "completionPct": 100
+  },
+  "gnome-photos": {
+    "total": 220,
+    "translated": 220,
+    "untranslated": 0,
+    "completionPct": 100
+  },
+  "gnome-remote-desktop": {
+    "total": 50,
+    "translated": 49,
+    "untranslated": 1,
+    "completionPct": 98
+  },
+  "gnome-screenshot": {
+    "total": 77,
+    "translated": 77,
+    "untranslated": 0,
+    "completionPct": 100
+  },
+  "gnome-session": {
+    "total": 45,
+    "translated": 0,
+    "untranslated": 45,
+    "completionPct": 0
+  },
+  "gnome-settings-daemon": {
+    "total": 544,
+    "translated": 544,
+    "untranslated": 0,
+    "completionPct": 100
+  },
+  "gnome-shell": {
+    "total": 769,
+    "translated": 755,
+    "untranslated": 14,
+    "completionPct": 98
+  },
+  "extension-manager": {
+    "total": 83,
+    "translated": 83,
+    "untranslated": 0,
+    "completionPct": 100
+  },
+  "appindicatorextension": {
+    "total": 29,
+    "translated": 0,
+    "untranslated": 29,
+    "completionPct": 0
+  },
+  "dashtodock": {
+    "total": 164,
+    "translated": 0,
+    "untranslated": 164,
+    "completionPct": 0
+  },
+  "ding": {
+    "total": 198,
+    "translated": 0,
+    "untranslated": 198,
+    "completionPct": 0
+  },
+  "tiling-assistantleleat-on-github": {
+    "total": 10,
+    "translated": 0,
+    "untranslated": 10,
+    "completionPct": 0
+  },
+  "websearchprovidershellextension": {
+    "total": 2,
+    "translated": 2,
+    "untranslated": 0,
+    "completionPct": 100
+  },
+  "gnome-sound-recorder": {
+    "total": 74,
+    "translated": 0,
+    "untranslated": 74,
+    "completionPct": 0
+  },
+  "org.gnome.soundrecorder": {
+    "total": 92,
+    "translated": 0,
+    "untranslated": 92,
+    "completionPct": 0
+  },
+  "sushi": {
+    "total": 14,
+    "translated": 14,
+    "untranslated": 0,
+    "completionPct": 100
+  },
+  "gnome-system-log": {
+    "total": 76,
+    "translated": 27,
+    "untranslated": 49,
+    "completionPct": 36
+  },
+  "gnome-terminal": {
+    "total": 541,
+    "translated": 487,
+    "untranslated": 54,
+    "completionPct": 90
+  },
+  "gnome-text-editor": {
+    "total": 288,
+    "translated": 205,
+    "untranslated": 83,
+    "completionPct": 71
+  },
+  "gnome-themes-extra": {
+    "total": 6,
+    "translated": 6,
+    "untranslated": 0,
+    "completionPct": 100
+  },
+  "gnome-themes-standard": {
+    "total": 6,
+    "translated": 6,
+    "untranslated": 0,
+    "completionPct": 100
+  },
+  "gnome-todo": {
+    "total": 158,
+    "translated": 158,
+    "untranslated": 0,
+    "completionPct": 100
+  },
+  "gnome-video-effects": {
+    "total": 68,
+    "translated": 20,
+    "untranslated": 48,
+    "completionPct": 29
+  },
+  "gnupg": {
+    "total": 1297,
+    "translated": 0,
+    "untranslated": 1297,
+    "completionPct": 0
+  },
+  "gnupg2": {
+    "total": 2219,
+    "translated": 0,
+    "untranslated": 2219,
+    "completionPct": 0
+  },
+  "libgnutls": {
+    "total": 280,
+    "translated": 0,
+    "untranslated": 280,
+    "completionPct": 0
+  },
+  "gnutls28": {
+    "total": 424,
+    "translated": 0,
+    "untranslated": 424,
+    "completionPct": 0
+  },
+  "gnutls30": {
+    "total": 425,
+    "translated": 0,
+    "untranslated": 425,
+    "completionPct": 0
+  },
+  "gparted": {
+    "total": 513,
+    "translated": 399,
+    "untranslated": 114,
+    "completionPct": 78
+  },
+  "grep": {
+    "total": 115,
+    "translated": 0,
+    "untranslated": 115,
+    "completionPct": 0
+  },
+  "grilo": {
+    "total": 36,
+    "translated": 36,
+    "untranslated": 0,
+    "completionPct": 100
+  },
+  "grub": {
+    "total": 1481,
+    "translated": 23,
+    "untranslated": 1458,
+    "completionPct": 2
+  },
+  "gsasl": {
+    "total": 103,
+    "translated": 0,
+    "untranslated": 103,
+    "completionPct": 0
+  },
+  "gsettings-desktop-schemas": {
+    "total": 691,
+    "translated": 1,
+    "untranslated": 690,
+    "completionPct": 0
+  },
+  "gsettings-ubuntu-touch-schemas": {
+    "total": 51,
+    "translated": 50,
+    "untranslated": 1,
+    "completionPct": 98
+  },
+  "gspell-1": {
+    "total": 31,
+    "translated": 31,
+    "untranslated": 0,
+    "completionPct": 100
+  },
+  "gst-plugins-bad-1.0": {
+    "total": 29,
+    "translated": 0,
+    "untranslated": 29,
+    "completionPct": 0
+  },
+  "gst-plugins-base": {
+    "total": 237,
+    "translated": 0,
+    "untranslated": 237,
+    "completionPct": 0
+  },
+  "gst-plugins-base-1.0": {
+    "total": 237,
+    "translated": 41,
+    "untranslated": 196,
+    "completionPct": 17
+  },
+  "gst-plugins-good": {
+    "total": 104,
+    "translated": 0,
+    "untranslated": 104,
+    "completionPct": 0
+  },
+  "gst-plugins-good-1.0": {
+    "total": 104,
+    "translated": 57,
+    "untranslated": 47,
+    "completionPct": 55
+  },
+  "gstreamer": {
+    "total": 397,
+    "translated": 0,
+    "untranslated": 397,
+    "completionPct": 0
+  },
+  "gstreamer-1.0": {
+    "total": 397,
+    "translated": 136,
+    "untranslated": 261,
+    "completionPct": 34
+  },
+  "gtk": {
+    "total": 862,
+    "translated": 816,
+    "untranslated": 46,
+    "completionPct": 95
+  },
+  "gtk-properties": {
+    "total": 1729,
+    "translated": 1644,
+    "untranslated": 85,
+    "completionPct": 95
+  },
+  "gtk-3.0": {
+    "total": 1694,
+    "translated": 1694,
+    "untranslated": 0,
+    "completionPct": 100
+  },
+  "gtk-3.0-properties": {
+    "total": 2242,
+    "translated": 2242,
+    "untranslated": 0,
+    "completionPct": 100
+  },
+  "gtk40": {
+    "total": 1004,
+    "translated": 179,
+    "untranslated": 825,
+    "completionPct": 18
+  },
+  "gtk40-properties": {
+    "total": 1859,
+    "translated": 799,
+    "untranslated": 1060,
+    "completionPct": 43
+  },
+  "language-specs": {
+    "total": 16,
+    "translated": 0,
+    "untranslated": 16,
+    "completionPct": 0
+  },
+  "styles": {
+    "total": 13,
+    "translated": 4,
+    "untranslated": 9,
+    "completionPct": 31
+  },
+  "gtksourceview": {
+    "total": 106,
+    "translated": 106,
+    "untranslated": 0,
+    "completionPct": 100
+  },
+  "gtksourceview-4": {
+    "total": 94,
+    "translated": 0,
+    "untranslated": 94,
+    "completionPct": 0
+  },
+  "gtksourceview-5": {
+    "total": 112,
+    "translated": 0,
+    "untranslated": 112,
+    "completionPct": 0
+  },
+  "gutenprint": {
+    "total": 4864,
+    "translated": 4864,
+    "untranslated": 0,
+    "completionPct": 100
+  },
+  "gvfs": {
+    "total": 422,
+    "translated": 422,
+    "untranslated": 0,
+    "completionPct": 100
+  },
+  "heimdal-krb5": {
+    "total": 307,
+    "translated": 0,
+    "untranslated": 307,
+    "completionPct": 0
+  },
+  "hello": {
+    "total": 46,
+    "translated": 8,
+    "untranslated": 38,
+    "completionPct": 17
+  },
+  "hello-debhelper": {
+    "total": 31,
+    "translated": 0,
+    "untranslated": 31,
+    "completionPct": 0
+  },
+  "help2man": {
+    "total": 49,
+    "translated": 0,
+    "untranslated": 49,
+    "completionPct": 0
+  },
+  "hunspell": {
+    "total": 79,
+    "translated": 1,
+    "untranslated": 78,
+    "completionPct": 1
+  },
+  "ibus10": {
+    "total": 629,
+    "translated": 623,
+    "untranslated": 6,
+    "completionPct": 99
+  },
+  "ibus-chewing": {
+    "total": 73,
+    "translated": 31,
+    "untranslated": 42,
+    "completionPct": 42
+  },
+  "ibus-hangul": {
+    "total": 30,
+    "translated": 13,
+    "untranslated": 17,
+    "completionPct": 43
+  },
+  "ibus-libpinyin": {
+    "total": 178,
+    "translated": 0,
+    "untranslated": 178,
+    "completionPct": 0
+  },
+  "ibus-m17n": {
+    "total": 25,
+    "translated": 0,
+    "untranslated": 25,
+    "completionPct": 0
+  },
+  "ibus-table": {
+    "total": 153,
+    "translated": 1,
+    "untranslated": 152,
+    "completionPct": 1
+  },
+  "ibus-unikey": {
+    "total": 39,
+    "translated": 0,
+    "untranslated": 39,
+    "completionPct": 0
+  },
+  "im-config": {
+    "total": 74,
+    "translated": 10,
+    "untranslated": 64,
+    "completionPct": 14
+  },
+  "indent": {
+    "total": 52,
+    "translated": 47,
+    "untranslated": 5,
+    "completionPct": 90
+  },
+  "indicator-appmenu": {
+    "total": 3,
+    "translated": 3,
+    "untranslated": 0,
+    "completionPct": 100
+  },
+  "indicator-bluetooth": {
+    "total": 11,
+    "translated": 11,
+    "untranslated": 0,
+    "completionPct": 100
+  },
+  "indicator-datetime": {
+    "total": 13,
+    "translated": 13,
+    "untranslated": 0,
+    "completionPct": 100
+  },
+  "indicator-keyboard": {
+    "total": 7,
+    "translated": 7,
+    "untranslated": 0,
+    "completionPct": 100
+  },
+  "indicator-messages": {
+    "total": 10,
+    "translated": 10,
+    "untranslated": 0,
+    "completionPct": 100
+  },
+  "indicator-power": {
+    "total": 37,
+    "translated": 37,
+    "untranslated": 0,
+    "completionPct": 100
+  },
+  "indicator-printers": {
+    "total": 13,
+    "translated": 13,
+    "untranslated": 0,
+    "completionPct": 100
+  },
+  "indicator-session": {
+    "total": 29,
+    "translated": 29,
+    "untranslated": 0,
+    "completionPct": 100
+  },
+  "indicator-sound": {
+    "total": 27,
+    "translated": 27,
+    "untranslated": 0,
+    "completionPct": 100
+  },
+  "iputils": {
+    "total": 251,
+    "translated": 0,
+    "untranslated": 251,
+    "completionPct": 0
+  },
+  "isoquery": {
+    "total": 20,
+    "translated": 0,
+    "untranslated": 20,
+    "completionPct": 0
+  },
+  "json-glib": {
+    "total": 48,
+    "translated": 0,
+    "untranslated": 48,
+    "completionPct": 0
+  },
+  "kbd": {
+    "total": 356,
+    "translated": 0,
+    "untranslated": 356,
+    "completionPct": 0
+  },
+  "desktop-kde-config-whoopsie": {
+    "total": 3,
+    "translated": 3,
+    "untranslated": 0,
+    "completionPct": 100
+  },
+  "kcm-whoopsie": {
+    "total": 13,
+    "translated": 13,
+    "untranslated": 0,
+    "completionPct": 100
+  },
+  "kdesudo": {
+    "total": 39,
+    "translated": 39,
+    "untranslated": 0,
+    "completionPct": 100
+  },
+  "kerneloops": {
+    "total": 11,
+    "translated": 7,
+    "untranslated": 4,
+    "completionPct": 64
+  },
+  "keystone": {
+    "total": 323,
+    "translated": 11,
+    "untranslated": 312,
+    "completionPct": 3
+  },
+  "mit-krb5": {
+    "total": 1942,
+    "translated": 0,
+    "untranslated": 1942,
+    "completionPct": 0
+  },
+  "kubuntu-debug-installer": {
+    "total": 14,
+    "translated": 14,
+    "untranslated": 0,
+    "completionPct": 100
+  },
+  "desktop-kubuntu-driver-manager": {
+    "total": 3,
+    "translated": 3,
+    "untranslated": 0,
+    "completionPct": 100
+  },
+  "kcm-driver-manager": {
+    "total": 38,
+    "translated": 38,
+    "untranslated": 0,
+    "completionPct": 100
+  },
+  "desktop-kubuntu-notification-helper": {
+    "total": 17,
+    "translated": 17,
+    "untranslated": 0,
+    "completionPct": 100
+  },
+  "kcm-notificationhelper": {
+    "total": 16,
+    "translated": 16,
+    "untranslated": 0,
+    "completionPct": 100
+  },
+  "notificationhelper": {
+    "total": 25,
+    "translated": 25,
+    "untranslated": 0,
+    "completionPct": 100
+  },
+  "kubuntu-patched-l10n": {
+    "total": 39,
+    "translated": 39,
+    "untranslated": 0,
+    "completionPct": 100
+  },
+  "desktop-kubuntu-web-shortcuts": {
+    "total": 36,
+    "translated": 36,
+    "untranslated": 0,
+    "completionPct": 100
+  },
+  "landscape-client": {
+    "total": 34,
+    "translated": 34,
+    "untranslated": 0,
+    "completionPct": 100
+  },
+  "language-selector": {
+    "total": 58,
+    "translated": 58,
+    "untranslated": 0,
+    "completionPct": 100
+  },
+  "ldm": {
+    "total": 19,
+    "translated": 19,
+    "untranslated": 0,
+    "completionPct": 100
+  },
+  "lftp": {
+    "total": 503,
+    "translated": 0,
+    "untranslated": 503,
+    "completionPct": 0
+  },
+  "libadwaita": {
+    "total": 147,
+    "translated": 14,
+    "untranslated": 133,
+    "completionPct": 10
+  },
+  "libbytesize": {
+    "total": 17,
+    "translated": 0,
+    "untranslated": 17,
+    "completionPct": 0
+  },
+  "libdazzle-1.0": {
+    "total": 62,
+    "translated": 0,
+    "untranslated": 62,
+    "completionPct": 0
+  },
+  "libdbusmenu": {
+    "total": 2,
+    "translated": 2,
+    "untranslated": 0,
+    "completionPct": 100
+  },
+  "libelf": {
+    "total": 76,
+    "translated": 0,
+    "untranslated": 76,
+    "completionPct": 0
+  },
+  "libexif-12": {
+    "total": 1325,
+    "translated": 0,
+    "untranslated": 1325,
+    "completionPct": 0
+  },
+  "gdata": {
+    "total": 87,
+    "translated": 0,
+    "untranslated": 87,
+    "completionPct": 0
+  },
+  "libgnome-games-support": {
+    "total": 14,
+    "translated": 14,
+    "untranslated": 0,
+    "completionPct": 100
+  },
+  "libgnomekbd": {
+    "total": 39,
+    "translated": 39,
+    "untranslated": 0,
+    "completionPct": 100
+  },
+  "libgpg-error": {
+    "total": 489,
+    "translated": 0,
+    "untranslated": 489,
+    "completionPct": 0
+  },
+  "libgphoto2-6": {
+    "total": 3177,
+    "translated": 0,
+    "untranslated": 3177,
+    "completionPct": 0
+  },
+  "libgphoto2-port-12": {
+    "total": 78,
+    "translated": 0,
+    "untranslated": 78,
+    "completionPct": 0
+  },
+  "libgphoto2-2": {
+    "total": 2232,
+    "translated": 0,
+    "untranslated": 2232,
+    "completionPct": 0
+  },
+  "libgphoto2-port-0": {
+    "total": 119,
+    "translated": 27,
+    "untranslated": 92,
+    "completionPct": 23
+  },
+  "libgpod": {
+    "total": 185,
+    "translated": 0,
+    "untranslated": 185,
+    "completionPct": 0
+  },
+  "libgsf": {
+    "total": 151,
+    "translated": 0,
+    "untranslated": 151,
+    "completionPct": 0
+  },
+  "libgtop": {
+    "total": 40,
+    "translated": 0,
+    "untranslated": 40,
+    "completionPct": 0
+  },
+  "libgtop2": {
+    "total": 40,
+    "translated": 0,
+    "untranslated": 40,
+    "completionPct": 0
+  },
+  "libgweather-locations": {
+    "total": 4460,
+    "translated": 4344,
+    "untranslated": 116,
+    "completionPct": 97
+  },
+  "libgweather-3.0": {
+    "total": 240,
+    "translated": 240,
+    "untranslated": 0,
+    "completionPct": 100
+  },
+  "libgweather-4.0": {
+    "total": 233,
+    "translated": 0,
+    "untranslated": 233,
+    "completionPct": 0
+  },
+  "libgweather-4.0-locations": {
+    "total": 4926,
+    "translated": 0,
+    "untranslated": 4926,
+    "completionPct": 0
+  },
+  "libhandy": {
+    "total": 308,
+    "translated": 308,
+    "untranslated": 0,
+    "completionPct": 100
+  },
+  "libhangul": {
+    "total": 17,
+    "translated": 0,
+    "untranslated": 17,
+    "completionPct": 0
+  },
+  "libidn": {
+    "total": 59,
+    "translated": 0,
+    "untranslated": 59,
+    "completionPct": 0
+  },
+  "libidn2": {
+    "total": 41,
+    "translated": 0,
+    "untranslated": 41,
+    "completionPct": 0
+  },
+  "libnih": {
+    "total": 125,
+    "translated": 0,
+    "untranslated": 125,
+    "completionPct": 0
+  },
+  "libnma": {
+    "total": 183,
+    "translated": 0,
+    "untranslated": 183,
+    "completionPct": 0
+  },
+  "libnsl": {
+    "total": 23,
+    "translated": 0,
+    "untranslated": 23,
+    "completionPct": 0
+  },
+  "nss-db": {
+    "total": 18,
+    "translated": 18,
+    "untranslated": 0,
+    "completionPct": 100
+  },
+  "libpanel": {
+    "total": 30,
+    "translated": 0,
+    "untranslated": 30,
+    "completionPct": 0
+  },
+  "parse-debianchangelog": {
+    "total": 38,
+    "translated": 0,
+    "untranslated": 38,
+    "completionPct": 0
+  },
+  "parse-debianchangelog-pod": {
+    "total": 191,
+    "translated": 0,
+    "untranslated": 191,
+    "completionPct": 0
+  },
+  "libpeas-1.0": {
+    "total": 29,
+    "translated": 0,
+    "untranslated": 29,
+    "completionPct": 0
+  },
+  "libpeas": {
+    "total": 34,
+    "translated": 34,
+    "untranslated": 0,
+    "completionPct": 100
+  },
+  "libpwquality": {
+    "total": 51,
+    "translated": 0,
+    "untranslated": 51,
+    "completionPct": 0
+  },
+  "libsecret": {
+    "total": 10,
+    "translated": 10,
+    "untranslated": 0,
+    "completionPct": 100
+  },
+  "libsmbios": {
+    "total": 361,
+    "translated": 0,
+    "untranslated": 361,
+    "completionPct": 0
+  },
+  "libsoup": {
+    "total": 43,
+    "translated": 0,
+    "untranslated": 43,
+    "completionPct": 0
+  },
+  "libsoup-3.0": {
+    "total": 37,
+    "translated": 0,
+    "untranslated": 37,
+    "completionPct": 0
+  },
+  "libvirt": {
+    "total": 11015,
+    "translated": 0,
+    "untranslated": 11015,
+    "completionPct": 0
+  },
+  "libvisual-0.4": {
+    "total": 205,
+    "translated": 0,
+    "untranslated": 205,
+    "completionPct": 0
+  },
+  "libvisual-plugins": {
+    "total": 109,
+    "translated": 0,
+    "untranslated": 109,
+    "completionPct": 0
+  },
+  "libwnck": {
+    "total": 231,
+    "translated": 231,
+    "untranslated": 0,
+    "completionPct": 100
+  },
+  "templates": {
+    "total": 11,
+    "translated": 11,
+    "untranslated": 0,
+    "completionPct": 100
+  },
+  "linux-base": {
+    "total": 32,
+    "translated": 0,
+    "untranslated": 32,
+    "completionPct": 0
+  },
+  "live-build": {
+    "total": 256,
+    "translated": 0,
+    "untranslated": 256,
+    "completionPct": 0
+  },
+  "live-helper": {
+    "total": 258,
+    "translated": 0,
+    "untranslated": 258,
+    "completionPct": 0
+  },
+  "localsearch3": {
+    "total": 185,
+    "translated": 0,
+    "untranslated": 185,
+    "completionPct": 0
+  },
+  "loupe": {
+    "total": 211,
+    "translated": 0,
+    "untranslated": 211,
+    "completionPct": 0
+  },
+  "lshw": {
+    "total": 304,
+    "translated": 0,
+    "untranslated": 304,
+    "completionPct": 0
+  },
+  "ltsp": {
+    "total": 110,
+    "translated": 0,
+    "untranslated": 110,
+    "completionPct": 0
+  },
+  "ltsp-login": {
+    "total": 6,
+    "translated": 6,
+    "untranslated": 0,
+    "completionPct": 100
+  },
+  "lvm2": {
+    "total": 1556,
+    "translated": 0,
+    "untranslated": 1556,
+    "completionPct": 0
+  },
+  "lxd": {
+    "total": 696,
+    "translated": 0,
+    "untranslated": 696,
+    "completionPct": 0
+  },
+  "m17n-contrib": {
+    "total": 7,
+    "translated": 0,
+    "untranslated": 7,
+    "completionPct": 0
+  },
+  "m17n-db": {
+    "total": 74,
+    "translated": 0,
+    "untranslated": 74,
+    "completionPct": 0
+  },
+  "mailman": {
+    "total": 1472,
+    "translated": 0,
+    "untranslated": 1472,
+    "completionPct": 0
+  },
+  "make": {
+    "total": 477,
+    "translated": 0,
+    "untranslated": 477,
+    "completionPct": 0
+  },
+  "malcontent": {
+    "total": 235,
+    "translated": 0,
+    "untranslated": 235,
+    "completionPct": 0
+  },
+  "man-db": {
+    "total": 204,
+    "translated": 0,
+    "untranslated": 204,
+    "completionPct": 0
+  },
+  "man-db-gnulib": {
+    "total": 50,
+    "translated": 0,
+    "untranslated": 50,
+    "completionPct": 0
+  },
+  "mlocate": {
+    "total": 51,
+    "translated": 0,
+    "untranslated": 51,
+    "completionPct": 0
+  },
+  "modemmanager": {
+    "total": 19,
+    "translated": 2,
+    "untranslated": 17,
+    "completionPct": 11
+  },
+  "jabberbot": {
+    "total": 27,
+    "translated": 0,
+    "untranslated": 27,
+    "completionPct": 0
+  },
+  "moinmoin": {
+    "total": 933,
+    "translated": 0,
+    "untranslated": 933,
+    "completionPct": 0
+  },
+  "monitoring-plugins": {
+    "total": 1346,
+    "translated": 0,
+    "untranslated": 1346,
+    "completionPct": 0
+  },
+  "mousetweaks": {
+    "total": 34,
+    "translated": 34,
+    "untranslated": 0,
+    "completionPct": 100
+  },
+  "fcitx-mozc": {
+    "total": 15,
+    "translated": 0,
+    "untranslated": 15,
+    "completionPct": 0
+  },
+  "fcitx5-mozc": {
+    "total": 23,
+    "translated": 19,
+    "untranslated": 4,
+    "completionPct": 83
+  },
+  "mutt": {
+    "total": 1428,
+    "translated": 0,
+    "untranslated": 1428,
+    "completionPct": 0
+  },
+  "mutter": {
+    "total": 172,
+    "translated": 172,
+    "untranslated": 0,
+    "completionPct": 100
+  },
+  "nano": {
+    "total": 647,
+    "translated": 6,
+    "untranslated": 641,
+    "completionPct": 1
+  },
+  "nautilus": {
+    "total": 1168,
+    "translated": 1114,
+    "untranslated": 54,
+    "completionPct": 95
+  },
+  "nautilus-sendto": {
+    "total": 10,
+    "translated": 10,
+    "untranslated": 0,
+    "completionPct": 100
+  },
+  "nautilus-share": {
+    "total": 37,
+    "translated": 37,
+    "untranslated": 0,
+    "completionPct": 100
+  },
+  "ndisc6": {
+    "total": 108,
+    "translated": 73,
+    "untranslated": 35,
+    "completionPct": 68
+  },
+  "needrestart": {
+    "total": 37,
+    "translated": 0,
+    "untranslated": 37,
+    "completionPct": 0
+  },
+  "needrestart-notify": {
+    "total": 5,
+    "translated": 0,
+    "untranslated": 5,
+    "completionPct": 0
+  },
+  "neon": {
+    "total": 146,
+    "translated": 0,
+    "untranslated": 146,
+    "completionPct": 0
+  },
+  "net-tools": {
+    "total": 582,
+    "translated": 0,
+    "untranslated": 582,
+    "completionPct": 0
+  },
+  "networkmanager": {
+    "total": 2377,
+    "translated": 62,
+    "untranslated": 2315,
+    "completionPct": 3
+  },
+  "network-manager-applet": {
+    "total": 996,
+    "translated": 67,
+    "untranslated": 929,
+    "completionPct": 7
+  },
+  "nm-applet": {
+    "total": 877,
+    "translated": 876,
+    "untranslated": 1,
+    "completionPct": 100
+  },
+  "networkmanager-openvpn": {
+    "total": 310,
+    "translated": 310,
+    "untranslated": 0,
+    "completionPct": 100
+  },
+  "networkmanager-pptp": {
+    "total": 94,
+    "translated": 94,
+    "untranslated": 0,
+    "completionPct": 100
+  },
+  "newt": {
+    "total": 4,
+    "translated": 4,
+    "untranslated": 0,
+    "completionPct": 100
+  },
+  "zenmap": {
+    "total": 503,
+    "translated": 0,
+    "untranslated": 503,
+    "completionPct": 0
+  },
+  "notification-daemon": {
+    "total": 11,
+    "translated": 11,
+    "untranslated": 0,
+    "completionPct": 100
+  },
+  "orca": {
+    "total": 1832,
+    "translated": 1832,
+    "untranslated": 0,
+    "completionPct": 100
+  },
+  "p11-kit": {
+    "total": 394,
+    "translated": 66,
+    "untranslated": 328,
+    "completionPct": 17
+  },
+  "packagekit": {
+    "total": 497,
+    "translated": 0,
+    "untranslated": 497,
+    "completionPct": 0
+  },
+  "linux-pam": {
+    "total": 101,
+    "translated": 101,
+    "untranslated": 0,
+    "completionPct": 100
+  },
+  "pam-p11": {
+    "total": 22,
+    "translated": 22,
+    "untranslated": 0,
+    "completionPct": 100
+  },
+  "papers": {
+    "total": 425,
+    "translated": 101,
+    "untranslated": 324,
+    "completionPct": 24
+  },
+  "parted": {
+    "total": 577,
+    "translated": 0,
+    "untranslated": 577,
+    "completionPct": 0
+  },
+  "pastebin": {
+    "total": 32,
+    "translated": 4,
+    "untranslated": 28,
+    "completionPct": 13
+  },
+  "pemmican": {
+    "total": 10,
+    "translated": 0,
+    "untranslated": 10,
+    "completionPct": 0
+  },
+  "phonon-gstreamer": {
+    "total": 14,
+    "translated": 14,
+    "untranslated": 0,
+    "completionPct": 100
+  },
+  "pipewire": {
+    "total": 120,
+    "translated": 102,
+    "untranslated": 18,
+    "completionPct": 85
+  },
+  "plainbox": {
+    "total": 808,
+    "translated": 0,
+    "untranslated": 808,
+    "completionPct": 0
+  },
+  "stubbox": {
+    "total": 40,
+    "translated": 0,
+    "untranslated": 40,
+    "completionPct": 0
+  },
+  "plymouth": {
+    "total": 8,
+    "translated": 7,
+    "untranslated": 1,
+    "completionPct": 88
+  },
+  "polkit-1": {
+    "total": 12,
+    "translated": 12,
+    "untranslated": 0,
+    "completionPct": 100
+  },
+  "policykit-1-gnome": {
+    "total": 16,
+    "translated": 16,
+    "untranslated": 0,
+    "completionPct": 100
+  },
+  "pdfsig": {
+    "total": 2,
+    "translated": 2,
+    "untranslated": 0,
+    "completionPct": 100
+  },
+  "popt": {
+    "total": 32,
+    "translated": 0,
+    "untranslated": 32,
+    "completionPct": 0
+  },
+  "powertop": {
+    "total": 204,
+    "translated": 0,
+    "untranslated": 204,
+    "completionPct": 0
+  },
+  "pppconfig": {
+    "total": 137,
+    "translated": 0,
+    "untranslated": 137,
+    "completionPct": 0
+  },
+  "pppoeconf": {
+    "total": 32,
+    "translated": 0,
+    "untranslated": 32,
+    "completionPct": 0
+  },
+  "procps-ng": {
+    "total": 925,
+    "translated": 0,
+    "untranslated": 925,
+    "completionPct": 0
+  },
+  "psmisc": {
+    "total": 94,
+    "translated": 0,
+    "untranslated": 94,
+    "completionPct": 0
+  },
+  "ptyxis": {
+    "total": 462,
+    "translated": 0,
+    "untranslated": 462,
+    "completionPct": 0
+  },
+  "pulseaudio": {
+    "total": 572,
+    "translated": 572,
+    "untranslated": 0,
+    "completionPct": 100
+  },
+  "pv": {
+    "total": 140,
+    "translated": 0,
+    "untranslated": 140,
+    "completionPct": 0
+  },
+  "python-apt": {
+    "total": 67,
+    "translated": 67,
+    "untranslated": 0,
+    "completionPct": 100
+  },
+  "pytz": {
+    "total": 0,
+    "translated": 0,
+    "untranslated": 0,
+    "completionPct": 0
+  },
+  "quota": {
+    "total": 573,
+    "translated": 18,
+    "untranslated": 555,
+    "completionPct": 3
+  },
+  "realmd": {
+    "total": 134,
+    "translated": 0,
+    "untranslated": 134,
+    "completionPct": 0
+  },
+  "recode": {
+    "total": 79,
+    "translated": 0,
+    "untranslated": 79,
+    "completionPct": 0
+  },
+  "remmina": {
+    "total": 1065,
+    "translated": 1045,
+    "untranslated": 20,
+    "completionPct": 98
+  },
+  "resources": {
+    "total": 397,
+    "translated": 0,
+    "untranslated": 397,
+    "completionPct": 0
+  },
+  "rhash": {
+    "total": 96,
+    "translated": 0,
+    "untranslated": 96,
+    "completionPct": 0
+  },
+  "rhythmbox": {
+    "total": 952,
+    "translated": 952,
+    "untranslated": 0,
+    "completionPct": 100
+  },
+  "alternative-toolbar": {
+    "total": 57,
+    "translated": 57,
+    "untranslated": 0,
+    "completionPct": 100
+  },
+  "rrdtool": {
+    "total": 32,
+    "translated": 0,
+    "untranslated": 32,
+    "completionPct": 0
+  },
+  "rygel": {
+    "total": 298,
+    "translated": 0,
+    "untranslated": 298,
+    "completionPct": 0
+  },
+  "sane-backends": {
+    "total": 1282,
+    "translated": 0,
+    "untranslated": 1282,
+    "completionPct": 0
+  },
+  "schroot": {
+    "total": 358,
+    "translated": 0,
+    "untranslated": 358,
+    "completionPct": 0
+  },
+  "screen-resolution-extra": {
+    "total": 11,
+    "translated": 11,
+    "untranslated": 0,
+    "completionPct": 100
+  },
+  "seahorse": {
+    "total": 540,
+    "translated": 540,
+    "untranslated": 0,
+    "completionPct": 100
+  },
+  "sed": {
+    "total": 146,
+    "translated": 37,
+    "untranslated": 109,
+    "completionPct": 25
+  },
+  "debianutils": {
+    "total": 13,
+    "translated": 0,
+    "untranslated": 13,
+    "completionPct": 0
+  },
+  "shadow": {
+    "total": 678,
+    "translated": 0,
+    "untranslated": 678,
+    "completionPct": 0
+  },
+  "shared-mime-info": {
+    "total": 773,
+    "translated": 0,
+    "untranslated": 773,
+    "completionPct": 0
+  },
+  "sharutils": {
+    "total": 304,
+    "translated": 0,
+    "untranslated": 304,
+    "completionPct": 0
+  },
+  "shotwell": {
+    "total": 1244,
+    "translated": 1239,
+    "untranslated": 5,
+    "completionPct": 100
+  },
+  "showtime": {
+    "total": 77,
+    "translated": 0,
+    "untranslated": 77,
+    "completionPct": 0
+  },
+  "simple-scan": {
+    "total": 217,
+    "translated": 217,
+    "untranslated": 0,
+    "completionPct": 100
+  },
+  "snappy": {
+    "total": 1097,
+    "translated": 901,
+    "untranslated": 196,
+    "completionPct": 82
+  },
+  "snapd-glib": {
+    "total": 55,
+    "translated": 0,
+    "untranslated": 55,
+    "completionPct": 0
+  },
+  "software-properties": {
+    "total": 316,
+    "translated": 308,
+    "untranslated": 8,
+    "completionPct": 97
+  },
+  "sos": {
+    "total": 30,
+    "translated": 30,
+    "untranslated": 0,
+    "completionPct": 100
+  },
+  "sound-theme-freedesktop": {
+    "total": 1,
+    "translated": 1,
+    "untranslated": 0,
+    "completionPct": 100
+  },
+  "speech-dispatcher": {
+    "total": 164,
+    "translated": 0,
+    "untranslated": 164,
+    "completionPct": 0
+  },
+  "sssd": {
+    "total": 735,
+    "translated": 0,
+    "untranslated": 735,
+    "completionPct": 0
+  },
+  "sssd-docs": {
+    "total": 2838,
+    "translated": 0,
+    "untranslated": 2838,
+    "completionPct": 0
+  },
+  "subiquity": {
+    "total": 483,
+    "translated": 40,
+    "untranslated": 443,
+    "completionPct": 8
+  },
+  "subversion": {
+    "total": 2956,
+    "translated": 0,
+    "untranslated": 2956,
+    "completionPct": 0
+  },
+  "sudo": {
+    "total": 241,
+    "translated": 2,
+    "untranslated": 239,
+    "completionPct": 1
+  },
+  "sudoers": {
+    "total": 709,
+    "translated": 0,
+    "untranslated": 709,
+    "completionPct": 0
+  },
+  "swift": {
+    "total": 196,
+    "translated": 0,
+    "untranslated": 196,
+    "completionPct": 0
+  },
+  "synaptic": {
+    "total": 729,
+    "translated": 1,
+    "untranslated": 728,
+    "completionPct": 0
+  },
+  "synaptic-manual": {
+    "total": 360,
+    "translated": 0,
+    "untranslated": 360,
+    "completionPct": 0
+  },
+  "sysprof": {
+    "total": 188,
+    "translated": 0,
+    "untranslated": 188,
+    "completionPct": 0
+  },
+  "sysstat": {
+    "total": 88,
+    "translated": 23,
+    "untranslated": 65,
+    "completionPct": 26
+  },
+  "system-config-printer": {
+    "total": 930,
+    "translated": 930,
+    "untranslated": 0,
+    "completionPct": 100
+  },
+  "systemd": {
+    "total": 285,
+    "translated": 261,
+    "untranslated": 24,
+    "completionPct": 92
+  },
+  "tar": {
+    "total": 598,
+    "translated": 0,
+    "untranslated": 598,
+    "completionPct": 0
+  },
+  "debian-tasks": {
+    "total": 2,
+    "translated": 1,
+    "untranslated": 1,
+    "completionPct": 50
+  },
+  "tasksel": {
+    "total": 2,
+    "translated": 2,
+    "untranslated": 0,
+    "completionPct": 100
+  },
+  "tecla": {
+    "total": 8,
+    "translated": 6,
+    "untranslated": 2,
+    "completionPct": 75
+  },
+  "texinfo-document": {
+    "total": 244,
+    "translated": 88,
+    "untranslated": 156,
+    "completionPct": 36
+  },
+  "texinfo": {
+    "total": 870,
+    "translated": 0,
+    "untranslated": 870,
+    "completionPct": 0
+  },
+  "tmispell-voikko": {
+    "total": 28,
+    "translated": 23,
+    "untranslated": 5,
+    "completionPct": 82
+  },
+  "totem-pl-parser": {
+    "total": 8,
+    "translated": 8,
+    "untranslated": 0,
+    "completionPct": 100
+  },
+  "tracker3": {
+    "total": 116,
+    "translated": 116,
+    "untranslated": 0,
+    "completionPct": 100
+  },
+  "tracker": {
+    "total": 372,
+    "translated": 372,
+    "untranslated": 0,
+    "completionPct": 100
+  },
+  "tracker-miners": {
+    "total": 98,
+    "translated": 98,
+    "untranslated": 0,
+    "completionPct": 100
+  },
+  "tracker3-miners": {
+    "total": 294,
+    "translated": 294,
+    "untranslated": 0,
+    "completionPct": 100
+  },
+  "transmission": {
+    "total": 515,
+    "translated": 515,
+    "untranslated": 0,
+    "completionPct": 100
+  },
+  "ubiquity-desktop": {
+    "total": 6,
+    "translated": 6,
+    "untranslated": 0,
+    "completionPct": 100
+  },
+  "ubiquity-debconf": {
+    "total": 335,
+    "translated": 335,
+    "untranslated": 0,
+    "completionPct": 100
+  },
+  "slideshow-oem-config-ubuntu-budgie": {
+    "total": 26,
+    "translated": 7,
+    "untranslated": 19,
+    "completionPct": 27
+  },
+  "slideshow-ubuntu-budgie": {
+    "total": 26,
+    "translated": 6,
+    "untranslated": 20,
+    "completionPct": 23
+  },
+  "slideshow-oem-config-ubuntu-mate": {
+    "total": 59,
+    "translated": 27,
+    "untranslated": 32,
+    "completionPct": 46
+  },
+  "slideshow-ubuntu-mate": {
+    "total": 59,
+    "translated": 25,
+    "untranslated": 34,
+    "completionPct": 42
+  },
+  "slideshow-ubuntukylin": {
+    "total": 16,
+    "translated": 0,
+    "untranslated": 16,
+    "completionPct": 0
+  },
+  "ubiquity-slideshow-ubuntustudio": {
+    "total": 31,
+    "translated": 31,
+    "untranslated": 0,
+    "completionPct": 100
+  },
+  "ubiquity-slideshow-kubuntu": {
+    "total": 71,
+    "translated": 71,
+    "untranslated": 0,
+    "completionPct": 100
+  },
+  "ubiquity-slideshow-xubuntu": {
+    "total": 15,
+    "translated": 15,
+    "untranslated": 0,
+    "completionPct": 100
+  },
+  "ubiquity-slideshow-oem-config-ubuntu": {
+    "total": 37,
+    "translated": 37,
+    "untranslated": 0,
+    "completionPct": 100
+  },
+  "ubiquity-slideshow-ubuntu": {
+    "total": 37,
+    "translated": 37,
+    "untranslated": 0,
+    "completionPct": 100
+  },
+  "ubuntu-advantage-desktop-daemon": {
+    "total": 11,
+    "translated": 11,
+    "untranslated": 0,
+    "completionPct": 100
+  },
+  "ubuntu-advantage": {
+    "total": 6,
+    "translated": 6,
+    "untranslated": 0,
+    "completionPct": 100
+  },
+  "ubuntu-help": {
+    "total": 167,
+    "translated": 167,
+    "untranslated": 0,
+    "completionPct": 100
+  },
+  "ubuntu-release-upgrader": {
+    "total": 314,
+    "translated": 308,
+    "untranslated": 6,
+    "completionPct": 98
+  },
+  "ubuntu-default-launchers": {
+    "total": 1,
+    "translated": 1,
+    "untranslated": 0,
+    "completionPct": 100
+  },
+  "system-service": {
+    "total": 12,
+    "translated": 12,
+    "untranslated": 0,
+    "completionPct": 100
+  },
+  "ubuntu-wallpapers": {
+    "total": 365,
+    "translated": 96,
+    "untranslated": 269,
+    "completionPct": 26
+  },
+  "udisks2": {
+    "total": 636,
+    "translated": 0,
+    "untranslated": 636,
+    "completionPct": 0
+  },
+  "ufw": {
+    "total": 186,
+    "translated": 1,
+    "untranslated": 185,
+    "completionPct": 1
+  },
+  "unattended-upgrades": {
+    "total": 92,
+    "translated": 0,
+    "untranslated": 92,
+    "completionPct": 0
+  },
+  "unity-doc": {
+    "total": 27,
+    "translated": 27,
+    "untranslated": 0,
+    "completionPct": 100
+  },
+  "unity": {
+    "total": 302,
+    "translated": 302,
+    "untranslated": 0,
+    "completionPct": 100
+  },
+  "unity-control-center": {
+    "total": 1266,
+    "translated": 1266,
+    "untranslated": 0,
+    "completionPct": 100
+  },
+  "unity-greeter": {
+    "total": 44,
+    "translated": 44,
+    "untranslated": 0,
+    "completionPct": 100
+  },
+  "unity-lens-applications": {
+    "total": 55,
+    "translated": 55,
+    "untranslated": 0,
+    "completionPct": 100
+  },
+  "unity-lens-files": {
+    "total": 66,
+    "translated": 66,
+    "untranslated": 0,
+    "completionPct": 100
+  },
+  "unity-lens-music": {
+    "total": 41,
+    "translated": 41,
+    "untranslated": 0,
+    "completionPct": 100
+  },
+  "unity-lens-photos": {
+    "total": 48,
+    "translated": 48,
+    "untranslated": 0,
+    "completionPct": 100
+  },
+  "unity-lens-video": {
+    "total": 20,
+    "translated": 20,
+    "untranslated": 0,
+    "completionPct": 100
+  },
+  "unity-scope-calculator": {
+    "total": 7,
+    "translated": 7,
+    "untranslated": 0,
+    "completionPct": 100
+  },
+  "unity-scope-devhelp": {
+    "total": 7,
+    "translated": 7,
+    "untranslated": 0,
+    "completionPct": 100
+  },
+  "unity-scope-home": {
+    "total": 97,
+    "translated": 97,
+    "untranslated": 0,
+    "completionPct": 100
+  },
+  "unity-scope-manpages": {
+    "total": 8,
+    "translated": 8,
+    "untranslated": 0,
+    "completionPct": 100
+  },
+  "unity-settings-daemon": {
+    "total": 376,
+    "translated": 376,
+    "untranslated": 0,
+    "completionPct": 100
+  },
+  "godbcconfig": {
+    "total": 69,
+    "translated": 0,
+    "untranslated": 69,
+    "completionPct": 0
+  },
+  "update-manager": {
+    "total": 122,
+    "translated": 122,
+    "untranslated": 0,
+    "completionPct": 100
+  },
+  "update-motd": {
+    "total": 2,
+    "translated": 2,
+    "untranslated": 0,
+    "completionPct": 100
+  },
+  "update-notifier": {
+    "total": 83,
+    "translated": 83,
+    "untranslated": 0,
+    "completionPct": 100
+  },
+  "upower": {
+    "total": 10,
+    "translated": 10,
+    "untranslated": 0,
+    "completionPct": 100
+  },
+  "ureadahead": {
+    "total": 25,
+    "translated": 0,
+    "untranslated": 25,
+    "completionPct": 0
+  },
+  "usbcreator": {
+    "total": 47,
+    "translated": 47,
+    "untranslated": 0,
+    "completionPct": 100
+  },
+  "util-linux": {
+    "total": 5512,
+    "translated": 0,
+    "untranslated": 5512,
+    "completionPct": 0
+  },
+  "libdvbv5": {
+    "total": 173,
+    "translated": 0,
+    "untranslated": 173,
+    "completionPct": 0
+  },
+  "v4l-utils": {
+    "total": 414,
+    "translated": 414,
+    "untranslated": 0,
+    "completionPct": 100
+  },
+  "vim": {
+    "total": 3102,
+    "translated": 0,
+    "untranslated": 3102,
+    "completionPct": 0
+  },
+  "vino": {
+    "total": 94,
+    "translated": 94,
+    "untranslated": 0,
+    "completionPct": 100
+  },
+  "volume-key": {
+    "total": 154,
+    "translated": 154,
+    "untranslated": 0,
+    "completionPct": 100
+  },
+  "vte-2.91": {
+    "total": 9,
+    "translated": 9,
+    "untranslated": 0,
+    "completionPct": 100
+  },
+  "w3m": {
+    "total": 237,
+    "translated": 0,
+    "untranslated": 237,
+    "completionPct": 0
+  },
+  "wdiff": {
+    "total": 119,
+    "translated": 25,
+    "untranslated": 94,
+    "completionPct": 21
+  },
+  "wdiff-gnulib": {
+    "total": 31,
+    "translated": 27,
+    "untranslated": 4,
+    "completionPct": 87
+  },
+  "webkitgtk-4.1": {
+    "total": 524,
+    "translated": 524,
+    "untranslated": 0,
+    "completionPct": 100
+  },
+  "webkitgtk-6.0": {
+    "total": 531,
+    "translated": 531,
+    "untranslated": 0,
+    "completionPct": 100
+  },
+  "wget": {
+    "total": 600,
+    "translated": 0,
+    "untranslated": 600,
+    "completionPct": 0
+  },
+  "whois": {
+    "total": 40,
+    "translated": 0,
+    "untranslated": 40,
+    "completionPct": 0
+  },
+  "whoopsie-preferences": {
+    "total": 2,
+    "translated": 2,
+    "untranslated": 0,
+    "completionPct": 100
+  },
+  "conf": {
+    "total": 50,
+    "translated": 0,
+    "untranslated": 50,
+    "completionPct": 0
+  },
+  "wireplumber": {
+    "total": 57,
+    "translated": 57,
+    "untranslated": 0,
+    "completionPct": 100
+  },
+  "ubuntu-pro": {
+    "total": 25,
+    "translated": 25,
+    "untranslated": 0,
+    "completionPct": 100
+  },
+  "xdg-desktop-portal": {
+    "total": 50,
+    "translated": 50,
+    "untranslated": 0,
+    "completionPct": 100
+  },
+  "xdg-desktop-portal-gnome": {
+    "total": 78,
+    "translated": 78,
+    "untranslated": 0,
+    "completionPct": 100
+  },
+  "xdg-desktop-portal-gtk": {
+    "total": 64,
+    "translated": 64,
+    "untranslated": 0,
+    "completionPct": 100
+  },
+  "xdg-user-dirs": {
+    "total": 28,
+    "translated": 28,
+    "untranslated": 0,
+    "completionPct": 100
+  },
+  "xdg-user-dirs-gtk": {
+    "total": 11,
+    "translated": 11,
+    "untranslated": 0,
+    "completionPct": 100
+  },
+  "xdiagnose": {
+    "total": 27,
+    "translated": 27,
+    "untranslated": 0,
+    "completionPct": 100
+  },
+  "xen-xm": {
+    "total": 10,
+    "translated": 10,
+    "untranslated": 0,
+    "completionPct": 100
+  },
+  "xfsdump": {
+    "total": 768,
+    "translated": 0,
+    "untranslated": 768,
+    "completionPct": 0
+  },
+  "xfsprogs": {
+    "total": 3717,
+    "translated": 0,
+    "untranslated": 3717,
+    "completionPct": 0
+  },
+  "xkeyboard-config": {
+    "total": 1299,
+    "translated": 0,
+    "untranslated": 1299,
+    "completionPct": 0
+  },
+  "xz-man": {
+    "total": 708,
+    "translated": 708,
+    "untranslated": 0,
+    "completionPct": 100
+  },
+  "xz": {
+    "total": 260,
+    "translated": 260,
+    "untranslated": 0,
+    "completionPct": 100
+  },
+  "yelp": {
+    "total": 82,
+    "translated": 82,
+    "untranslated": 0,
+    "completionPct": 100
+  },
+  "yelp-xsl": {
+    "total": 64,
+    "translated": 64,
+    "untranslated": 0,
+    "completionPct": 100
+  },
+  "zeitgeist": {
+    "total": 2,
+    "translated": 2,
+    "untranslated": 0,
+    "completionPct": 100
+  },
+  "zenity": {
+    "total": 200,
+    "translated": 200,
+    "untranslated": 0,
+    "completionPct": 100
+  },
+  "zsys": {
+    "total": 377,
+    "translated": 377,
+    "untranslated": 0,
+    "completionPct": 100
+  }
+}

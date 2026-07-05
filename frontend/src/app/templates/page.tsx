@@ -7,6 +7,7 @@ import { ExternalLink, Package, ArrowUpDown, Filter, Loader2 } from 'lucide-reac
 import { useI18n } from '@/lib/i18n'
 import { lpTranslateUrl, lpUbuntuUrl, LANGUAGES, UBUNTU_RELEASE } from '@/lib/constants'
 import templatesData from '@/data/templates.json'
+import staticMetrics from '@/data/metrics-my.json'
 import type { TranslationTemplate } from '@/app/api/translation-progress/route'
 
 const ITEMS_PER_PAGE = 20
@@ -32,7 +33,7 @@ export default function TemplatesPage() {
   const [category, setCategory] = useState('All')
   const [priority, setPriority] = useState('All')
   const [currentPage, setCurrentPage] = useState(1)
-  const [sortBy, setSortBy] = useState<'name' | 'untranslated' | 'priority'>('name')
+  const [sortBy, setSortBy] = useState<'name' | 'untranslated' | 'priority' | 'total'>('name')
   const [sortDir, setSortDir] = useState<'asc' | 'desc'>('asc')
 
   // ── Localization metrics state ────────────────────────────────────
@@ -62,8 +63,22 @@ export default function TemplatesPage() {
     }
   }, [])
 
-  // Fetch metrics on mount
+  // Load static metrics instantly, then refresh from API in background
   useEffect(() => {
+    // Instant: load from bundled static JSON
+    const map: MetricsMap = {}
+    for (const [name, m] of Object.entries(staticMetrics as Record<string, any>)) {
+      map[name] = {
+        name,
+        sourcePackage: '',
+        total: m.total,
+        translated: m.translated,
+        untranslated: m.untranslated,
+        completionPct: m.completionPct,
+      }
+    }
+    setMetrics(map)
+    // Background: refresh from API (gets latest data)
     fetchMetrics()
   }, [fetchMetrics])
 
@@ -88,6 +103,11 @@ export default function TemplatesPage() {
         const order = { high: 0, medium: 1, low: 2 }
         cmp = (order[a.priority as keyof typeof order] ?? 1) - (order[b.priority as keyof typeof order] ?? 1)
       }
+      else if (sortBy === 'total') {
+        const aTotal = metrics[a.name]?.total ?? a.entries
+        const bTotal = metrics[b.name]?.total ?? b.entries
+        cmp = aTotal - bTotal
+      }
       return sortDir === 'asc' ? cmp : -cmp
     })
     return result
@@ -96,7 +116,7 @@ export default function TemplatesPage() {
   const totalPages = Math.ceil(filtered.length / ITEMS_PER_PAGE)
   const paginated = filtered.slice((currentPage - 1) * ITEMS_PER_PAGE, currentPage * ITEMS_PER_PAGE)
 
-  const toggleSort = (field: 'name' | 'untranslated' | 'priority') => {
+  const toggleSort = (field: 'name' | 'untranslated' | 'priority' | 'total') => {
     if (sortBy === field) setSortDir(d => d === 'asc' ? 'desc' : 'asc')
     else { setSortBy(field); setSortDir('asc') }
     setCurrentPage(1)
@@ -163,26 +183,31 @@ export default function TemplatesPage() {
             <thead>
               <tr>
                 <th>
-                  <button onClick={() => toggleSort('name')} className="flex items-center gap-1 hover:text-[var(--tx-secondary)] transition-colors">
+                  <button onClick={() => toggleSort('name')} className="flex items-center gap-1 hover:text-[var(--tx-secondary)] transition-colors text-sm font-semibold">
                     {t('templates_package', 'Package')}
                     <ArrowUpDown size={12} />
                   </button>
                 </th>
-                <th>{t('templates_category', 'Category')}</th>
+                <th className="text-sm font-semibold">{t('templates_category', 'Category')}</th>
                 <th>
-                  <button onClick={() => toggleSort('priority')} className="flex items-center gap-1 hover:text-[var(--tx-secondary)] transition-colors">
+                  <button onClick={() => toggleSort('priority')} className="flex items-center gap-1 hover:text-[var(--tx-secondary)] transition-colors text-sm font-semibold">
                     {t('templates_priority', 'Priority')}
                     <ArrowUpDown size={12} />
                   </button>
                 </th>
                 <th>
-                  <button onClick={() => toggleSort('untranslated')} className="flex items-center gap-1 hover:text-[var(--tx-secondary)] transition-colors">
+                  <button onClick={() => toggleSort('untranslated')} className="flex items-center gap-1 hover:text-[var(--tx-secondary)] transition-colors text-sm font-semibold">
                     {t('templates_untranslated', 'Untranslated')}
                     <ArrowUpDown size={12} />
                   </button>
                 </th>
-                <th>{t('templates_total_strings', 'Total')}</th>
-                <th>{t('templates_translate', 'Translate')}</th>
+                <th>
+                  <button onClick={() => toggleSort('total')} className="flex items-center gap-1 hover:text-[var(--tx-secondary)] transition-colors text-sm font-semibold">
+                    {t('templates_total_strings', 'Total')}
+                    <ArrowUpDown size={12} />
+                  </button>
+                </th>
+                <th className="text-sm font-semibold">{t('templates_translate', 'Translate')}</th>
               </tr>
             </thead>
             <tbody>
