@@ -7,7 +7,7 @@ import { useI18n } from '@/lib/i18n'
 import { LANGUAGES, TRANSLATION_STATS, DASHBOARD_STATS, lpLanguageUrl } from '@/lib/constants'
 
 export default function Dashboard() {
-  const { t } = useI18n()
+  const { t, lang } = useI18n()
 
   const languageData = LANGUAGES.map(lang => {
     const stats = TRANSLATION_STATS.find(s => s.code === lang.code)!
@@ -125,6 +125,50 @@ export default function Dashboard() {
                   {action.title}
                 </h3>
                 <p className="text-sm text-[var(--tx-secondary)] mt-1">{action.desc}</p>
+                {lang === 'my' && action.href === 'https://launchpad.net/' && (
+                  <div className="mt-3 space-y-2 border-t border-[var(--border-light)] pt-3">
+                    <a href="https://launchpad.net/~ubuntu-mm" target="_blank" rel="noopener noreferrer" className="flex items-center gap-2 text-xs text-ubuntu-orange hover:underline" onClick={(e) => e.stopPropagation()}>
+                      <ExternalLink size={12} />
+                      Ubuntu Myanmar LoCo Team
+                    </a>
+                    <a href="https://launchpad.net/~lp-l10n-my" target="_blank" rel="noopener noreferrer" className="flex items-center gap-2 text-xs text-ubuntu-orange hover:underline" onClick={(e) => e.stopPropagation()}>
+                      <ExternalLink size={12} />
+                      Launchpad Burmese Translators
+                    </a>
+                    <a href="https://launchpad.net/~ubuntu-l10n-my" target="_blank" rel="noopener noreferrer" className="flex items-center gap-2 text-xs text-ubuntu-orange hover:underline" onClick={(e) => e.stopPropagation()}>
+                      <ExternalLink size={12} />
+                      Burmese Localization Team
+                    </a>
+                  </div>
+                )}
+                {lang === 'shn' && action.href === 'https://launchpad.net/' && (
+                  <div className="mt-3 space-y-2 border-t border-[var(--border-light)] pt-3">
+                    <a href="https://launchpad.net/~ubuntu-shn" target="_blank" rel="noopener noreferrer" className="flex items-center gap-2 text-xs text-ubuntu-orange hover:underline" onClick={(e) => e.stopPropagation()}>
+                      <ExternalLink size={12} />
+                      Ubuntu Shan LoCo Team
+                    </a>
+                    <a href="https://launchpad.net/~lp-l10n-shn" target="_blank" rel="noopener noreferrer" className="flex items-center gap-2 text-xs text-ubuntu-orange hover:underline" onClick={(e) => e.stopPropagation()}>
+                      <ExternalLink size={12} />
+                      Launchpad Shan Translators
+                    </a>
+                    <a href="https://launchpad.net/~ubuntu-l10n-shn" target="_blank" rel="noopener noreferrer" className="flex items-center gap-2 text-xs text-ubuntu-orange hover:underline" onClick={(e) => e.stopPropagation()}>
+                      <ExternalLink size={12} />
+                      Ubuntu Shan Localization
+                    </a>
+                  </div>
+                )}
+                {lang === 'mnw' && action.href === 'https://launchpad.net/' && (
+                  <div className="mt-3 space-y-2 border-t border-[var(--border-light)] pt-3">
+                    <a href="https://launchpad.net/~lp-l10n-mnw" target="_blank" rel="noopener noreferrer" className="flex items-center gap-2 text-xs text-ubuntu-orange hover:underline" onClick={(e) => e.stopPropagation()}>
+                      <ExternalLink size={12} />
+                      Launchpad Mon Translation
+                    </a>
+                    <a href="https://launchpad.net/~ubuntu-l10n-mnw" target="_blank" rel="noopener noreferrer" className="flex items-center gap-2 text-xs text-ubuntu-orange hover:underline" onClick={(e) => e.stopPropagation()}>
+                      <ExternalLink size={12} />
+                      Ubuntu Mon Translation
+                    </a>
+                  </div>
+                )}
               </a>
             ) : (
               <Link key={action.href} href={action.href} className="glass-card glass-card-hover p-6 group">
