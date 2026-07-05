@@ -5,7 +5,7 @@ import { ClientLayout } from '@/components/ClientLayout'
 
 export const metadata: Metadata = {
   title: 'Ubuntu Localization Tool',
-  description: 'AI-powered Ubuntu OS localization for indigenous languages',
+  description: 'Ubuntu OS localization for indigenous languages',
   icons: { icon: '/favicon.png' },
 }
 

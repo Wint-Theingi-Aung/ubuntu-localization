@@ -342,7 +342,7 @@ export default function TranslatePage() {
             >
               {isTranslating
                 ? <><Loader2 size={18} className="animate-spin" />Translating {Math.min(ENTRIES_PER_PAGE, untranslatedCount)} strings...</>
-                : <><Sparkles size={18} />AI Translate (next {Math.min(ENTRIES_PER_PAGE, untranslatedCount)})</>}
+                : <><Sparkles size={18} />To Translate (next {Math.min(ENTRIES_PER_PAGE, untranslatedCount)})</>}
             </button>
             {translatedCount > 0 && (
               <button onClick={() => setStep('review')} className="btn-secondary flex items-center gap-2">
@@ -381,7 +381,7 @@ export default function TranslatePage() {
                             placeholder={t('translation_enter_translation', 'Enter or edit translation...')}
                           />
                         )
-                        : <p className="text-[var(--tx-faint)] italic text-sm p-2.5">{t('translation_pending_hint', 'Click AI Translate to generate')}</p>}
+                        : <p className="text-[var(--tx-faint)] italic text-sm p-2.5">{t('translation_pending_hint', 'Click To Translate to generate')}</p>}
                     </div>
                   </div>
                   {(entry.status === 'translated' || entry.status === 'reviewing') && (
