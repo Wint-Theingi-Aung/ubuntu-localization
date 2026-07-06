@@ -326,7 +326,10 @@ export default function TranslatePage() {
             <div className="flex items-center justify-between mb-2">
               <span className="text-[var(--tx-muted)]">{t('translation_progress', 'Progress')}</span>
               <span className="text-[var(--tx-primary)] font-medium">
-                {confirmedCount} confirmed / {totalCount} total ({untranslatedCount} untranslated)
+                {t('translation_progress_summary', '{confirmed} confirmed / {total} total ({untranslated} untranslated)')
+                  .replace('{confirmed}', String(confirmedCount))
+                  .replace('{total}', String(totalCount))
+                  .replace('{untranslated}', String(untranslatedCount))}
               </span>
             </div>
             <div className="progress-bar">
@@ -341,12 +344,12 @@ export default function TranslatePage() {
               className="btn-primary flex items-center gap-2"
             >
               {isTranslating
-                ? <><Loader2 size={18} className="animate-spin" />Translating {Math.min(ENTRIES_PER_PAGE, untranslatedCount)} strings...</>
-                : <><Sparkles size={18} />To Translate (next {Math.min(ENTRIES_PER_PAGE, untranslatedCount)})</>}
+                ? <><Loader2 size={18} className="animate-spin" />{t('translation_translating_n', 'Translating {count} strings...').replace('{count}', String(Math.min(ENTRIES_PER_PAGE, untranslatedCount)))}</>
+                : <><Sparkles size={18} />{t('translation_to_translate', 'To Translate (next {count})').replace('{count}', String(Math.min(ENTRIES_PER_PAGE, untranslatedCount)))}</>}
             </button>
             {translatedCount > 0 && (
               <button onClick={() => setStep('review')} className="btn-secondary flex items-center gap-2">
-                <Eye size={18} />Review Translations
+                <Eye size={18} />{t('translation_review_translations', 'Review Translations')}
               </button>
             )}
           </div>
@@ -355,16 +358,16 @@ export default function TranslatePage() {
             <div className="divide-y divide-[var(--border-light)]">
               {paginatedEntries.map(entry => (
                 <div key={entry.index} className="p-4 hover:bg-[var(--surface-overlay)] transition-colors">
-                  <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-                    <div>
+                  <div className="grid grid-cols-1 md:grid-cols-2 gap-4 items-stretch">
+                    <div className="flex flex-col">
                       <p className="text-xs text-[var(--tx-dim)] mb-1 flex items-center gap-1">
                         <FileText size={10} />{t('translation_source', 'Source')}
                       </p>
-                      <p className="text-[var(--tx-primary)] font-mono text-sm bg-[var(--surface-overlay)] p-2.5 rounded-lg border border-[var(--border-light)]">
+                      <p className="text-[var(--tx-primary)] font-mono text-sm bg-[var(--surface-overlay)] p-2.5 rounded-lg border border-[var(--border-light)] min-h-[4rem] flex-1">
                         {entry.msgid}
                       </p>
                     </div>
-                    <div>
+                    <div className="flex flex-col">
                       <p className="text-xs text-[var(--tx-dim)] mb-1 flex items-center gap-1">
                         <Languages size={10} />
                         {entry.status === 'translated' || entry.status === 'reviewing'
@@ -376,12 +379,12 @@ export default function TranslatePage() {
                           <textarea
                             value={entry.msgstr}
                             onChange={(e) => handleEditTranslation(entry.index, e.target.value)}
-                            className="input-field w-full font-myanmar text-sm min-h-[4rem] resize-y bg-emerald-500/5 border-emerald-500/20 focus:border-ubuntu-orange/50"
+                            className="input-field w-full font-myanmar text-sm min-h-[4rem] flex-1 resize-y bg-emerald-500/5 border-emerald-500/20 focus:border-ubuntu-orange/50"
                             rows={2}
                             placeholder={t('translation_enter_translation', 'Enter or edit translation...')}
                           />
                         )
-                        : <p className="text-[var(--tx-faint)] italic text-sm p-2.5">{t('translation_pending_hint', 'Click To Translate to generate')}</p>}
+                        : <p className="text-[var(--tx-faint)] italic text-sm p-2.5 min-h-[4rem] flex-1 flex items-center">{t('translation_pending_hint', 'Click To Translate to generate')}</p>}
                     </div>
                   </div>
                   {(entry.status === 'translated' || entry.status === 'reviewing') && (
@@ -407,16 +410,16 @@ export default function TranslatePage() {
             <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-3">
               <div className="flex items-center gap-4 text-sm flex-wrap">
                 <span className="text-[var(--tx-muted)]">
-                  <span className="text-amber-400 font-semibold">{reviewingCount}</span> awaiting review
+                  <span className="text-amber-400 font-semibold">{reviewingCount}</span> {t('translation_awaiting_review', 'awaiting review')}
                 </span>
                 <span className="text-[var(--tx-muted)]">
-                  <span className="text-emerald-400 font-semibold">{confirmedCount}</span> confirmed
+                  <span className="text-emerald-400 font-semibold">{confirmedCount}</span> {t('translation_confirmed', 'confirmed')}
                 </span>
                 <span className="text-[var(--tx-muted)]">
-                  <span className="text-[var(--tx-dim)] font-semibold">{untranslatedCount}</span> untranslated
+                  <span className="text-[var(--tx-dim)] font-semibold">{untranslatedCount}</span> {t('translation_untranslated', 'untranslated')}
                 </span>
                 <span className="text-[var(--tx-muted)]">
-                  <span className="text-[var(--tx-primary)] font-semibold">{totalCount}</span> total
+                  <span className="text-[var(--tx-primary)] font-semibold">{totalCount}</span> {t('translation_total', 'total')}
                 </span>
               </div>
               <div className="flex gap-2">
@@ -425,14 +428,14 @@ export default function TranslatePage() {
                   disabled={reviewingCount === 0}
                   className="btn-primary flex items-center gap-2 text-sm"
                 >
-                  <Check size={16} />Confirm Page ({pageReviewingCount})
+                  <Check size={16} />{t('translation_confirm_page', 'Confirm Page ({count})').replace('{count}', String(pageReviewingCount))}
                 </button>
                 <button
                   onClick={() => setStep('export')}
                   disabled={confirmedCount === 0}
                   className="btn-secondary flex items-center gap-2 text-sm"
                 >
-                  <Download size={16} />Export ({confirmedCount} confirmed)
+                  <Download size={16} />{t('translation_export_confirmed', 'Export ({count} confirmed)').replace('{count}', String(confirmedCount))}
                 </button>
               </div>
             </div>
@@ -481,13 +484,13 @@ export default function TranslatePage() {
                       <p className={`text-sm font-myanmar truncate mt-0.5 ${
                         isConfirmed ? 'text-emerald-400' : 'text-amber-300'
                       }`}>
-                        {entry.msgstr || '(empty)'}
+                        {entry.msgstr || t('translation_empty', '(empty)')}
                       </p>
                     </div>
                     <span className={`badge flex-shrink-0 ${
                       isConfirmed ? 'badge-green' : isReviewing ? 'badge-yellow' : 'badge-orange'
                     }`}>
-                      {isConfirmed ? 'Confirmed' : isReviewing ? 'Needs Review' : 'Pending'}
+                      {isConfirmed ? t('translation_status_confirmed', 'Confirmed') : isReviewing ? t('translation_status_needs_review', 'Needs Review') : t('translation_status_pending', 'Pending')}
                     </span>
                     {isExpanded ? <ChevronUp size={16} className="text-[var(--tx-dim)]" /> : <ChevronDown size={16} className="text-[var(--tx-dim)]" />}
                   </button>
@@ -499,7 +502,7 @@ export default function TranslatePage() {
                         {/* Source */}
                         <div>
                           <label className="text-xs text-[var(--tx-dim)] mb-2 block flex items-center gap-1">
-                            <FileText size={10} />Source Text
+                            <FileText size={10} />{t('translation_source_text', 'Source Text')}
                           </label>
                           <div className="font-mono text-sm bg-[var(--surface-overlay)] p-3 rounded-lg border border-[var(--border-light)] text-[var(--tx-primary)] whitespace-pre-wrap">
                             {entry.msgid}
@@ -510,7 +513,7 @@ export default function TranslatePage() {
                         <div>
                           <label className="text-xs text-[var(--tx-dim)] mb-2 block flex items-center gap-1">
                             <Edit3 size={10} />
-                            Translation {isReviewing && <span className="text-amber-400">(AI-generated — review & edit)</span>}
+                            {t('translation_review_label', 'Translation')} {isReviewing && <span className="text-amber-400">({t('translation_ai_review_hint', 'AI-generated — review & edit')})</span>}
                           </label>
                           <textarea
                             value={entry.msgstr}
@@ -521,7 +524,7 @@ export default function TranslatePage() {
                                 : ''
                             }`}
                             rows={3}
-                            placeholder="Enter translation..."
+                            placeholder={t('translation_enter_translation', 'Enter translation...')}
                           />
                         </div>
                       </div>
@@ -533,7 +536,7 @@ export default function TranslatePage() {
                             onClick={() => handleUnconfirmEntry(entry.index)}
                             className="btn-ghost flex items-center gap-1.5 text-sm text-amber-400 hover:text-amber-300"
                           >
-                            <RotateCcw size={14} />Unconfirm
+                            <RotateCcw size={14} />{t('translation_unconfirm', 'Unconfirm')}
                           </button>
                         ) : (
                           <button
@@ -541,14 +544,14 @@ export default function TranslatePage() {
                             disabled={!entry.msgstr}
                             className="btn-primary flex items-center gap-1.5 text-sm"
                           >
-                            <Check size={14} />Confirm Translation
+                            <Check size={14} />{t('translation_confirm_translation', 'Confirm Translation')}
                           </button>
                         )}
                         <button
                           onClick={() => handleResetToAI(entry.index)}
                           className="btn-ghost flex items-center gap-1.5 text-sm text-[var(--tx-muted)] hover:text-[var(--tx-primary)]"
                         >
-                          <RotateCcw size={14} />Reset
+                          <RotateCcw size={14} />{t('translation_reset', 'Reset')}
                         </button>
                       </div>
                     </div>
@@ -571,10 +574,12 @@ export default function TranslatePage() {
             {t('translation_complete', 'Translation Complete!')}
           </h2>
           <p className="text-[var(--tx-muted)] mb-1">
-            {confirmedCount} strings confirmed and ready to export
+            {t('translation_strings_ready', '{count} strings confirmed and ready to export').replace('{count}', String(confirmedCount))}
           </p>
           <p className="text-[var(--tx-dim)] text-sm mb-6">
-            Translated to {languages.find(l => l.code === targetLang)?.name} ({languages.find(l => l.code === targetLang)?.native})
+            {t('translation_translated_to_lang', 'Translated to {lang} ({native})')
+              .replace('{lang}', languages.find(l => l.code === targetLang)?.name || '')
+              .replace('{native}', languages.find(l => l.code === targetLang)?.native || '')}
           </p>
 
           <div className="flex flex-col sm:flex-row justify-center gap-3">
