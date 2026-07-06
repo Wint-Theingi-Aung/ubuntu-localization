@@ -13,6 +13,7 @@ interface I18nContextType {
   lang: LanguageCode
   setLang: (lang: LanguageCode) => void
   t: (key: string, fallback?: string) => string
+  ti: (key: string, params: Record<string, string | number>, fallback?: string) => string
   langName: string
 }
 
@@ -28,13 +29,17 @@ const langNames: Record<string, string> = {
 }
 
 export function I18nProvider({ children }: { children: ReactNode }) {
+  // Start with 'en' so server and client match during hydration.
+  // After hydration, useEffect reads the saved preference from localStorage.
   const [lang, setLangState] = useState<LanguageCode>('en')
 
   useEffect(() => {
-    const stored = localStorage.getItem('ubuntu-locale')
-    if (stored && ['en', 'my', 'shn', 'mnw', 'ksw'].includes(stored)) {
-      setLangState(stored as LanguageCode)
-    }
+    try {
+      const stored = localStorage.getItem('ubuntu-locale')
+      if (stored && ['en', 'my', 'shn', 'mnw', 'ksw'].includes(stored)) {
+        setLangState(stored as LanguageCode)
+      }
+    } catch {}
   }, [])
 
   const setLang = useCallback((newLang: LanguageCode) => {
@@ -50,10 +55,23 @@ export function I18nProvider({ children }: { children: ReactNode }) {
     [lang]
   )
 
+  /** Translate with interpolation — replaces {param} placeholders in the resolved string */
+  const ti = useCallback(
+    (key: string, params: Record<string, string | number>, fallback?: string): string => {
+      const raw = t(key, fallback)
+      return Object.entries(params).reduce(
+        (str, [k, v]) => str.replace(new RegExp(`\\{${k}\\}`, 'g'), String(v)),
+        raw,
+      )
+    },
+    [t],
+  )
+
   const value: I18nContextType = {
     lang,
     setLang,
     t,
+    ti,
     langName: langNames[lang] || 'English',
   }
 

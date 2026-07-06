@@ -206,5 +206,16 @@
   "templates_loading_metrics": "metric ၶော်ႁူဝ်...",
   "templates_metrics_unavailable": "metric ၶုပ်းၶႃႈႁူဝ်",
   "templates_untranslated_short": "မပြန်ရ",
-  "templates_total_short": "ႁူဝ်ၶႃး"
+  "templates_total_short": "ႁူဝ်ၶႃး",
+  "activity_translated_n": "{file} ၵူဝ်ႁိူၼ် {count} ၵော်ႁူဝ် ပိၼ်ႇၽၢသႃႁဵတ်ႁႂ်ႁဵၼ်ႁႂ်ႈ",
+  "activity_exported_file": "ပိၼ်ႇၽၢသႃႁဵတ်ႁႂ် {file} ၵော်ႁူဝ် လူတ်ႇလူင်းႁဵတ်ႁႂ်ႁဵၼ်ႁႂ်ႈ",
+  "activity_uploaded_file": "{file} ၵော်ႁူဝ် ပိၼ်ႇၽၢသႃႇၶႃႈ လွၵ်းတၢင်းႁဵတ်ႁႂ်ႁဵၼ်ႁႂ်ႈ",
+  "activity_added_glossary_n": "ၸိုဝ်ႈသဵင် {count} ၵော်ႁူဝ် ႁူတ်ႁိုင်ႁဵတ်ႁႂ်ႁဵၼ်ႁႂ်ႈ",
+  "activity_ai_batch": "Gemini AI ၼႂ်း batch ပိၼ်ႇၽၢသႃ",
+  "activity_manual": "ႁူၶိုဝ်ႈႁူပ်း ပိၼ်ႇၽၢသႃ",
+  "activity_new_translations": "ပိၼ်ႇၽၢသႃႁဵတ်ႁႂ်ႁဵၼ်ႁႂ်ႈ +{count}၊ ၶိူင်ႁဵတ်ႁႂ်ႁဵၼ်ႁႂ်ႈ: {percent}%",
+  "activity_entries_n": "ႁူဝ်ႁိူၼ် {count}၊ ပိၼ်ႇၽၢသႃမတိာ် {untranslated}",
+  "activity_glossary_detail": "{terms}",
+  "activity_visitors": "လားပ်းႁူဝ်ႁိူၼ်: {count}",
+  "activity_visitors_loading": "လားပ်းႁူဝ်ႁိူၼ် ၶော်ႁူဝ်..."
 }

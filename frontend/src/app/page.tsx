@@ -7,12 +7,11 @@ import { useI18n } from '@/lib/i18n'
 import { LANGUAGES, TRANSLATION_STATS, DASHBOARD_STATS, lpLanguageUrl } from '@/lib/constants'
 import { getHistory, formatTimestamp, type HistoryEntry } from '@/lib/history'
 
-const actionLabels: Record<string, string> = { translate: 'Translated', export: 'Exported', upload: 'Uploaded', glossary: 'Updated glossary' }
 const actionIconMap: Record<string, typeof Languages> = { translate: Languages, export: FileCode, upload: FileText, glossary: BookOpen }
 const actionColorMap: Record<string, string> = { translate: 'text-ubuntu-orange', export: 'text-emerald-400', upload: 'text-blue-400', glossary: 'text-purple-400' }
 
 export default function Dashboard() {
-  const { t, lang } = useI18n()
+  const { t, ti, lang } = useI18n()
   const [mounted, setMounted] = useState(false)
   const [recentActivity, setRecentActivity] = useState<HistoryEntry[]>([])
   useEffect(() => {
@@ -212,7 +211,7 @@ export default function Dashboard() {
                       <Icon className={color} size={16} />
                     </div>
                     <div className="min-w-0">
-                      <p className="text-[var(--tx-primary)] text-sm truncate">{entry.description}</p>
+                      <p className="text-[var(--tx-primary)] text-sm truncate">{mounted && entry.descriptionKey ? ti(entry.descriptionKey, entry.descriptionParams || {}, entry.description) : entry.description}</p>
                       <div className="flex items-center gap-2">
                         <span className="text-xs text-[var(--tx-dim)]">{entry.user}</span>
                         {entry.language && <span className="badge-orange text-[10px]">{entry.language}</span>}

@@ -1,6 +1,6 @@
 'use client'
 
-import { useState, useMemo } from 'react'
+import { useState, useMemo, useEffect } from 'react'
 import { History, Download, Languages, FileText, Clock, BookOpen, Trash2 } from 'lucide-react'
 import { useI18n } from '@/lib/i18n'
 import { getHistory, clearHistory, formatTimestamp, type HistoryEntry } from '@/lib/history'
@@ -17,12 +17,18 @@ const filterOptions: { key: string | null; labelKey: string; fallback: string }[
 ]
 
 export default function HistoryPage() {
-  const { t } = useI18n()
+  const { t, ti } = useI18n()
+  const [mounted, setMounted] = useState(false)
+  const [allHistory, setAllHistory] = useState<HistoryEntry[]>([])
   const [filter, setFilter] = useState<string | null>(null)
   const [refreshKey, setRefreshKey] = useState(0)
 
-  // Re-read from localStorage when filter or refreshKey changes
-  const allHistory = useMemo(() => getHistory(), [refreshKey])
+  // Load history after mount so server and client both render [] during hydration
+  useEffect(() => {
+    setMounted(true)
+    setAllHistory(getHistory())
+  }, [refreshKey])
+
   const filtered = useMemo(() => filter ? allHistory.filter(h => h.action === filter) : allHistory, [filter, allHistory])
 
   const handleClear = () => {
@@ -67,7 +73,7 @@ export default function HistoryPage() {
                 <div className="timeline-content glass-card p-4">
                   <div className="flex items-start justify-between">
                     <div>
-                      <p className="text-[var(--tx-primary)] font-medium">{entry.description}</p>
+                      <p className="text-[var(--tx-primary)] font-medium">{mounted && entry.descriptionKey ? ti(entry.descriptionKey, entry.descriptionParams || {}, entry.description) : entry.description}</p>
                       <div className="flex items-center gap-3 mt-1">
                         <span className="text-sm text-[var(--tx-muted)]">{entry.user}</span>
                         {entry.language && <span className="badge-orange">{entry.language}</span>}
@@ -75,7 +81,7 @@ export default function HistoryPage() {
                     </div>
                     <div className="flex items-center gap-1 text-xs text-[var(--tx-dim)] flex-shrink-0 ml-4"><Clock size={12} />{formatTimestamp(entry.timestamp, t)}</div>
                   </div>
-                  {entry.details && <p className="text-sm text-[var(--tx-muted)] mt-2">{entry.details}</p>}
+                  {entry.details && <p className="text-sm text-[var(--tx-muted)] mt-2">{mounted && entry.detailsKey ? ti(entry.detailsKey, entry.detailsParams || {}, entry.details) : entry.details}</p>}
                 </div>
               </div>
             )
@@ -92,7 +98,7 @@ export default function HistoryPage() {
               <div className="flex items-start gap-3">
                 <div className={`w-10 h-10 rounded-full flex items-center justify-center flex-shrink-0 ${c}`}><Icon size={18} /></div>
                 <div className="flex-1 min-w-0">
-                  <p className="text-[var(--tx-primary)] font-medium text-sm">{entry.description}</p>
+                  <p className="text-[var(--tx-primary)] font-medium text-sm">{mounted && entry.descriptionKey ? ti(entry.descriptionKey, entry.descriptionParams || {}, entry.description) : entry.description}</p>
                   <div className="flex items-center gap-2 mt-1 flex-wrap">
                     <span className="text-xs text-[var(--tx-dim)]">{entry.user}</span>
                     {entry.language && <span className="badge-orange text-[10px]">{entry.language}</span>}
@@ -100,7 +106,7 @@ export default function HistoryPage() {
                 </div>
               </div>
               <div className="flex items-center justify-between text-xs text-[var(--tx-dim)]">
-                <span>{entry.details}</span>
+                <span>{mounted && entry.detailsKey ? ti(entry.detailsKey, entry.detailsParams || {}, entry.details || '') : entry.details}</span>
                 <span className="flex items-center gap-1 flex-shrink-0"><Clock size={10} />{formatTimestamp(entry.timestamp, t)}</span>
               </div>
             </div>

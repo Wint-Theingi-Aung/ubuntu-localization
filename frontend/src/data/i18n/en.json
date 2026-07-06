@@ -209,5 +209,16 @@
   "templates_loading_metrics": "Loading metrics...",
   "templates_metrics_unavailable": "Metrics unavailable",
   "templates_untranslated_short": "untrans",
-  "templates_total_short": "total"
+  "templates_total_short": "total",
+  "activity_translated_n": "Translated {count} strings in {file}",
+  "activity_exported_file": "Exported translated {file}",
+  "activity_uploaded_file": "Uploaded {file} for translation",
+  "activity_added_glossary_n": "Added {count} glossary terms",
+  "activity_ai_batch": "AI batch translation with Gemini",
+  "activity_manual": "Manual translation",
+  "activity_new_translations": "+{count} new translations, completion: {percent}%",
+  "activity_entries_n": "{count} entries, {untranslated} untranslated",
+  "activity_glossary_detail": "{terms}",
+  "activity_visitors": "Visitors: {count}",
+  "activity_visitors_loading": "Loading visitors..."
 }

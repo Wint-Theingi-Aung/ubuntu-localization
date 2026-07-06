@@ -209,5 +209,16 @@
   "templates_loading_metrics": "metric များ ဖွင့်နေသည်...",
   "templates_metrics_unavailable": "metric များ ရနိုင်ခြင်းမရှိ",
   "templates_untranslated_short": "မပြန်ရ",
-  "templates_total_short": "စုစုပေါင်း"
+  "templates_total_short": "စုစုပေါင်း",
+  "activity_translated_n": "{file} တွင် စာကြောင်း {count} ကို ဘာသာပြန်ပြီး",
+  "activity_exported_file": "ဘာသာပြန်ပြီး {file} ကို ဒေါင်းလုဒ်လုပ်ပြီး",
+  "activity_uploaded_file": "{file} ကို ဘာသာပြန်ရန် ဖိုင်တင်ပြီး",
+  "activity_added_glossary_n": "ဝေါဟာရ {count} ခု ထည့်သွင်းပြီး",
+  "activity_ai_batch": "Gemini AI ဖြင့် batch ဘာသာပြန်ခြင်း",
+  "activity_manual": "လက်ဖြင့်ဘာသာပြန်ခြင်း",
+  "activity_new_translations": "ဘာသာပြန်ပြီးသား +{count}၊ ပြီးစီးမှု: {percent}%",
+  "activity_entries_n": "စာကြောင်း {count}၊ ဘာသာမပြန်ရသေး {untranslated}",
+  "activity_glossary_detail": "{terms}",
+  "activity_visitors": "လာရောက်သူ: {count}",
+  "activity_visitors_loading": "လာရောက်သူ ဖွင့်နေသည်..."
 }

@@ -209,5 +209,16 @@
   "templates_loading_metrics": "metric ကောဝ်...",
   "templates_metrics_unavailable": "metric ရက်",
   "templates_untranslated_short": "သုတ်ကာ",
-  "templates_total_short": "စုဝ်ကာ"
+  "templates_total_short": "စုဝ်ကာ",
+  "activity_translated_n": "{file} ကောဝ် စာကြောင်း {count} ပြာပ်ပြံၚ်ပြီး",
+  "activity_exported_file": "ပြာပ်ပြံၚ်ပြီး {file} ဒေါင်းလုဒ်လုပ်ပြီး",
+  "activity_uploaded_file": "{file} ပြာပ်ပြံၚ်ႇၶေၣ် ဖိုင်တင်ပြီး",
+  "activity_added_glossary_n": "ရမျှာၚ် {count} ထည့်သွင်းပြီး",
+  "activity_ai_batch": "Gemini AI ၼူၚ် batch ပြာပ်ပြံၚ်",
+  "activity_manual": "လက်ဖြင့်ပြာပ်ပြံၚ်",
+  "activity_new_translations": "ပြာပ်ပြံၚ်ပြီးသား +{count}၊ ပြီးစီးမှု: {percent}%",
+  "activity_entries_n": "စာကြောင်း {count}၊ ပြာပ်ပြံၚ်မတိာ် {untranslated}",
+  "activity_glossary_detail": "{terms}",
+  "activity_visitors": "လားပ်: {count}",
+  "activity_visitors_loading": "လားပ် ဖွံ့..."
 }

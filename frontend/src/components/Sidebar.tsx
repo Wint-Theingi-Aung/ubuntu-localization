@@ -24,14 +24,17 @@ import { UI_LANGUAGES } from '@/lib/constants'
 
 function VisitorCounter() {
   const [count, setCount] = useState<number | null>(null)
+  const [mounted, setMounted] = useState(false)
+  const { t } = useI18n()
   useEffect(() => {
-    fetch('https://api.countapi.xyz/hit/ubuntu-localization/visits')
+    setMounted(true)
+    fetch('https://api.countapi.xyz/hit/ubuntu-localization.vercel.app/visitors')
       .then(r => r.json())
       .then(d => setCount(d.value))
       .catch(() => {})
   }, [])
   return count !== null ? (
-    <span className="text-[10px] text-[var(--tx-faint)]" title="Total visitors">
+    <span className="text-[10px] text-[var(--tx-faint)]" title={mounted ? t('activity_visitors', 'Visitors') : 'Visitors'}>
       👁 {count.toLocaleString()}
     </span>
   ) : null

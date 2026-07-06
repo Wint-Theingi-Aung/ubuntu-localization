@@ -209,5 +209,16 @@
   "templates_loading_metrics": "metric ဖွံ့...",
   "templates_metrics_unavailable": "metric မရှိ",
   "templates_untranslated_short": "မတိာ်",
-  "templates_total_short": "တူၣ်း"
+  "templates_total_short": "တူၣ်း",
+  "activity_translated_n": "{file} ထဲမှာ စာကြောင်း {count} ကွဲးကျိာ်ပြီး",
+  "activity_exported_file": "ကွဲးကျိာ်ပြီး {file} ဒေါင်းလုဒ်လုပ်ပြီး",
+  "activity_uploaded_file": "{file} ကွဲးကျိာ်ႇၶေၣ် ဖိုင်တင်ပြီး",
+  "activity_added_glossary_n": "တၢ်ကတိၤသီ {count} ထည့်သွင်းပြီး",
+  "activity_ai_batch": "Gemini AI ၼူၚ် batch ကွဲးကျိာ်",
+  "activity_manual": "လက်ဖြင့်ကွဲးကျိာ်",
+  "activity_new_translations": "ကွဲးကျိာ်ပြီးသား +{count}၊ ပြီးစီးမှု: {percent}%",
+  "activity_entries_n": "စာကြောင်း {count}၊ ကွဲးကျိာ်မတိာ် {untranslated}",
+  "activity_glossary_detail": "{terms}",
+  "activity_visitors": "လားပ်: {count}",
+  "activity_visitors_loading": "လားပ် ဖွံ့..."
 }
