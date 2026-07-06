@@ -13,6 +13,7 @@ export interface HistoryEntry {
 }
 
 const STORAGE_KEY = 'ubuntu-localization-history'
+const CLEARED_KEY = 'ubuntu-localization-history-cleared'
 const MAX_ENTRIES = 100
 
 /** Read all history entries from localStorage (newest first) */
@@ -20,7 +21,12 @@ export function getHistory(): HistoryEntry[] {
   if (typeof window === 'undefined') return []
   try {
     const raw = localStorage.getItem(STORAGE_KEY)
-    if (!raw) return getDefaultHistory()
+    if (!raw) {
+      // Only seed defaults on fresh install (not after manual clear)
+      const wasCleared = localStorage.getItem(CLEARED_KEY) === 'true'
+      if (wasCleared) return []
+      return getDefaultHistory()
+    }
     const entries: HistoryEntry[] = JSON.parse(raw)
     return entries.sort((a, b) => b.timestamp - a.timestamp)
   } catch {
@@ -40,6 +46,7 @@ export function recordHistory(entry: Omit<HistoryEntry, 'id' | 'timestamp'>) {
     }
     const updated = [newEntry, ...existing].slice(0, MAX_ENTRIES)
     localStorage.setItem(STORAGE_KEY, JSON.stringify(updated))
+    localStorage.removeItem(CLEARED_KEY)
   } catch {
     // localStorage full or unavailable — fail silently
   }
@@ -49,6 +56,7 @@ export function recordHistory(entry: Omit<HistoryEntry, 'id' | 'timestamp'>) {
 export function clearHistory() {
   if (typeof window === 'undefined') return
   localStorage.removeItem(STORAGE_KEY)
+  localStorage.setItem(CLEARED_KEY, 'true')
 }
 
 /** Seed with default entries if no history exists */

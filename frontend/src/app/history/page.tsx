@@ -26,8 +26,10 @@ export default function HistoryPage() {
   const filtered = useMemo(() => filter ? allHistory.filter(h => h.action === filter) : allHistory, [filter, allHistory])
 
   const handleClear = () => {
-    clearHistory()
-    setRefreshKey(k => k + 1)
+    if (window.confirm(t('history_clear_confirm', 'Are you sure you want to clear all translation history? This cannot be undone.'))) {
+      clearHistory()
+      setRefreshKey(k => k + 1)
+    }
   }
 
   return (

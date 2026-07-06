@@ -139,6 +139,7 @@
   "history_empty_hint": "အခြားစစ်ထုတ်မှုတစ်ခု ရွေးရန်",
   "history_entries": "ႁူဝ်ႁိူၼ်ႁူင်ႁၼ်ႁဵတႁႂ်ႈ",
   "history_clear": "မၢႆတွင်း ဖျက်ပါ",
+  "history_clear_confirm": "ဘာသာပြန်မှတ်တမ်းအားလုံးကို ဖျက်မည်လား။ ဒါကို ပြန်ဖျက်မရပါ။",
   "history_time_just_now": "အခုပဲ",
   "history_time_minutes_ago": "မိနစ်ကြာပြီ",
   "history_time_hours_ago": "နာရီကြာပြီ",

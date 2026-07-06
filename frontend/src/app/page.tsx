@@ -1,15 +1,24 @@
 'use client'
 import { useState, useEffect } from 'react'
 import LanguageCard from '@/components/LanguageCard'
-import { Languages, FileCode, BookOpen, Users, ArrowRight, Sparkles, ExternalLink, Github, Rocket } from 'lucide-react'
+import { Languages, FileCode, FileText, BookOpen, Users, ArrowRight, Sparkles, ExternalLink, Github, Rocket, Clock } from 'lucide-react'
 import Link from 'next/link'
 import { useI18n } from '@/lib/i18n'
 import { LANGUAGES, TRANSLATION_STATS, DASHBOARD_STATS, lpLanguageUrl } from '@/lib/constants'
+import { getHistory, formatTimestamp, type HistoryEntry } from '@/lib/history'
+
+const actionLabels: Record<string, string> = { translate: 'Translated', export: 'Exported', upload: 'Uploaded', glossary: 'Updated glossary' }
+const actionIconMap: Record<string, typeof Languages> = { translate: Languages, export: FileCode, upload: FileText, glossary: BookOpen }
+const actionColorMap: Record<string, string> = { translate: 'text-ubuntu-orange', export: 'text-emerald-400', upload: 'text-blue-400', glossary: 'text-purple-400' }
 
 export default function Dashboard() {
   const { t, lang } = useI18n()
   const [mounted, setMounted] = useState(false)
-  useEffect(() => setMounted(true), [])
+  const [recentActivity, setRecentActivity] = useState<HistoryEntry[]>([])
+  useEffect(() => {
+    setMounted(true)
+    setRecentActivity(getHistory().slice(0, 5))
+  }, [])
 
   const languageData = LANGUAGES.map(lang => {
     const stats = TRANSLATION_STATS.find(s => s.code === lang.code)!
@@ -32,31 +41,6 @@ export default function Dashboard() {
     { href: 'https://launchpad.net/', icon: Users, iconColor: 'text-purple-400', hoverColor: 'group-hover:text-purple-400', title: t('dashboard_join_contributors', 'Join Contributors'), desc: t('dashboard_join_contributors_desc', 'Connect with the translation community'), external: true },
     { href: '/get-started', icon: Rocket, iconColor: 'text-emerald-400', hoverColor: 'group-hover:text-emerald-400', title: t('dashboard_get_started', 'Get Started'), desc: t('dashboard_get_started_desc', 'Create account, join team, make your first translation') },
   ]
-
-  const recentActivity = [
-    { actionKey: 'history_activity_translated', count: 150, fileKey: 'gnome-control-center.po', lang: 'Myanmar', timeKey: 'history_time_hours_ago', timeValue: 2, user: 'wint-theingi-aung' },
-    { actionKey: 'history_activity_exported', fileKey: 'gnome-control-center.po', lang: 'Myanmar', timeKey: 'history_time_hours_ago', timeValue: 3, user: 'wint-theingi-aung' },
-    { actionKey: 'history_activity_added', count: 25, glossaryKey: 'history_activity_glossary_terms', lang: 'Shan', timeKey: 'history_time_days_ago', timeValue: 1, user: 'gipsyhnh' },
-    { actionKey: 'history_activity_translated', count: 8, fileKey: 'nautilus.po', lang: 'Mon', timeKey: 'history_time_days_ago', timeValue: 1, user: 'htetminaung2018' },
-  ]
-
-  const formatActivity = (activity: typeof recentActivity[0]) => {
-    const action = t(activity.actionKey, activity.actionKey === 'history_activity_translated' ? 'Translated' : activity.actionKey === 'history_activity_exported' ? 'Exported' : 'Added')
-    if (activity.actionKey === 'history_activity_exported') {
-      return `${action} ${activity.fileKey}`
-    }
-    if (activity.actionKey === 'history_activity_added') {
-      const glossary = t(activity.glossaryKey || 'history_activity_glossary_terms', 'glossary terms')
-      return `${action} ${activity.count} ${glossary}`
-    }
-    const strings = t('history_activity_strings', 'strings in')
-    return `${action} ${activity.count} ${strings} ${activity.fileKey}`
-  }
-
-  const formatTime = (activity: typeof recentActivity[0]) => {
-    const timeLabel = t(activity.timeKey, activity.timeKey === 'history_time_hours_ago' ? 'h ago' : 'd ago')
-    return `${activity.timeValue}${timeLabel}`
-  }
 
   return (
     <div className="max-w-7xl mx-auto space-y-8">
@@ -202,17 +186,44 @@ export default function Dashboard() {
       </div>
 
       <div className="glass-card p-6">
-        <h2 className="text-xl font-semibold text-[var(--tx-primary)] mb-4">{t('dashboard_recent_activity', 'Recent Activity')}</h2>
+        <div className="flex items-center justify-between mb-4">
+          <h2 className="text-xl font-semibold text-[var(--tx-primary)]">{t('dashboard_recent_activity', 'Recent Activity')}</h2>
+          {recentActivity.length > 0 && (
+            <Link href="/history" className="text-sm text-ubuntu-orange hover:underline flex items-center gap-1">
+              {t('dashboard_view_all', 'View All')} <ArrowRight size={14} />
+            </Link>
+          )}
+        </div>
         <div className="space-y-3">
-          {recentActivity.map((activity, idx) => (
-            <div key={idx} className="flex items-center justify-between py-2 border-b border-[var(--border-light)] last:border-0">
-              <div>
-                <p className="text-[var(--tx-primary)] text-sm">{formatActivity(activity)}</p>
-                <p className="text-xs text-[var(--tx-dim)]">{activity.user} • {activity.lang}</p>
-              </div>
-              <span className="text-xs text-[var(--tx-faint)]">{formatTime(activity)}</span>
+          {recentActivity.length === 0 ? (
+            <div className="text-center py-6">
+              <Clock className="mx-auto text-[var(--tx-faint)] mb-2" size={32} />
+              <p className="text-[var(--tx-muted)] text-sm">{t('dashboard_no_activity', 'No recent activity')}</p>
+              <p className="text-[var(--tx-dim)] text-xs mt-1">{t('dashboard_no_activity_hint', 'Start translating to see your history here')}</p>
             </div>
-          ))}
+          ) : (
+            recentActivity.map((entry) => {
+              const Icon = actionIconMap[entry.action] || Languages
+              const color = actionColorMap[entry.action] || 'text-[var(--tx-muted)]'
+              return (
+                <div key={entry.id} className="flex items-center justify-between py-2 border-b border-[var(--border-light)] last:border-0">
+                  <div className="flex items-center gap-3 min-w-0">
+                    <div className={`w-8 h-8 rounded-full flex items-center justify-center flex-shrink-0 ${entry.action === 'translate' ? 'bg-ubuntu-orange/20' : entry.action === 'export' ? 'bg-emerald-400/20' : entry.action === 'upload' ? 'bg-blue-400/20' : 'bg-purple-400/20'}`}>
+                      <Icon className={color} size={16} />
+                    </div>
+                    <div className="min-w-0">
+                      <p className="text-[var(--tx-primary)] text-sm truncate">{entry.description}</p>
+                      <div className="flex items-center gap-2">
+                        <span className="text-xs text-[var(--tx-dim)]">{entry.user}</span>
+                        {entry.language && <span className="badge-orange text-[10px]">{entry.language}</span>}
+                      </div>
+                    </div>
+                  </div>
+                  <span className="text-xs text-[var(--tx-faint)] flex-shrink-0 ml-3">{formatTimestamp(entry.timestamp, t)}</span>
+                </div>
+              )
+            })
+          )}
         </div>
       </div>
 
