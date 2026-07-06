@@ -88,11 +88,16 @@ export default function TranslatePage() {
       setCurrentPage(1)
       setStep('translate')
       const langName = LANGUAGES.find(l => l.code === targetLang)?.name || targetLang
+      const pendingCount = merged.filter(e => e.status === 'pending').length
       recordHistory({
         action: 'upload',
         description: `Uploaded ${file!.name} for translation`,
+        descriptionKey: 'activity_uploaded_file',
+        descriptionParams: { file: file!.name },
         language: langName,
-        details: `${merged.length} entries, ${merged.filter(e => e.status === 'pending').length} untranslated`,
+        details: `${merged.length} entries, ${pendingCount} untranslated`,
+        detailsKey: 'activity_entries_n',
+        detailsParams: { count: merged.length, untranslated: pendingCount },
         user: 'local-user',
       })
     } catch (err: any) { setError(err.message) }
@@ -123,8 +128,11 @@ export default function TranslatePage() {
       recordHistory({
         action: 'translate',
         description: `Translated ${batch.length} strings with AI`,
+        descriptionKey: 'activity_translated_n',
+        descriptionParams: { count: batch.length, file: file?.name || 'demo' },
         language: langName,
         details: `AI batch translation with Gemini — ${file?.name || 'demo'}`,
+        detailsKey: 'activity_ai_batch',
         user: 'local-user',
       })
     } catch (err: any) { setError(err.message) }
@@ -189,12 +197,17 @@ export default function TranslatePage() {
       document.body.appendChild(a); a.click(); document.body.removeChild(a)
       URL.revokeObjectURL(url)
       const confirmedCount = entries.filter(e => e.status === 'confirmed').length
+      const completionPercent = entries.length > 0 ? Math.round((confirmedCount / entries.length) * 100) : 0
       const langName = LANGUAGES.find(l => l.code === targetLang)?.name || targetLang
       recordHistory({
         action: 'export',
         description: `Exported translated ${file?.name || 'messages.po'}`,
+        descriptionKey: 'activity_exported_file',
+        descriptionParams: { file: file?.name || 'messages.po' },
         language: langName,
         details: `${confirmedCount} confirmed translations`,
+        detailsKey: 'activity_new_translations',
+        detailsParams: { count: confirmedCount, percent: completionPercent },
         user: 'local-user',
       })
     } catch (err: any) { setError(err.message) }

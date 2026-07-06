@@ -28,9 +28,20 @@ function VisitorCounter() {
   const { t } = useI18n()
   useEffect(() => {
     setMounted(true)
-    fetch('https://api.countapi.xyz/hit/ubuntu-localization.vercel.app/visitors')
+    // Get or create unique visitor ID
+    let uuid = localStorage.getItem('ubuntu-localization-visitor-id')
+    if (!uuid) {
+      uuid = crypto.randomUUID()
+      localStorage.setItem('ubuntu-localization-visitor-id', uuid)
+    }
+    // Register this visitor and get unique count
+    fetch('/api/visitors', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ uuid }),
+    })
       .then(r => r.json())
-      .then(d => setCount(d.value))
+      .then(d => setCount(d.count))
       .catch(() => {})
   }, [])
   return count !== null ? (
