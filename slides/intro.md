@@ -51,7 +51,7 @@ section.lead h1 { border-bottom:none; }
 
 **Wint Theingi Aung** · @Wint-Theingi-Aung
 
-<span class="tags">`#built-with-claude` `#vibecode.tours` `#fastapi` `#jinja2` `#htmx` `#gemini-ai` </span>
+<span class="tags">`#built-with-claude` `#vibecode.tours` `#next.js` `#tailwindcss` `#gemini-ai` `#localization`</span>
 
 ---
 
@@ -67,20 +67,21 @@ section.lead h1 { border-bottom:none; }
 
 ```bash
 # the core flow in 3 commands
-uv sync
-uv run fastapi dev main.py
-# open http://localhost:8000
+cd frontend
+npm install
+npm run dev
+# open http://localhost:3000
 ```
 
-Stack: **FastAPI + Jinja2 + htmx + Google Gemini 2.5 Flash + polib + uv** · built with Claude Code
+Stack: **Next.js 14 + TypeScript + Tailwind CSS + Google Gemini 2.5 Flash** · built with Claude Code
 
 ---
 
 <!-- _class: lead -->
 
-# Landing Page — Mon
+# Dashboard — Dark Mode
 
-![w:880](../screenshots/desktop-mon-1280x800.png)
+![w:880](../docs/screenshots/dashboard-dark-en.png)
 
 ---
 
@@ -88,28 +89,36 @@ Stack: **FastAPI + Jinja2 + htmx + Google Gemini 2.5 Flash + polib + uv** · bui
 
 # Guide Page — S'gaw Karen
 
-![w:880](../screenshots/guide-sgaw-karen-top-1280x800.png)
+![w:880](../docs/screenshots/guide-karen.png)
 
 ---
 
 <!-- _class: lead -->
 
-# Translate Page — Myanmar
+# Translate Page — Mon
 
-![w:880](../screenshots/translate-desktop.png)
+![w:880](../docs/screenshots/translate-mon.png)
 
 ---
 
 <!-- _class: lead -->
 
-# Contributors — Shan
+# Contributors — Myanmar
 
-![w:880](../screenshots/leaderboard-shan-1280x800.png)
+![w:880](../docs/screenshots/contributors-mm.png)
+
+---
+
+<!-- _class: lead -->
+
+# Templates — Shan
+
+![w:880](../docs/screenshots/template-shan.png)
 
 ---
 
 # Links
 
-- **Live:** Live: https://ubuntu-localization.vercel.app/
+- **Live:** https://ubuntu-localization.vercel.app/
 - **Repo:** https://github.com/Wint-Theingi-Aung/ubuntu-localization
 - **License:** MIT
