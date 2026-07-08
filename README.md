@@ -28,19 +28,19 @@ An AI-powered localization tool for translating Ubuntu `.po` files into indigeno
 
 ## Screenshots
 
-![Dashboard — Dark Theme, English](docs/screenshots/dashboard-dark-en.png)
+![Dashboard — Dark Theme, English](screenshots/dashboard-dark-en.png)
 *Dashboard — Dark theme with English UI*
 
-![Templates — Shan](docs/screenshots/template-shan.png)
+![Templates — Shan](screenshots/template-shan.png)
 *Templates page — 550 Ubuntu packages, Shan language*
 
-![Translate — Mon](docs/screenshots/translate-mon.png)
+![Translate — Mon](screenshots/translate-mon.png)
 *Translation workspace — AI-powered .po file translation, Mon language*
 
-![Guide — S'gaw Karen](docs/screenshots/guide-karen.png)
+![Guide — S'gaw Karen](screenshots/guide-karen.png)
 *Interactive translation guide — S'gaw Karen language*
 
-![Contributors — Myanmar](docs/screenshots/contributors-mm.png)
+![Contributors — Myanmar](screenshots/contributors-mm.png)
 *Contributor leaderboard — Myanmar language*
 
 ## Tech Stack

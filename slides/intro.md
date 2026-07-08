@@ -81,7 +81,7 @@ Stack: **Next.js 14 + TypeScript + Tailwind CSS + Google Gemini 2.5 Flash** · b
 
 # Dashboard — Dark Mode
 
-![w:880](../docs/screenshots/dashboard-dark-en.png)
+![w:880](../screenshots/dashboard-dark-en.png)
 
 ---
 
@@ -89,7 +89,7 @@ Stack: **Next.js 14 + TypeScript + Tailwind CSS + Google Gemini 2.5 Flash** · b
 
 # Guide Page — S'gaw Karen
 
-![w:880](../docs/screenshots/guide-karen.png)
+![w:880](../screenshots/guide-karen.png)
 
 ---
 
@@ -97,7 +97,7 @@ Stack: **Next.js 14 + TypeScript + Tailwind CSS + Google Gemini 2.5 Flash** · b
 
 # Translate Page — Mon
 
-![w:880](../docs/screenshots/translate-mon.png)
+![w:880](../screenshots/translate-mon.png)
 
 ---
 
@@ -105,7 +105,7 @@ Stack: **Next.js 14 + TypeScript + Tailwind CSS + Google Gemini 2.5 Flash** · b
 
 # Contributors — Myanmar
 
-![w:880](../docs/screenshots/contributors-mm.png)
+![w:880](../screenshots/contributors-mm.png)
 
 ---
 
@@ -113,7 +113,7 @@ Stack: **Next.js 14 + TypeScript + Tailwind CSS + Google Gemini 2.5 Flash** · b
 
 # Templates — Shan
 
-![w:880](../docs/screenshots/template-shan.png)
+![w:880](../screenshots/template-shan.png)
 
 ---
 
