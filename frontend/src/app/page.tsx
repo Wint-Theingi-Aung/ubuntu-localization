@@ -1,29 +1,77 @@
 'use client'
-import { useState, useEffect } from 'react'
+import { useState, useEffect, useCallback } from 'react'
 import LanguageCard from '@/components/LanguageCard'
-import { Languages, FileCode, FileText, BookOpen, Users, ArrowRight, Sparkles, ExternalLink, Github, Rocket, Clock } from 'lucide-react'
+import { Languages, FileCode, FileText, BookOpen, Users, ArrowRight, Sparkles, ExternalLink, Github, Rocket, Clock, Loader2 } from 'lucide-react'
 import Link from 'next/link'
 import { useI18n } from '@/lib/i18n'
 import { LANGUAGES, TRANSLATION_STATS, DASHBOARD_STATS, lpLanguageUrl } from '@/lib/constants'
 import { getHistory, formatTimestamp, type HistoryEntry } from '@/lib/history'
+import type { TranslationTemplate } from '@/app/api/translation-progress/route'
 
 const actionIconMap: Record<string, typeof Languages> = { translate: Languages, export: FileCode, upload: FileText, glossary: BookOpen }
 const actionColorMap: Record<string, string> = { translate: 'text-ubuntu-orange', export: 'text-emerald-400', upload: 'text-blue-400', glossary: 'text-purple-400' }
+
+// Aggregate per-template stats into per-language totals
+function aggregateLangStats(templates: TranslationTemplate[], langCode: string) {
+  // For now, we fetch my (Myanmar) as the primary language for dashboard display
+  // The API returns per-template stats for the requested language
+  let total = 0
+  let translated = 0
+  for (const t of templates) {
+    total += t.total
+    translated += t.translated
+  }
+  const progress = total > 0 ? Math.round((translated / total) * 100) : 0
+  return { totalEntries: total, translatedEntries: translated, progress }
+}
 
 export default function Dashboard() {
   const { t, ti, lang } = useI18n()
   const [mounted, setMounted] = useState(false)
   const [recentActivity, setRecentActivity] = useState<HistoryEntry[]>([])
+  const [liveStats, setLiveStats] = useState<Record<string, { totalEntries: number; translatedEntries: number; progress: number }>>({})
+  const [statsLoading, setStatsLoading] = useState(false)
+
+  // Fetch live translation progress for all languages
+  const fetchLiveStats = useCallback(async () => {
+    setStatsLoading(true)
+    try {
+      const results: Record<string, { totalEntries: number; translatedEntries: number; progress: number }> = {}
+      // Fetch in parallel for all languages
+      const promises = LANGUAGES.map(async (l) => {
+        try {
+          const res = await fetch(`/api/translation-progress?lang=${l.code}`)
+          const data = await res.json()
+          if (data.templates && Array.isArray(data.templates)) {
+            results[l.code] = aggregateLangStats(data.templates, l.code)
+          }
+        } catch {
+          // Use static fallback
+        }
+      })
+      await Promise.all(promises)
+      if (Object.keys(results).length > 0) {
+        setLiveStats(results)
+      }
+    } finally {
+      setStatsLoading(false)
+    }
+  }, [])
+
   useEffect(() => {
     setMounted(true)
     setRecentActivity(getHistory().slice(0, 5))
-  }, [])
+    fetchLiveStats()
+  }, [fetchLiveStats])
 
   const languageData = LANGUAGES.map(lang => {
-    const stats = TRANSLATION_STATS.find(s => s.code === lang.code)!
+    const staticStats = TRANSLATION_STATS.find(s => s.code === lang.code)!
+    const live = liveStats[lang.code]
     return {
       ...lang,
-      ...stats,
+      totalEntries: live?.totalEntries ?? staticStats.totalEntries,
+      translatedEntries: live?.translatedEntries ?? staticStats.translatedEntries,
+      progress: live?.progress ?? staticStats.progress,
     }
   })
 
@@ -75,7 +123,10 @@ export default function Dashboard() {
       </div>
 
       <div>
-        <h2 className="text-xl font-semibold text-[var(--tx-primary)] mb-4">{t('dashboard_translation_progress', 'Translation Progress')}</h2>
+        <div className="flex items-center gap-2 mb-4">
+          <h2 className="text-xl font-semibold text-[var(--tx-primary)]">{t('dashboard_translation_progress', 'Translation Progress')}</h2>
+          {statsLoading && <Loader2 size={16} className="animate-spin text-ubuntu-orange" />}
+        </div>
         <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
           {languageData.map((lang) => (
             <a
@@ -104,7 +155,7 @@ export default function Dashboard() {
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
           {quickActions.map((action) => (
             action.external ? (
-              <a key={action.href} href={action.href} target="_blank" rel="noopener noreferrer" className="glass-card glass-card-hover p-6 group">
+              <div key={action.href} className="glass-card glass-card-hover p-6 group cursor-pointer" onClick={() => window.open(action.href, '_blank', 'noopener,noreferrer')}>
                 <action.icon className={`${action.iconColor} mb-3`} size={32} />
                 <h3 className={`font-semibold text-[var(--tx-primary)] ${action.hoverColor} transition-colors`}>
                   {action.title}
@@ -170,7 +221,7 @@ export default function Dashboard() {
                     </a>
                   </div>
                 )}
-              </a>
+              </div>
             ) : (
               <Link key={action.href} href={action.href} className="glass-card glass-card-hover p-6 group">
                 <action.icon className={`${action.iconColor} mb-3`} size={32} />

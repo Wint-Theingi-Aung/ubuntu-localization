@@ -200,6 +200,7 @@ export default function TemplatesPage() {
                     <ArrowUpDown size={12} />
                   </button>
                 </th>
+                <th className="text-sm font-semibold">{t('templates_completion', 'Completion')}</th>
                 <th>
                   <button onClick={() => toggleSort('total')} className="flex items-center gap-1 hover:text-[var(--tx-secondary)] transition-colors text-sm font-semibold">
                     {t('templates_total_strings', 'Total')}
@@ -229,6 +230,26 @@ export default function TemplatesPage() {
                       <span className={pkg.metrics.untranslated > 0 ? 'text-red-400 font-semibold' : 'text-green-400'}>
                         {pkg.metrics.untranslated > 0 ? pkg.metrics.untranslated.toLocaleString() : '0'}
                       </span>
+                    ) : (
+                      <span className="text-xs text-[var(--tx-faint)]">—</span>
+                    )}
+                  </td>
+                  <td data-label={t('templates_completion', 'Completion')}>
+                    {pkg.metrics ? (
+                      <div className="flex items-center gap-2">
+                        <div className="w-16 h-1.5 bg-[var(--surface-progress)] rounded-full overflow-hidden">
+                          <div
+                            className="h-full rounded-full transition-all duration-500"
+                            style={{
+                              width: `${pkg.metrics.completionPct}%`,
+                              backgroundColor: pkg.metrics.completionPct >= 50 ? '#22c55e' : pkg.metrics.completionPct >= 20 ? '#eab308' : '#ef4444',
+                            }}
+                          />
+                        </div>
+                        <span className={`text-xs font-mono font-semibold ${pkg.metrics.completionPct >= 50 ? 'text-green-400' : pkg.metrics.completionPct >= 20 ? 'text-yellow-400' : 'text-red-400'}`}>
+                          {pkg.metrics.completionPct}%
+                        </span>
+                      </div>
                     ) : (
                       <span className="text-xs text-[var(--tx-faint)]">—</span>
                     )}
@@ -275,6 +296,20 @@ export default function TemplatesPage() {
                 <span className={`font-mono ${pkg.metrics.untranslated > 0 ? 'text-red-400' : 'text-green-400'}`}>
                   {pkg.metrics.untranslated > 0 ? pkg.metrics.untranslated.toLocaleString() : '0'} {t('templates_untranslated_short', 'untrans')}
                 </span>
+                <div className="flex items-center gap-1.5">
+                  <div className="w-12 h-1.5 bg-[var(--surface-progress)] rounded-full overflow-hidden">
+                    <div
+                      className="h-full rounded-full"
+                      style={{
+                        width: `${pkg.metrics.completionPct}%`,
+                        backgroundColor: pkg.metrics.completionPct >= 50 ? '#22c55e' : pkg.metrics.completionPct >= 20 ? '#eab308' : '#ef4444',
+                      }}
+                    />
+                  </div>
+                  <span className={`font-mono font-semibold ${pkg.metrics.completionPct >= 50 ? 'text-green-400' : pkg.metrics.completionPct >= 20 ? 'text-yellow-400' : 'text-red-400'}`}>
+                    {pkg.metrics.completionPct}%
+                  </span>
+                </div>
                 <span className="font-mono font-semibold text-sky-400">
                   {pkg.metrics.total.toLocaleString()} {t('templates_total_short', 'total')}
                 </span>

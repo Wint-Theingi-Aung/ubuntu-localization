@@ -4,30 +4,43 @@
       {
         "id": "getting-started",
         "title": "Getting Started",
-        "sectionCount": 2,
+        "sectionCount": 3,
         "sections": [
           {
             "id": "overview",
             "title": "What is Ubuntu Localization?",
-            "content": "The Ubuntu Localization Tool helps translate Ubuntu into indigenous languages — Myanmar (my), Shan (shn), Mon (mnw), and S'gaw Karen (ksw) — using Google Gemini AI. It works with .po files, the standard format for Linux translations exported from Launchpad.",
+            "content": "The Ubuntu Localization Tool helps translate Ubuntu into indigenous languages — Myanmar (my), Shan (shn), Mon (mnw), and S'gaw Karen (ksw) — using Google Gemini AI. It works with any standard gettext .po file, not just Ubuntu packages. You can use it for any localization project that uses the .po format.",
             "tips": [
-              "Ubuntu uses Launchpad for translations",
-              ".po files contain translatable strings",
-              "Each string has a source (English) and target"
+              "Works with any valid gettext .po file — not just Ubuntu",
+              ".po files contain translatable source/target string pairs",
+              "AI-powered translation with manual editing support",
+              "Export translated .po files for use in any gettext project"
+            ]
+          },
+          {
+            "id": "prerequisites",
+            "title": "Prerequisites",
+            "content": "Before you start translating, make sure you have the following set up. A Launchpad account is required if you want to contribute translations back to Ubuntu upstream.",
+            "tips": [
+              "Launchpad account — required to contribute to Ubuntu translations",
+              "Sign up free at launchpad.net → 'Create a new account'",
+              "Join your language team on Launchpad (e.g. Ubuntu Myanmar LoCo)",
+              "Any .po file — export from Launchpad or use your own gettext project",
+              "Web browser — Chrome, Firefox, or Edge recommended"
             ]
           },
           {
             "id": "quick-start",
             "title": "Quick Start Guide",
-            "content": "Follow these steps to start translating Ubuntu into your language.",
+            "content": "Follow these steps to translate your first .po file. You can use files from Launchpad or any gettext-based project.",
             "tips": [
-              "1. Go to the Translation page",
-              "2. Upload a .po file from Launchpad",
-              "3. Select your target language",
-              "4. Click AI Translate",
-              "5. Review and edit translations",
+              "1. Go to the Translate page (left sidebar)",
+              "2. Upload a .po file (drag & drop or click to browse)",
+              "3. Select your target language from the dropdown",
+              "4. Click 'AI Translate' to auto-translate with Gemini",
+              "5. Review and manually edit any translations",
               "6. Export the translated .po file",
-              "7. Upload back to Launchpad"
+              "7. Upload back to Launchpad or use in your project"
             ]
           }
         ]

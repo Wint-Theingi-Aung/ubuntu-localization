@@ -1,13 +1,14 @@
 'use client'
 
 import { useState } from 'react'
-import { ChevronRight, BookOpen, Upload, Languages, FileText, AlertTriangle, CheckCircle2, Code2, Lightbulb, Globe, Users, Heart, Zap, Shield } from 'lucide-react'
+import { ChevronRight, BookOpen, Upload, Languages, FileText, AlertTriangle, CheckCircle2, Code2, Lightbulb, Globe, Users, Heart, Zap, Shield, ClipboardCheck } from 'lucide-react'
 import { useI18n } from '@/lib/i18n'
 import guideData from '@/data/guide.json'
 
 // Map section IDs to icons
 const sectionIcons: Record<string, typeof BookOpen> = {
   overview: Globe,
+  prerequisites: ClipboardCheck,
   'quick-start': Upload,
   placeholders: Code2,
   'html-tags': Code2,

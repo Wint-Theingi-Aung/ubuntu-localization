@@ -137,7 +137,7 @@ export default function TranslatePage() {
       })
     } catch (err: any) { setError(err.message) }
     finally { setIsTranslating(false) }
-  }, [entries, targetLang])
+  }, [entries, targetLang, file])
 
   const handleEditTranslation = useCallback((index: number, newMsgstr: string) => {
     setEntries(prev => prev.map(e =>

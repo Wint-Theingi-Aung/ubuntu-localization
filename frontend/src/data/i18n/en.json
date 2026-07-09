@@ -204,6 +204,7 @@
   "get_started_ready_desc": "After completing the steps, you can start translating Ubuntu into your language. Every translation makes Ubuntu more accessible.",
   "templates_status": "Status",
   "templates_untranslated": "Untranslated",
+  "templates_completion": "Completion",
   "templates_total_strings": "Total",
   "templates_metrics_lang": "Translation metrics language",
   "templates_loading_metrics": "Loading metrics...",
