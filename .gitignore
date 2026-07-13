@@ -30,3 +30,6 @@ next-env.d.ts
 
 # Misc
 *.pem
+
+# Playwright MCP
+.playwright-mcp/
