@@ -1,7 +1,7 @@
 'use client'
 
 import { useState } from 'react'
-import { ChevronRight, BookOpen, Upload, Languages, FileText, AlertTriangle, CheckCircle2, Code2, Lightbulb, Globe, Users, Heart, Zap, Shield, ClipboardCheck } from 'lucide-react'
+import { ChevronRight, BookOpen, Upload, Languages, FileText, AlertTriangle, CheckCircle2, Code2, Lightbulb, Globe, Users, Heart, Zap, Shield, ClipboardCheck, ArrowRight } from 'lucide-react'
 import { useI18n } from '@/lib/i18n'
 import guideData from '@/data/guide.json'
 
@@ -187,6 +187,23 @@ export default function GuidePage() {
         </div>
         <a href="/guide/quickref" className="btn-secondary text-sm py-2 px-4">
           {t('guide_view_card', 'View Card')}
+        </a>
+      </div>
+
+      {/* CTA to Start Translating */}
+      <div className="glass-card p-6 flex flex-col sm:flex-row items-center justify-between gap-4">
+        <div className="flex items-center gap-3">
+          <div className="w-10 h-10 rounded-xl bg-ubuntu-orange/10 flex items-center justify-center">
+            <Languages size={20} className="text-ubuntu-orange" />
+          </div>
+          <div>
+            <p className="text-sm font-medium text-[var(--tx-primary)]">{t('guide_cta_title', 'Ready to Start Translating?')}</p>
+            <p className="text-xs text-[var(--tx-dim)]">{t('guide_cta_desc', 'Once you understand the translation guidelines, you can start contributing by choosing a template for your language.')}</p>
+          </div>
+        </div>
+        <a href="/templates" className="btn-primary text-sm py-2 px-4 flex items-center gap-2 whitespace-nowrap">
+          {t('guide_cta_button', 'Start Translating')}
+          <ArrowRight size={14} />
         </a>
       </div>
     </div>

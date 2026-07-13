@@ -152,6 +152,7 @@ export default function Dashboard() {
 
       <div>
         <h2 className="text-xl font-semibold text-[var(--tx-primary)] mb-4">{t('dashboard_quick_actions', 'Quick Actions')}</h2>
+        <p className="text-xs text-[var(--tx-dim)] mb-4 -mt-2">{t('dashboard_new_contributor_note', 'New contributor? We recommend reading Get Started and the Translation Guide before translating.')}</p>
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
           {quickActions.map((action) => (
             action.external ? (

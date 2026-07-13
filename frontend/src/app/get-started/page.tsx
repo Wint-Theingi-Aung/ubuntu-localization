@@ -1,6 +1,6 @@
 'use client'
 
-import { UserPlus, LogIn, Users, BookOpen, Languages, Upload, ArrowRight, ExternalLink, CheckCircle2 } from 'lucide-react'
+import { UserPlus, LogIn, Users, BookOpen, Languages, Download, UploadCloud, ArrowRight, ExternalLink, CheckCircle2 } from 'lucide-react'
 import Link from 'next/link'
 import { useI18n } from '@/lib/i18n'
 
@@ -33,13 +33,13 @@ const steps = [
   },
   {
     number: 3,
-    icon: Users,
+    icon: Download,
     color: 'text-emerald-400',
     bg: 'bg-emerald-500/10',
     titleKey: 'get_started_step3_title',
     titleFallback: 'Download Translation Template',
     descKey: 'get_started_step3_desc',
-    descFallback: 'Choose your language and the template you want to translate. Open the template in Launchpad, then click Download Translation to download the translation (.po) file for your selected language.',
+    descFallback: 'Open the Templates page and select your language. Find the template you want to translate and open it in Launchpad. Click Download Translation. Launchpad will send a notification email containing the translation file. Open the email and download the attached .po file.',
     link: '/templates',
     linkText: 'Browse Templates',
     external: false,
@@ -72,13 +72,13 @@ const steps = [
   },
   {
     number: 6,
-    icon: Upload,
+    icon: UploadCloud,
     color: 'text-pink-400',
     bg: 'bg-pink-500/10',
     titleKey: 'get_started_step6_title',
     titleFallback: 'Upload Your Translation',
     descKey: 'get_started_step6_desc',
-    descFallback: 'After completing your translation, return to the same Launchpad template for your language and click Upload Translation to upload your translated .po file. Once uploaded, your translation will be available for review by Ubuntu translators.',
+    descFallback: 'After translating the .po file, return to the same template in Launchpad. Click Upload Translation and upload your translated .po file. After a successful upload, Launchpad will send a confirmation email indicating that your translation has been received and is ready for review.',
     link: 'https://launchpad.net/+login',
     linkText: 'Go to Launchpad',
     external: true,
@@ -126,7 +126,7 @@ export default function GetStartedPage() {
                 <h3 className="text-lg font-semibold text-[var(--tx-primary)] mb-2">
                   {t(step.titleKey, step.titleFallback)}
                 </h3>
-                <p className="text-sm text-[var(--tx-secondary)] mb-4">
+                <p className="text-sm text-[var(--tx-secondary)] mb-4 text-justify">
                   {t(step.descKey, step.descFallback)}
                 </p>
                 {step.external ? (
@@ -160,9 +160,26 @@ export default function GetStartedPage() {
           <CheckCircle2 className="text-emerald-400 flex-shrink-0 mt-0.5" size={20} />
           <div>
             <p className="text-sm text-[var(--tx-secondary)] font-medium">{t('get_started_ready', 'Ready to Contribute')}</p>
-            <p className="text-xs text-[var(--tx-muted)] mt-1">{t('get_started_ready_desc', 'Once you complete these steps, you can start translating Ubuntu into your language. Every translation helps make Ubuntu accessible to more people. After translating, don’t forget to upload your .po file back to Launchpad for review.')}</p>
+            <p className="text-xs text-[var(--tx-muted)] mt-1">{t('get_started_ready_desc', 'Once you complete these steps, you can start translating Ubuntu into your language. Every translation helps make Ubuntu accessible to more people. After translating, don\'t forget to upload your .po file back to Launchpad for review.')}</p>
           </div>
         </div>
+      </div>
+
+      {/* CTA to Translation Guide */}
+      <div className="glass-card p-6 flex flex-col sm:flex-row items-center justify-between gap-4">
+        <div className="flex items-center gap-3">
+          <div className="w-10 h-10 rounded-xl bg-blue-500/10 flex items-center justify-center">
+            <BookOpen size={20} className="text-blue-400" />
+          </div>
+          <div>
+            <p className="text-sm font-medium text-[var(--tx-primary)]">{t('get_started_cta_title', 'Need Translation Guidelines?')}</p>
+            <p className="text-xs text-[var(--tx-dim)]">{t('get_started_cta_desc', 'Before you start translating, please read the Translation Guide to understand Ubuntu translation conventions, terminology, and best practices.')}</p>
+          </div>
+        </div>
+        <Link href="/guide" className="btn-secondary text-sm py-2 px-4 flex items-center gap-2 whitespace-nowrap">
+          {t('get_started_cta_button', 'Open Translation Guide')}
+          <ArrowRight size={14} />
+        </Link>
       </div>
     </div>
   )
