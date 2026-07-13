@@ -1,6 +1,6 @@
 'use client'
 
-import { UserPlus, LogIn, Users, BookOpen, Languages, ArrowRight, ExternalLink, CheckCircle2 } from 'lucide-react'
+import { UserPlus, LogIn, Users, BookOpen, Languages, Upload, ArrowRight, ExternalLink, CheckCircle2 } from 'lucide-react'
 import Link from 'next/link'
 import { useI18n } from '@/lib/i18n'
 
@@ -37,12 +37,12 @@ const steps = [
     color: 'text-emerald-400',
     bg: 'bg-emerald-500/10',
     titleKey: 'get_started_step3_title',
-    titleFallback: 'Join Translation Team',
+    titleFallback: 'Download Translation Template',
     descKey: 'get_started_step3_desc',
-    descFallback: 'Join the Ubuntu translators team to collaborate with other contributors and start translating.',
-    link: 'https://launchpad.net/~ubuntu-translators',
-    linkText: 'Join Team',
-    external: true,
+    descFallback: 'Choose your language and the template you want to translate. Open the template in Launchpad, then click Download Translation to download the translation (.po) file for your selected language.',
+    link: '/templates',
+    linkText: 'Browse Templates',
+    external: false,
   },
   {
     number: 4,
@@ -69,6 +69,19 @@ const steps = [
     link: '/translate',
     linkText: 'Start Now',
     external: false,
+  },
+  {
+    number: 6,
+    icon: Upload,
+    color: 'text-pink-400',
+    bg: 'bg-pink-500/10',
+    titleKey: 'get_started_step6_title',
+    titleFallback: 'Upload Your Translation',
+    descKey: 'get_started_step6_desc',
+    descFallback: 'After completing your translation, return to the same Launchpad template for your language and click Upload Translation to upload your translated .po file. Once uploaded, your translation will be available for review by Ubuntu translators.',
+    link: 'https://launchpad.net/+login',
+    linkText: 'Go to Launchpad',
+    external: true,
   },
 ]
 
@@ -147,7 +160,7 @@ export default function GetStartedPage() {
           <CheckCircle2 className="text-emerald-400 flex-shrink-0 mt-0.5" size={20} />
           <div>
             <p className="text-sm text-[var(--tx-secondary)] font-medium">{t('get_started_ready', 'Ready to Contribute')}</p>
-            <p className="text-xs text-[var(--tx-muted)] mt-1">{t('get_started_ready_desc', 'Once you complete these steps, you can start translating Ubuntu into your language. Every translation helps make Ubuntu accessible to more people.')}</p>
+            <p className="text-xs text-[var(--tx-muted)] mt-1">{t('get_started_ready_desc', 'Once you complete these steps, you can start translating Ubuntu into your language. Every translation helps make Ubuntu accessible to more people. After translating, don’t forget to upload your .po file back to Launchpad for review.')}</p>
           </div>
         </div>
       </div>
