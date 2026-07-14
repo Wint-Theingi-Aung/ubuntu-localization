@@ -135,19 +135,6 @@ export function clearHistory() {
   localStorage.setItem(CLEARED_KEY, 'true')
 }
 
-/** Count history entries from today (local calendar day) */
-export function getTodayCount(): number {
-  const entries = getHistory()
-  const now = new Date()
-  const todayStart = new Date(now.getFullYear(), now.getMonth(), now.getDate()).getTime()
-  return entries.filter(e => e.timestamp >= todayStart).length
-}
-
-/** Count all history entries */
-export function getTotalCount(): number {
-  return getHistory().length
-}
-
 /** Seed with default entries if no history exists */
 function getDefaultHistory(): HistoryEntry[] {
   const now = Date.now()

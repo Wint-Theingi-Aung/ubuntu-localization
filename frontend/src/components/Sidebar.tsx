@@ -22,33 +22,38 @@ import ThemeToggle from './ThemeToggle'
 import { useI18n, type LanguageCode } from '@/lib/i18n'
 import { UI_LANGUAGES } from '@/lib/constants'
 
-function VisitorCounter() {
-  const [count, setCount] = useState<number | null>(null)
+const HIT_STORAGE_KEY = 'ubuntu-localization-hits'
+
+function HitCounter() {
+  const [totalHits, setTotalHits] = useState<number | null>(null)
   const [mounted, setMounted] = useState(false)
   const { t } = useI18n()
+
   useEffect(() => {
     setMounted(true)
-    // Get or create unique visitor ID
-    let uuid = localStorage.getItem('ubuntu-localization-visitor-id')
-    if (!uuid) {
-      uuid = crypto.randomUUID()
-      localStorage.setItem('ubuntu-localization-visitor-id', uuid)
+    try {
+      const raw = localStorage.getItem(HIT_STORAGE_KEY)
+      let total = 1
+
+      if (raw) {
+        const data = JSON.parse(raw)
+        total = (data.total || 0) + 1
+      }
+
+      localStorage.setItem(HIT_STORAGE_KEY, JSON.stringify({ total }))
+      setTotalHits(total)
+    } catch {
+      // localStorage unavailable
     }
-    // Register this visitor and get unique count
-    fetch('/api/visitors', {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({ uuid }),
-    })
-      .then(r => r.json())
-      .then(d => setCount(d.count))
-      .catch(() => {})
   }, [])
-  return count !== null ? (
-    <span className="text-[10px] text-[var(--tx-faint)]" title={mounted ? t('activity_visitors', 'Visitors') : 'Visitors'}>
-      👁 {count.toLocaleString()}
+
+  if (!mounted || totalHits === null) return null
+
+  return (
+    <span className="text-[10px] text-[var(--tx-faint)]" title={t('sidebar_hit_counter', 'Hit Counter')}>
+      👁 {totalHits.toLocaleString()}
     </span>
-  ) : null
+  )
 }
 
 const navItems = [
@@ -184,7 +189,7 @@ export default function Sidebar() {
               <p className="text-[10px] text-[var(--tx-faint)]">
                 v3.1.0
               </p>
-              <VisitorCounter />
+              <HitCounter />
               <p className="text-[10px] text-[var(--tx-faint)]">
                 Next.js + Tailwind
               </p>
