@@ -16,6 +16,8 @@
   "dashboard_templates": "Templates",
   "dashboard_glossary_terms": "Glossary Terms",
   "dashboard_contributors": "Contributors",
+  "dashboard_today_count": "Today",
+  "dashboard_total_count": "Total Activities",
   "dashboard_translation_progress": "Translation Progress",
   "dashboard_quick_actions": "Quick Actions",
   "dashboard_recent_activity": "Recent Activity",

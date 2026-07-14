@@ -16,6 +16,8 @@
   "dashboard_templates": "ဘာသာပြန်မည့်ဖိုင်များ",
   "dashboard_glossary_terms": "ဝေါဟာရများ",
   "dashboard_contributors": "ပံ့ပိုးသူများ",
+  "dashboard_today_count": "ယနေ့",
+  "dashboard_total_count": "စုစုပေါင်းလုပ်ဆောင်ချက်များ",
   "dashboard_translation_progress": "ဘာသာပြန်တိုးတက်မှု",
   "dashboard_quick_actions": "အမြန်လုပ်ဆောင်ချက်များ",
   "dashboard_recent_activity": "လတ်တလောလုပ်ဆောင်ချက်များ",

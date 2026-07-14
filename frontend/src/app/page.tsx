@@ -5,7 +5,7 @@ import { Languages, FileCode, FileText, BookOpen, Users, ArrowRight, Sparkles, E
 import Link from 'next/link'
 import { useI18n } from '@/lib/i18n'
 import { LANGUAGES, TRANSLATION_STATS, DASHBOARD_STATS, lpLanguageUrl } from '@/lib/constants'
-import { getHistory, formatTimestamp, type HistoryEntry } from '@/lib/history'
+import { getHistory, getTodayCount, getTotalCount, formatTimestamp, type HistoryEntry } from '@/lib/history'
 import type { TranslationTemplate } from '@/app/api/translation-progress/route'
 
 const actionIconMap: Record<string, typeof Languages> = { translate: Languages, export: FileCode, upload: FileText, glossary: BookOpen }
@@ -31,6 +31,8 @@ export default function Dashboard() {
   const [recentActivity, setRecentActivity] = useState<HistoryEntry[]>([])
   const [liveStats, setLiveStats] = useState<Record<string, { totalEntries: number; translatedEntries: number; progress: number }>>({})
   const [statsLoading, setStatsLoading] = useState(false)
+  const [todayCount, setTodayCount] = useState(0)
+  const [totalCount, setTotalCount] = useState(0)
 
   // Fetch live translation progress for all languages
   const fetchLiveStats = useCallback(async () => {
@@ -60,7 +62,10 @@ export default function Dashboard() {
 
   useEffect(() => {
     setMounted(true)
-    setRecentActivity(getHistory().slice(0, 5))
+    const history = getHistory()
+    setRecentActivity(history.slice(0, 5))
+    setTodayCount(getTodayCount())
+    setTotalCount(getTotalCount())
     fetchLiveStats()
   }, [fetchLiveStats])
 
@@ -76,10 +81,10 @@ export default function Dashboard() {
   })
 
   const stats = [
-    { label: t('dashboard_languages', 'Languages'), value: String(DASHBOARD_STATS.languages), icon: Languages, color: 'text-ubuntu-orange', bg: 'bg-ubuntu-orange/10', href: '/translate' },
-    { label: t('dashboard_templates', 'Templates'), value: String(DASHBOARD_STATS.templates), icon: FileCode, color: 'text-purple-400', bg: 'bg-purple-500/10', href: '/templates' },
-    { label: t('dashboard_glossary_terms', 'Glossary Terms'), value: String(DASHBOARD_STATS.glossaryTerms), icon: BookOpen, color: 'text-emerald-400', bg: 'bg-emerald-500/10', href: '/glossary' },
-    { label: t('dashboard_contributors', 'Contributors'), value: String(DASHBOARD_STATS.contributors), icon: Users, color: 'text-blue-400', bg: 'bg-blue-500/10', href: '/contributors' },
+    { label: t('dashboard_today_count', 'Today'), value: String(todayCount), icon: Clock, color: 'text-ubuntu-orange', bg: 'bg-ubuntu-orange/10', href: '/history' },
+    { label: t('dashboard_total_count', 'Total Activities'), value: String(totalCount), icon: FileText, color: 'text-purple-400', bg: 'bg-purple-500/10', href: '/history' },
+    { label: t('dashboard_templates', 'Templates'), value: String(DASHBOARD_STATS.templates), icon: FileCode, color: 'text-emerald-400', bg: 'bg-emerald-500/10', href: '/templates' },
+    { label: t('dashboard_glossary_terms', 'Glossary Terms'), value: String(DASHBOARD_STATS.glossaryTerms), icon: BookOpen, color: 'text-blue-400', bg: 'bg-blue-500/10', href: '/glossary' },
   ]
 
   const quickActions = [
