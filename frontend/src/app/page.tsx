@@ -21,7 +21,7 @@ function aggregateLangStats(templates: TranslationTemplate[], langCode: string) 
     total += t.total
     translated += t.translated
   }
-  const progress = total > 0 ? Math.round((translated / total) * 100) : 0
+  const progress = total > 0 ? Math.round((translated / total) * 1000) / 10 : 0
   return { totalEntries: total, translatedEntries: translated, progress }
 }
 

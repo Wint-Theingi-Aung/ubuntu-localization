@@ -9,9 +9,6 @@ interface CacheEntry {
 const cache = new Map<string, CacheEntry>()
 const CACHE_TTL_MS = 10 * 60 * 1000 // 10 minutes
 
-// ── In-flight refresh tracking ───────────────────────────────────────
-const refreshing = new Map<string, boolean>()
-
 // ── Types ─────────────────────────────────────────────────────────────
 export interface TranslationTemplate {
   name: string
@@ -22,134 +19,87 @@ export interface TranslationTemplate {
   completionPct: number
 }
 
-// ── Launchpad web scraping helpers ─────────────────────────────────────
+// ── Launchpad helpers ─────────────────────────────────────────────────
 
 /**
- * Scrape the Launchpad translation templates page to get per-template
- * total string counts. The Launchpad REST API no longer exposes
- * +translation-templates, so we parse the HTML directly.
+ * Fetch overall language stats from the main Launchpad translations page.
+ * This is a SINGLE request that returns per-language untranslated counts
+ * and percentages — much faster than per-template scraping (which times
+ * out on Vercel due to 547+ individual requests).
  *
- * Returns a map of template name → { total, sourcePackage }
+ * The page structure has rows like:
+ *   <a href="+lang/my">Burmese</a> ... 81.39% untranslated ... 323977 untranslated
+ *
+ * Returns a map of lang code → { total, translated, untranslated, pct }
  */
-async function scrapeTemplateTotals(): Promise<Map<string, { total: number; sourcePackage: string }>> {
-  const result = new Map<string, { total: number; sourcePackage: string }>()
-  const url = `https://translations.launchpad.net/ubuntu/${UBUNTU_RELEASE}/+templates`
+async function fetchLanguageOverview(): Promise<
+  Map<string, { total: number; translated: number; untranslated: number; pct: number }>
+> {
+  const result = new Map<string, { total: number; translated: number; untranslated: number; pct: number }>()
+  const url = `https://translations.launchpad.net/ubuntu/${UBUNTU_RELEASE}`
 
   try {
     const res = await fetch(url, {
-      headers: { 'User-Agent': 'Ubuntu-Localization-Tool/4.0' },
-      next: { revalidate: 3600 }, // 1 hour cache at Next.js level
+      headers: { 'User-Agent': 'Ubuntu-Localization-Tool/5.0' },
+      next: { revalidate: 3600 },
     })
     if (!res.ok) return result
 
     const html = await res.text()
 
-    // Extract template names from links like: <a href="+source/.../+pots/TEMPLATE">TEMPLATE</a>
-    const templateLinks = html.match(/<a href="\+source\/[^"]*\+pots\/([^"]+)">([^<]+)<\/a>/g) || []
+    // Extract the table header to find column indices
+    const headerMatch = html.match(/<thead>([\s\S]*?)<\/thead>/)
+    if (!headerMatch) return result
 
-    // Extract source packages from <td class="sourcepackage_column">PKG</td>
-    const sourcePackages = html.match(/<td class="sourcepackage_column">([^<]+)<\/td>/g) || []
+    const headers = headerMatch[1].match(/<th>([^<]+)<\/th>/g) || []
+    const colNames = headers.map(h => h.replace(/<[^>]*>/g, '').trim().toLowerCase())
+    const untranslatedIdx = colNames.findIndex(c => c === 'untranslated')
+    if (untranslatedIdx === -1) return result
 
-    // Extract lengths from <td class="length_column">NUM</td>
-    const lengths = html.match(/<td class="length_column">([^<]+)<\/td>/g) || []
+    // For each target language, find its row and extract stats
+    const langCodes = ['my', 'shn', 'mnw', 'ksw']
 
-    // Parse the extracted HTML fragments
-    const parseText = (s: string) => s.replace(/<[^>]*>/g, '').trim()
+    for (const langCode of langCodes) {
+      // Find the row containing this language's link
+      const rowPattern = new RegExp(
+        `<tr>([\\s\\S]*?<a href="\\+lang/${langCode}">[\\s\\S]*?)</tr>`,
+        'i'
+      )
+      const rowMatch = html.match(rowPattern)
+      if (!rowMatch) continue
 
-    const names = templateLinks.map(parseText)
+      const row = rowMatch[1]
 
-    for (let i = 0; i < names.length; i++) {
-      const name = names[i]
-      const sourcePackage = i < sourcePackages.length ? parseText(sourcePackages[i]) : name
-      const total = i < lengths.length ? parseInt(parseText(lengths[i]), 10) || 0 : 0
+      // Extract untranslated percentage from the bar alt text
+      // Format: alt=" 81.39% untranslated "
+      const pctMatch = row.match(/alt="[^"]*?([\d.]+)%\s*untranslated/i)
+      if (!pctMatch) continue
+      const untranslatedPct = parseFloat(pctMatch[1])
 
-      if (name) {
-        result.set(name, { total, sourcePackage })
+      // Extract untranslated count from the appropriate column
+      const tds = row.match(/<td[^>]*>([\s\S]*?)<\/td>/g) || []
+      if (tds.length <= untranslatedIdx) continue
+
+      const untranslatedTd = tds[untranslatedIdx].replace(/<[^>]*>/g, '').trim()
+      const untranslated = parseInt(untranslatedTd.replace(/,/g, ''), 10) || 0
+
+      if (untranslated > 0 || untranslatedPct > 0) {
+        // Calculate total from untranslated count and percentage
+        const translatedPct = 100 - untranslatedPct
+        const total = untranslatedPct > 0
+          ? Math.round(untranslated / (untranslatedPct / 100))
+          : untranslated
+        const translated = Math.round(total * (translatedPct / 100))
+        const pct = Math.round(translatedPct * 10) / 10 // 1 decimal
+
+        result.set(langCode, { total, translated, untranslated, pct })
       }
     }
   } catch {
-    // Scraping failed — return empty, caller handles gracefully
+    // Fetch failed — return empty, caller handles gracefully
   }
 
   return result
-}
-
-/**
- * Try to get per-language translation stats for a template by fetching
- * its +details page on Launchpad.
- *
- * Uses the +details endpoint which shows structured stats like:
- *   "140 (36.55%) translated"
- *   "243 (63.45%) untranslated"
- *   "383 messages"
- */
-async function fetchTemplateLangStats(
-  templateName: string,
-  sourcePackage: string,
-  langCode: string
-): Promise<{ translated: number; untranslated: number; completionPct: number } | null> {
-  const url = `https://translations.launchpad.net/ubuntu/${UBUNTU_RELEASE}/+source/${sourcePackage}/+pots/${templateName}/${langCode}/+details`
-
-  try {
-    const res = await fetch(url, {
-      headers: { 'User-Agent': 'Ubuntu-Localization-Tool/4.0' },
-      next: { revalidate: 3600 },
-    })
-    if (!res.ok) return null
-
-    const html = await res.text()
-
-    // Strip HTML tags first for cleaner parsing
-    const text = html.replace(/<[^>]*>/g, ' ').replace(/\s+/g, ' ')
-
-    // "Messages: N" or "N messages"
-    const totalMatch = text.match(/Messages:\s*(\d[\d,]*)/i) ||
-                       text.match(/(\d[\d,]*)\s+messages/i)
-    // "Translated: N (XX%)" — number comes right after the label
-    const translatedMatch = text.match(/Translated:\s*(\d[\d,]*)\s*\(/i) ||
-                            text.match(/(\d[\d,]*)\s*\([^)]*\)\s*translated/i)
-    // "Untranslated: N (XX%)"
-    const untranslatedMatch = text.match(/Untranslated:\s*(\d[\d,]*)\s*\(/i) ||
-                              text.match(/(\d[\d,]*)\s*\([^)]*\)\s*untranslated/i)
-
-    if (totalMatch) {
-      const total = parseInt(totalMatch[1].replace(/,/g, ''), 10) || 0
-      const translated = translatedMatch
-        ? parseInt(translatedMatch[1].replace(/,/g, ''), 10) || 0
-        : 0
-      const untranslated = untranslatedMatch
-        ? parseInt(untranslatedMatch[1].replace(/,/g, ''), 10) || (total - translated)
-        : total - translated
-      const completionPct = total > 0 ? Math.round((translated / total) * 100) : 0
-      return { translated, untranslated, completionPct }
-    }
-  } catch {
-    // Fetch failed — return null
-  }
-
-  return null
-}
-
-/**
- * Run async tasks with a concurrency limit.
- */
-async function pMap<T, R>(
-  items: T[],
-  fn: (item: T, index: number) => Promise<R>,
-  concurrency: number
-): Promise<R[]> {
-  const results: R[] = new Array(items.length)
-  let idx = 0
-
-  async function worker() {
-    while (idx < items.length) {
-      const i = idx++
-      results[i] = await fn(items[i], i)
-    }
-  }
-
-  await Promise.all(Array.from({ length: Math.min(concurrency, items.length) }, () => worker()))
-  return results
 }
 
 // ── API Route ─────────────────────────────────────────────────────────
@@ -165,89 +115,57 @@ export async function GET(request: NextRequest) {
     )
   }
 
-  const cacheKey = `all-templates-${lang}`
+  const cacheKey = `lang-overview`
   const cached = cache.get(cacheKey)
 
-  // If cache is fresh, return immediately
   if (cached && Date.now() - cached.fetchedAt < CACHE_TTL_MS) {
     return NextResponse.json({
       lang,
-      templates: cached.data,
+      templates: cached.data.filter(t => t.name.startsWith(`${lang}-`) || cached.data.length <= 4),
       cached: true,
     })
   }
 
-  // If already refreshing in background, return stale cache (if available) or wait
-  if (refreshing.get(cacheKey)) {
-    if (cached) {
-      return NextResponse.json({ lang, templates: cached.data, cached: true, refreshing: true })
-    }
-    // No stale cache — must wait for first fetch
-    // Fall through to fetch below
-  }
-
-  // Start background refresh
-  refreshing.set(cacheKey, true)
-
   try {
-    // Step 1: Scrape template names + total counts from the listing page (fast, single request)
-    const totals = await scrapeTemplateTotals()
+    const overview = await fetchLanguageOverview()
 
-    if (totals.size === 0) {
-      refreshing.delete(cacheKey)
+    if (overview.size === 0) {
       return NextResponse.json({
         lang,
         templates: cached?.data || [],
         cached: !!cached,
-        note: 'Launchpad templates page unavailable. Metrics will show as N/A.',
+        note: 'Launchpad overview page unavailable.',
       })
     }
 
-    // Step 2: Fetch per-language stats for ALL templates in parallel
-    const entries = Array.from(totals.entries())
-    const CONCURRENCY = 15 // increased parallel requests
+    // Convert overview stats into the TranslationTemplate format
+    // Return a single "aggregate" entry per language
+    const templates: TranslationTemplate[] = []
 
-    const langStatsResults = await pMap(
-      entries,
-      ([name, { sourcePackage }]) => fetchTemplateLangStats(name, sourcePackage, lang),
-      CONCURRENCY
-    )
+    for (const [langCode, stats] of overview.entries()) {
+      templates.push({
+        name: `ubuntu-${langCode}`,
+        sourcePackage: 'ubuntu',
+        total: stats.total,
+        translated: stats.translated,
+        untranslated: stats.untranslated,
+        completionPct: stats.pct,
+      })
+    }
 
-    const templates: TranslationTemplate[] = entries.map(([name, { total, sourcePackage }], i) => {
-      const langStats = langStatsResults[i]
-      if (langStats) {
-        return {
-          name,
-          sourcePackage,
-          total: langStats.translated + langStats.untranslated,
-          translated: langStats.translated,
-          untranslated: langStats.untranslated,
-          completionPct: langStats.completionPct,
-        }
-      }
-      // No per-language stats — use total only
-      return {
-        name,
-        sourcePackage,
-        total,
-        translated: 0,
-        untranslated: total,
-        completionPct: 0,
-      }
-    })
-
-    // Update cache
+    // Cache ALL languages together
     cache.set(cacheKey, { data: templates, fetchedAt: Date.now() })
-    refreshing.delete(cacheKey)
+
+    // Return only the requested language's entry
+    const langEntry = templates.find(t => t.name === `ubuntu-${lang}`)
 
     return NextResponse.json({
       lang,
-      templates,
+      templates: langEntry ? [langEntry] : [],
       cached: false,
     })
   } catch (error) {
     console.error('Translation progress fetch error:', error)
-    refreshing.delete(cacheKey)
     return NextResponse.json({
       lang,
       templates: cached?.data || [],

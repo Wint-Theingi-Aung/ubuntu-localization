@@ -26,7 +26,7 @@ export default function LanguageCard({
         <div className="w-20 h-20 relative">
           <CircularProgressbar
             value={progress}
-            text={`${progress}%`}
+            text={`${progress % 1 === 0 ? progress : progress.toFixed(1)}%`}
             styles={buildStyles({
               textSize: '22px',
               pathColor: color,
