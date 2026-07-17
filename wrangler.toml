@@ -1,7 +1,0 @@
-name = "ubuntu-localization"
-compatibility_date = "2024-12-01"
-compatibility_flags = ["nodejs_compat"]
-
-[pages]
-build_command = "cd frontend && npm install --legacy-peer-deps && npx @cloudflare/next-on-pages"
-build_output_dir = "frontend/.vercel/output/static"

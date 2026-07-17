@@ -10,7 +10,6 @@ out/
 
 # Build output
 .vercel/
-.wrangler/
 
 # OS files
 .DS_Store
