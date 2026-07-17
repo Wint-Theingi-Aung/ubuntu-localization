@@ -4,7 +4,10 @@ import { I18nProvider } from '@/lib/i18n'
 import { ClientLayout } from '@/components/ClientLayout'
 
 export const metadata: Metadata = {
-  title: 'Ubuntu Localization Tool',
+  title: {
+    template: '%s — Ubuntu Localization Tool',
+    default: 'Ubuntu Localization Tool',
+  },
   description: 'Ubuntu OS localization for indigenous languages',
   icons: { icon: '/favicon.ico' },
 }

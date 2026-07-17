@@ -1,9 +1,17 @@
 'use client'
 
-import { type ReactNode } from 'react'
+import { type ReactNode, useEffect } from 'react'
 import Sidebar from '@/components/Sidebar'
+import { useI18n } from '@/lib/i18n'
 
 export function ClientLayout({ children }: { children: ReactNode }) {
+  const { lang } = useI18n()
+
+  // Dynamically update <html lang="..."> for SEO and accessibility
+  useEffect(() => {
+    document.documentElement.lang = lang
+  }, [lang])
+
   return (
     <div className="flex min-h-screen">
       <Sidebar />

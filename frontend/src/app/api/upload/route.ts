@@ -18,9 +18,9 @@ export async function POST(request: NextRequest) {
     }
 
     // Validate file type
-    if (!file.name.endsWith('.po') && !file.name.endsWith('.pot')) {
+    if (!file.name.endsWith('.po')) {
       return NextResponse.json(
-        { error: 'Only .po and .pot files are supported.' },
+        { error: 'Only .po files are supported.' },
         { status: 400 }
       )
     }

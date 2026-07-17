@@ -92,6 +92,6 @@ export const DASHBOARD_STATS = {
 export const TRANSLATION_CONFIG = {
   BATCH_SIZE:        15,
   MAX_FILE_SIZE_MB:  50,
-  ALLOWED_EXTENSIONS: ['.po', '.pot'],
+  ALLOWED_EXTENSIONS: ['.po'],
   ENDPOINT:          '/api/translate',
 } as const

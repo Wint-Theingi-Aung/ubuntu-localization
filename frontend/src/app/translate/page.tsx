@@ -4,7 +4,7 @@ import { useState, useCallback, useMemo, useEffect } from 'react'
 import {
   Upload, Languages, Download, FileText, Loader2, CheckCircle,
   AlertCircle, X, Play, Sparkles, Shield, Edit3, Eye, Check,
-  ChevronDown, ChevronUp, RotateCcw,
+  ChevronDown, ChevronUp, RotateCcw, Info,
 } from 'lucide-react'
 import { useI18n } from '@/lib/i18n'
 import { LANGUAGES, TRANSLATION_CONFIG } from '@/lib/constants'
@@ -192,7 +192,7 @@ export default function TranslatePage() {
       a.href = url
       const now = new Date()
       const ts = `${now.getFullYear()}-${String(now.getMonth() + 1).padStart(2, '0')}-${String(now.getDate()).padStart(2, '0')}-${String(now.getHours()).padStart(2, '0')}${String(now.getMinutes()).padStart(2, '0')}${String(now.getSeconds()).padStart(2, '0')}`
-      const baseName = (file?.name || 'messages.po').replace(/\.pot?$/, '')
+      const baseName = (file?.name || 'messages.po').replace(/\.po$/, '')
       a.download = `${baseName}-${ts}.po`
       document.body.appendChild(a); a.click(); document.body.removeChild(a)
       URL.revokeObjectURL(url)
@@ -280,6 +280,20 @@ export default function TranslatePage() {
       {/* ════════════════ UPLOAD STEP ════════════════ */}
       {step === 'upload' && (
         <div className="glass-card p-8">
+          {/* Contribution Policy Notice */}
+          <div className="mb-6 p-4 rounded-lg border-l-4 border-l-ubuntu-orange bg-ubuntu-orange/5">
+            <div className="flex gap-3">
+              <Info className="text-ubuntu-orange flex-shrink-0 mt-0.5" size={20} />
+              <div>
+                <p className="text-sm text-[var(--tx-primary)] font-medium">
+                  {t('translation_contribution_title', 'Ubuntu Localization Contributions Only')}
+                </p>
+                <p className="text-xs text-[var(--tx-muted)] mt-1">
+                  {t('translation_contribution_note', 'This tool is for Ubuntu Localization Contributions only. We support .po files for direct translation. Please ensure your files are exported from Launchpad.')}
+                </p>
+              </div>
+            </div>
+          </div>
           <div className="max-w-md mx-auto space-y-6">
             <div>
               <label className="block text-sm text-[var(--tx-muted)] mb-2">{t('translation_target_language', 'Target Language')}</label>
@@ -292,7 +306,7 @@ export default function TranslatePage() {
             <div>
               <label className="block text-sm text-[var(--tx-muted)] mb-2">{t('translation_po_file', '.po File')}</label>
               <label className={`upload-zone ${file ? 'has-file' : ''}`}>
-                <input type="file" accept=".po,.pot" onChange={handleFileSelect} className="hidden" />
+                <input type="file" accept=".po" onChange={handleFileSelect} className="hidden" />
                 {file ? (
                   <div className="text-center">
                     <FileText className="mx-auto text-ubuntu-orange mb-2" size={32} />
@@ -302,7 +316,7 @@ export default function TranslatePage() {
                 ) : (
                   <div className="text-center">
                     <Upload className="mx-auto text-[var(--tx-dim)] mb-2" size={32} />
-                    <p className="text-[var(--tx-muted)]">{t('translation_drop_hint', 'Drop .po or .pot file here or click to browse')}</p>
+                    <p className="text-[var(--tx-muted)]">{t('translation_drop_hint', 'Drop .po file here or click to browse')}</p>
                     <p className="text-xs text-[var(--tx-dim)] mt-1">{t('translation_max_size', 'Maximum 50 MB')}</p>
                   </div>
                 )}
