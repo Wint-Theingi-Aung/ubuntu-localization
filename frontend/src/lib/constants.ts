@@ -72,9 +72,9 @@ export const API = {
 // Source: Launchpad translations (fetched 2026-07-03)
 // Total: 397,822 strings across all Ubuntu 26.10 (stonking) packages
 export const TRANSLATION_STATS = [
-  { code: 'my',  totalEntries: 397822, translatedEntries: 74121,  progress: 19 },
-  { code: 'shn', totalEntries: 397822, translatedEntries: 1637,   progress: 0  },
-  { code: 'mnw', totalEntries: 397822, translatedEntries: 6878,   progress: 2  },
+  { code: 'my',  totalEntries: 397822, translatedEntries: 74034,  progress: 19 },
+  { code: 'shn', totalEntries: 397822, translatedEntries: 1631,   progress: 0  },
+  { code: 'mnw', totalEntries: 397822, translatedEntries: 6882,   progress: 2  },
   { code: 'ksw', totalEntries: 397822, translatedEntries: 0,      progress: 0  },
 ]
 
