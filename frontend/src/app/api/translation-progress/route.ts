@@ -115,7 +115,7 @@ export async function GET(request: NextRequest) {
   if (cached && Date.now() - cached.fetchedAt < CACHE_TTL_MS) {
     return NextResponse.json({
       lang,
-      templates: cached.data.filter(t => t.name.startsWith(`${lang}-`) || cached.data.length <= 4),
+      templates: cached.data.filter(t => t.name === `ubuntu-${lang}`),
       cached: true,
     })
   }
