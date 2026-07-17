@@ -52,11 +52,12 @@ and a web UI that turn weeks of manual translation into minutes.
 | `/po-detect` | Prioritize by importance, detect fuzzy/missing |
 | `/po-translate` | Batch AI translation with **3-reviewer QA** |
 | `/po-export` | Write back clean .po, ready for Launchpad |
-| **Web UI** | Ubuntu-themed FastAPI + htmx dashboard |
+| **Web UI** | Next.js 14 + React + TypeScript dashboard |
 | **Contributors** | Per-language contributor rankings via Launchpad |
 
-**4 indigenous languages supported** with Unicode-correct scripts and
-language-specific grammar rules (SOV vs SVO, tone marks, script families).
+**5 UI languages** — the interface itself is fully localized in Myanmar, Shan,
+Mon, S'gaw Karen, and English. Plus Unicode-correct scripts and language-specific
+grammar rules (SOV vs SVO, tone marks, script families) for translation output.
 
 ---
 
@@ -77,7 +78,7 @@ language-specific grammar rules (SOV vs SVO, tone marks, script families).
 - `qa-reviewer` → 3 adversarial lenses (placeholders, context, structure)
 - `batch-translate-orchestrator` → 5-phase pipeline: Load → Translate → Verify → Merge → Report
 
-**Stack:** FastAPI + Jinja2 + htmx · Google Gemini · Vercel deployment
+**Stack:** Next.js 14 + React + TypeScript + Tailwind CSS · Google Gemini · Vercel deployment
 
 ---
 
@@ -112,6 +113,6 @@ This tool:
 - [x] **Skill used** — 6 slash commands: po-upload, po-detect, po-translate, po-export, po-description, pr-description
 - [x] **Agents used** — translate-batch (Gemini translator) + qa-reviewer (3-lens adversarial QA)
 - [x] **Workflow used** — batch-translate-orchestrator (5-phase pipeline with parallel translation + majority-vote verification)
-- [x] **Web UI** — Ubuntu-themed FastAPI + htmx dashboard with leaderboard and auth
-- [x] **Deployed** — Vercel with `/tmp`-based persistence
+- [x] **Web UI** — Next.js 14 + React + TypeScript + Tailwind CSS, fully localized in 5 languages
+- [x] **Deployed** — Vercel production
 - [ ] `report.md` in team repo
