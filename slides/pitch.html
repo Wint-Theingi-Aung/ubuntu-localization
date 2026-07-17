@@ -66,7 +66,7 @@ and a web UI that turn weeks of manual translation into minutes.</p>
 </tr>
 <tr>
 <td><strong>Web UI</strong></td>
-<td>Ubuntu-themed FastAPI + htmx dashboard</td>
+<td>Next.js 14 + React + TypeScript dashboard</td>
 </tr>
 <tr>
 <td><strong>Leaderboard</strong></td>
@@ -74,8 +74,9 @@ and a web UI that turn weeks of manual translation into minutes.</p>
 </tr>
 </tbody>
 </table>
-<p><strong>4 indigenous languages supported</strong> with Unicode-correct scripts and<br />
-language-specific grammar rules (SOV vs SVO, tone marks, script families).</p>
+<p><strong>5 UI languages</strong> — the interface itself is fully localized in Myanmar, Shan,<br />
+Mon, S'gaw Karen, and English. Plus Unicode-correct scripts and language-specific<br />
+grammar rules (SOV vs SVO, tone marks, script families) for translation output.</p>
 </section>
 </foreignObject></svg><svg data-marpit-svg="" viewBox="0 0 1280 720"><foreignObject width="1280" height="720"><section id="4" data-paginate="true" lang="en-US" data-marpit-pagination="4" style="--paginate:true;" data-marpit-pagination-total="6" data-transition-back="{&quot;name&quot;:&quot;fade&quot;,&quot;builtinFallback&quot;:true}" data-transition="{&quot;name&quot;:&quot;fade&quot;,&quot;builtinFallback&quot;:true}">
 <h1 id="how-i-built-it">How I built it</h1>
@@ -96,7 +97,7 @@ language-specific grammar rules (SOV vs SVO, tone marks, script families).</p>
 <li><code>qa-reviewer</code> → 3 adversarial lenses (placeholders, context, structure)</li>
 <li><code>batch-translate-orchestrator</code> → 5-phase pipeline: Load → Translate → Verify → Merge → Report</li>
 </ul>
-<p><strong>Stack:</strong> FastAPI + Jinja2 + htmx · Google Gemini · Vercel deployment</p>
+<p><strong>Stack:</strong> Next.js 14 + React + TypeScript + Tailwind CSS · Google Gemini · Vercel deployment</p>
 </section>
 </foreignObject></svg><svg data-marpit-svg="" viewBox="0 0 1280 720"><foreignObject width="1280" height="720"><section id="5" data-paginate="true" lang="en-US" data-marpit-pagination="5" style="--paginate:true;" data-marpit-pagination-total="6" data-transition-back="{&quot;name&quot;:&quot;fade&quot;,&quot;builtinFallback&quot;:true}" data-transition="{&quot;name&quot;:&quot;fade&quot;,&quot;builtinFallback&quot;:true}">
 <h1 id="why-it-matters">Why it matters</h1>
@@ -124,8 +125,8 @@ translations don't exist or are incomplete.</p>
 <li>[x] <strong>Skill used</strong> — 6 slash commands: po-upload, po-detect, po-translate, po-export, po-description, pr-description</li>
 <li>[x] <strong>Agents used</strong> — translate-batch (Gemini translator) + qa-reviewer (3-lens adversarial QA)</li>
 <li>[x] <strong>Workflow used</strong> — batch-translate-orchestrator (5-phase pipeline with parallel translation + majority-vote verification)</li>
-<li>[x] <strong>Web UI</strong> — Ubuntu-themed FastAPI + htmx dashboard with contributors page and auth</li>
-<li>[x] <strong>Deployed</strong> — Vercel with <code>/tmp</code>-based persistence</li>
+<li>[x] <strong>Web UI</strong> — Next.js 14 + React + TypeScript + Tailwind CSS, fully localized in 5 languages</li>
+<li>[x] <strong>Deployed</strong> — Vercel production</li>
 <li>[ ] <code>report.md</code> in team repo</li>
 </ul>
 </section>
