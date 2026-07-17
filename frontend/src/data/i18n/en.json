@@ -231,5 +231,7 @@
   "activity_entries_n": "{count} entries, {untranslated} untranslated",
   "activity_glossary_detail": "{terms}",
   "activity_visitors": "Visitors: {count}",
-  "activity_visitors_loading": "Loading visitors..."
+  "activity_visitors_loading": "Loading visitors...",
+  "translation_contribution_title": "Ubuntu Localization Contributions Only",
+  "translation_contribution_note": "This tool is for Ubuntu Localization Contributions only. We support .po files for direct translation. Please ensure your files are exported from Launchpad."
 }

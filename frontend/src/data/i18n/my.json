@@ -231,5 +231,7 @@
   "activity_entries_n": "စာကြောင်း {count}၊ ဘာသာမပြန်ရသေး {untranslated}",
   "activity_glossary_detail": "{terms}",
   "activity_visitors": "လာရောက်သူ: {count}",
-  "activity_visitors_loading": "လာရောက်သူ ဖွင့်နေသည်..."
+  "activity_visitors_loading": "လာရောက်သူ ဖွင့်နေသည်...",
+  "translation_contribution_title": "Ubuntu ဘာသာပြန်ဆိုမှု ပံ့ပိုးကူညီခြင်းများအတွက်သာ",
+  "translation_contribution_note": "ဤကိရိယာသည် Ubuntu ဘာသာပြန်ဆိုမှု ပံ့ပိုးကူညီခြင်းများအတွက်သာ ဖြစ်သည်။ တိုက်ရိုက်ဘာသာပြန်ဆိုရန်အတွက် .po ဖိုင်များကို ပံ့ပိုးပေးထားသည်။ သင်၏ဖိုင်များကို Launchpad မှ ထုတ်ယူထားခြင်းဖြစ်ကြောင်း သေချာပါစေ။"
 }

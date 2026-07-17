@@ -231,5 +231,7 @@
   "activity_entries_n": "စာကြောင်း {count}၊ ပြာပ်ပြံၚ်မတိာ် {untranslated}",
   "activity_glossary_detail": "{terms}",
   "activity_visitors": "လားပ်: {count}",
-  "activity_visitors_loading": "လားပ် ဖွံ့..."
+  "activity_visitors_loading": "လားပ် ဖွံ့...",
+  "translation_contribution_title": "သွက် အရေဝ်ဝေါဟာရ တုဲင်ပံင် Ubuntu ဟေင်",
+  "translation_contribution_note": "ကိရိယာဏအ်ဝွံ သွက်ဂကောံတုဲင်ပံင် အရေဝ်ဝေါဟာရ Ubuntu ဟေင်ရ။ သွက်ဂွံတုဲင်ပံင်တိုက်ရိုက်ဂှ် ပကင်ရင်ကဵု .po ဝှာင်ရ။ ပကင်ရင်လဝ် ဝှာင်မၞးတအ် ပ္တိတ်နင်နူ Launchpad ဂှ် ညံင်ဂွံဒှ်ဍာံရ။"
 }
