@@ -47,28 +47,20 @@ async function fetchLanguageOverview(): Promise<
 
     const html = await res.text()
 
-    // Extract the table header to find column indices
-    const headerMatch = html.match(/<thead>([\s\S]*?)<\/thead>/)
-    if (!headerMatch) return result
-
-    const headers = headerMatch[1].match(/<th>([^<]+)<\/th>/g) || []
-    const colNames = headers.map(h => h.replace(/<[^>]*>/g, '').trim().toLowerCase())
-    const untranslatedIdx = colNames.findIndex(c => c === 'untranslated')
-    if (untranslatedIdx === -1) return result
-
-    // For each target language, find its row and extract stats
+    // For each target language, find its row and extract stats.
+    // Each row has sortkey spans: untranslated%, untranslated_count, need_review, changed, contributors
     const langCodes = ['my', 'shn', 'mnw', 'ksw']
 
     for (const langCode of langCodes) {
-      // Find the row containing this language's link
-      const rowPattern = new RegExp(
-        `<tr>([\\s\\S]*?<a href="\\+lang/${langCode}">[\\s\\S]*?)</tr>`,
-        'i'
-      )
-      const rowMatch = html.match(rowPattern)
-      if (!rowMatch) continue
+      // Find the language link position
+      const linkIdx = html.indexOf(`+lang/${langCode}`)
+      if (linkIdx === -1) continue
 
-      const row = rowMatch[1]
+      // Extract the containing <tr>...</tr> by finding nearest tr boundaries
+      const trStart = html.lastIndexOf('<tr', linkIdx)
+      const trEnd = html.indexOf('</tr>', linkIdx)
+      if (trStart === -1 || trEnd === -1) continue
+      const row = html.substring(trStart, trEnd)
 
       // Extract untranslated percentage from the bar alt text
       // Format: alt=" 81.39% untranslated "
@@ -76,12 +68,14 @@ async function fetchLanguageOverview(): Promise<
       if (!pctMatch) continue
       const untranslatedPct = parseFloat(pctMatch[1])
 
-      // Extract untranslated count from the appropriate column
-      const tds = row.match(/<td[^>]*>([\s\S]*?)<\/td>/g) || []
-      if (tds.length <= untranslatedIdx) continue
+      // Extract untranslated count from sortkey spans.
+      // The row has sortkey spans in order: [untranslated%, untranslated_count, need_review, changed, contributors]
+      const sortkeys = [...row.matchAll(/<span class="sortkey">([^<]+)<\/span>/g)]
+        .map(m => m[1].trim())
+      // sortkeys[0] = untranslated%, sortkeys[1] = untranslated count
+      if (sortkeys.length < 2) continue
 
-      const untranslatedTd = tds[untranslatedIdx].replace(/<[^>]*>/g, '').trim()
-      const untranslated = parseInt(untranslatedTd.replace(/,/g, ''), 10) || 0
+      const untranslated = parseInt(sortkeys[1].replace(/,/g, ''), 10) || 0
 
       if (untranslated > 0 || untranslatedPct > 0) {
         // Calculate total from untranslated count and percentage
