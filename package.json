@@ -7,6 +7,8 @@
     "build": "cd frontend && npm run build",
     "start": "cd frontend && npm start",
     "lint": "cd frontend && npm run lint",
-    "vercel-build": "cd frontend && npm run build"
+    "vercel-build": "cd frontend && npm run build",
+    "pages:build": "cd frontend && npx @cloudflare/next-on-pages",
+    "pages:dev": "cd frontend && npx wrangler pages dev .vercel/output/static --compatibility-flag=nodejs_compat"
   }
 }
