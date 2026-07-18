@@ -48,11 +48,12 @@ export default function TemplatesPage() {
       const res = await fetch('/api/translation-progress?lang=my')
       const data = await res.json()
       if (data.templates && Array.isArray(data.templates)) {
-        const map: MetricsMap = {}
+        const newMap: MetricsMap = {}
         for (const tmpl of data.templates) {
-          map[tmpl.name] = tmpl
+          newMap[tmpl.name] = tmpl
         }
-        setMetrics(map)
+        // MERGE instead of replace — keeps static JSON data intact for packages the API doesn't cover
+        setMetrics(prev => ({ ...prev, ...newMap }))
       } else {
         setMetricsError(true)
       }
