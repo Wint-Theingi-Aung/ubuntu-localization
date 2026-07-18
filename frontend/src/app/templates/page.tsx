@@ -50,9 +50,10 @@ export default function TemplatesPage() {
       if (data.templates && Array.isArray(data.templates)) {
         const newMap: MetricsMap = {}
         for (const tmpl of data.templates) {
-          newMap[tmpl.name] = tmpl
+          const key = tmpl.sourcePackage ? `${tmpl.sourcePackage}/${tmpl.name}` : tmpl.name
+          newMap[key] = tmpl
         }
-        // MERGE instead of replace — keeps static JSON data intact for packages the API doesn't cover
+        // Functional update to MERGE instead of replace
         setMetrics(prev => ({ ...prev, ...newMap }))
       } else {
         setMetricsError(true)
@@ -69,9 +70,13 @@ export default function TemplatesPage() {
     // Instant: load from bundled static JSON
     const map: MetricsMap = {}
     for (const [name, m] of Object.entries(staticMetrics as Record<string, any>)) {
-      map[name] = {
+      // Look up sourcePackage from templates data for composite key
+      const pkg = (templatesData.packages as any[]).find((p: any) => p.name === name)
+      const sourcePackage = pkg?.sourcePackage || ''
+      const key = sourcePackage ? `${sourcePackage}/${name}` : name
+      map[key] = {
         name,
-        sourcePackage: '',
+        sourcePackage,
         total: m.total,
         translated: m.translated,
         untranslated: m.untranslated,
@@ -96,8 +101,10 @@ export default function TemplatesPage() {
       let cmp = 0
       if (sortBy === 'name') cmp = a.name.localeCompare(b.name)
       else if (sortBy === 'untranslated') {
-        const aUn = metrics[a.name]?.untranslated ?? a.entries
-        const bUn = metrics[b.name]?.untranslated ?? b.entries
+        const aKey = a.sourcePackage ? `${a.sourcePackage}/${a.name}` : a.name
+        const bKey = b.sourcePackage ? `${b.sourcePackage}/${b.name}` : b.name
+        const aUn = metrics[aKey]?.untranslated ?? metrics[a.name]?.untranslated ?? a.entries
+        const bUn = metrics[bKey]?.untranslated ?? metrics[b.name]?.untranslated ?? b.entries
         cmp = aUn - bUn
       }
       else if (sortBy === 'priority') {
@@ -105,8 +112,10 @@ export default function TemplatesPage() {
         cmp = (order[a.priority as keyof typeof order] ?? 1) - (order[b.priority as keyof typeof order] ?? 1)
       }
       else if (sortBy === 'total') {
-        const aTotal = metrics[a.name]?.total ?? a.entries
-        const bTotal = metrics[b.name]?.total ?? b.entries
+        const aKey = a.sourcePackage ? `${a.sourcePackage}/${a.name}` : a.name
+        const bKey = b.sourcePackage ? `${b.sourcePackage}/${b.name}` : b.name
+        const aTotal = metrics[aKey]?.total ?? metrics[a.name]?.total ?? a.entries
+        const bTotal = metrics[bKey]?.total ?? metrics[b.name]?.total ?? b.entries
         cmp = aTotal - bTotal
       }
       return sortDir === 'asc' ? cmp : -cmp
@@ -124,10 +133,13 @@ export default function TemplatesPage() {
 
   // Merge metrics into paginated items
   const paginatedWithMetrics = useMemo(() => {
-    return paginated.map((pkg: any) => ({
-      ...pkg,
-      metrics: metrics[pkg.name] || null,
-    }))
+    return paginated.map((pkg: any) => {
+      const key = pkg.sourcePackage ? `${pkg.sourcePackage}/${pkg.name}` : pkg.name
+      return {
+        ...pkg,
+        metrics: metrics[key] || metrics[pkg.name] || null, // Fallback for safety
+      }
+    })
   }, [paginated, metrics])
 
   return (
