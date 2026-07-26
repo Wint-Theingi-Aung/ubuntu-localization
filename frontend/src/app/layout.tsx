@@ -10,6 +10,28 @@ export const metadata: Metadata = {
   },
   description: 'Ubuntu OS localization for indigenous languages',
   icons: { icon: '/favicon.ico' },
+  openGraph: {
+    title: 'Ubuntu Localization for Myanmar',
+    description: 'Ubuntu OS အတွက် မြန်မာဘာသာ သာမက တိုင်းရင်းသားဘာသာစကားများ ပြုပြင်ပြောင်းလဲမှုစနစ်',
+    url: 'https://ubuntu-localization.vercel.app/',
+    siteName: 'Ubuntu Localization Tool',
+    images: [
+      {
+        url: 'https://ubuntu-localization.vercel.app/og.jpg',
+        width: 1200,
+        height: 630,
+        alt: 'Ubuntu Localization Myanmar Preview',
+      },
+    ],
+    locale: 'my_MM',
+    type: 'website',
+  },
+  twitter: {
+    card: 'summary_large_image',
+    title: 'Ubuntu Localization for Myanmar',
+    description: 'Ubuntu OS အတွက် မြန်မာဘာသာ သာမက တိုင်းရင်းသားဘာသာစကားများ ပြုပြင်ပြောင်းလဲမှုစနစ်',
+    images: ['https://ubuntu-localization.vercel.app/og.jpg'],
+  },
 }
 
 export default function RootLayout({
