@@ -8,7 +8,7 @@ import { useI18n } from '@/lib/i18n'
 import { lpTranslateUrl, lpUbuntuUrl, LANGUAGES, UBUNTU_RELEASE } from '@/lib/constants'
 import templatesData from '@/data/templates.json'
 import staticMetrics from '@/data/metrics-my.json'
-import type { TranslationTemplate } from '@/app/api/translation-progress/route'
+import type { TranslationTemplate } from '@/lib/types'
 
 const ITEMS_PER_PAGE = 20
 

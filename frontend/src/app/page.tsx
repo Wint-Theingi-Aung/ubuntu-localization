@@ -6,7 +6,7 @@ import Link from 'next/link'
 import { useI18n } from '@/lib/i18n'
 import { LANGUAGES, TRANSLATION_STATS, DASHBOARD_STATS, lpLanguageUrl } from '@/lib/constants'
 import { getHistory, formatTimestamp, type HistoryEntry } from '@/lib/history'
-import type { TranslationTemplate } from '@/app/api/translation-progress/route'
+import type { TranslationTemplate } from '@/lib/types'
 
 const actionIconMap: Record<string, typeof Languages> = { translate: Languages, export: FileCode, upload: FileText, glossary: BookOpen }
 const actionColorMap: Record<string, string> = { translate: 'text-ubuntu-orange', export: 'text-emerald-400', upload: 'text-blue-400', glossary: 'text-purple-400' }

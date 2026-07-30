@@ -7,9 +7,6 @@ export default defineConfig({
   use: {
     baseURL: 'http://localhost:3000',
     headless: true,
-    launchOptions: {
-      executablePath: '/usr/bin/google-chrome',
-    },
   },
   webServer: {
     command: 'npm run dev',

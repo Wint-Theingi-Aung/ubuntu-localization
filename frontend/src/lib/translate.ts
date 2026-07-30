@@ -4,6 +4,7 @@
 
 import { PoEntry } from './po-parser'
 
+/** Language metadata for translation prompts */
 const LANGUAGES: Record<string, { name: string; script: string; word_order: string }> = {
   my: { name: 'Myanmar', script: 'Myanmar Unicode', word_order: 'SOV' },
   shn: { name: 'Shan', script: 'Shan Unicode', word_order: 'SVO' },

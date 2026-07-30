@@ -1,5 +1,6 @@
 import { NextRequest, NextResponse } from 'next/server'
 import { UBUNTU_RELEASE } from '@/lib/constants'
+import type { TranslationTemplate } from '@/lib/types'
 
 // ── Cache ─────────────────────────────────────────────────────────────
 interface CacheEntry {
@@ -8,16 +9,6 @@ interface CacheEntry {
 }
 const cache = new Map<string, CacheEntry>()
 const CACHE_TTL_MS = 10 * 60 * 1000 // 10 minutes
-
-// ── Types ─────────────────────────────────────────────────────────────
-export interface TranslationTemplate {
-  name: string
-  sourcePackage: string
-  total: number
-  translated: number
-  untranslated: number
-  completionPct: number
-}
 
 // ── Launchpad helpers ─────────────────────────────────────────────────
 
