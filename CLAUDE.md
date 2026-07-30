@@ -93,7 +93,20 @@ npm run dev
 
 ## Deployment (Vercel)
 - Entry point: `frontend/` directory (Next.js)
-- Set `GOOGLE_API_KEY` as environment variable in Vercel dashboard
+
+### Required Environment Variables
+| Variable | Purpose | Where |
+|----------|---------|-------|
+| `GOOGLE_API_KEY` | Gemini AI translation API | Vercel dashboard + `.env` locally |
+
+Set via CLI:
+```bash
+echo "YOUR_KEY" | vercel env add GOOGLE_API_KEY production
+echo "YOUR_KEY" | vercel env add GOOGLE_API_KEY preview
+echo "YOUR_KEY" | vercel env add GOOGLE_API_KEY development
+```
+
+> **Note:** Without `GOOGLE_API_KEY`, the translation page shows "Google API key not configured" error. Both production and preview deployments require this variable.
 
 ## Quick Start
 1. `cd frontend && npm install`
