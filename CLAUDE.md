@@ -92,6 +92,7 @@ npm run dev
 - `frontend/src/components/Sidebar.tsx` — Navigation sidebar
 
 ## Deployment (Vercel)
+- **Production URL**: https://ubuntu-localization.vercel.app/
 - Entry point: `frontend/` directory (Next.js)
 
 ### Required Environment Variables
