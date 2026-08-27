@@ -396,7 +396,7 @@ export default function TranslatePage() {
             )}
           </div>
 
-          <div className="glass-card overflow-hidden">
+          <div className="glass-card">
             <div className="divide-y divide-[var(--border-light)]">
               {paginatedEntries.map(entry => (
                 <div key={entry.index} className="p-4 hover:bg-[var(--surface-overlay)] transition-colors">
@@ -408,7 +408,7 @@ export default function TranslatePage() {
                       <textarea
                         readOnly
                         value={entry.msgid}
-                        className="input-field w-full font-mono text-sm min-h-[4rem] flex-1 resize-y bg-[var(--surface-overlay)] border-[var(--border-light)] text-[var(--tx-primary)] cursor-default"
+                        className="input-field w-full font-mono text-sm min-h-[4rem] resize-y bg-[var(--surface-overlay)] border-[var(--border-light)] text-[var(--tx-primary)] cursor-default"
                         rows={3}
                       />
                     </div>
@@ -424,12 +424,12 @@ export default function TranslatePage() {
                           <textarea
                             value={entry.msgstr}
                             onChange={(e) => handleEditTranslation(entry.index, e.target.value)}
-                            className="input-field w-full font-myanmar text-sm min-h-[4rem] flex-1 resize-y bg-emerald-500/5 border-emerald-500/20 focus:border-ubuntu-orange/50"
+                            className="input-field w-full font-myanmar text-sm min-h-[4rem] resize-y bg-emerald-500/5 border-emerald-500/20 focus:border-ubuntu-orange/50"
                             rows={2}
                             placeholder={t('translation_enter_translation', 'Enter or edit translation...')}
                           />
                         )
-                        : <p className="text-[var(--tx-faint)] italic text-sm p-2.5 min-h-[4rem] flex-1 flex items-center">{t('translation_pending_hint', 'Click To Translate to generate')}</p>}
+                        : <p className="text-[var(--tx-faint)] italic text-sm p-2.5 min-h-[4rem] flex items-center">{t('translation_pending_hint', 'Click To Translate to generate')}</p>}
                     </div>
                   </div>
                   {(entry.status === 'translated' || entry.status === 'reviewing') && (
@@ -502,7 +502,7 @@ export default function TranslatePage() {
               return (
                 <div
                   key={entry.index}
-                  className={`glass-card overflow-hidden transition-all duration-200 ${
+                  className={`glass-card transition-all duration-200 ${
                     isConfirmed
                       ? 'border-l-4 border-l-emerald-500/50'
                       : isReviewing
