@@ -50,6 +50,9 @@ export async function POST(request: NextRequest) {
         msgid: e.msgid,
         msgstr: '',
         msgctxt: e.msgctxt,
+        flags: e.flags,
+        occurrences: e.occurrences,
+        tcomment: e.tcomment,
         status: 'pending',
       })),
       all_entries: parsed.all_entries.map(e => ({
@@ -57,6 +60,9 @@ export async function POST(request: NextRequest) {
         msgid: e.msgid,
         msgstr: e.msgstr,
         msgctxt: e.msgctxt,
+        flags: e.flags,
+        occurrences: e.occurrences,
+        tcomment: e.tcomment,
       })),
       po_headers: parsed.po_headers,
     })

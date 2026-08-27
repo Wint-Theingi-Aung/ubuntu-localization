@@ -4,7 +4,7 @@ import { generatePoContent } from '@/lib/po-parser'
 export async function POST(request: NextRequest) {
   try {
     const body = await request.json()
-    const { entries, language_code, filename } = body
+    const { entries, language_code, filename, po_headers } = body
 
     if (!entries || !Array.isArray(entries)) {
       return NextResponse.json(
@@ -13,8 +13,8 @@ export async function POST(request: NextRequest) {
       )
     }
 
-    // Build headers
-    const headers: Record<string, string> = {
+    // Preserve original headers from uploaded file, fall back to defaults
+    const defaultHeaders: Record<string, string> = {
       'Project-Id-Version': 'Ubuntu',
       'Report-Msgid-Bugs-To': '',
       'POT-Creation-Date': new Date().toISOString(),
@@ -25,15 +25,18 @@ export async function POST(request: NextRequest) {
       'Content-Type': 'text/plain; charset=UTF-8',
       'Content-Transfer-Encoding': '8bit',
     }
+    const headers: Record<string, string> = { ...defaultHeaders, ...(po_headers || {}) }
 
-    // Generate .po content
+    // Generate .po content — preserve entry metadata from upload
     const poContent = generatePoContent(
-      entries.map((e: { index: number; msgid: string; msgstr: string }) => ({
+      entries.map((e: any) => ({
         index: e.index,
         msgid: e.msgid,
         msgstr: e.msgstr,
-        flags: [],
-        occurrences: [],
+        msgctxt: e.msgctxt || undefined,
+        flags: e.flags || [],
+        occurrences: e.occurrences || [],
+        tcomment: e.tcomment || undefined,
       })),
       headers
     )

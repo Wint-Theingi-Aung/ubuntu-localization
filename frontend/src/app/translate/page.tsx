@@ -17,6 +17,10 @@ interface TranslationEntry {
   index: number
   msgid: string
   msgstr: string
+  msgctxt?: string
+  flags: string[]
+  occurrences: string[]
+  tcomment?: string
   status: 'pending' | 'translated' | 'reviewing' | 'confirmed'
 }
 
@@ -31,6 +35,7 @@ export default function TranslatePage() {
   const [error, setError] = useState<string | null>(null)
   const [expandedEntry, setExpandedEntry] = useState<number | null>(null)
   const [currentPage, setCurrentPage] = useState(1)
+  const [poHeaders, setPoHeaders] = useState<Record<string, string>>({})
 
   const languages = LANGUAGES
 
@@ -85,6 +90,7 @@ export default function TranslatePage() {
         merged = d.entries.map((e: any) => ({ ...e, msgstr: '', status: 'pending' as const }))
       }
       setEntries(merged)
+      setPoHeaders(d.po_headers || {})
       setCurrentPage(1)
       setStep('translate')
       const langName = LANGUAGES.find(l => l.code === targetLang)?.name || targetLang
@@ -180,9 +186,18 @@ export default function TranslatePage() {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({
-          entries: entries.map(e => ({ index: e.index, msgid: e.msgid, msgstr: e.msgstr })),
+          entries: entries.map(e => ({
+            index: e.index,
+            msgid: e.msgid,
+            msgstr: e.msgstr,
+            msgctxt: e.msgctxt || '',
+            flags: e.flags || [],
+            occurrences: e.occurrences || [],
+            tcomment: e.tcomment || '',
+          })),
           language_code: targetLang,
           filename: file?.name || 'messages.po',
+          po_headers: poHeaders,
         }),
       })
       if (!r.ok) throw new Error('Export failed')
@@ -211,7 +226,7 @@ export default function TranslatePage() {
         user: 'local-user',
       })
     } catch (err: any) { setError(err.message) }
-  }, [entries, targetLang, file])
+  }, [entries, targetLang, file, poHeaders])
 
   const translatedCount = entries.filter(e => e.status === 'translated' || e.status === 'reviewing' || e.status === 'confirmed').length
   const confirmedCount = entries.filter(e => e.status === 'confirmed').length
@@ -331,11 +346,11 @@ export default function TranslatePage() {
               <p className="text-sm text-[var(--tx-dim)] mb-2">{t('translation_no_file', 'No .po file handy?')}</p>
               <button onClick={() => {
                 setEntries([
-                  { index: 0, msgid: 'Power Off', msgstr: '', status: 'pending' },
-                  { index: 1, msgid: 'Suspend', msgstr: '', status: 'pending' },
-                  { index: 2, msgid: 'Restart...', msgstr: '', status: 'pending' },
-                  { index: 3, msgid: 'Power Off...', msgstr: '', status: 'pending' },
-                  { index: 4, msgid: 'Log Out...', msgstr: '', status: 'pending' },
+                  { index: 0, msgid: 'Power Off', msgstr: '', flags: [], occurrences: [], status: 'pending' },
+                  { index: 1, msgid: 'Suspend', msgstr: '', flags: [], occurrences: [], status: 'pending' },
+                  { index: 2, msgid: 'Restart...', msgstr: '', flags: [], occurrences: [], status: 'pending' },
+                  { index: 3, msgid: 'Power Off...', msgstr: '', flags: [], occurrences: [], status: 'pending' },
+                  { index: 4, msgid: 'Log Out...', msgstr: '', flags: [], occurrences: [], status: 'pending' },
                 ])
                 setStep('translate')
               }} className="btn-secondary flex items-center gap-2 mx-auto">
