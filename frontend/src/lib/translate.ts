@@ -34,7 +34,7 @@ Word Order: ${langInfo.word_order}
 
 Rules:
 - Preserve ALL placeholders exactly: %s, %d, %f, %u, {{0}}, {{1}}, %(name)s
-- Preserve HTML/XML tags: <b>, <i>, <span>, etc. and entities: &amp;, &#160;
+- Preserve ALL HTML tags exactly as they appear: <strong>, </strong>, <b>, </b>, <em>, </em>, <i>, </i>, <span>, </span>, <p>, </p>, <br/>, <a>, </a>, <code>, </code>, <pre>, </pre>, <ul>, </ul>, <ol>, </ol>, <li>, </li>, <div>, </div>, <h1>–<h6>, etc. Do NOT rename, remove, or invent tags. Opening and closing tags must remain correctly matched. Only translate text content between tags. Also preserve XML entities: &amp; &#160; etc.
 - Preserve newlines (\\n) and whitespace patterns character-for-character
 - Keep Ubuntu/Linux technical terms UNTRANSLATED:
   Kernel, GNOME, sudo, apt, repository, GRUB, X11, Wayland, ext4, Btrfs,

@@ -405,9 +405,12 @@ export default function TranslatePage() {
                       <p className="text-xs text-[var(--tx-dim)] mb-1 flex items-center gap-1">
                         <FileText size={10} />{t('translation_source', 'Source')}
                       </p>
-                      <p className="text-[var(--tx-primary)] font-mono text-sm bg-[var(--surface-overlay)] p-2.5 rounded-lg border border-[var(--border-light)] min-h-[4rem] flex-1">
-                        {entry.msgid}
-                      </p>
+                      <textarea
+                        readOnly
+                        value={entry.msgid}
+                        className="input-field w-full font-mono text-sm min-h-[4rem] flex-1 resize-y bg-[var(--surface-overlay)] border-[var(--border-light)] text-[var(--tx-primary)] cursor-default"
+                        rows={3}
+                      />
                     </div>
                     <div className="flex flex-col">
                       <p className="text-xs text-[var(--tx-dim)] mb-1 flex items-center gap-1">
@@ -546,9 +549,12 @@ export default function TranslatePage() {
                           <label className="text-xs text-[var(--tx-dim)] mb-2 block flex items-center gap-1">
                             <FileText size={10} />{t('translation_source_text', 'Source Text')}
                           </label>
-                          <div className="font-mono text-sm bg-[var(--surface-overlay)] p-3 rounded-lg border border-[var(--border-light)] text-[var(--tx-primary)] whitespace-pre-wrap">
-                            {entry.msgid}
-                          </div>
+                          <textarea
+                            readOnly
+                            value={entry.msgid}
+                            className="input-field w-full font-mono text-sm min-h-[5rem] resize-y bg-[var(--surface-overlay)] border-[var(--border-light)] text-[var(--tx-primary)] whitespace-pre-wrap cursor-default"
+                            rows={3}
+                          />
                         </div>
 
                         {/* Editable translation */}
