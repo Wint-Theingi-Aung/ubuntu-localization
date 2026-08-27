@@ -39,7 +39,7 @@ export default function ContributorsPage() {
       <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
         {[{ icon: Users, color: 'text-ubuntu-orange', bg: 'bg-ubuntu-orange/10', val: contributorsData.meta.total, label: t('contributors_contributors', 'Contributors') },
           { icon: Globe, color: 'text-emerald-400', bg: 'bg-emerald-500/10', val: '4', label: t('contributors_languages', 'Languages') },
-          { icon: Star, color: 'text-purple-400', bg: 'bg-purple-500/10', val: totalKarma.toLocaleString(), label: t('contributors_total_karma', 'Total Karma') },
+          { icon: Star, color: 'text-purple-400', bg: 'bg-purple-500/10', val: totalKarma.toLocaleString('en-US'), label: t('contributors_total_karma', 'Total Karma') },
           { icon: Award, color: 'text-blue-400', bg: 'bg-blue-500/10', val: 'Myanmar', label: t('contributors_top_lang', 'Top Language') }].map(s => (
           <div key={s.label} className="stat-card glass-card p-4 text-center">
             <div className={`w-12 h-12 rounded-xl ${s.bg} flex items-center justify-center mx-auto mb-2`}><s.icon className={s.color} size={24} /></div>
@@ -73,7 +73,7 @@ export default function ContributorsPage() {
             <div className="mt-4 flex items-center justify-between">
               <div className="flex items-center gap-1.5 text-sm">
                 <Star size={14} className="text-amber-400/60" />
-                <span className="font-bold text-ubuntu-orange">{contributor.karma.toLocaleString()}</span>
+                <span className="font-bold text-ubuntu-orange">{contributor.karma.toLocaleString('en-US')}</span>
                 <span className="text-[var(--tx-dim)] text-xs">{t('contributors_karma', 'karma')}</span>
               </div>
               <a href={contributor.web_link} target="_blank" rel="noopener noreferrer" className="p-2 rounded-lg hover:bg-[var(--surface-overlay)] transition-colors" title={t('contributors_view_profile', 'View Launchpad Profile')}>

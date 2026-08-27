@@ -241,7 +241,7 @@ export default function TemplatesPage() {
                   <td data-label={t('templates_untranslated', 'Untranslated')} className="font-mono text-sm">
                     {pkg.metrics ? (
                       <span className={pkg.metrics.untranslated > 0 ? 'text-red-400 font-semibold' : 'text-green-400'}>
-                        {pkg.metrics.untranslated > 0 ? pkg.metrics.untranslated.toLocaleString() : '0'}
+                        {pkg.metrics.untranslated > 0 ? pkg.metrics.untranslated.toLocaleString('en-US') : '0'}
                       </span>
                     ) : (
                       <span className="text-xs text-[var(--tx-faint)]">—</span>
@@ -268,7 +268,7 @@ export default function TemplatesPage() {
                     )}
                   </td>
                   <td data-label={t('templates_total_strings', 'Total')} className="font-mono text-sm font-semibold text-sky-400">
-                    {pkg.metrics ? pkg.metrics.total.toLocaleString() : <span className="text-xs text-[var(--tx-faint)]">—</span>}
+                    {pkg.metrics ? pkg.metrics.total.toLocaleString('en-US') : <span className="text-xs text-[var(--tx-faint)]">—</span>}
                   </td>
                   <td data-label={t('templates_translate', 'Translate')}>
                     <div className="flex gap-1">
@@ -307,7 +307,7 @@ export default function TemplatesPage() {
             {pkg.metrics && (
               <div className="flex items-center gap-3 text-xs">
                 <span className={`font-mono ${pkg.metrics.untranslated > 0 ? 'text-red-400' : 'text-green-400'}`}>
-                  {pkg.metrics.untranslated > 0 ? pkg.metrics.untranslated.toLocaleString() : '0'} {t('templates_untranslated_short', 'untrans')}
+                  {pkg.metrics.untranslated > 0 ? pkg.metrics.untranslated.toLocaleString('en-US') : '0'} {t('templates_untranslated_short', 'untrans')}
                 </span>
                 <div className="flex items-center gap-1.5">
                   <div className="w-12 h-1.5 bg-[var(--surface-progress)] rounded-full overflow-hidden">
@@ -324,7 +324,7 @@ export default function TemplatesPage() {
                   </span>
                 </div>
                 <span className="font-mono font-semibold text-sky-400">
-                  {pkg.metrics.total.toLocaleString()} {t('templates_total_short', 'total')}
+                  {pkg.metrics.total.toLocaleString('en-US')} {t('templates_total_short', 'total')}
                 </span>
               </div>
             )}

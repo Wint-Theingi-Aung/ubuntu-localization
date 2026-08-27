@@ -38,8 +38,8 @@ export default function LanguageCard({
       </div>
 
       <div className="flex justify-between text-sm text-[var(--tx-secondary)]">
-        <span>{translatedEntries.toLocaleString()} translated</span>
-        <span>{totalEntries.toLocaleString()} total</span>
+        <span>{translatedEntries.toLocaleString('en-US')} translated</span>
+        <span>{totalEntries.toLocaleString('en-US')} total</span>
       </div>
 
       <div className="mt-4 w-full bg-[var(--surface-progress)] rounded-full h-2">

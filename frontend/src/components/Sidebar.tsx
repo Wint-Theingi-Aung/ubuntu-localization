@@ -51,7 +51,7 @@ function HitCounter() {
 
   return (
     <span className="text-[10px] text-[var(--tx-faint)]" title={t('sidebar_hit_counter', 'Hit Counter')}>
-      👁 {totalHits.toLocaleString()}
+      👁 {totalHits.toLocaleString('en-US')}
     </span>
   )
 }
