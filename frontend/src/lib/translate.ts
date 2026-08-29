@@ -6,7 +6,7 @@ import { PoEntry } from './po-parser'
 
 /** Language metadata for translation prompts */
 const LANGUAGES: Record<string, { name: string; script: string; word_order: string }> = {
-  my: { name: 'Myanmar', script: 'Myanmar Unicode', word_order: 'SOV' },
+  my: { name: 'Burmese', script: 'Myanmar Unicode', word_order: 'SOV' },
   shn: { name: 'Shan', script: 'Shan Unicode', word_order: 'SVO' },
   mnw: { name: 'Mon', script: 'Mon Unicode', word_order: 'SVO' },
   ksw: { name: 'S\'gaw Karen', script: 'S\'gaw Karen Unicode', word_order: 'SVO' },
@@ -47,7 +47,7 @@ Rules:
 - For error messages: clear, actionable, respectful tone
 - Return ONLY a JSON array of translated strings, in the same order as input
 - If a string should NOT be translated (brand names, code, symbols), return it unchanged
-- NEVER use Zawgyi encoding — always Unicode Myanmar (Myanmar only)
+  - NEVER use Zawgyi encoding — always Unicode Myanmar (Burmese only)
 
 Input is a JSON array of msgid strings to translate.`
 }

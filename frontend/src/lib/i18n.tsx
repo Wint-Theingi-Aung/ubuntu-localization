@@ -22,7 +22,7 @@ const I18nContext = createContext<I18nContextType | null>(null)
 const translations: Record<string, Record<string, string>> = { en, my, shn, mnw, ksw }
 const langNames: Record<string, string> = {
   en: 'English',
-  my: 'မြန်မာ',
+  my: 'ဗမာ',
   shn: 'တႆး',
   mnw: 'မန်',
   ksw: 'စှီၤကရိ',

@@ -97,7 +97,7 @@ export default function Dashboard() {
             <h1 className="text-3xl font-bold text-[var(--tx-primary)]">{t('dashboard_title', 'Dashboard')}</h1>
             <Sparkles className="text-ubuntu-orange animate-pulse-slow" size={24} />
           </div>
-          <p className="text-[var(--tx-secondary)] mt-1">{t('dashboard_subtitle', 'AI-powered Ubuntu localization for indigenous Myanmar languages')}</p>
+          <p className="text-[var(--tx-secondary)] mt-1">{t('dashboard_subtitle', 'AI-powered Ubuntu localization for indigenous Burmese languages')}</p>
         </div>
         <Link href="/get-started" className="btn-primary flex items-center gap-2 w-fit">
           <Languages size={18} />

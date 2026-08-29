@@ -11,7 +11,7 @@ const ITEMS_PER_PAGE = 20
 
 const langColumns = [
   { code: 'en', label: 'English', flag: '🇬🇧', labelKey: 'glossary_english' },
-  { code: 'my', label: 'Myanmar', flag: '🇲🇲', labelKey: 'glossary_myanmar' },
+  { code: 'my', label: 'Burmese', flag: '🇲🇲', labelKey: 'glossary_myanmar' },
   { code: 'shn', label: 'Shan', flag: '🇲🇲', labelKey: 'glossary_shan' },
   { code: 'mnw', label: 'Mon', flag: '🇲🇲', labelKey: 'glossary_mon' },
   { code: 'ksw', label: "S'gaw Karen", flag: '🇲🇲', labelKey: 'glossary_karen' },
@@ -127,7 +127,7 @@ export default function GlossaryPage() {
                 return (
                   <tr key={entry.id}>
                     <td data-label={t('glossary_english', 'English')} className="font-medium text-[var(--tx-primary)]">{entry.en}</td>
-                    <td data-label={t('glossary_myanmar', 'Myanmar')} className={`font-myanmar ${selectedLang && selectedLang !== 'my' ? 'hidden' : ''}`}>{entry.my || <span className="text-[var(--tx-faint)]">—</span>}</td>
+                    <td data-label={t('glossary_myanmar', 'Burmese')} className={`font-myanmar ${selectedLang && selectedLang !== 'my' ? 'hidden' : ''}`}>{entry.my || <span className="text-[var(--tx-faint)]">—</span>}</td>
                     <td data-label={t('glossary_shan', 'Shan')} className={`font-myanmar ${selectedLang && selectedLang !== 'shn' ? 'hidden' : ''}`}>{entry.shn || <span className="text-[var(--tx-faint)] italic">—</span>}</td>
                     <td data-label={t('glossary_mon', 'Mon')} className={`font-myanmar ${selectedLang && selectedLang !== 'mnw' ? 'hidden' : ''}`}>{entry.mnw || <span className="text-[var(--tx-faint)] italic">—</span>}</td>
                     <td data-label={t('glossary_karen', "S'gaw Karen")} className={`font-myanmar ${selectedLang && selectedLang !== 'ksw' ? 'hidden' : ''}`}>{entry.ksw || <span className="text-[var(--tx-faint)] italic">—</span>}</td>
@@ -157,7 +157,7 @@ export default function GlossaryPage() {
                 {s === 'pending' && <span className="status-pending">{t('glossary_pending', 'Pending')}</span>}
               </div>
               <div className={`grid gap-2 ${selectedLang ? 'grid-cols-1' : 'grid-cols-2'}`}>
-                {[{ code: 'my', label: t('glossary_myanmar', 'Myanmar'), value: entry.my }, { code: 'shn', label: t('glossary_shan', 'Shan'), value: entry.shn }, { code: 'mnw', label: t('glossary_mon', 'Mon'), value: entry.mnw }, { code: 'ksw', label: t('glossary_karen', 'Karen'), value: entry.ksw }].filter(l => !selectedLang || l.code === selectedLang).map(l => (
+                {[{ code: 'my', label: t('glossary_myanmar', 'Burmese'), value: entry.my }, { code: 'shn', label: t('glossary_shan', 'Shan'), value: entry.shn }, { code: 'mnw', label: t('glossary_mon', 'Mon'), value: entry.mnw }, { code: 'ksw', label: t('glossary_karen', 'Karen'), value: entry.ksw }].filter(l => !selectedLang || l.code === selectedLang).map(l => (
                   <div key={l.code} className="text-xs">
                     <span className="text-[var(--tx-dim)]">{l.label}: </span>
                     {l.value ? <span className="font-myanmar text-[var(--tx-secondary)]">{l.value}</span> : <span className="text-[var(--tx-faint)] italic">—</span>}

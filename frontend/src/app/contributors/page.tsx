@@ -10,7 +10,7 @@ import contributorsData from '@/data/contributors.json'
 const ITEMS_PER_PAGE = 12
 
 const langBadgeMap: Record<string, string> = { my: 'badge-orange', shn: 'badge-purple', mnw: 'badge-green', ksw: 'badge-blue' }
-const langNameMap: Record<string, string> = { my: 'Myanmar', shn: 'Shan', mnw: 'Mon', ksw: 'Karen' }
+const langNameMap: Record<string, string> = { my: 'Burmese', shn: 'Shan', mnw: 'Mon', ksw: 'Karen' }
 
 export default function ContributorsPage() {
   const { t } = useI18n()
@@ -40,7 +40,7 @@ export default function ContributorsPage() {
         {[{ icon: Users, color: 'text-ubuntu-orange', bg: 'bg-ubuntu-orange/10', val: contributorsData.meta.total, label: t('contributors_contributors', 'Contributors') },
           { icon: Globe, color: 'text-emerald-400', bg: 'bg-emerald-500/10', val: '4', label: t('contributors_languages', 'Languages') },
           { icon: Star, color: 'text-purple-400', bg: 'bg-purple-500/10', val: totalKarma.toLocaleString('en-US'), label: t('contributors_total_karma', 'Total Karma') },
-          { icon: Award, color: 'text-blue-400', bg: 'bg-blue-500/10', val: 'Myanmar', label: t('contributors_top_lang', 'Top Language') }].map(s => (
+          { icon: Award, color: 'text-blue-400', bg: 'bg-blue-500/10', val: 'Burmese', label: t('contributors_top_lang', 'Top Language') }].map(s => (
           <div key={s.label} className="stat-card glass-card p-4 text-center">
             <div className={`w-12 h-12 rounded-xl ${s.bg} flex items-center justify-center mx-auto mb-2`}><s.icon className={s.color} size={24} /></div>
             <p className={`text-2xl font-bold ${s.color}`}>{s.val}</p>
@@ -104,7 +104,7 @@ export default function ContributorsPage() {
 
       <div className="glass-card p-6 text-center">
         <h3 className="font-semibold text-[var(--tx-primary)] mb-2">{t('contributors_want_to_contribute', 'Want to contribute?')}</h3>
-        <p className="text-sm text-[var(--tx-muted)] mb-4">{t('contributors_cta', "Help translate Ubuntu into Myanmar, Shan, Mon, or S'gaw Karen")}</p>
+        <p className="text-sm text-[var(--tx-muted)] mb-4">{t('contributors_cta', "Help translate Ubuntu into Burmese, Shan, Mon, or S'gaw Karen")}</p>
         <div className="flex justify-center gap-3">
           <a href="https://github.com/Wint-Theingi-Aung/ubuntu-localization" target="_blank" rel="noopener noreferrer" className="btn-outline inline-flex items-center gap-2">
             <Github size={16} />{t('contributors_view_github', 'View on GitHub')}<ExternalLink size={14} />

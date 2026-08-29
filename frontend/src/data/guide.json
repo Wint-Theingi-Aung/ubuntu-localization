@@ -9,7 +9,7 @@
           {
             "id": "overview",
             "title": "What is Ubuntu Localization?",
-            "content": "The Ubuntu Localization Tool helps translate Ubuntu into indigenous languages — Myanmar (my), Shan (shn), Mon (mnw), and S'gaw Karen (ksw) — using Google Gemini AI. It works with any standard gettext .po file, not just Ubuntu packages. You can use it for any localization project that uses the .po format.",
+            "content": "The Ubuntu Localization Tool helps translate Ubuntu into indigenous languages — Burmese (my), Shan (shn), Mon (mnw), and S'gaw Karen (ksw) — using Google Gemini AI. It works with any standard gettext .po file, not just Ubuntu packages. You can use it for any localization project that uses the .po format.",
             "tips": [
               "Works with any valid gettext .po file — not just Ubuntu",
               ".po files contain translatable source/target string pairs",
@@ -24,7 +24,7 @@
             "tips": [
               "Launchpad account — required to contribute to Ubuntu translations",
               "Sign up free at launchpad.net → 'Create a new account'",
-              "Join your language team on Launchpad (e.g. Ubuntu Myanmar LoCo)",
+              "Join your language team on Launchpad (e.g. Ubuntu Burmese LoCo)",
               "Any .po file — export from Launchpad or use your own gettext project",
               "Web browser — Chrome, Firefox, or Edge recommended"
             ]
@@ -157,7 +157,7 @@
           {
             "id": "overview",
             "title": "Ubuntu ဘာသာပြန်ဆိုခြင်းဆိုတာ ဘာလဲ",
-            "content": "Ubuntu Localization Tool သည် Google Gemini AI ကို အသုံးပြုပြီး Ubuntu စနစ်ကို ဒေသခံတိုင်းရင်းသား ဘာသာစကားများဖြစ်သည့် မြန်မာ (my)၊ ရှမ်း (shn)၊ မွန် (mnw) နှင့် စကောကရင် (ksw) ဘာသာစကားများသို့ ပြန်ဆိုပေးနိုင်သည့် ကိရိယာ ဖြစ်သည်။ ၎င်းသည် Launchpad မှ ထွက်ရှိလာသော Linux ဘာသာပြန် စံနှုန်းမီဖိုင်အမျိုးအစား ဖြစ်သည့် .po ဖိုင်များကို အသုံးပြု၍ လုပ်ဆောင်ပေးပါသည်။",
+            "content": "Ubuntu Localization Tool သည် Google Gemini AI ကို အသုံးပြုပြီး Ubuntu စနစ်ကို ဒေသခံတိုင်းရင်းသား ဘာသာစကားများဖြစ်သည့် ဗမာ (my)၊ ရှမ်း (shn)၊ မွန် (mnw) နှင့် စကောကရင် (ksw) ဘာသာစကားများသို့ ပြန်ဆိုပေးနိုင်သည့် ကိရိယာ ဖြစ်သည်။ ၎င်းသည် Launchpad မှ ထွက်ရှိလာသော Linux ဘာသာပြန် စံနှုန်းမီဖိုင်အမျိုးအစား ဖြစ်သည့် .po ဖိုင်များကို အသုံးပြု၍ လုပ်ဆောင်ပေးပါသည်။",
             "tips": [
               "Ubuntu သည် Launchpad ကို ဘာသာပြန်ဆိုရာတွင် အသုံးပြုသည်",
               ".po ဖိုင်များတွင် ဘာသာပြန်ဆိုနိုင်သော စာသားစုများ ပါဝင်သည်",
@@ -562,7 +562,7 @@
           {
             "id": "overview",
             "title": "Ubuntu တၢ်ကွဲးကျဲၤမ့ၢ်တၢ်မနုၤလဲၣ်",
-            "content": "ပှၤကွဲးကျဲၤ Ubuntu တဖၣ် Ubuntu ကို မနုၤလဲၣ် ကျိာ်လၢ်တၢ်တိၣ် — မြန်မာ (my)၊ ရှမ်း (shn)၊ မွန် (mnw) နူ ကညီကျိာ် (ksw) — ကို တၢ်ကွဲးကျဲၤ မၤစၢၤလဲၣ်။ Google Gemini AI ကို စိးထီၣ်ပြီး .po လံာ်တိၣ်န့ၢ် မၤတၢ်လဲၣ်။ .po လံာ်တဖၣ် Linux တၢ်ကွဲးကျဲၤအတၢ် Launchpad မ့ၢ် ဟဲထလဲၣ် စံလံာ်ဖြစ်လဲၣ်။",
+            "content": "ပှၤကွဲးကျဲၤ Ubuntu တဖၣ် Ubuntu ကို မနုၤလဲၣ် ကျိာ်လၢ်တၢ်တိၣ် — ဗမာ (my)၊ ရှမ်း (shn)၊ မွန် (mnw) နူ ကညီကျိာ် (ksw) — ကို တၢ်ကွဲးကျဲၤ မၤစၢၤလဲၣ်။ Google Gemini AI ကို စိးထီၣ်ပြီး .po လံာ်တိၣ်န့ၢ် မၤတၢ်လဲၣ်။ .po လံာ်တဖၣ် Linux တၢ်ကွဲးကျဲၤအတၢ် Launchpad မ့ၢ် ဟဲထလဲၣ် စံလံာ်ဖြစ်လဲၣ်။",
             "tips": [
               "Ubuntu တဖၣ် တၢ်ကွဲးကျဲၤအတၢ် Launchpad ကို စိးထီၣ်လဲၣ်",
               ".po လံာ်တိၣ်တွင် ကွဲးကျဲၤနိုၣ် စာသားတိၣ် ပါဝင်လဲၣ်",

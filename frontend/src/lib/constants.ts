@@ -15,7 +15,7 @@ export interface Language {
 }
 
 export const LANGUAGES: Language[] = [
-  { code: 'my',  name: 'Myanmar',     native: 'မြန်မာ',      color: '#E95420' },
+  { code: 'my',  name: 'Burmese',     native: 'ဗမာ',          color: '#E95420' },
   { code: 'shn', name: 'Shan',        native: 'ရှမ်း',        color: '#772953' },
   { code: 'mnw', name: 'Mon',         native: 'မွန်',         color: '#0E8420' },
   { code: 'ksw', name: "S'gaw Karen", native: 'စကောကရင်',    color: '#007AA6' },
@@ -23,7 +23,7 @@ export const LANGUAGES: Language[] = [
 
 export const UI_LANGUAGES = [
   { code: 'en',  label: 'EN',  name: 'English',      native: 'English'       },
-  { code: 'my',  label: 'MY',  name: 'Myanmar',      native: 'မြန်မာ'       },
+  { code: 'my',  label: 'MY',  name: 'Burmese',      native: 'ဗမာ'          },
   { code: 'shn', label: 'SHN', name: 'Shan',         native: 'ရှမ်း'         },
   { code: 'mnw', label: 'MNW', name: 'Mon',          native: 'မွန်'          },
   { code: 'ksw', label: 'KSW', name: 'Karen',        native: 'စကောကရင်'    },

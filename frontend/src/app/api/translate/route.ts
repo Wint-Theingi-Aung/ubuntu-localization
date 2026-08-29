@@ -2,7 +2,7 @@ import { NextRequest, NextResponse } from 'next/server'
 import { translateBatch, verifyTranslation } from '@/lib/translate'
 
 const LANGUAGES: Record<string, string> = {
-  my: 'Myanmar',
+  my: 'Burmese',
   shn: 'Shan',
   mnw: 'Mon',
   ksw: 'S\'gaw Karen',
@@ -21,7 +21,7 @@ export async function POST(request: NextRequest) {
     }
 
     const langCode = target_lang || 'my'
-    const langName = LANGUAGES[langCode] || 'Myanmar'
+    const langName = LANGUAGES[langCode] || 'Burmese'
 
     // Extract msgids
     const msgids = entries.map((e: { msgid: string }) => e.msgid)
