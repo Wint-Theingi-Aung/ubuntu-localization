@@ -227,6 +227,11 @@
     transform: none;
   }
 
+  .btn-primary:disabled:hover {
+    background: var(--ubuntu-orange);
+    box-shadow: 0 4px 12px rgba(233,84,32,0.25);
+  }
+
   .btn-secondary {
     background: var(--surface-overlay);
     color: var(--tx-primary);
@@ -243,6 +248,16 @@
 
   .btn-secondary:active {
     transform: scale(0.98);
+  }
+
+  .btn-secondary:disabled {
+    opacity: 0.5;
+    cursor: not-allowed;
+    transform: none;
+  }
+
+  .btn-secondary:disabled:hover {
+    background: var(--surface-overlay);
   }
 
   .btn-outline {
