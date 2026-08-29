@@ -62,6 +62,7 @@ export default function TranslatePage() {
     e.status === 'translated' || e.status === 'reviewing' || e.status === 'confirmed'
   ).length
   const confirmedCount = entries.filter(e => e.status === 'confirmed').length
+  const hasConfirmedEntry = confirmedCount > 0
   const untranslatedCount = entries.filter(e => e.status === 'pending').length
   const totalCount = entries.length
 
@@ -435,7 +436,7 @@ export default function TranslatePage() {
               </div>
               <button
                 onClick={handleExport}
-                disabled={totalCount === 0}
+                disabled={totalCount === 0 || !hasConfirmedEntry}
                 className="btn-secondary flex items-center gap-2 text-sm"
               >
                 <Download size={16} />{t('translation_download_progress', 'Download Progress')}
@@ -682,7 +683,7 @@ export default function TranslatePage() {
           </p>
 
           <div className="flex flex-col sm:flex-row justify-center gap-3">
-            <button onClick={handleExport} className="btn-primary flex items-center justify-center gap-2">
+            <button onClick={handleExport} disabled={!hasConfirmedEntry} className="btn-primary flex items-center justify-center gap-2">
               <Download size={18} />{t('translation_download_po', 'Download .po File')}
             </button>
             <button onClick={() => {

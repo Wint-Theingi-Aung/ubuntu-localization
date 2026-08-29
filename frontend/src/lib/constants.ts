@@ -90,7 +90,7 @@ export const DASHBOARD_STATS = {
 // ── AI Translation Config ─────────────────────────────────────────────
 
 export const TRANSLATION_CONFIG = {
-  BATCH_SIZE:        15,
+  BATCH_SIZE:        10,
   MAX_FILE_SIZE_MB:  50,
   ALLOWED_EXTENSIONS: ['.po'],
   ENDPOINT:          '/api/translate',
