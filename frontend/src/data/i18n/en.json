@@ -93,6 +93,7 @@
   "translation_invalid_file": "Only .po files are supported",
   "translation_file_too_large": "File too large. Maximum size is 50 MB.",
   "translation_ai_generated": "AI-generated — edit to refine",
+  "translation_preview": "AI Translation — edit to refine",
   "translation_live_demo": "Live Demo",
   "translation_progress_summary": "{confirmed} confirmed / {total} total ({untranslated} untranslated)",
   "translation_to_translate": "To Translate (next {count})",

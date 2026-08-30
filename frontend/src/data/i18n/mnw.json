@@ -94,6 +94,7 @@
   "translation_invalid_file": ".po ဖိုင်များကိုသာ ပံ့ပိုးထားသည်",
   "translation_file_too_large": "ဖိုင်ကြီးလွန်းသည်။ အများဆုံးအရွယ်အစား 50 MB ဖြစ်သည်။",
   "translation_ai_generated": "AI ၼူၚ်ဖန်တီးထားသည် — ပြင်ဆင်ရန်တည်းဖြတ်ပါ",
+  "translation_preview": "AI ပြာပ်ပြံၚ် — ပြင်ဆင်ရန်တည်းဖြတ်ပါ",
   "translation_live_demo": "Live Demo",
   "translation_progress_summary": "အတည်ပြုပြီး {confirmed} / စုစုပေါင်း {total} (ဘာသာမပြန်ရသေး {untranslated})",
   "translation_to_translate": "ဘာသာပြန်ရန် (နောက် {count})",

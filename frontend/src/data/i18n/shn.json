@@ -94,6 +94,7 @@
   "translation_invalid_file": ".po ၾၢႆႇႁူင်ႁႂ်ႁဵၼ်ႁႂ်ႈသာ ပံ့ပိုးထားသည်",
   "translation_file_too_large": "ၾၢႆႇႁူတ်ႁိုင်ႁိုင်။ ၵူၼ်းႁဵတ်ႁႂ်ႈ 50 MB ဢၼ်ၼႆႉႁူဝ်ႁိူၼ်ႁိုင်ႁႂ်ႈ။",
   "translation_ai_generated": "AI ၼႂ်းႁဵၼ်ႁႂ်ႈႁူင်ႁၼ်ႁဵတ်ႁႂ်ႈ — တည်းဖြတ်ရန်",
+  "translation_preview": "AI ပိၼ်ႇၽၢသႃ — တည်းဖြတ်ရန်",
   "translation_live_demo": "Live Demo",
   "translation_progress_summary": "တည်ႋတ်ႁိုင်ႁဵတ်ႁႂ် {confirmed} / ဢၼ်ႁဵတ်ႁႂ်ႁိူင် {total} (ဘာသာမပြန်ရသေး {untranslated})",
   "translation_to_translate": "ပိၼ်ႇၽၢသႃလိူၵ်ႈႁဵတ်း (ဢိူဝ်ႁိူၼ် {count})",
