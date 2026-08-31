@@ -122,35 +122,11 @@ export default function TranslatePage() {
       if (!r.ok) { const d = await r.json(); throw new Error(d.error || 'Upload failed') }
       const d = await r.json()
       const saveKey = `ubuntu-translate-${file!.name}-${targetLang}`
-      const saved = localStorage.getItem(saveKey)
-      let merged: TranslationEntry[]
-      if (saved) {
-        try {
-          const savedEntries: TranslationEntry[] = JSON.parse(saved)
-          merged = d.entries.map((e: any) => {
-            const s = savedEntries.find((se: TranslationEntry) => se.msgid === e.msgid)
-            return s ? { ...e, msgstr: s.msgstr, status: s.status } : { ...e, msgstr: '', status: 'pending' as const }
-          })
-        } catch {
-          merged = d.entries.map((e: any) => ({ ...e, msgstr: '', status: 'pending' as const }))
-        }
-      } else {
-        merged = d.entries.map((e: any) => ({ ...e, msgstr: '', status: 'pending' as const }))
-      }
+      localStorage.removeItem(saveKey)
+      const merged: TranslationEntry[] = d.entries.map((e: any) => ({ ...e, msgstr: '', status: 'pending' as const }))
       setEntries(merged)
       setPoHeaders(d.po_headers || {})
-      const total = Math.ceil(merged.length / BATCH_SIZE)
-      let startBatch = 0
-      for (let i = 0; i < total; i++) {
-        const bStart = i * BATCH_SIZE
-        const bEnd = Math.min(bStart + BATCH_SIZE, merged.length)
-        const batch = merged.slice(bStart, bEnd)
-        if (batch.some(e => e.status !== 'confirmed')) {
-          startBatch = i
-          break
-        }
-      }
-      setCurrentBatch(startBatch)
+      setCurrentBatch(0)
       setReviewMode(false)
       setExpandedEntry(null)
       setStep('work')
