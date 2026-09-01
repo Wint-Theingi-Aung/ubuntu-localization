@@ -9,6 +9,7 @@ import {
 import { useI18n } from '@/lib/i18n'
 import { LANGUAGES, TRANSLATION_CONFIG } from '@/lib/constants'
 import { recordHistory } from '@/lib/history'
+import { compareFormatSpecifiers } from '@/lib/translate'
 
 const BATCH_SIZE = 10
 
@@ -35,6 +36,7 @@ export default function TranslatePage() {
   const [expandedEntry, setExpandedEntry] = useState<number | null>(null)
   const [poHeaders, setPoHeaders] = useState<Record<string, string>>({})
   const [reviewMode, setReviewMode] = useState(false)
+  const [formatErrors, setFormatErrors] = useState<Record<number, string>>({})
 
   const languages = LANGUAGES
 
@@ -68,6 +70,8 @@ export default function TranslatePage() {
 
   const batchReviewingCount = currentBatchEntries.filter(e => e.status === 'reviewing' || e.status === 'translated').length
   const batchConfirmedCount = currentBatchEntries.filter(e => e.status === 'confirmed').length
+  const batchFormatErrorCount = currentBatchEntries.filter(e => formatErrors[e.index]).length
+  const totalFormatErrorCount = Object.keys(formatErrors).length
 
   const activeStepKey = step === 'upload' ? 'upload'
     : step === 'complete' ? 'complete'
@@ -162,10 +166,25 @@ export default function TranslatePage() {
       })
       if (!r.ok) { const d = await r.json(); throw new Error(d.error || 'Translation failed') }
       const d = await r.json()
-      setEntries(prev => prev.map(e => {
-        const m = d.translations.find((t: any) => t.index === e.index)
-        return m ? { ...e, msgstr: m.translated, status: 'reviewing' as const } : e
-      }))
+      const newErrors: Record<number, string> = {}
+      setEntries(prev => {
+        const updated = prev.map(e => {
+          const m = d.translations.find((t: any) => t.index === e.index)
+          if (m) {
+            const { missing, extra } = compareFormatSpecifiers(e.msgid, m.translated)
+            if (missing.length > 0 || extra.length > 0) {
+              const parts: string[] = []
+              if (missing.length) parts.push(`Missing: ${missing.join(', ')}`)
+              if (extra.length) parts.push(`Extra: ${extra.join(', ')}`)
+              newErrors[e.index] = parts.join('; ')
+            }
+            return { ...e, msgstr: m.translated, status: 'reviewing' as const }
+          }
+          return e
+        })
+        return updated
+      })
+      setFormatErrors(prev => ({ ...prev, ...newErrors }))
       const langName = LANGUAGES.find(l => l.code === targetLang)?.name || targetLang
       recordHistory({
         action: 'translate',
@@ -192,16 +211,36 @@ export default function TranslatePage() {
   }, [currentBatchEntries])
 
   const handleEditTranslation = useCallback((index: number, newMsgstr: string) => {
-    setEntries(prev => prev.map(e =>
-      e.index === index ? { ...e, msgstr: newMsgstr } : e
-    ))
+    setEntries(prev => {
+      const updated = prev.map(e =>
+        e.index === index ? { ...e, msgstr: newMsgstr } : e
+      )
+      const entry = updated.find(e => e.index === index)
+      if (entry && entry.msgid) {
+        const { missing, extra } = compareFormatSpecifiers(entry.msgid, newMsgstr)
+        if (missing.length > 0 || extra.length > 0) {
+          const parts: string[] = []
+          if (missing.length) parts.push(`Missing: ${missing.join(', ')}`)
+          if (extra.length) parts.push(`Extra: ${extra.join(', ')}`)
+          setFormatErrors(prev => ({ ...prev, [index]: parts.join('; ') }))
+        } else {
+          setFormatErrors(prev => {
+            const next = { ...prev }
+            delete next[index]
+            return next
+          })
+        }
+      }
+      return updated
+    })
   }, [])
 
   const handleConfirmEntry = useCallback((index: number) => {
+    if (formatErrors[index]) return
     setEntries(prev => prev.map(e =>
       e.index === index ? { ...e, status: 'confirmed' as const } : e
     ))
-  }, [])
+  }, [formatErrors])
 
   const handleUnconfirmEntry = useCallback((index: number) => {
     setEntries(prev => prev.map(e =>
@@ -213,19 +252,36 @@ export default function TranslatePage() {
     const start = currentBatch * BATCH_SIZE
     const end = start + BATCH_SIZE
     setEntries(prev => prev.map((e, i) =>
-      i >= start && i < end && (e.status === 'reviewing' || e.status === 'translated')
+      i >= start && i < end && (e.status === 'reviewing' || e.status === 'translated') && !formatErrors[e.index]
         ? { ...e, status: 'confirmed' as const }
         : e
     ))
-  }, [currentBatch])
+  }, [currentBatch, formatErrors])
 
   const handleResetToAI = useCallback((index: number) => {
     setEntries(prev => prev.map(e =>
       e.index === index ? { ...e, msgstr: '', status: 'pending' as const } : e
     ))
+    setFormatErrors(prev => {
+      const next = { ...prev }
+      delete next[index]
+      return next
+    })
   }, [])
 
   const handleExport = useCallback(async () => {
+    const confirmedWithErrors = entries.filter(e => e.status === 'confirmed' && formatErrors[e.index])
+    if (confirmedWithErrors.length > 0) {
+      const names = confirmedWithErrors.slice(0, 3).map(e => `"${e.msgid.slice(0, 40)}..."`)
+      const more = confirmedWithErrors.length > 3 ? ` and ${confirmedWithErrors.length - 3} more` : ''
+      setError(
+        t('translation_export_blocked', 'Cannot export: {count} confirmed entry(ies) have format specifier mismatches ({names}{more}). Unconfirm and fix them first.')
+          .replace('{count}', String(confirmedWithErrors.length))
+          .replace('{names}', names.join(', '))
+          .replace('{more}', more)
+      )
+      return
+    }
     try {
       const r = await fetch('/api/export', {
         method: 'POST',
@@ -245,7 +301,16 @@ export default function TranslatePage() {
           po_headers: poHeaders,
         }),
       })
-      if (!r.ok) throw new Error('Export failed')
+      if (!r.ok) {
+        if (r.status === 422) {
+          const errData = await r.json()
+          const details = (errData.mismatches || []).slice(0, 3).map((m: any) =>
+            `"${m.msgid.slice(0, 40)}..." — missing: [${m.missing.join(', ')}]`
+          ).join('\n')
+          throw new Error(`${errData.error}${details ? '\n' + details : ''}`)
+        }
+        throw new Error('Export failed')
+      }
       const blob = await r.blob()
       const url = URL.createObjectURL(blob)
       const a = document.createElement('a')
@@ -271,7 +336,7 @@ export default function TranslatePage() {
         user: 'local-user',
       })
     } catch (err: any) { setError(err.message) }
-  }, [entries, targetLang, file, poHeaders])
+  }, [entries, targetLang, file, poHeaders, formatErrors, t])
 
   return (
     <div className="max-w-6xl mx-auto space-y-6">
@@ -485,9 +550,15 @@ export default function TranslatePage() {
                       </div>
                       {(entry.status === 'translated' || entry.status === 'reviewing') && (
                         <div className="flex items-center gap-2 mt-2 ml-auto">
-                          <span className="text-[10px] text-emerald-400 flex items-center gap-1">
-                            <Sparkles size={10} />{t('translation_ai_generated', 'AI-generated \u2014 edit to refine')}
-                          </span>
+                          {formatErrors[entry.index] ? (
+                            <span className="text-[10px] text-red-400 flex items-center gap-1">
+                              <AlertCircle size={10} />{t('translation_format_mismatch', 'Format mismatch — review before confirming')}
+                            </span>
+                          ) : (
+                            <span className="text-[10px] text-emerald-400 flex items-center gap-1">
+                              <Sparkles size={10} />{t('translation_ai_generated', 'AI-generated \u2014 edit to refine')}
+                            </span>
+                          )}
                         </div>
                       )}
                     </div>
@@ -508,6 +579,11 @@ export default function TranslatePage() {
                     <span className="text-[var(--tx-muted)]">
                       <span className="text-emerald-400 font-semibold">{batchConfirmedCount}</span> {t('translation_confirmed_in_batch', 'confirmed in batch')}
                     </span>
+                    {batchFormatErrorCount > 0 && (
+                      <span className="text-[var(--tx-muted)]">
+                        <span className="text-red-400 font-semibold">{batchFormatErrorCount}</span> {t('translation_format_errors', 'format mismatch')}
+                      </span>
+                    )}
                   </div>
                   <div className="flex gap-2">
                     <button
@@ -518,13 +594,22 @@ export default function TranslatePage() {
                     </button>
                     <button
                       onClick={handleConfirmAllBatch}
-                      disabled={batchReviewingCount === 0}
+                      disabled={batchReviewingCount === batchFormatErrorCount}
                       className="btn-primary flex items-center gap-2 text-sm"
                     >
-                      <Check size={16} />{t('translation_confirm_all_next', 'Confirm All & Next Batch ({count})').replace('{count}', String(batchReviewingCount))}
+                      <Check size={16} />{batchFormatErrorCount > 0
+                        ? t('translation_confirm_all_fix', 'Confirm Valid ({count})').replace('{count}', String(batchReviewingCount - batchFormatErrorCount))
+                        : t('translation_confirm_all_next', 'Confirm All & Next Batch ({count})').replace('{count}', String(batchReviewingCount))}
                     </button>
                   </div>
                 </div>
+                {batchFormatErrorCount > 0 && (
+                  <div className="mt-3 p-3 rounded-lg bg-red-500/10 border border-red-500/20">
+                    <p className="text-sm text-red-400">
+                      {t('translation_format_error_batch', '{count} entry(s) have format specifier mismatches ({fmtErrors} total). Fix or unconfirm these entries before exporting.').replace('{count}', String(batchFormatErrorCount)).replace('{fmtErrors}', String(totalFormatErrorCount))}
+                    </p>
+                  </div>
+                )}
               </div>
 
               <div className="space-y-3">
@@ -606,6 +691,15 @@ export default function TranslatePage() {
                             </div>
                           </div>
 
+                          {formatErrors[entry.index] && (
+                            <div className="mt-3 p-3 rounded-lg bg-red-500/10 border border-red-500/20">
+                              <p className="text-xs text-red-400 flex items-center gap-1.5">
+                                <AlertCircle size={14} />
+                                {t('translation_format_error_entry', 'Format specifier mismatch: {error}').replace('{error}', formatErrors[entry.index])}
+                              </p>
+                            </div>
+                          )}
+
                           <div className="flex flex-wrap gap-2 mt-4">
                             {isConfirmed ? (
                               <button
@@ -617,10 +711,16 @@ export default function TranslatePage() {
                             ) : (
                               <button
                                 onClick={() => handleConfirmEntry(entry.index)}
-                                disabled={!entry.msgstr}
-                                className="btn-primary flex items-center gap-1.5 text-sm"
+                                disabled={!entry.msgstr || !!formatErrors[entry.index]}
+                                className={`flex items-center gap-1.5 text-sm ${
+                                  formatErrors[entry.index]
+                                    ? 'btn-ghost text-red-400 cursor-not-allowed opacity-50'
+                                    : 'btn-primary'
+                                }`}
                               >
-                                <Check size={14} />{t('translation_confirm_translation', 'Confirm Translation')}
+                                {formatErrors[entry.index]
+                                  ? <><AlertCircle size={14} />{t('translation_fix_format', 'Fix Format Specifiers')}</>
+                                  : <><Check size={14} />{t('translation_confirm_translation', 'Confirm Translation')}</>}
                               </button>
                             )}
                             <button

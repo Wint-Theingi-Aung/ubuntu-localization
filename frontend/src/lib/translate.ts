@@ -33,8 +33,14 @@ Script: ${langInfo.script}
 Word Order: ${langInfo.word_order}
 
 Rules:
-- Preserve ALL placeholders exactly: %s, %d, %f, %u, {{0}}, {{1}}, %(name)s
-- Preserve ALL HTML tags exactly as they appear: <strong>, </strong>, <b>, </b>, <em>, </em>, <i>, </i>, <span>, </span>, <p>, </p>, <br/>, <a>, </a>, <code>, </code>, <pre>, </pre>, <ul>, </ul>, <ol>, </ol>, <li>, </li>, <div>, </div>, <h1>–<h6>, etc. Do NOT rename, remove, or invent tags. Opening and closing tags must remain correctly matched. Only translate text content between tags. Also preserve XML entities: &amp; &#160; etc.
+- CRITICAL: Preserve ALL printf-style format specifiers EXACTLY as they appear in the source. Do NOT translate, modify, reorder, or remove them. This includes:
+  Simple: %s, %d, %f, %u, %c, %e, %g, %o, %x, %p
+  With length: %ld, %lu, %lld, %llu, %hd, %hu, %Lf, %zu, %td
+  With flags/width/precision: %02d, %-20s, %.16s, %.*s, %+10.5f, %#x
+  Named: %(name)s, %(count)d
+  Positional: %1$s, %2$d
+  Escaped literal: %% (literal percent sign — keep as %%)
+- Preserve HTML tags exactly as they appear: <strong>, </strong>, <b>, </b>, <em>, </em>, <i>, </i>, <span>, </span>, <p>, </p>, <br/>, <a>, </a>, <code>, </code>, <pre>, </pre>, <ul>, </ul>, <ol>, </ol>, <li>, </li>, <div>, </div>, <h1>–<h6>, etc. Do NOT rename, remove, or invent tags. Opening and closing tags must remain correctly matched. Only translate text content between tags. Also preserve XML entities: &amp; &#160; etc.
 - Preserve newlines (\\n) and whitespace patterns character-for-character
 - Keep Ubuntu/Linux technical terms UNTRANSLATED:
   Kernel, GNOME, sudo, apt, repository, GRUB, X11, Wayland, ext4, Btrfs,
@@ -127,6 +133,59 @@ export interface QAResult {
   passed: boolean
 }
 
+/**
+ * Extract all printf-style format specifiers and i18n placeholders from a string.
+ * Returns them in order of appearance.
+ *
+ * Covers: %s %d %f %u %c %e %g %o %x %p,
+ * length modifiers (%ld %lld %hd %Lf %zu %td etc.),
+ * flags/width/precision (%02d %-20s %.16s %.*s %+10.5f %#x),
+ * named (%(name)s), positional (%1$s), escaped (%%).
+ */
+export function extractFormatSpecifiers(str: string): string[] {
+  // eslint-disable-next-line no-control-regex
+  const printfRegex = /%(?:%\$|\d+\$|\(.*?\))?[+#-0 *]*(?:\d+|\*)?(?:\.(?:\d+|\*))?(?:hh?|ll?|[Lqjzt])?[diouxXeEfFgGaAcspn%]/g
+  const specifiers = str.match(printfRegex) || []
+  // Filter out %% (literal percent) — it's not a data placeholder
+  return specifiers.filter(s => s !== '%%')
+}
+
+/**
+ * Compare format specifiers between source and translation.
+ * Returns an object with missing, extra, and whether they match.
+ */
+export function compareFormatSpecifiers(
+  msgid: string,
+  msgstr: string
+): { missing: string[]; extra: string[]; match: boolean } {
+  const srcSpecs = extractFormatSpecifiers(msgid)
+  const tgtSpecs = extractFormatSpecifiers(msgstr)
+
+  const srcCounts = new Map<string, number>()
+  for (const s of srcSpecs) srcCounts.set(s, (srcCounts.get(s) || 0) + 1)
+
+  const tgtCounts = new Map<string, number>()
+  for (const s of tgtSpecs) tgtCounts.set(s, (tgtCounts.get(s) || 0) + 1)
+
+  const missing: string[] = []
+  for (const [spec, count] of srcCounts) {
+    const tgtCount = tgtCounts.get(spec) || 0
+    if (tgtCount < count) {
+      for (let i = 0; i < count - tgtCount; i++) missing.push(spec)
+    }
+  }
+
+  const extra: string[] = []
+  for (const [spec, count] of tgtCounts) {
+    const srcCount = srcCounts.get(spec) || 0
+    if (count > srcCount) {
+      for (let i = 0; i < count - srcCount; i++) extra.push(spec)
+    }
+  }
+
+  return { missing, extra, match: missing.length === 0 && extra.length === 0 }
+}
+
 export function verifyTranslation(
   msgid: string,
   translated: string,
@@ -134,18 +193,29 @@ export function verifyTranslation(
 ): QAResult {
   const checks: QACheck[] = []
 
-  // Check 1: Placeholder integrity
-  const placeholderRegex = /%[dsfu]|%\([^)]+\)[dsfu]|\{[0-9]*\}/g
-  const srcPlaceholders = new Set(msgid.match(placeholderRegex) || [])
-  const tgtPlaceholders = new Set(translated.match(placeholderRegex) || [])
-  const missing = [...srcPlaceholders].filter(p => !tgtPlaceholders.has(p))
-  const extra = [...tgtPlaceholders].filter(p => !srcPlaceholders.has(p))
+  // Check 1: Format specifier integrity (printf-style + i18n placeholders)
+  const { missing, extra, match } = compareFormatSpecifiers(msgid, translated)
+  // Also check {{N}} positional placeholders used in some i18n frameworks
+  const srcBrace: string[] = msgid.match(/\{\{\d+\}\}/g) || []
+  const tgtBrace: string[] = translated.match(/\{\{\d+\}\}/g) || []
+  const missingBrace = srcBrace.filter(p => !tgtBrace.includes(p))
+  const extraBrace = tgtBrace.filter(p => !srcBrace.includes(p))
+  // Also check %(name)s named placeholders
+  const srcNamed: string[] = msgid.match(/%\([^)]+\)[a-z]/g) || []
+  const tgtNamed: string[] = translated.match(/%\([^)]+\)[a-z]/g) || []
+  const missingNamed = srcNamed.filter(p => !tgtNamed.includes(p))
+  const extraNamed = tgtNamed.filter(p => !srcNamed.includes(p))
+
+  const allMissing = [...missing, ...missingBrace, ...missingNamed]
+  const allExtra = [...extra, ...extraBrace, ...extraNamed]
+  const allMatch = match && missingBrace.length === 0 && extraBrace.length === 0 &&
+                   missingNamed.length === 0 && extraNamed.length === 0
 
   checks.push({
-    name: 'Placeholder Integrity',
-    passed: missing.length === 0 && extra.length === 0,
-    detail: missing.length ? `Missing: ${missing.join(', ')}` :
-            extra.length ? `Extra: ${extra.join(', ')}` : 'OK',
+    name: 'Format Specifiers',
+    passed: allMatch,
+    detail: allMissing.length ? `Missing in translation: ${allMissing.join(', ')}` :
+            allExtra.length ? `Extra in translation: ${allExtra.join(', ')}` : 'OK',
   })
 
   // Check 2: Newline count

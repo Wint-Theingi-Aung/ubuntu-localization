@@ -1,5 +1,6 @@
 import { NextRequest, NextResponse } from 'next/server'
 import { generatePoContent } from '@/lib/po-parser'
+import { compareFormatSpecifiers } from '@/lib/translate'
 
 export async function POST(request: NextRequest) {
   try {
@@ -10,6 +11,32 @@ export async function POST(request: NextRequest) {
       return NextResponse.json(
         { error: 'No entries provided for export.' },
         { status: 400 }
+      )
+    }
+
+    // Validate format specifiers for all entries with translations
+    const mismatches: Array<{ index: number; msgid: string; missing: string[]; extra: string[] }> = []
+    for (const entry of entries) {
+      if (entry.msgstr && entry.msgid) {
+        const { missing, extra } = compareFormatSpecifiers(entry.msgid, entry.msgstr)
+        if (missing.length > 0 || extra.length > 0) {
+          mismatches.push({ index: entry.index, msgid: entry.msgid, missing, extra })
+        }
+      }
+    }
+
+    if (mismatches.length > 0) {
+      return NextResponse.json(
+        {
+          error: `Export rejected: ${mismatches.length} entry(ies) have format specifier mismatches.`,
+          mismatches: mismatches.slice(0, 10).map(m => ({
+            index: m.index,
+            msgid: m.msgid.slice(0, 80),
+            missing: m.missing,
+            extra: m.extra,
+          })),
+        },
+        { status: 422 }
       )
     }
 
