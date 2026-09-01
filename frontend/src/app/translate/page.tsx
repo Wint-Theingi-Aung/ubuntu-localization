@@ -172,11 +172,12 @@ export default function TranslatePage() {
           const m = d.translations.find((t: any) => t.index === e.index)
           if (m) {
             if (m.translated.trim().length > 0) {
-              const { missing, extra } = compareFormatSpecifiers(e.msgid, m.translated)
-              if (missing.length > 0 || extra.length > 0) {
+              const { missing, extra, orderMismatch } = compareFormatSpecifiers(e.msgid, m.translated)
+              if (missing.length > 0 || extra.length > 0 || orderMismatch) {
                 const parts: string[] = []
                 if (missing.length) parts.push(`Missing: ${missing.join(', ')}`)
                 if (extra.length) parts.push(`Extra: ${extra.join(', ')}`)
+                if (orderMismatch) parts.push('Placeholder order changed')
                 newErrors[e.index] = parts.join('; ')
               }
             }
@@ -219,11 +220,12 @@ export default function TranslatePage() {
       )
       const entry = updated.find(e => e.index === index)
       if (entry && entry.msgid && newMsgstr.trim().length > 0) {
-        const { missing, extra } = compareFormatSpecifiers(entry.msgid, newMsgstr)
-        if (missing.length > 0 || extra.length > 0) {
+        const { missing, extra, orderMismatch } = compareFormatSpecifiers(entry.msgid, newMsgstr)
+        if (missing.length > 0 || extra.length > 0 || orderMismatch) {
           const parts: string[] = []
           if (missing.length) parts.push(`Missing: ${missing.join(', ')}`)
           if (extra.length) parts.push(`Extra: ${extra.join(', ')}`)
+          if (orderMismatch) parts.push('Placeholder order changed')
           setFormatErrors(prev => ({ ...prev, [index]: parts.join('; ') }))
         } else {
           setFormatErrors(prev => {
@@ -312,9 +314,13 @@ export default function TranslatePage() {
       if (!r.ok) {
         if (r.status === 422) {
           const errData = await r.json()
-          const details = (errData.mismatches || []).slice(0, 3).map((m: any) =>
-            `"${m.msgid.slice(0, 40)}..." — missing: [${m.missing.join(', ')}]`
-          ).join('\n')
+          const details = (errData.mismatches || []).slice(0, 3).map((m: any) => {
+            const parts: string[] = []
+            if (m.missing?.length) parts.push(`missing: [${m.missing.join(', ')}]`)
+            if (m.extra?.length) parts.push(`extra: [${m.extra.join(', ')}]`)
+            if (m.orderMismatch) parts.push('placeholder order changed')
+            return `"${m.msgid.slice(0, 40)}..." — ${parts.join('; ') || 'mismatch'}`
+          }).join('\n')
           throw new Error(`${errData.error}${details ? '\n' + details : ''}`)
         }
         throw new Error('Export failed')

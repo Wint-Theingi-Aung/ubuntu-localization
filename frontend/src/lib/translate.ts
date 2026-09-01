@@ -152,12 +152,15 @@ export function extractFormatSpecifiers(str: string): string[] {
 
 /**
  * Compare format specifiers between source and translation.
- * Returns an object with missing, extra, and whether they match.
+ * Returns an object with missing, extra, orderMismatch, and whether they match.
+ *
+ * Order matters: printf-style specifiers are positional — %s %d is different
+ * from %d %s.  Launchpad rejects translations where argument order changes.
  */
 export function compareFormatSpecifiers(
   msgid: string,
   msgstr: string
-): { missing: string[]; extra: string[]; match: boolean } {
+): { missing: string[]; extra: string[]; orderMismatch: boolean; match: boolean } {
   const srcSpecs = extractFormatSpecifiers(msgid)
   const tgtSpecs = extractFormatSpecifiers(msgstr)
 
@@ -183,7 +186,26 @@ export function compareFormatSpecifiers(
     }
   }
 
-  return { missing, extra, match: missing.length === 0 && extra.length === 0 }
+  // Check positional order: each matched specifier must appear in the same
+  // sequence.  We walk both lists in parallel, greedily matching specifiers
+  // that exist in both.  If the remaining matched sequences differ, the
+  // argument order has changed and Launchpad will reject the translation.
+  let orderMismatch = false
+  if (missing.length === 0 && extra.length === 0 && srcSpecs.length > 0) {
+    const matchedSrc = srcSpecs.filter(s => tgtCounts.has(s))
+    const matchedTgt = tgtSpecs.filter(s => srcCounts.has(s))
+    if (matchedSrc.length !== matchedTgt.length ||
+        matchedSrc.some((s, i) => s !== matchedTgt[i])) {
+      orderMismatch = true
+    }
+  }
+
+  return {
+    missing,
+    extra,
+    orderMismatch,
+    match: missing.length === 0 && extra.length === 0 && !orderMismatch,
+  }
 }
 
 export function verifyTranslation(
@@ -194,7 +216,7 @@ export function verifyTranslation(
   const checks: QACheck[] = []
 
   // Check 1: Format specifier integrity (printf-style + i18n placeholders)
-  const { missing, extra, match } = compareFormatSpecifiers(msgid, translated)
+  const { missing, extra, orderMismatch, match } = compareFormatSpecifiers(msgid, translated)
   // Also check {{N}} positional placeholders used in some i18n frameworks
   const srcBrace: string[] = msgid.match(/\{\{\d+\}\}/g) || []
   const tgtBrace: string[] = translated.match(/\{\{\d+\}\}/g) || []
@@ -211,11 +233,19 @@ export function verifyTranslation(
   const allMatch = match && missingBrace.length === 0 && extraBrace.length === 0 &&
                    missingNamed.length === 0 && extraNamed.length === 0
 
+  let formatDetail = 'OK'
+  if (!allMatch) {
+    const parts: string[] = []
+    if (allMissing.length) parts.push(`Missing: ${allMissing.join(', ')}`)
+    if (allExtra.length) parts.push(`Extra: ${allExtra.join(', ')}`)
+    if (orderMismatch) parts.push('Placeholder argument order changed')
+    formatDetail = parts.join('; ')
+  }
+
   checks.push({
     name: 'Format Specifiers',
     passed: allMatch,
-    detail: allMissing.length ? `Missing in translation: ${allMissing.join(', ')}` :
-            allExtra.length ? `Extra in translation: ${allExtra.join(', ')}` : 'OK',
+    detail: formatDetail,
   })
 
   // Check 2: Newline count

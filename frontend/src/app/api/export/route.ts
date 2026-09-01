@@ -15,12 +15,12 @@ export async function POST(request: NextRequest) {
     }
 
     // Validate format specifiers for all entries with translations
-    const mismatches: Array<{ index: number; msgid: string; missing: string[]; extra: string[] }> = []
+    const mismatches: Array<{ index: number; msgid: string; missing: string[]; extra: string[]; orderMismatch: boolean }> = []
     for (const entry of entries) {
       if (entry.msgstr && entry.msgid) {
-        const { missing, extra } = compareFormatSpecifiers(entry.msgid, entry.msgstr)
-        if (missing.length > 0 || extra.length > 0) {
-          mismatches.push({ index: entry.index, msgid: entry.msgid, missing, extra })
+        const { missing, extra, orderMismatch } = compareFormatSpecifiers(entry.msgid, entry.msgstr)
+        if (missing.length > 0 || extra.length > 0 || orderMismatch) {
+          mismatches.push({ index: entry.index, msgid: entry.msgid, missing, extra, orderMismatch })
         }
       }
     }
@@ -34,6 +34,7 @@ export async function POST(request: NextRequest) {
             msgid: m.msgid.slice(0, 80),
             missing: m.missing,
             extra: m.extra,
+            orderMismatch: m.orderMismatch,
           })),
         },
         { status: 422 }
