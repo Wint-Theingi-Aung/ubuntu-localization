@@ -171,12 +171,14 @@ export default function TranslatePage() {
         const updated = prev.map(e => {
           const m = d.translations.find((t: any) => t.index === e.index)
           if (m) {
-            const { missing, extra } = compareFormatSpecifiers(e.msgid, m.translated)
-            if (missing.length > 0 || extra.length > 0) {
-              const parts: string[] = []
-              if (missing.length) parts.push(`Missing: ${missing.join(', ')}`)
-              if (extra.length) parts.push(`Extra: ${extra.join(', ')}`)
-              newErrors[e.index] = parts.join('; ')
+            if (m.translated.trim().length > 0) {
+              const { missing, extra } = compareFormatSpecifiers(e.msgid, m.translated)
+              if (missing.length > 0 || extra.length > 0) {
+                const parts: string[] = []
+                if (missing.length) parts.push(`Missing: ${missing.join(', ')}`)
+                if (extra.length) parts.push(`Extra: ${extra.join(', ')}`)
+                newErrors[e.index] = parts.join('; ')
+              }
             }
             return { ...e, msgstr: m.translated, status: 'reviewing' as const }
           }
@@ -216,7 +218,7 @@ export default function TranslatePage() {
         e.index === index ? { ...e, msgstr: newMsgstr } : e
       )
       const entry = updated.find(e => e.index === index)
-      if (entry && entry.msgid) {
+      if (entry && entry.msgid && newMsgstr.trim().length > 0) {
         const { missing, extra } = compareFormatSpecifiers(entry.msgid, newMsgstr)
         if (missing.length > 0 || extra.length > 0) {
           const parts: string[] = []
@@ -230,6 +232,12 @@ export default function TranslatePage() {
             return next
           })
         }
+      } else {
+        setFormatErrors(prev => {
+          const next = { ...prev }
+          delete next[index]
+          return next
+        })
       }
       return updated
     })
