@@ -292,12 +292,17 @@ export default function TranslatePage() {
       )
       return
     }
+    const confirmedEntries = entries.filter(e => e.status === 'confirmed')
+    if (confirmedEntries.length === 0) {
+      setError(t('translation_no_confirmed', 'No confirmed translations to export. Confirm at least one entry first.'))
+      return
+    }
     try {
       const r = await fetch('/api/export', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({
-          entries: entries.map(e => ({
+          entries: confirmedEntries.map(e => ({
             index: e.index,
             msgid: e.msgid,
             msgstr: e.msgstr,
