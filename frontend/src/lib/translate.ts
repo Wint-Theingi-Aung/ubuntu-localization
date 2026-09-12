@@ -41,6 +41,7 @@ Rules:
   Positional: %1$s, %2$d
   Escaped literal: %% (literal percent sign — keep as %%)
 - Preserve HTML tags exactly as they appear: <strong>, </strong>, <b>, </b>, <em>, </em>, <i>, </i>, <span>, </span>, <p>, </p>, <br/>, <a>, </a>, <code>, </code>, <pre>, </pre>, <ul>, </ul>, <ol>, </ol>, <li>, </li>, <div>, </div>, <h1>–<h6>, etc. Do NOT rename, remove, or invent tags. Opening and closing tags must remain correctly matched. Only translate text content between tags. Also preserve XML entities: &amp; &#160; etc.
+- CRITICAL: Preserve mnemonic underscores EXACTLY as they appear. A mnemonic is an underscore followed by a single letter (e.g. _E, _F, _S). These mark keyboard accelerator keys in GTK/Qt UIs. Do NOT remove, translate, reorder, or alter them. Keep the underscore and the letter exactly as-is in the original. Example: "_Edit Selected Profile" → "_E တည်းဖြတ်ပါ" (the _E stays unchanged)
 - Preserve newlines (\\n) and whitespace patterns character-for-character
 - Keep Ubuntu/Linux technical terms UNTRANSLATED:
   Kernel, GNOME, sudo, apt, repository, GRUB, X11, Wayland, ext4, Btrfs,
@@ -248,7 +249,28 @@ export function verifyTranslation(
     detail: formatDetail,
   })
 
-  // Check 2: Newline count
+  // Check 2: Mnemonic underscore integrity
+  const srcMnemonics: string[] = msgid.match(/_[A-Za-z]/g) || []
+  const tgtMnemonics: string[] = translated.match(/_[A-Za-z]/g) || []
+  const missingMnemonics = srcMnemonics.filter(m => !tgtMnemonics.includes(m))
+  const extraMnemonics = tgtMnemonics.filter(m => !srcMnemonics.includes(m))
+  const mnemonicsMatch = missingMnemonics.length === 0 && extraMnemonics.length === 0
+
+  let mnemonicDetail = 'OK'
+  if (!mnemonicsMatch) {
+    const parts: string[] = []
+    if (missingMnemonics.length) parts.push(`Missing: ${missingMnemonics.join(', ')}`)
+    if (extraMnemonics.length) parts.push(`Extra: ${extraMnemonics.join(', ')}`)
+    mnemonicDetail = parts.join('; ')
+  }
+
+  checks.push({
+    name: 'Mnemonic Underscores',
+    passed: mnemonicsMatch,
+    detail: mnemonicDetail,
+  })
+
+  // Check 3: Newline count
   const srcNewlines = (msgid.match(/\n/g) || []).length
   const tgtNewlines = (translated.match(/\n/g) || []).length
   checks.push({
@@ -257,14 +279,14 @@ export function verifyTranslation(
     detail: `Source: ${srcNewlines}, Target: ${tgtNewlines}`,
   })
 
-  // Check 3: Non-empty
+  // Check 4: Non-empty
   checks.push({
     name: 'Non-Empty',
     passed: translated.trim().length > 0,
     detail: translated.trim() ? 'OK' : 'Translation is empty',
   })
 
-  // Check 4: Length ratio
+  // Check 5: Length ratio
   if (msgid) {
     const ratio = translated.length / msgid.length
     checks.push({

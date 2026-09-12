@@ -31,10 +31,11 @@ the original is **identical** in the translation:
 | Shell | `$1` `$2` `${var}` `$@` |
 | HTML/XML | `<b>` `</b>` `<i>` `</i>` `<span>` `<a href>` `&amp;` `&lt;` `&gt;` `&#160;` |
 | Escape | `\n` `\t` `\\` `\"` `\r` |
-| Accelerator | `_F` (underscore prefix for Alt+key shortcuts) |
+| Accelerator/Mnemonic | `_F` `_E` `_S` etc. (underscore + single letter for Alt+key shortcuts) — must be preserved EXACTLY, never removed or reordered |
 
 **FAIL if**: Any placeholder is missing, altered, reordered, or has wrong case.
-**PASS only if**: Every placeholder matches the original character-for-character.
+**FAIL if**: Any mnemonic underscore (`_X` where X is a letter) is missing, added, or has a different letter.
+**PASS only if**: Every placeholder AND every mnemonic underscore matches the original character-for-character.
 
 ### Lens 2: Ubuntu Context & Semantic Accuracy
 

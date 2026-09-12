@@ -55,7 +55,7 @@ Keep these EXACTLY as they appear — no character changes, no spacing changes:
 - Preserve leading/trailing whitespace exactly
 - Preserve punctuation marks (periods, colons, question marks)
 - Preserve capitalization: if msgid starts lowercase, translation should too
-- Preserve accelerators: `_File` → `_ဖိုင်` (keep underscore, translate the word)
+- Preserve mnemonic underscores EXACTLY: `_File` → `_ဖိုင်` but `_E` → `_E` (never remove, translate, or reorder the underscore+letter mnemonic marker — it must stay character-for-character identical to the original)
 
 ### 3. Technical Term Preservation (DO NOT TRANSLATE)
 These Ubuntu/Linux technical terms must stay in English:
