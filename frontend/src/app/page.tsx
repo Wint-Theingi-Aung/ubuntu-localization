@@ -265,7 +265,7 @@ export default function Dashboard() {
                     <div className="min-w-0">
                       <p className="text-[var(--tx-primary)] text-sm truncate">{mounted && entry.descriptionKey ? ti(entry.descriptionKey, entry.descriptionParams || {}, entry.description) : entry.description}</p>
                       <div className="flex items-center gap-2">
-                        <span className="text-xs text-[var(--tx-dim)]">{entry.user}</span>
+                        <span className="text-xs text-[var(--tx-dim)]">{entry.user || t('history_user_you', 'You')}</span>
                         {entry.language && <span className="badge-orange text-[10px]">{entry.language}</span>}
                       </div>
                     </div>

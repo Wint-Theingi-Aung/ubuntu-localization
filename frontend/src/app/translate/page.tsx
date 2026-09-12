@@ -145,7 +145,6 @@ export default function TranslatePage() {
         details: `${merged.length} entries, ${pendingCount} untranslated`,
         detailsKey: 'activity_entries_n',
         detailsParams: { count: merged.length, untranslated: pendingCount },
-        user: 'local-user',
       })
     } catch (err: any) { setError(err.message) }
     finally { setIsTranslating(false) }
@@ -197,7 +196,6 @@ export default function TranslatePage() {
         language: langName,
         details: `AI batch translation with Gemini — ${file?.name || 'demo'}`,
         detailsKey: 'activity_ai_batch',
-        user: 'local-user',
       })
     } catch (err: any) { setError(err.message) }
     finally { setIsTranslating(false) }
@@ -352,7 +350,6 @@ export default function TranslatePage() {
         details: `${cc} confirmed translations`,
         detailsKey: 'activity_new_translations',
         detailsParams: { count: cc, percent: pct },
-        user: 'local-user',
       })
     } catch (err: any) { setError(err.message) }
   }, [entries, targetLang, file, poHeaders, formatErrors, t])

@@ -5,7 +5,8 @@
 export interface HistoryEntry {
   id: string
   timestamp: number
-  user: string
+  /** User identifier — undefined for local (no-auth) actions; set by authenticated sessions */
+  user?: string
   action: 'translate' | 'export' | 'upload' | 'glossary'
   /** Plain-text fallback (English) — used when no descriptionKey is set, or for old localStorage entries */
   description: string
@@ -23,7 +24,6 @@ export interface HistoryEntry {
 }
 
 const STORAGE_KEY = 'ubuntu-localization-history'
-const CLEARED_KEY = 'ubuntu-localization-history-cleared'
 const MAX_ENTRIES = 100
 
 /** Infer descriptionKey/detailsKey from plain English description for legacy entries */
@@ -93,12 +93,7 @@ export function getHistory(): HistoryEntry[] {
   if (typeof window === 'undefined') return []
   try {
     const raw = localStorage.getItem(STORAGE_KEY)
-    if (!raw) {
-      // Only seed defaults on fresh install (not after manual clear)
-      const wasCleared = localStorage.getItem(CLEARED_KEY) === 'true'
-      if (wasCleared) return []
-      return getDefaultHistory()
-    }
+    if (!raw) return []
     const entries: HistoryEntry[] = JSON.parse(raw)
     // Migrate legacy entries: infer i18n keys from plain English descriptions
     const migrated = entries.map(inferI18nKeys)
@@ -106,7 +101,7 @@ export function getHistory(): HistoryEntry[] {
     try { localStorage.setItem(STORAGE_KEY, JSON.stringify(migrated)) } catch {}
     return migrated.sort((a, b) => b.timestamp - a.timestamp)
   } catch {
-    return getDefaultHistory()
+    return []
   }
 }
 
@@ -122,7 +117,6 @@ export function recordHistory(entry: Omit<HistoryEntry, 'id' | 'timestamp'>) {
     }
     const updated = [newEntry, ...existing].slice(0, MAX_ENTRIES)
     localStorage.setItem(STORAGE_KEY, JSON.stringify(updated))
-    localStorage.removeItem(CLEARED_KEY)
   } catch {
     // localStorage full or unavailable — fail silently
   }
@@ -132,26 +126,6 @@ export function recordHistory(entry: Omit<HistoryEntry, 'id' | 'timestamp'>) {
 export function clearHistory() {
   if (typeof window === 'undefined') return
   localStorage.removeItem(STORAGE_KEY)
-  localStorage.setItem(CLEARED_KEY, 'true')
-}
-
-/** Seed with default entries if no history exists */
-function getDefaultHistory(): HistoryEntry[] {
-  const now = Date.now()
-  const hour = 3600000
-  const defaults: HistoryEntry[] = [
-    { id: 'seed-1', timestamp: now - 2 * hour, user: 'wint-theingi-aung', action: 'translate', description: 'Translated 150 strings in gnome-control-center.po', descriptionKey: 'activity_translated_n', descriptionParams: { count: 150, file: 'gnome-control-center.po' }, language: 'Burmese', details: 'AI batch translation with Gemini', detailsKey: 'activity_ai_batch' },
-    { id: 'seed-2', timestamp: now - 3 * hour, user: 'wint-theingi-aung', action: 'export', description: 'Exported translated gnome-control-center.po', descriptionKey: 'activity_exported_file', descriptionParams: { file: 'gnome-control-center.po' }, language: 'Burmese', details: '+150 new translations, completion: 42%', detailsKey: 'activity_new_translations', detailsParams: { count: 150, percent: 42 } },
-    { id: 'seed-3', timestamp: now - 5 * hour, user: 'wint-theingi-aung', action: 'upload', description: 'Uploaded gnome-shell.po for translation', descriptionKey: 'activity_uploaded_file', descriptionParams: { file: 'gnome-shell.po' }, language: 'Burmese', details: '1,890 entries, 520 untranslated', detailsKey: 'activity_entries_n', detailsParams: { count: 1890, untranslated: 520 } },
-    { id: 'seed-4', timestamp: now - 24 * hour, user: 'gipsyhnh', action: 'translate', description: 'Translated 25 strings in nautilus.po', descriptionKey: 'activity_translated_n', descriptionParams: { count: 25, file: 'nautilus.po' }, language: 'Shan', details: 'Manual translation', detailsKey: 'activity_manual' },
-    { id: 'seed-5', timestamp: now - 28 * hour, user: 'wint-theingi-aung', action: 'glossary', description: 'Added 10 glossary terms', descriptionKey: 'activity_added_glossary_n', descriptionParams: { count: 10 }, details: 'Network, Security, System terms', detailsKey: 'activity_glossary_detail', detailsParams: { terms: 'Network, Security, System' } },
-    { id: 'seed-6', timestamp: now - 40 * hour, user: 'htetminaung2018', action: 'translate', description: 'Translated 15 strings in firefox.po', descriptionKey: 'activity_translated_n', descriptionParams: { count: 15, file: 'firefox.po' }, language: 'Mon', details: 'Manual translation', detailsKey: 'activity_manual' },
-    { id: 'seed-7', timestamp: now - 48 * hour, user: 'wint-theingi-aung', action: 'export', description: 'Exported translated nautilus.po', descriptionKey: 'activity_exported_file', descriptionParams: { file: 'nautilus.po' }, language: 'Burmese', details: '+280 new translations, completion: 65%', detailsKey: 'activity_new_translations', detailsParams: { count: 280, percent: 65 } },
-    { id: 'seed-8', timestamp: now - 72 * hour, user: 'clementlefebvre', action: 'translate', description: 'Translated 8 strings in gnome-calculator.po', descriptionKey: 'activity_translated_n', descriptionParams: { count: 8, file: 'gnome-calculator.po' }, language: "S'gaw Karen", details: 'Manual translation', detailsKey: 'activity_manual' },
-  ]
-  // Save defaults to localStorage so they persist
-  try { localStorage.setItem(STORAGE_KEY, JSON.stringify(defaults)) } catch {}
-  return defaults
 }
 
 /** Format a timestamp for display with i18n support */

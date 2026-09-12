@@ -75,7 +75,7 @@ export default function HistoryPage() {
                     <div>
                       <p className="text-[var(--tx-primary)] font-medium">{mounted && entry.descriptionKey ? ti(entry.descriptionKey, entry.descriptionParams || {}, entry.description) : entry.description}</p>
                       <div className="flex items-center gap-3 mt-1">
-                        <span className="text-sm text-[var(--tx-muted)]">{entry.user}</span>
+                        <span className="text-sm text-[var(--tx-muted)]">{entry.user || t('history_user_you', 'You')}</span>
                         {entry.language && <span className="badge-orange">{entry.language}</span>}
                       </div>
                     </div>
@@ -100,7 +100,7 @@ export default function HistoryPage() {
                 <div className="flex-1 min-w-0">
                   <p className="text-[var(--tx-primary)] font-medium text-sm">{mounted && entry.descriptionKey ? ti(entry.descriptionKey, entry.descriptionParams || {}, entry.description) : entry.description}</p>
                   <div className="flex items-center gap-2 mt-1 flex-wrap">
-                    <span className="text-xs text-[var(--tx-dim)]">{entry.user}</span>
+                    <span className="text-xs text-[var(--tx-dim)]">{entry.user || t('history_user_you', 'You')}</span>
                     {entry.language && <span className="badge-orange text-[10px]">{entry.language}</span>}
                   </div>
                 </div>
