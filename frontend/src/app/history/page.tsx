@@ -1,8 +1,9 @@
 'use client'
 
-import { useState, useMemo, useEffect } from 'react'
+import { useState, useMemo, useEffect, useCallback } from 'react'
 import { History, Download, Languages, FileText, Clock, BookOpen, Trash2 } from 'lucide-react'
 import { useI18n } from '@/lib/i18n'
+import { useAuth } from '@/lib/auth-context'
 import { getHistory, clearHistory, formatTimestamp, type HistoryEntry } from '@/lib/history'
 
 const actionIcons: Record<string, typeof Languages> = { translate: Languages, export: Download, upload: FileText, glossary: BookOpen }
@@ -18,16 +19,36 @@ const filterOptions: { key: string | null; labelKey: string; fallback: string }[
 
 export default function HistoryPage() {
   const { t, ti } = useI18n()
+  const { user } = useAuth()
   const [mounted, setMounted] = useState(false)
   const [allHistory, setAllHistory] = useState<HistoryEntry[]>([])
   const [filter, setFilter] = useState<string | null>(null)
   const [refreshKey, setRefreshKey] = useState(0)
 
+  const loadHistory = useCallback(async () => {
+    if (user) {
+      // Fetch from DB when authenticated
+      try {
+        const res = await fetch('/api/history')
+        if (res.ok) {
+          const data = await res.json()
+          setAllHistory(data.entries || [])
+        }
+      } catch {
+        // Fall back to localStorage
+        setAllHistory(getHistory())
+      }
+    } else {
+      // Use localStorage for anonymous users
+      setAllHistory(getHistory())
+    }
+  }, [user])
+
   // Load history after mount so server and client both render [] during hydration
   useEffect(() => {
     setMounted(true)
-    setAllHistory(getHistory())
-  }, [refreshKey])
+    loadHistory()
+  }, [refreshKey, loadHistory])
 
   const filtered = useMemo(() => filter ? allHistory.filter(h => h.action === filter) : allHistory, [filter, allHistory])
 
@@ -43,7 +64,12 @@ export default function HistoryPage() {
       <div className="flex flex-col md:flex-row md:items-center md:justify-between gap-4">
         <div>
           <h1 className="text-3xl font-bold text-[var(--tx-primary)]">{t('history_title', 'History')}</h1>
-          <p className="text-[var(--tx-muted)] mt-1">{t('history_subtitle', 'Recent translation activities')} — {allHistory.length} {t('history_entries', 'entries')}</p>
+          <p className="text-[var(--tx-muted)] mt-1">
+            {user
+              ? t('history_subtitle_auth', 'Your translation activities')
+              : t('history_subtitle', 'Recent translation activities')
+            } — {allHistory.length} {t('history_entries', 'entries')}
+          </p>
         </div>
         {allHistory.length > 0 && (
           <button onClick={handleClear} className="btn-ghost flex items-center gap-2 text-sm text-[var(--tx-muted)] hover:text-red-400">
@@ -51,6 +77,28 @@ export default function HistoryPage() {
           </button>
         )}
       </div>
+
+      {user && (
+        <div className="glass-card p-4 border-l-4 border-ubuntu-orange/50">
+          <div className="flex gap-3">
+            <div className="w-8 h-8 rounded-full bg-ubuntu-orange/20 flex items-center justify-center flex-shrink-0">
+              <span className="text-ubuntu-orange font-bold text-xs">{user.username.charAt(0).toUpperCase()}</span>
+            </div>
+            <div>
+              <p className="text-sm text-[var(--tx-secondary)] font-medium">{t('history_signed_in_as', 'Signed in as')} @{user.username}</p>
+              <p className="text-xs text-[var(--tx-muted)] mt-0.5">{t('history_synced_note', 'History is saved to your account and synced across devices')}</p>
+            </div>
+          </div>
+        </div>
+      )}
+
+      {!user && (
+        <div className="glass-card p-4 border-l-4 border-blue-500/50">
+          <div className="flex gap-3">
+            <p className="text-xs text-[var(--tx-muted)]">{t('history_local_only', 'History is stored locally in your browser. Sign in with Launchpad to sync across devices.')}</p>
+          </div>
+        </div>
+      )}
 
       <div className="flex gap-2 flex-wrap">
         {filterOptions.map(opt => (

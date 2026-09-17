@@ -1,6 +1,7 @@
 import type { Metadata } from 'next'
 import './globals.css'
 import { I18nProvider } from '@/lib/i18n'
+import { AuthProvider } from '@/lib/auth-context'
 import { ClientLayout } from '@/components/ClientLayout'
 
 export const metadata: Metadata = {
@@ -43,9 +44,11 @@ export default function RootLayout({
     <html lang="en" className="dark" suppressHydrationWarning>
       <body className="min-h-screen transition-colors duration-300" suppressHydrationWarning>
         <I18nProvider>
-          <ClientLayout>
-            {children}
-          </ClientLayout>
+          <AuthProvider>
+            <ClientLayout>
+              {children}
+            </ClientLayout>
+          </AuthProvider>
         </I18nProvider>
       </body>
     </html>

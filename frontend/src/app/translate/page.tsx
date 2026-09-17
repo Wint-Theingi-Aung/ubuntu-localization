@@ -10,6 +10,7 @@ import { useI18n } from '@/lib/i18n'
 import { LANGUAGES, TRANSLATION_CONFIG } from '@/lib/constants'
 import { recordHistory } from '@/lib/history'
 import { compareFormatSpecifiers } from '@/lib/translate'
+import { useAuth } from '@/lib/auth-context'
 
 const BATCH_SIZE = 10
 
@@ -26,6 +27,7 @@ interface TranslationEntry {
 
 export default function TranslatePage() {
   const { t } = useI18n()
+  const { user } = useAuth()
   const [step, setStep] = useState<'upload' | 'work' | 'complete'>('upload')
   const [currentBatch, setCurrentBatch] = useState(0)
   const [file, setFile] = useState<File | null>(null)
@@ -39,6 +41,18 @@ export default function TranslatePage() {
   const [formatErrors, setFormatErrors] = useState<Record<number, string>>({})
 
   const languages = LANGUAGES
+
+  // Record history to both localStorage and DB (when authenticated)
+  const recordAndSyncHistory = useCallback((entry: Parameters<typeof recordHistory>[0]) => {
+    recordHistory(entry)
+    if (user) {
+      fetch('/api/history', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(entry),
+      }).catch(() => {})
+    }
+  }, [user])
 
   useEffect(() => {
     if (!file || entries.length === 0) return
@@ -136,7 +150,7 @@ export default function TranslatePage() {
       setStep('work')
       const langName = LANGUAGES.find(l => l.code === targetLang)?.name || targetLang
       const pendingCount = merged.filter(e => e.status === 'pending').length
-      recordHistory({
+      recordAndSyncHistory({
         action: 'upload',
         description: `Uploaded ${file!.name} for translation`,
         descriptionKey: 'activity_uploaded_file',
@@ -148,7 +162,7 @@ export default function TranslatePage() {
       })
     } catch (err: any) { setError(err.message) }
     finally { setIsTranslating(false) }
-  }, [file, targetLang])
+  }, [file, targetLang, recordAndSyncHistory])
 
   const handleTranslate = useCallback(async () => {
     setIsTranslating(true); setError(null)
@@ -188,7 +202,7 @@ export default function TranslatePage() {
       })
       setFormatErrors(prev => ({ ...prev, ...newErrors }))
       const langName = LANGUAGES.find(l => l.code === targetLang)?.name || targetLang
-      recordHistory({
+      recordAndSyncHistory({
         action: 'translate',
         description: `Translated ${batch.length} strings with AI`,
         descriptionKey: 'activity_translated_n',
@@ -199,7 +213,7 @@ export default function TranslatePage() {
       })
     } catch (err: any) { setError(err.message) }
     finally { setIsTranslating(false) }
-  }, [currentBatchEntries, targetLang, file])
+  }, [currentBatchEntries, targetLang, file, recordAndSyncHistory])
 
   const handleStartReview = useCallback(() => {
     setEntries(prev => prev.map(e => {
@@ -278,18 +292,6 @@ export default function TranslatePage() {
   }, [])
 
   const handleExport = useCallback(async () => {
-    const confirmedWithErrors = entries.filter(e => e.status === 'confirmed' && formatErrors[e.index])
-    if (confirmedWithErrors.length > 0) {
-      const names = confirmedWithErrors.slice(0, 3).map(e => `"${e.msgid.slice(0, 40)}..."`)
-      const more = confirmedWithErrors.length > 3 ? ` and ${confirmedWithErrors.length - 3} more` : ''
-      setError(
-        t('translation_export_blocked', 'Cannot export: {count} confirmed entry(ies) have format specifier mismatches ({names}{more}). Unconfirm and fix them first.')
-          .replace('{count}', String(confirmedWithErrors.length))
-          .replace('{names}', names.join(', '))
-          .replace('{more}', more)
-      )
-      return
-    }
     const confirmedEntries = entries.filter(e => e.status === 'confirmed')
     if (confirmedEntries.length === 0) {
       setError(t('translation_no_confirmed', 'No confirmed translations to export. Confirm at least one entry first.'))
@@ -315,17 +317,6 @@ export default function TranslatePage() {
         }),
       })
       if (!r.ok) {
-        if (r.status === 422) {
-          const errData = await r.json()
-          const details = (errData.mismatches || []).slice(0, 3).map((m: any) => {
-            const parts: string[] = []
-            if (m.missing?.length) parts.push(`missing: [${m.missing.join(', ')}]`)
-            if (m.extra?.length) parts.push(`extra: [${m.extra.join(', ')}]`)
-            if (m.orderMismatch) parts.push('placeholder order changed')
-            return `"${m.msgid.slice(0, 40)}..." — ${parts.join('; ') || 'mismatch'}`
-          }).join('\n')
-          throw new Error(`${errData.error}${details ? '\n' + details : ''}`)
-        }
         throw new Error('Export failed')
       }
       const blob = await r.blob()
@@ -341,7 +332,7 @@ export default function TranslatePage() {
       const cc = entries.filter(e => e.status === 'confirmed').length
       const pct = entries.length > 0 ? Math.round((cc / entries.length) * 100) : 0
       const langName = LANGUAGES.find(l => l.code === targetLang)?.name || targetLang
-      recordHistory({
+      recordAndSyncHistory({
         action: 'export',
         description: `Exported translated ${file?.name || 'messages.po'}`,
         descriptionKey: 'activity_exported_file',
@@ -352,7 +343,7 @@ export default function TranslatePage() {
         detailsParams: { count: cc, percent: pct },
       })
     } catch (err: any) { setError(err.message) }
-  }, [entries, targetLang, file, poHeaders, formatErrors, t])
+  }, [entries, targetLang, file, poHeaders, formatErrors, t, recordAndSyncHistory])
 
   return (
     <div className="max-w-6xl mx-auto space-y-6">
@@ -622,7 +613,7 @@ export default function TranslatePage() {
                 {batchFormatErrorCount > 0 && (
                   <div className="mt-3 p-3 rounded-lg bg-red-500/10 border border-red-500/20">
                     <p className="text-sm text-red-400">
-                      {t('translation_format_error_batch', '{count} entry(s) have format specifier mismatches ({fmtErrors} total). Fix or unconfirm these entries before exporting.').replace('{count}', String(batchFormatErrorCount)).replace('{fmtErrors}', String(totalFormatErrorCount))}
+                      {t('translation_format_error_batch', '{count} entry(s) have format specifier mismatches ({fmtErrors} total). These will be exported as untranslated.').replace('{count}', String(batchFormatErrorCount)).replace('{fmtErrors}', String(totalFormatErrorCount))}
                     </p>
                   </div>
                 )}

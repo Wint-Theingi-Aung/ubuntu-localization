@@ -236,5 +236,20 @@
   "activity_visitors": "Visitors: {count}",
   "activity_visitors_loading": "Loading visitors...",
   "translation_contribution_title": "Ubuntu Localization Contributions Only",
-  "translation_contribution_note": "This tool is for Ubuntu Localization Contributions only. We support .po files for direct translation. Please ensure your files are exported from Launchpad."
+  "translation_contribution_note": "This tool is for Ubuntu Localization Contributions only. We support .po files for direct translation. Please ensure your files are exported from Launchpad.",
+  "auth_sign_in": "Sign in with Launchpad",
+  "auth_sign_out": "Sign Out",
+  "history_subtitle_auth": "Your translation activities",
+  "history_signed_in_as": "Signed in as",
+  "history_synced_note": "History is saved to your account and synced across devices",
+  "history_local_only": "History is stored locally in your browser. Sign in with Launchpad to sync across devices.",
+  "glossary_add_term": "Add Term",
+  "glossary_edit_term": "Edit Term",
+  "glossary_delete": "Delete",
+  "glossary_delete_confirm": "Are you sure you want to delete this term?",
+  "glossary_cancel": "Cancel",
+  "glossary_save": "Save",
+  "glossary_add": "Add",
+  "glossary_actions": "Actions",
+  "glossary_english_placeholder": "English term (required)"
 }

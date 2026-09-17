@@ -25,20 +25,14 @@ export async function POST(request: NextRequest) {
       }
     }
 
+    // Clear msgstr on entries with format specifier mismatches so they remain untranslated
     if (mismatches.length > 0) {
-      return NextResponse.json(
-        {
-          error: `Export rejected: ${mismatches.length} entry(ies) have format specifier mismatches.`,
-          mismatches: mismatches.slice(0, 10).map(m => ({
-            index: m.index,
-            msgid: m.msgid.slice(0, 80),
-            missing: m.missing,
-            extra: m.extra,
-            orderMismatch: m.orderMismatch,
-          })),
-        },
-        { status: 422 }
-      )
+      const mismatchIndices = new Set(mismatches.map(m => m.index))
+      for (const entry of entries) {
+        if (mismatchIndices.has(entry.index)) {
+          entry.msgstr = ''
+        }
+      }
     }
 
     // Preserve original headers from uploaded file, fall back to defaults

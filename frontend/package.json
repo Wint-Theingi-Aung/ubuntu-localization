@@ -12,6 +12,7 @@
     "clsx": "^2.1.0",
     "lucide-react": "^0.300.0",
     "next": "^14.2.0",
+    "pg": "^8.23.0",
     "react": "^18.2.0",
     "react-circular-progressbar": "^2.1.0",
     "react-dom": "^18.2.0"
@@ -20,6 +21,7 @@
     "@playwright/test": "^1.61.1",
     "@types/jest": "^30.0.0",
     "@types/node": "^20.10.0",
+    "@types/pg": "^8.23.1",
     "@types/react": "^18.2.0",
     "@types/react-dom": "^18.2.0",
     "autoprefixer": "^10.4.16",
