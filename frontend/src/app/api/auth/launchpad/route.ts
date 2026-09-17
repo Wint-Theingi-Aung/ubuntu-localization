@@ -3,10 +3,13 @@
 // ═══════════════════════════════════════════════════════════════════
 
 import { NextRequest, NextResponse } from 'next/server'
-import { getRequestToken, storeOAuthSession } from '@/lib/auth'
+import { getRequestToken, storeOAuthSession, initDB } from '@/lib/auth'
 
 export async function POST(request: NextRequest) {
   try {
+    // Ensure database tables exist before storing OAuth session
+    await initDB()
+
     const origin = request.nextUrl.origin
     const callbackUrl = `${origin}/api/auth/callback`
 

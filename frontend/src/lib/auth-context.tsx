@@ -60,9 +60,14 @@ export function AuthProvider({ children }: { children: ReactNode }) {
       const data = await res.json()
       if (data.authorizationUrl) {
         window.location.href = data.authorizationUrl
+      } else {
+        const msg = data.error || 'Sign-in initiation failed. Please try again.'
+        console.error('Sign in failed:', msg)
+        alert(msg)
       }
     } catch (error) {
       console.error('Sign in failed:', error)
+      alert('Unable to connect to the server. Please try again later.')
     }
   }, [])
 

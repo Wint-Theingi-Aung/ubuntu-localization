@@ -21,30 +21,14 @@ function getConsumerKey(): string {
 
   // Reproduce launchpadlib's SystemWideConsumer KEY_FORMAT:
   // "System-wide: %s (%s)" where %s = distro.name(), %s = socket.gethostname()
-  const platform = process.platform
-  let distroName = ''
-  if (platform === 'win32') {
-    distroName = 'Windows'
-  } else if (platform === 'darwin') {
-    distroName = 'macOS'
-  } else {
-    // On Linux, use OS release name (like launchpadlib uses distro.name())
-    try {
-      const fs = require('fs')
-      const osRelease = fs.readFileSync('/etc/os-release', 'utf-8')
-      const nameMatch = osRelease.match(/^PRETTY_NAME="(.+)"$/m)
-      distroName = nameMatch ? nameMatch[1].split(' ')[0] : 'Linux'
-    } catch {
-      distroName = 'Linux'
-    }
-  }
+  // On Vercel serverless, /etc/os-release is unavailable — fall back gracefully.
   const hostname = process.env.HOSTNAME || process.env.HOST || 'localhost'
-  return `System-wide: ${distroName} (${hostname})`
+  return `System-wide: Ubuntu (${hostname})`
 }
 
 const CONSUMER_KEY = getConsumerKey()
 const CONSUMER_SECRET = process.env.LAUNCHPAD_CONSUMER_SECRET || 'ubuntu-localization-tool'
-const SESSION_SECRET = process.env.SESSION_SECRET || crypto.randomBytes(32).toString('hex')
+const SESSION_SECRET = process.env.SESSION_SECRET || 'ubuntu-localization-fallback-session-secret'
 
 const SESSION_COOKIE = 'ulp_session'
 const SESSION_MAX_AGE = 7 * 24 * 60 * 60 // 7 days
