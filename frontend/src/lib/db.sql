@@ -3,7 +3,7 @@
 -- PostgreSQL-compatible (Neon, self-hosted, etc.)
 -- ═══════════════════════════════════════════════════════════════════
 
--- Users table — Launchpad identity only, no passwords
+-- Users table — identity for contributors
 CREATE TABLE IF NOT EXISTS users (
   id              SERIAL PRIMARY KEY,
   launchpad_id    VARCHAR(255) NOT NULL UNIQUE,
@@ -13,16 +13,6 @@ CREATE TABLE IF NOT EXISTS users (
   avatar_url      VARCHAR(1024) DEFAULT '',
   created_at      TIMESTAMP WITH TIME ZONE DEFAULT NOW(),
   updated_at      TIMESTAMP WITH TIME ZONE DEFAULT NOW()
-);
-
--- OAuth sessions — temporary request tokens during OAuth flow
-CREATE TABLE IF NOT EXISTS oauth_sessions (
-  id              SERIAL PRIMARY KEY,
-  request_token   VARCHAR(512) NOT NULL UNIQUE,
-  request_secret  VARCHAR(512) NOT NULL,
-  state           VARCHAR(512),
-  created_at      TIMESTAMP WITH TIME ZONE DEFAULT NOW(),
-  expires_at      TIMESTAMP WITH TIME ZONE NOT NULL
 );
 
 -- User sessions — persistent login sessions
@@ -66,9 +56,6 @@ CREATE TABLE IF NOT EXISTS translation_history (
 CREATE INDEX IF NOT EXISTS idx_user_sessions_token ON user_sessions(session_token);
 CREATE INDEX IF NOT EXISTS idx_user_sessions_user_id ON user_sessions(user_id);
 CREATE INDEX IF NOT EXISTS idx_user_sessions_expires ON user_sessions(expires_at);
-CREATE INDEX IF NOT EXISTS idx_oauth_sessions_token ON oauth_sessions(request_token);
-CREATE INDEX IF NOT EXISTS idx_oauth_sessions_expires ON oauth_sessions(expires_at);
 CREATE INDEX IF NOT EXISTS idx_glossary_created_by ON glossary(created_by);
 CREATE INDEX IF NOT EXISTS idx_translation_history_user ON translation_history(user_id);
 CREATE INDEX IF NOT EXISTS idx_translation_history_action ON translation_history(action);
-CREATE INDEX IF NOT EXISTS idx_users_launchpad_id ON users(launchpad_id);

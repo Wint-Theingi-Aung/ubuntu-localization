@@ -2,7 +2,7 @@
 // CENTRALIZED CONSTANTS — Update once, propagate everywhere
 // ═══════════════════════════════════════════════════════════════════
 
-/** Current Ubuntu release codename used for all Launchpad links */
+/** Current Ubuntu release codename used for all translation links */
 export const UBUNTU_RELEASE = 'stonking'
 
 // ── Language Codes ──────────────────────────────────────────────────

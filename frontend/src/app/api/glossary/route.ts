@@ -1,16 +1,15 @@
 // ═══════════════════════════════════════════════════════════════════
-// /api/glossary — Glossary CRUD (GET public, POST/PUT/DELETE auth-gated)
+// /api/glossary — Glossary CRUD
 // ═══════════════════════════════════════════════════════════════════
 
 import { NextRequest, NextResponse } from 'next/server'
 import {
-  getCurrentUser,
   getDbGlossary,
   addDbGlossaryEntry,
   updateDbGlossaryEntry,
   deleteDbGlossaryEntry,
   initDB,
-} from '@/lib/auth'
+} from '@/lib/db'
 
 // ── GET: List glossary entries (public) ────────────────────────
 
@@ -28,20 +27,11 @@ export async function GET() {
   }
 }
 
-// ── POST: Add a glossary entry (authenticated) ─────────────────
+// ── POST: Add a glossary entry ─────────────────────────────────
 
 export async function POST(request: NextRequest) {
   try {
     await initDB()
-    const cookies = request.headers.get('cookie')
-    const user = await getCurrentUser(cookies)
-
-    if (!user) {
-      return NextResponse.json(
-        { error: 'Authentication required to add glossary entries' },
-        { status: 401 },
-      )
-    }
 
     const body = await request.json()
     const { en, my, shn, mnw, ksw } = body
@@ -55,7 +45,6 @@ export async function POST(request: NextRequest) {
 
     const entry = await addDbGlossaryEntry(
       { en: en.trim(), my: my || '', shn: shn || '', mnw: mnw || '', ksw: ksw || '' },
-      user.id,
     )
 
     return NextResponse.json({ entry }, { status: 201 })
@@ -68,20 +57,11 @@ export async function POST(request: NextRequest) {
   }
 }
 
-// ── PUT: Update a glossary entry (authenticated) ───────────────
+// ── PUT: Update a glossary entry ───────────────────────────────
 
 export async function PUT(request: NextRequest) {
   try {
     await initDB()
-    const cookies = request.headers.get('cookie')
-    const user = await getCurrentUser(cookies)
-
-    if (!user) {
-      return NextResponse.json(
-        { error: 'Authentication required to edit glossary entries' },
-        { status: 401 },
-      )
-    }
 
     const body = await request.json()
     const { id, en, my, shn, mnw, ksw } = body
@@ -112,20 +92,11 @@ export async function PUT(request: NextRequest) {
   }
 }
 
-// ── DELETE: Remove a glossary entry (authenticated) ────────────
+// ── DELETE: Remove a glossary entry ────────────────────────────
 
 export async function DELETE(request: NextRequest) {
   try {
     await initDB()
-    const cookies = request.headers.get('cookie')
-    const user = await getCurrentUser(cookies)
-
-    if (!user) {
-      return NextResponse.json(
-        { error: 'Authentication required to delete glossary entries' },
-        { status: 401 },
-      )
-    }
 
     const url = new URL(request.url)
     const idParam = url.searchParams.get('id')

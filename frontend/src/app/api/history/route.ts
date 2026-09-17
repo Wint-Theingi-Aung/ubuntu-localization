@@ -1,32 +1,30 @@
 // ═══════════════════════════════════════════════════════════════════
-// /api/history — Translation history (GET/POST authenticated only)
+// /api/history — Translation history (GET/POST)
 // ═══════════════════════════════════════════════════════════════════
 
 import { NextRequest, NextResponse } from 'next/server'
-import { getCurrentUser, getDbHistory, recordDbHistory, initDB } from '@/lib/auth'
+import { getDbHistory, recordDbHistory, initDB } from '@/lib/db'
 
-// ── GET: Fetch user's translation history ──────────────────────
+// ── GET: Fetch translation history ─────────────────────────────
 
 export async function GET(request: NextRequest) {
   try {
     await initDB()
-    const cookies = request.headers.get('cookie')
-    const user = await getCurrentUser(cookies)
-
-    if (!user) {
-      return NextResponse.json({ entries: [] })
-    }
 
     const url = new URL(request.url)
     const limit = parseInt(url.searchParams.get('limit') || '50', 10)
+    const userId = parseInt(url.searchParams.get('userId') || '0', 10)
 
-    const entries = await getDbHistory(user.id, limit)
+    if (!userId) {
+      return NextResponse.json({ entries: [] })
+    }
+
+    const entries = await getDbHistory(userId, limit)
 
     return NextResponse.json({
       entries: entries.map((e) => ({
         id: String(e.id),
         timestamp: new Date(e.created_at).getTime(),
-        user: user.username,
         action: e.action,
         description: e.description,
         descriptionKey: e.description_key,
@@ -51,15 +49,6 @@ export async function GET(request: NextRequest) {
 export async function POST(request: NextRequest) {
   try {
     await initDB()
-    const cookies = request.headers.get('cookie')
-    const user = await getCurrentUser(cookies)
-
-    if (!user) {
-      return NextResponse.json(
-        { error: 'Authentication required to record history' },
-        { status: 401 },
-      )
-    }
 
     const body = await request.json()
     const { action, description, descriptionKey, descriptionParams, language, details, detailsKey, detailsParams } = body
@@ -72,7 +61,6 @@ export async function POST(request: NextRequest) {
     }
 
     await recordDbHistory({
-      userId: user.id,
       action,
       description,
       descriptionKey,

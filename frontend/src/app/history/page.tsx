@@ -92,13 +92,6 @@ export default function HistoryPage() {
         </div>
       )}
 
-      {!user && (
-        <div className="glass-card p-4 border-l-4 border-blue-500/50">
-          <div className="flex gap-3">
-            <p className="text-xs text-[var(--tx-muted)]">{t('history_local_only', 'History is stored locally in your browser. Sign in with Launchpad to sync across devices.')}</p>
-          </div>
-        </div>
-      )}
 
       <div className="flex gap-2 flex-wrap">
         {filterOptions.map(opt => (

@@ -66,16 +66,6 @@ export async function initDB(): Promise<void> {
     )
   `)
   await query(`
-    CREATE TABLE IF NOT EXISTS oauth_sessions (
-      id              SERIAL PRIMARY KEY,
-      request_token   VARCHAR(512) NOT NULL UNIQUE,
-      request_secret  VARCHAR(512) NOT NULL,
-      state           VARCHAR(512),
-      created_at      TIMESTAMP WITH TIME ZONE DEFAULT NOW(),
-      expires_at      TIMESTAMP WITH TIME ZONE NOT NULL
-    )
-  `)
-  await query(`
     CREATE TABLE IF NOT EXISTS user_sessions (
       id              SERIAL PRIMARY KEY,
       session_token   VARCHAR(512) NOT NULL UNIQUE,
@@ -115,10 +105,137 @@ export async function initDB(): Promise<void> {
   await query(`CREATE INDEX IF NOT EXISTS idx_user_sessions_token ON user_sessions(session_token)`).catch(() => {})
   await query(`CREATE INDEX IF NOT EXISTS idx_user_sessions_user_id ON user_sessions(user_id)`).catch(() => {})
   await query(`CREATE INDEX IF NOT EXISTS idx_user_sessions_expires ON user_sessions(expires_at)`).catch(() => {})
-  await query(`CREATE INDEX IF NOT EXISTS idx_oauth_sessions_token ON oauth_sessions(request_token)`).catch(() => {})
-  await query(`CREATE INDEX IF NOT EXISTS idx_oauth_sessions_expires ON oauth_sessions(expires_at)`).catch(() => {})
   await query(`CREATE INDEX IF NOT EXISTS idx_glossary_created_by ON glossary(created_by)`).catch(() => {})
   await query(`CREATE INDEX IF NOT EXISTS idx_translation_history_user ON translation_history(user_id)`).catch(() => {})
   await query(`CREATE INDEX IF NOT EXISTS idx_translation_history_action ON translation_history(action)`).catch(() => {})
-  await query(`CREATE INDEX IF NOT EXISTS idx_users_launchpad_id ON users(launchpad_id)`).catch(() => {})
+}
+
+// ── Database History Operations ────────────────────────────────
+
+export interface DbHistoryEntry {
+  id: number
+  user_id: number | null
+  action: string
+  description: string
+  description_key: string | null
+  description_params: any
+  language: string | null
+  details: string | null
+  details_key: string | null
+  details_params: any
+  created_at: Date
+}
+
+/**
+ * Record a translation history entry in the database
+ */
+export async function recordDbHistory(entry: {
+  userId?: number
+  action: string
+  description: string
+  descriptionKey?: string
+  descriptionParams?: Record<string, string | number>
+  language?: string
+  details?: string
+  detailsKey?: string
+  detailsParams?: Record<string, string | number>
+}): Promise<void> {
+  await query(
+    `INSERT INTO translation_history
+     (user_id, action, description, description_key, description_params, language, details, details_key, details_params)
+     VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9)`,
+    [
+      entry.userId || null,
+      entry.action,
+      entry.description,
+      entry.descriptionKey || null,
+      entry.descriptionParams ? JSON.stringify(entry.descriptionParams) : null,
+      entry.language || null,
+      entry.details || null,
+      entry.detailsKey || null,
+      entry.detailsParams ? JSON.stringify(entry.detailsParams) : null,
+    ],
+  )
+}
+
+/**
+ * Get translation history for a user
+ */
+export async function getDbHistory(userId: number, limit = 50): Promise<DbHistoryEntry[]> {
+  return query<DbHistoryEntry>(
+    'SELECT * FROM translation_history WHERE user_id = $1 ORDER BY created_at DESC LIMIT $2',
+    [userId, limit],
+  )
+}
+
+// ── Database Glossary Operations ───────────────────────────────
+
+export interface DbGlossaryEntry {
+  id: number
+  en: string
+  my: string
+  shn: string
+  mnw: string
+  ksw: string
+  created_by: number | null
+  created_at: Date
+  updated_at: Date
+}
+
+/**
+ * Get all glossary entries from the database
+ */
+export async function getDbGlossary(): Promise<DbGlossaryEntry[]> {
+  return query<DbGlossaryEntry>('SELECT * FROM glossary ORDER BY id ASC')
+}
+
+/**
+ * Add a glossary entry
+ */
+export async function addDbGlossaryEntry(
+  entry: { en: string; my?: string; shn?: string; mnw?: string; ksw?: string },
+  userId?: number,
+): Promise<DbGlossaryEntry> {
+  const result = await queryOne<DbGlossaryEntry>(
+    'INSERT INTO glossary (en, my, shn, mnw, ksw, created_by) VALUES ($1, $2, $3, $4, $5, $6) RETURNING *',
+    [entry.en, entry.my || '', entry.shn || '', entry.mnw || '', entry.ksw || '', userId || null],
+  )
+  if (!result) throw new Error('Failed to add glossary entry')
+  return result
+}
+
+/**
+ * Update a glossary entry
+ */
+export async function updateDbGlossaryEntry(
+  id: number,
+  entry: { en?: string; my?: string; shn?: string; mnw?: string; ksw?: string },
+): Promise<DbGlossaryEntry | null> {
+  const fields: string[] = []
+  const values: any[] = []
+  let idx = 1
+
+  if (entry.en !== undefined) { fields.push(`en = $${idx++}`); values.push(entry.en) }
+  if (entry.my !== undefined) { fields.push(`my = $${idx++}`); values.push(entry.my) }
+  if (entry.shn !== undefined) { fields.push(`shn = $${idx++}`); values.push(entry.shn) }
+  if (entry.mnw !== undefined) { fields.push(`mnw = $${idx++}`); values.push(entry.mnw) }
+  if (entry.ksw !== undefined) { fields.push(`ksw = $${idx++}`); values.push(entry.ksw) }
+
+  if (fields.length === 0) return null
+
+  fields.push(`updated_at = NOW()`)
+  values.push(id)
+
+  return queryOne<DbGlossaryEntry>(
+    `UPDATE glossary SET ${fields.join(', ')} WHERE id = $${idx} RETURNING *`,
+    values,
+  )
+}
+
+/**
+ * Delete a glossary entry
+ */
+export async function deleteDbGlossaryEntry(id: number): Promise<boolean> {
+  const result = await query('DELETE FROM glossary WHERE id = $1', [id])
+  return (result as any).rowCount > 0
 }

@@ -16,15 +16,11 @@ import {
   Github,
   ExternalLink,
   Globe,
-  LogIn,
-  LogOut,
-  User,
 } from 'lucide-react'
 import TuxLogo from './TuxLogo'
 import ThemeToggle from './ThemeToggle'
 import { useI18n, type LanguageCode } from '@/lib/i18n'
 import { UI_LANGUAGES } from '@/lib/constants'
-import { useAuth } from '@/lib/auth-context'
 
 const HIT_STORAGE_KEY = 'ubuntu-localization-hits'
 
@@ -76,7 +72,6 @@ export default function Sidebar() {
   const [isOpen, setIsOpen] = useState(false)
   const { lang, setLang, t } = useI18n()
   const pathname = usePathname()
-  const { user, loading: authLoading, signIn, signOut } = useAuth()
 
   return (
     <>
@@ -150,42 +145,6 @@ export default function Sidebar() {
               )
             })}
           </nav>
-
-          {/* Auth Section */}
-          <div className="p-3 border-t border-[var(--border-theme)]">
-            {authLoading ? (
-              <div className="px-4 py-2">
-                <div className="h-8 bg-[var(--surface-overlay)] rounded-lg animate-pulse" />
-              </div>
-            ) : user ? (
-              <div className="space-y-2">
-                <div className="px-4 py-2 flex items-center gap-2">
-                  <div className="w-8 h-8 rounded-full bg-ubuntu-orange/20 flex items-center justify-center flex-shrink-0">
-                    <User size={14} className="text-ubuntu-orange" />
-                  </div>
-                  <div className="min-w-0">
-                    <p className="text-sm font-medium text-[var(--tx-primary)] truncate">{user.displayName || user.username}</p>
-                    <p className="text-[10px] text-[var(--tx-dim)] truncate">@{user.username}</p>
-                  </div>
-                </div>
-                <button
-                  onClick={signOut}
-                  className="sidebar-link w-full text-left text-xs"
-                >
-                  <LogOut size={14} />
-                  <span>{t('auth_sign_out', 'Sign Out')}</span>
-                </button>
-              </div>
-            ) : (
-              <button
-                onClick={signIn}
-                className="sidebar-link w-full text-left"
-              >
-                <LogIn size={18} />
-                <span>{t('auth_sign_in', 'Sign in with Launchpad')}</span>
-              </button>
-            )}
-          </div>
 
           {/* Theme Toggle — icon only */}
           <div className="p-3 border-t border-[var(--border-theme)] flex justify-center">
