@@ -43,15 +43,15 @@ export function AuthProvider({ children }: { children: ReactNode }) {
   useEffect(() => {
     fetchUser()
 
-    // Check URL for auth result
-    const params = new URLSearchParams(window.location.search)
-    if (params.get('auth') === 'success') {
-      // Clean up URL
-      window.history.replaceState({}, '', window.location.pathname)
+    // Listen for OAuth completion message from the auth/complete page
+    function onMessage(event: MessageEvent) {
+      if (event.origin !== window.location.origin) return
+      if (event.data?.type === 'launchpad-auth' && event.data?.status === 'success') {
+        fetchUser()
+      }
     }
-    if (params.get('auth') === 'error') {
-      window.history.replaceState({}, '', window.location.pathname)
-    }
+    window.addEventListener('message', onMessage)
+    return () => window.removeEventListener('message', onMessage)
   }, [fetchUser])
 
   const signIn = useCallback(async () => {
@@ -59,7 +59,8 @@ export function AuthProvider({ children }: { children: ReactNode }) {
       const res = await fetch('/api/auth/launchpad', { method: 'POST' })
       const data = await res.json()
       if (data.authorizationUrl) {
-        window.location.href = data.authorizationUrl
+        // Open Launchpad in a new tab so the current page stays open
+        window.open(data.authorizationUrl, '_blank', 'noopener,noreferrer')
       } else {
         const msg = data.error || 'Sign-in initiation failed. Please try again.'
         console.error('Sign in failed:', msg)

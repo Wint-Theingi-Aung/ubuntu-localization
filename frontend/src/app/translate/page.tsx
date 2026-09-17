@@ -148,21 +148,9 @@ export default function TranslatePage() {
       setReviewMode(false)
       setExpandedEntry(null)
       setStep('work')
-      const langName = LANGUAGES.find(l => l.code === targetLang)?.name || targetLang
-      const pendingCount = merged.filter(e => e.status === 'pending').length
-      recordAndSyncHistory({
-        action: 'upload',
-        description: `Uploaded ${file!.name} for translation`,
-        descriptionKey: 'activity_uploaded_file',
-        descriptionParams: { file: file!.name },
-        language: langName,
-        details: `${merged.length} entries, ${pendingCount} untranslated`,
-        detailsKey: 'activity_entries_n',
-        detailsParams: { count: merged.length, untranslated: pendingCount },
-      })
     } catch (err: any) { setError(err.message) }
     finally { setIsTranslating(false) }
-  }, [file, targetLang, recordAndSyncHistory])
+  }, [file, targetLang])
 
   const handleTranslate = useCallback(async () => {
     setIsTranslating(true); setError(null)
@@ -201,19 +189,9 @@ export default function TranslatePage() {
         return updated
       })
       setFormatErrors(prev => ({ ...prev, ...newErrors }))
-      const langName = LANGUAGES.find(l => l.code === targetLang)?.name || targetLang
-      recordAndSyncHistory({
-        action: 'translate',
-        description: `Translated ${batch.length} strings with AI`,
-        descriptionKey: 'activity_translated_n',
-        descriptionParams: { count: batch.length, file: file?.name || 'demo' },
-        language: langName,
-        details: `AI batch translation with Gemini — ${file?.name || 'demo'}`,
-        detailsKey: 'activity_ai_batch',
-      })
     } catch (err: any) { setError(err.message) }
     finally { setIsTranslating(false) }
-  }, [currentBatchEntries, targetLang, file, recordAndSyncHistory])
+  }, [currentBatchEntries, targetLang, file])
 
   const handleStartReview = useCallback(() => {
     setEntries(prev => prev.map(e => {

@@ -50,13 +50,14 @@ export async function GET(request: NextRequest) {
     // Create a session for the user
     const sessionToken = await createSession(dbUser.id)
 
-    // Redirect to home with session cookie
-    const response = NextResponse.redirect(new URL('/?auth=success', request.url))
+    // Redirect to the confirmation page (opened in a new tab by the sign-in flow).
+    // The confirmation page sends a postMessage to the opener tab and closes itself.
+    const response = NextResponse.redirect(new URL('/auth/complete', request.url))
     response.headers.append('Set-Cookie', setSessionCookie(sessionToken))
 
     return response
   } catch (error) {
     console.error('OAuth callback error:', error)
-    return NextResponse.redirect(new URL('/?auth=error&reason=callback_failed', request.url))
+    return NextResponse.redirect(new URL('/auth/complete?error=callback_failed', request.url))
   }
 }

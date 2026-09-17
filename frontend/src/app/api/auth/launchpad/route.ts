@@ -23,10 +23,10 @@ export async function POST(request: NextRequest) {
       authorizationUrl,
       requestToken,
     })
-  } catch (error) {
-    console.error('Launchpad OAuth initiation failed:', error)
+  } catch (error: any) {
+    console.error('Launchpad OAuth initiation failed:', error?.message || error)
     return NextResponse.json(
-      { error: 'Failed to initiate Launchpad authentication' },
+      { error: error?.message || 'Failed to initiate Launchpad authentication' },
       { status: 500 },
     )
   }
