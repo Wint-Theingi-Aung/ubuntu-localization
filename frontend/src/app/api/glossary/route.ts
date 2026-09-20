@@ -1,5 +1,5 @@
 // ═══════════════════════════════════════════════════════════════════
-// /api/glossary — Glossary CRUD
+// /api/glossary — Glossary CRUD (reads public, writes protected)
 // ═══════════════════════════════════════════════════════════════════
 
 import { NextRequest, NextResponse } from 'next/server'
@@ -10,6 +10,14 @@ import {
   deleteDbGlossaryEntry,
   initDB,
 } from '@/lib/db'
+import { isGlossaryAdmin, isGlossaryAuthRequired } from '@/lib/glossary-auth'
+
+/** Extract Bearer token from Authorization header */
+function getBearerPassword(request: NextRequest): string | null {
+  const auth = request.headers.get('authorization')
+  if (!auth || !auth.startsWith('Bearer ')) return null
+  return auth.slice(7)
+}
 
 // ── GET: List glossary entries (public) ────────────────────────
 
@@ -27,14 +35,25 @@ export async function GET() {
   }
 }
 
-// ── POST: Add a glossary entry ─────────────────────────────────
+// ── POST: Add a glossary entry (auth required) ────────────────
 
 export async function POST(request: NextRequest) {
   try {
     await initDB()
 
+    // Auth check
+    if (isGlossaryAuthRequired()) {
+      const password = getBearerPassword(request)
+      if (!isGlossaryAdmin(password)) {
+        return NextResponse.json(
+          { error: 'Authentication required to add glossary entries' },
+          { status: 401 },
+        )
+      }
+    }
+
     const body = await request.json()
-    const { en, my, shn, mnw, ksw } = body
+    const { en, my, shn, mnw, ksw, note } = body
 
     if (!en || typeof en !== 'string' || en.trim().length === 0) {
       return NextResponse.json(
@@ -44,7 +63,7 @@ export async function POST(request: NextRequest) {
     }
 
     const entry = await addDbGlossaryEntry(
-      { en: en.trim(), my: my || '', shn: shn || '', mnw: mnw || '', ksw: ksw || '' },
+      { en: en.trim(), my: my || '', shn: shn || '', mnw: mnw || '', ksw: ksw || '', note: note || '' },
     )
 
     return NextResponse.json({ entry }, { status: 201 })
@@ -57,14 +76,25 @@ export async function POST(request: NextRequest) {
   }
 }
 
-// ── PUT: Update a glossary entry ───────────────────────────────
+// ── PUT: Update a glossary entry (auth required) ──────────────
 
 export async function PUT(request: NextRequest) {
   try {
     await initDB()
 
+    // Auth check
+    if (isGlossaryAuthRequired()) {
+      const password = getBearerPassword(request)
+      if (!isGlossaryAdmin(password)) {
+        return NextResponse.json(
+          { error: 'Authentication required to update glossary entries' },
+          { status: 401 },
+        )
+      }
+    }
+
     const body = await request.json()
-    const { id, en, my, shn, mnw, ksw } = body
+    const { id, en, my, shn, mnw, ksw, note } = body
 
     if (!id || typeof id !== 'number') {
       return NextResponse.json(
@@ -73,7 +103,7 @@ export async function PUT(request: NextRequest) {
       )
     }
 
-    const entry = await updateDbGlossaryEntry(id, { en, my, shn, mnw, ksw })
+    const entry = await updateDbGlossaryEntry(id, { en, my, shn, mnw, ksw, note })
 
     if (!entry) {
       return NextResponse.json(
@@ -92,11 +122,22 @@ export async function PUT(request: NextRequest) {
   }
 }
 
-// ── DELETE: Remove a glossary entry ────────────────────────────
+// ── DELETE: Remove a glossary entry (auth required) ────────────
 
 export async function DELETE(request: NextRequest) {
   try {
     await initDB()
+
+    // Auth check
+    if (isGlossaryAuthRequired()) {
+      const password = getBearerPassword(request)
+      if (!isGlossaryAdmin(password)) {
+        return NextResponse.json(
+          { error: 'Authentication required to delete glossary entries' },
+          { status: 401 },
+        )
+      }
+    }
 
     const url = new URL(request.url)
     const idParam = url.searchParams.get('id')

@@ -3,7 +3,7 @@
 import { useState, useMemo, useEffect, useCallback } from 'react'
 import SearchInput from '@/components/SearchInput'
 import Pagination from '@/components/Pagination'
-import { BookOpen, AlertCircle, CheckCircle2, Clock, HelpCircle, Plus, Edit3, Trash2, X, Loader2 } from 'lucide-react'
+import { BookOpen, AlertCircle, CheckCircle2, Clock, HelpCircle, Plus, Edit3, Trash2, X, Loader2, Lock, LogIn, LogOut } from 'lucide-react'
 import { useI18n } from '@/lib/i18n'
 import { useAuth } from '@/lib/auth-context'
 import glossaryData from '@/data/glossary.json'
@@ -118,7 +118,7 @@ function GlossaryModal({ entry, onSave, onDelete, onClose }: GlossaryModalProps)
 
 export default function GlossaryPage() {
   const { t } = useI18n()
-  const { user } = useAuth()
+  const { user, glossaryLogin, glossaryLogout } = useAuth()
   const [search, setSearch] = useState('')
   const [currentPage, setCurrentPage] = useState(1)
   const [selectedLang, setSelectedLang] = useState<string | null>(null)
@@ -129,6 +129,54 @@ export default function GlossaryPage() {
   const [dbLoading, setDbLoading] = useState(false)
   const [showModal, setShowModal] = useState(false)
   const [editingEntry, setEditingEntry] = useState<GlossaryEntry | null>(null)
+
+  // Glossary admin login state
+  const [loginPassword, setLoginPassword] = useState('')
+  const [loginLoading, setLoginLoading] = useState(false)
+  const [loginError, setLoginError] = useState<string | null>(null)
+  const [authRequired, setAuthRequired] = useState<boolean | null>(null)
+
+  // Check if auth is required on mount
+  useEffect(() => {
+    fetch('/api/glossary/auth')
+      .then(r => r.json())
+      .then(d => setAuthRequired(d.authRequired))
+      .catch(() => setAuthRequired(false))
+  }, [])
+
+  /** Get Bearer token from localStorage */
+  const getAuthToken = useCallback((): string | null => {
+    try {
+      const stored = localStorage.getItem('ubuntu-localization-glossary-auth')
+      if (stored) {
+        const data = JSON.parse(stored)
+        return data?.password || null
+      }
+    } catch {}
+    return null
+  }, [])
+
+  /** Build auth headers for write requests */
+  const getAuthHeaders = useCallback((): Record<string, string> => {
+    const token = getAuthToken()
+    if (!token) return { 'Content-Type': 'application/json' }
+    return { 'Content-Type': 'application/json', Authorization: `Bearer ${token}` }
+  }, [getAuthToken])
+
+  const handleLogin = async () => {
+    if (!loginPassword.trim()) return
+    setLoginLoading(true)
+    setLoginError(null)
+    const ok = await glossaryLogin(loginPassword)
+    setLoginLoading(false)
+    if (!ok) setLoginError(t('glossary_login_error', 'Invalid password'))
+    else { setLoginPassword(''); setLoginError(null) }
+  }
+
+  const handleLogout = () => {
+    glossaryLogout()
+    setDbEntries([])
+  }
 
   // Load DB glossary when authenticated
   const loadDbGlossary = useCallback(async () => {
@@ -183,7 +231,7 @@ export default function GlossaryPage() {
   const handleAdd = async (data: { en: string; my: string; shn: string; mnw: string; ksw: string }) => {
     const res = await fetch('/api/glossary', {
       method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
+      headers: getAuthHeaders(),
       body: JSON.stringify(data),
     })
     if (!res.ok) {
@@ -197,7 +245,7 @@ export default function GlossaryPage() {
     if (!editingEntry) return
     const res = await fetch('/api/glossary', {
       method: 'PUT',
-      headers: { 'Content-Type': 'application/json' },
+      headers: getAuthHeaders(),
       body: JSON.stringify({ id: editingEntry.id, ...data }),
     })
     if (!res.ok) {
@@ -209,7 +257,10 @@ export default function GlossaryPage() {
 
   const handleDelete = async () => {
     if (!editingEntry) return
-    const res = await fetch(`/api/glossary?id=${editingEntry.id}`, { method: 'DELETE' })
+    const res = await fetch(`/api/glossary?id=${editingEntry.id}`, {
+      method: 'DELETE',
+      headers: getAuthHeaders(),
+    })
     if (!res.ok) {
       const err = await res.json().catch(() => ({}))
       throw new Error(err.error || 'Failed to delete term')
@@ -233,6 +284,51 @@ export default function GlossaryPage() {
           <span className="text-sm text-[var(--tx-dim)]">{allEntries.length} {t('glossary_terms', 'terms')}</span>
         </div>
       </div>
+
+      {/* Glossary Admin Login */}
+      {authRequired === true && !user && (
+        <div className="glass-card p-4 border-l-4 border-ubuntu-orange/50">
+          <div className="flex items-center gap-3">
+            <Lock className="text-ubuntu-orange flex-shrink-0" size={18} />
+            <div className="flex-1 flex flex-col sm:flex-row gap-2">
+              <p className="text-sm text-[var(--tx-muted)] flex items-center gap-2">
+                {t('glossary_admin_login', 'Admin login to edit glossary')}
+              </p>
+              <div className="flex gap-2">
+                <input
+                  type="password"
+                  value={loginPassword}
+                  onChange={e => setLoginPassword(e.target.value)}
+                  onKeyDown={e => { if (e.key === 'Enter') handleLogin() }}
+                  placeholder={t('glossary_password', 'Password')}
+                  className="input-field text-sm px-3 py-1.5 w-48"
+                />
+                <button onClick={handleLogin} disabled={loginLoading || !loginPassword.trim()} className="btn-primary text-sm px-3 py-1.5 flex items-center gap-1.5">
+                  {loginLoading ? <Loader2 size={14} className="animate-spin" /> : <LogIn size={14} />}
+                  {t('glossary_login', 'Login')}
+                </button>
+              </div>
+              {loginError && <p className="text-xs text-red-400 mt-1">{loginError}</p>}
+            </div>
+          </div>
+        </div>
+      )}
+
+      {/* Logged-in admin bar */}
+      {user && (
+        <div className="glass-card p-3 border-l-4 border-emerald-500/50">
+          <div className="flex items-center justify-between">
+            <span className="text-sm text-emerald-400 flex items-center gap-2">
+              <CheckCircle2 size={14} />
+              {t('glossary_admin_active', 'Admin mode active — you can edit glossary entries')}
+            </span>
+            <button onClick={handleLogout} className="btn-ghost text-xs text-[var(--tx-muted)] hover:text-[var(--tx-primary)] flex items-center gap-1">
+              <LogOut size={12} />
+              {t('glossary_logout', 'Logout')}
+            </button>
+          </div>
+        </div>
+      )}
 
       <div className="glass-card p-4 border-l-4 border-amber-500/50">
         <div className="flex gap-3">

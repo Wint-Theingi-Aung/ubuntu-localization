@@ -23,10 +23,20 @@ export interface TranslationResult {
   translated: string
 }
 
-export function buildSystemPrompt(targetLang: string, langCode: string): string {
+export interface GlossaryTerm {
+  en: string
+  translated: string
+  note: string
+}
+
+export function buildSystemPrompt(
+  targetLang: string,
+  langCode: string,
+  glossaryTerms?: GlossaryTerm[],
+): string {
   const langInfo = LANGUAGES[langCode] || LANGUAGES.my
 
-  return `You are a professional Ubuntu Linux localization engine.
+  let prompt = `You are a professional Ubuntu Linux localization engine.
 
 Target Language: ${targetLang} (${langCode})
 Script: ${langInfo.script}
@@ -57,19 +67,35 @@ Rules:
   - NEVER use Zawgyi encoding — always Unicode Myanmar (Burmese only)
 
 Input is a JSON array of msgid strings to translate.`
+
+  // Append glossary terms if available
+  if (glossaryTerms && glossaryTerms.length > 0) {
+    const glossaryLines = glossaryTerms
+      .map(t => {
+        let line = `  "${t.en}" → "${t.translated}"`
+        if (t.note) line += ` (note: ${t.note})`
+        return line
+      })
+      .join('\n')
+
+    prompt += `\n\nGlossary (${glossaryTerms.length} terms) — use these exact translations consistently:\n${glossaryLines}`
+  }
+
+  return prompt
 }
 
 export async function translateBatch(
   texts: string[],
   targetLang: string,
-  langCode: string
+  langCode: string,
+  glossaryTerms?: GlossaryTerm[],
 ): Promise<string[]> {
   const apiKey = process.env.GOOGLE_API_KEY
   if (!apiKey) {
     throw new Error('Google API key not configured. Set GOOGLE_API_KEY in environment.')
   }
 
-  const prompt = buildSystemPrompt(targetLang, langCode)
+  const prompt = buildSystemPrompt(targetLang, langCode, glossaryTerms)
 
   const response = await fetch(
     `https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash:generateContent?key=${apiKey}`,

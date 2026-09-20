@@ -1,5 +1,6 @@
 import { NextRequest, NextResponse } from 'next/server'
 import { translateBatch, verifyTranslation } from '@/lib/translate'
+import { getGlossaryForTranslation, initDB } from '@/lib/db'
 
 const LANGUAGES: Record<string, string> = {
   my: 'Burmese',
@@ -23,11 +24,20 @@ export async function POST(request: NextRequest) {
     const langCode = target_lang || 'my'
     const langName = LANGUAGES[langCode] || 'Burmese'
 
+    // Fetch glossary terms for the target language
+    let glossaryTerms: { en: string; translated: string; note: string }[] = []
+    try {
+      await initDB()
+      glossaryTerms = await getGlossaryForTranslation(langCode)
+    } catch {
+      // Glossary fetch failed — continue without glossary context
+    }
+
     // Extract msgids
     const msgids = entries.map((e: { msgid: string }) => e.msgid)
 
-    // Translate batch
-    const translations = await translateBatch(msgids, langName, langCode)
+    // Translate batch (with glossary context)
+    const translations = await translateBatch(msgids, langName, langCode, glossaryTerms)
 
     // QA verify
     const results = entries.map((entry: { index: number; msgid: string }, i: number) => {

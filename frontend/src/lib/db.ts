@@ -82,11 +82,14 @@ export async function initDB(): Promise<void> {
       shn             TEXT DEFAULT '',
       mnw             TEXT DEFAULT '',
       ksw             TEXT DEFAULT '',
+      note            TEXT DEFAULT '',
       created_by      INTEGER REFERENCES users(id) ON DELETE SET NULL,
       created_at      TIMESTAMP WITH TIME ZONE DEFAULT NOW(),
       updated_at      TIMESTAMP WITH TIME ZONE DEFAULT NOW()
     )
   `)
+  // Migration: add note column if missing (safe for existing tables)
+  await query(`ALTER TABLE glossary ADD COLUMN IF NOT EXISTS note TEXT DEFAULT ''`).catch(() => {})
   await query(`
     CREATE TABLE IF NOT EXISTS translation_history (
       id              SERIAL PRIMARY KEY,
@@ -177,6 +180,7 @@ export interface DbGlossaryEntry {
   shn: string
   mnw: string
   ksw: string
+  note: string
   created_by: number | null
   created_at: Date
   updated_at: Date
@@ -193,12 +197,12 @@ export async function getDbGlossary(): Promise<DbGlossaryEntry[]> {
  * Add a glossary entry
  */
 export async function addDbGlossaryEntry(
-  entry: { en: string; my?: string; shn?: string; mnw?: string; ksw?: string },
+  entry: { en: string; my?: string; shn?: string; mnw?: string; ksw?: string; note?: string },
   userId?: number,
 ): Promise<DbGlossaryEntry> {
   const result = await queryOne<DbGlossaryEntry>(
-    'INSERT INTO glossary (en, my, shn, mnw, ksw, created_by) VALUES ($1, $2, $3, $4, $5, $6) RETURNING *',
-    [entry.en, entry.my || '', entry.shn || '', entry.mnw || '', entry.ksw || '', userId || null],
+    'INSERT INTO glossary (en, my, shn, mnw, ksw, note, created_by) VALUES ($1, $2, $3, $4, $5, $6, $7) RETURNING *',
+    [entry.en, entry.my || '', entry.shn || '', entry.mnw || '', entry.ksw || '', entry.note || '', userId || null],
   )
   if (!result) throw new Error('Failed to add glossary entry')
   return result
@@ -209,7 +213,7 @@ export async function addDbGlossaryEntry(
  */
 export async function updateDbGlossaryEntry(
   id: number,
-  entry: { en?: string; my?: string; shn?: string; mnw?: string; ksw?: string },
+  entry: { en?: string; my?: string; shn?: string; mnw?: string; ksw?: string; note?: string },
 ): Promise<DbGlossaryEntry | null> {
   const fields: string[] = []
   const values: any[] = []
@@ -220,6 +224,7 @@ export async function updateDbGlossaryEntry(
   if (entry.shn !== undefined) { fields.push(`shn = $${idx++}`); values.push(entry.shn) }
   if (entry.mnw !== undefined) { fields.push(`mnw = $${idx++}`); values.push(entry.mnw) }
   if (entry.ksw !== undefined) { fields.push(`ksw = $${idx++}`); values.push(entry.ksw) }
+  if (entry.note !== undefined) { fields.push(`note = $${idx++}`); values.push(entry.note) }
 
   if (fields.length === 0) return null
 
@@ -238,4 +243,18 @@ export async function updateDbGlossaryEntry(
 export async function deleteDbGlossaryEntry(id: number): Promise<boolean> {
   const result = await query('DELETE FROM glossary WHERE id = $1', [id])
   return (result as any).rowCount > 0
+}
+
+/**
+ * Get glossary entries relevant to a specific language.
+ * Returns all entries where the target language column is non-empty,
+ * used to build translation context for the AI prompt.
+ */
+export async function getGlossaryForTranslation(langCode: string): Promise<{ en: string; translated: string; note: string }[]> {
+  const validLangs = ['my', 'shn', 'mnw', 'ksw']
+  const lang = validLangs.includes(langCode) ? langCode : 'my'
+  const rows = await query<{ en: string; translated: string; note: string }>(
+    `SELECT en, ${lang} AS translated, note FROM glossary WHERE ${lang} != '' AND ${lang} IS NOT NULL ORDER BY en`
+  )
+  return rows.map(r => ({ en: r.en, translated: String(r.translated || ''), note: r.note || '' }))
 }
