@@ -3,6 +3,7 @@
 // ═══════════════════════════════════════════════════════════════════
 
 import { Pool } from 'pg'
+import glossaryData from '../data/glossary.json'
 
 const pool = new Pool({
   connectionString: process.env.DATABASE_URL,
@@ -111,6 +112,26 @@ export async function initDB(): Promise<void> {
   await query(`CREATE INDEX IF NOT EXISTS idx_glossary_created_by ON glossary(created_by)`).catch(() => {})
   await query(`CREATE INDEX IF NOT EXISTS idx_translation_history_user ON translation_history(user_id)`).catch(() => {})
   await query(`CREATE INDEX IF NOT EXISTS idx_translation_history_action ON translation_history(action)`).catch(() => {})
+}
+
+/**
+ * Seed the glossary table from the static JSON file if empty.
+ * Preserves existing entries — only seeds when the table has zero rows.
+ */
+let glossarySeeded = false
+export async function seedGlossaryIfEmpty(): Promise<void> {
+  if (glossarySeeded) return
+  const rows = await query<{ count: string }>('SELECT COUNT(*)::text AS count FROM glossary')
+  if (parseInt(rows[0].count, 10) > 0) { glossarySeeded = true; return }
+  const entries = (glossaryData as { entries: Array<{ id: number; en: string; my?: string; shn?: string; mnw?: string; ksw?: string }> }).entries
+  for (const e of entries) {
+    await query(
+      'INSERT INTO glossary (id, en, my, shn, mnw, ksw) VALUES ($1, $2, $3, $4, $5, $6) ON CONFLICT (id) DO NOTHING',
+      [e.id, e.en, e.my || '', e.shn || '', e.mnw || '', e.ksw || ''],
+    )
+  }
+  await query("SELECT setval('glossary_id_seq', (SELECT COALESCE(MAX(id), 0) FROM glossary))")
+  glossarySeeded = true
 }
 
 // ── Database History Operations ────────────────────────────────
@@ -241,8 +262,13 @@ export async function updateDbGlossaryEntry(
  * Delete a glossary entry
  */
 export async function deleteDbGlossaryEntry(id: number): Promise<boolean> {
-  const result = await query('DELETE FROM glossary WHERE id = $1', [id])
-  return (result as any).rowCount > 0
+  const client = await pool.connect()
+  try {
+    const result = await client.query('DELETE FROM glossary WHERE id = $1', [id])
+    return (result.rowCount ?? 0) > 0
+  } finally {
+    client.release()
+  }
 }
 
 /**

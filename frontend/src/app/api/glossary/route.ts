@@ -9,6 +9,7 @@ import {
   updateDbGlossaryEntry,
   deleteDbGlossaryEntry,
   initDB,
+  seedGlossaryIfEmpty,
 } from '@/lib/db'
 import { isGlossaryAdmin, isGlossaryAuthRequired } from '@/lib/glossary-auth'
 
@@ -24,6 +25,7 @@ function getBearerPassword(request: NextRequest): string | null {
 export async function GET() {
   try {
     await initDB()
+    await seedGlossaryIfEmpty()
     const entries = await getDbGlossary()
     return NextResponse.json({ entries })
   } catch (error) {

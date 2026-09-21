@@ -88,7 +88,7 @@ function GlossaryModal({ entry, onSave, onDelete, onClose }: GlossaryModalProps)
                 onChange={e => setForm({ ...form, [col.code]: e.target.value })}
                 placeholder={col.code === 'en' ? t('glossary_english_placeholder', 'English term (required)') : ''}
                 className="input-field w-full"
-                disabled={col.code === 'en'}
+                disabled={col.code === 'en' && !!entry}
               />
             </div>
           ))}
@@ -178,9 +178,10 @@ export default function GlossaryPage() {
     setDbEntries([])
   }
 
-  // Load DB glossary when authenticated
+  const isAdmin = user !== null || authRequired === false
+
+  // Load DB glossary when authenticated or when no auth is required
   const loadDbGlossary = useCallback(async () => {
-    if (!user) return
     setDbLoading(true)
     try {
       const res = await fetch('/api/glossary')
@@ -193,19 +194,20 @@ export default function GlossaryPage() {
     } finally {
       setDbLoading(false)
     }
-  }, [user])
+  }, [])
 
   useEffect(() => {
-    loadDbGlossary()
-  }, [loadDbGlossary])
+    if (isAdmin) {
+      loadDbGlossary()
+    }
+  }, [isAdmin, loadDbGlossary])
 
   // Combine static + DB entries
   const allEntries = useMemo(() => {
     const staticEntries = glossaryData.entries as GlossaryEntry[]
-    if (!user || dbEntries.length === 0) return staticEntries
-    // DB entries come after static ones, with unique IDs
-    return [...staticEntries, ...dbEntries]
-  }, [dbEntries, user])
+    if (!isAdmin || dbEntries.length === 0) return staticEntries
+    return dbEntries
+  }, [dbEntries, isAdmin])
 
   const filtered = useMemo(() => {
     let result = allEntries
@@ -276,7 +278,7 @@ export default function GlossaryPage() {
           <p className="text-[var(--tx-muted)] mt-1">{t('glossary_subtitle', 'Standardized terminology for consistent translations')}</p>
         </div>
         <div className="flex items-center gap-3">
-          {user && (
+          {isAdmin && (
             <button onClick={() => { setEditingEntry(null); setShowModal(true) }} className="btn-primary flex items-center gap-2 text-sm">
               <Plus size={16} />{t('glossary_add_term', 'Add Term')}
             </button>
@@ -315,17 +317,19 @@ export default function GlossaryPage() {
       )}
 
       {/* Logged-in admin bar */}
-      {user && (
+      {(user || authRequired === false) && (
         <div className="glass-card p-3 border-l-4 border-emerald-500/50">
           <div className="flex items-center justify-between">
             <span className="text-sm text-emerald-400 flex items-center gap-2">
               <CheckCircle2 size={14} />
               {t('glossary_admin_active', 'Admin mode active — you can edit glossary entries')}
             </span>
-            <button onClick={handleLogout} className="btn-ghost text-xs text-[var(--tx-muted)] hover:text-[var(--tx-primary)] flex items-center gap-1">
-              <LogOut size={12} />
-              {t('glossary_logout', 'Logout')}
-            </button>
+            {user && (
+              <button onClick={handleLogout} className="btn-ghost text-xs text-[var(--tx-muted)] hover:text-[var(--tx-primary)] flex items-center gap-1">
+                <LogOut size={12} />
+                {t('glossary_logout', 'Logout')}
+              </button>
+            )}
           </div>
         </div>
       )}
@@ -383,7 +387,7 @@ export default function GlossaryPage() {
                   <th key={lang.code} className={selectedLang && selectedLang !== lang.code ? 'hidden' : ''}>{lang.flag} {t(lang.labelKey, lang.label)}</th>
                 ))}
                 <th className="w-24">{t('glossary_status', 'Status')}</th>
-                {user && <th className="w-20">{t('glossary_actions', 'Actions')}</th>}
+                {isAdmin && <th className="w-20">{t('glossary_actions', 'Actions')}</th>}
               </tr>
             </thead>
             <tbody>
@@ -401,7 +405,7 @@ export default function GlossaryPage() {
                       {s === 'partial' && <span className="status-partial"><Clock size={10} className="mr-1" />{c}/4</span>}
                       {s === 'pending' && <span className="status-pending">{t('glossary_pending', 'Pending')}</span>}
                     </td>
-                    {user && (
+                    {isAdmin && (
                       <td data-label={t('glossary_actions', 'Actions')}>
                         <button onClick={() => { setEditingEntry(entry); setShowModal(true) }}
                           className="p-1.5 rounded-lg hover:bg-[var(--surface-overlay)] text-[var(--tx-dim)] hover:text-[var(--tx-primary)] transition-colors">
@@ -429,7 +433,7 @@ export default function GlossaryPage() {
                   {s === 'translated' && <span className="status-translated"><CheckCircle2 size={10} className="mr-1" />{t('glossary_full', 'Full')}</span>}
                   {s === 'partial' && <span className="status-partial"><Clock size={10} className="mr-1" />{c}/4</span>}
                   {s === 'pending' && <span className="status-pending">{t('glossary_pending', 'Pending')}</span>}
-                  {user && (
+                  {isAdmin && (
                     <button onClick={() => { setEditingEntry(entry); setShowModal(true) }}
                       className="p-1 rounded-lg hover:bg-[var(--surface-overlay)] text-[var(--tx-dim)]">
                       <Edit3 size={12} />
