@@ -1,32 +1,28 @@
 // ═══════════════════════════════════════════════════════════════════
 // AUTH CONTEXT — Client-side authentication state
-// Glossary admin uses simple password-based auth via GLOSSARY_PASSWORD
+// Uses session cookies for secure authentication
 // ═══════════════════════════════════════════════════════════════════
 
 'use client'
 
 import { createContext, useContext, useState, useEffect, useCallback, type ReactNode } from 'react'
 
-const GLOSSARY_AUTH_KEY = 'ubuntu-localization-glossary-auth'
-
 interface AuthUser {
   id: number
   username: string
   displayName: string
-  karma: number
-  avatarUrl: string
+  isAdmin: boolean
 }
 
 interface AuthContextType {
   user: AuthUser | null
   loading: boolean
-  signIn: () => Promise<void>
-  signOut: () => Promise<void>
-  refresh: () => Promise<void>
-  /** Authenticate as glossary admin with a password */
-  glossaryLogin: (password: string) => Promise<boolean>
-  /** Log out of glossary admin */
-  glossaryLogout: () => void
+  /** Register a new account */
+  register: (username: string, password: string, displayName?: string) => Promise<{ success: boolean; error?: string }>
+  /** Login with username and password */
+  login: (username: string, password: string) => Promise<{ success: boolean; error?: string }>
+  /** Logout current user */
+  logout: () => Promise<void>
 }
 
 const AuthContext = createContext<AuthContextType | null>(null)
@@ -35,85 +31,69 @@ export function AuthProvider({ children }: { children: ReactNode }) {
   const [user, setUser] = useState<AuthUser | null>(null)
   const [loading, setLoading] = useState(true)
 
-  // Restore glossary admin session from localStorage on mount
+  // Restore session from cookie on mount
   useEffect(() => {
-    try {
-      const stored = localStorage.getItem(GLOSSARY_AUTH_KEY)
-      if (stored) {
-        const data = JSON.parse(stored)
-        if (data && data.password && Date.now() - (data.timestamp || 0) < 7 * 24 * 60 * 60 * 1000) {
-          // Re-validate the stored password
-          fetch('/api/glossary/auth', {
-            method: 'POST',
-            headers: { 'Content-Type': 'application/json' },
-            body: JSON.stringify({ password: data.password }),
-          })
-            .then(r => r.json())
-            .then(d => {
-              if (d.authenticated) {
-                setUser({
-                  id: 0,
-                  username: 'glossary-admin',
-                  displayName: 'Glossary Admin',
-                  karma: 0,
-                  avatarUrl: '',
-                })
-              } else {
-                localStorage.removeItem(GLOSSARY_AUTH_KEY)
-              }
-            })
-            .catch(() => localStorage.removeItem(GLOSSARY_AUTH_KEY))
-            .finally(() => setLoading(false))
-          return
-        } else {
-          localStorage.removeItem(GLOSSARY_AUTH_KEY)
+    fetch('/api/auth/me', { credentials: 'include' })
+      .then(r => r.json())
+      .then(d => {
+        if (d.user) {
+          setUser(d.user)
         }
-      }
-    } catch {
-      // localStorage unavailable
-    }
-    setLoading(false)
+      })
+      .catch(() => {})
+      .finally(() => setLoading(false))
   }, [])
 
-  const glossaryLogin = useCallback(async (password: string): Promise<boolean> => {
+  const register = useCallback(async (username: string, password: string, displayName?: string) => {
     try {
-      const res = await fetch('/api/glossary/auth', {
+      const res = await fetch('/api/auth/register', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ password }),
+        credentials: 'include',
+        body: JSON.stringify({ username, password, displayName }),
       })
       const data = await res.json()
-      if (data.authenticated) {
-        localStorage.setItem(GLOSSARY_AUTH_KEY, JSON.stringify({ password, timestamp: Date.now() }))
-        setUser({
-          id: 0,
-          username: 'glossary-admin',
-          displayName: 'Glossary Admin',
-          karma: 0,
-          avatarUrl: '',
-        })
-        return true
+      if (res.ok && data.user) {
+        setUser(data.user)
+        return { success: true }
       }
-      return false
+      return { success: false, error: data.error || 'Registration failed' }
     } catch {
-      return false
+      return { success: false, error: 'Network error' }
     }
   }, [])
 
-  const glossaryLogout = useCallback(() => {
-    localStorage.removeItem(GLOSSARY_AUTH_KEY)
+  const login = useCallback(async (username: string, password: string) => {
+    try {
+      const res = await fetch('/api/auth/login', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        credentials: 'include',
+        body: JSON.stringify({ username, password }),
+      })
+      const data = await res.json()
+      if (res.ok && data.user) {
+        setUser(data.user)
+        return { success: true }
+      }
+      return { success: false, error: data.error || 'Login failed' }
+    } catch {
+      return { success: false, error: 'Network error' }
+    }
+  }, [])
+
+  const logout = useCallback(async () => {
+    try {
+      await fetch('/api/auth/logout', {
+        method: 'POST',
+        credentials: 'include',
+      })
+    } catch {}
     setUser(null)
   }, [])
 
-  // Standard auth stubs (Launchpad OAuth removed)
-  const signIn = useCallback(async () => {}, [])
-  const signOut = useCallback(async () => {
-    glossaryLogout()
-  }, [glossaryLogout])
-  const refresh = useCallback(async () => {}, [])
-
   return (
-    <AuthContext.Provider value={{ user, loading, signIn, signOut, refresh, glossaryLogin, glossaryLogout }}>
+    <AuthContext.Provider value={{ user, loading, register, login, logout }}>
       {children}
     </AuthContext.Provider>
   )

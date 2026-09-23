@@ -3,10 +3,10 @@
 import { useState, useMemo, useEffect, useCallback } from 'react'
 import SearchInput from '@/components/SearchInput'
 import Pagination from '@/components/Pagination'
-import { BookOpen, AlertCircle, CheckCircle2, Clock, HelpCircle, Plus, Edit3, Trash2, X, Loader2, Lock, LogIn, LogOut } from 'lucide-react'
+import { BookOpen, AlertCircle, CheckCircle2, Clock, HelpCircle, Plus, Edit3, Trash2, X, Loader2, LogIn, LogOut, UserPlus, History } from 'lucide-react'
 import { useI18n } from '@/lib/i18n'
 import { useAuth } from '@/lib/auth-context'
-import glossaryData from '@/data/glossary.json'
+import Link from 'next/link'
 
 const ITEMS_PER_PAGE = 20
 
@@ -118,69 +118,60 @@ function GlossaryModal({ entry, onSave, onDelete, onClose }: GlossaryModalProps)
 
 export default function GlossaryPage() {
   const { t } = useI18n()
-  const { user, glossaryLogin, glossaryLogout } = useAuth()
+  const { user, loading: authLoading, register, login, logout } = useAuth()
   const [search, setSearch] = useState('')
   const [currentPage, setCurrentPage] = useState(1)
   const [selectedLang, setSelectedLang] = useState<string | null>(null)
   const [statusFilter, setStatusFilter] = useState<string | null>(null)
 
-  // DB glossary entries (for authenticated users)
+  // DB glossary entries
   const [dbEntries, setDbEntries] = useState<GlossaryEntry[]>([])
   const [dbLoading, setDbLoading] = useState(false)
   const [showModal, setShowModal] = useState(false)
   const [editingEntry, setEditingEntry] = useState<GlossaryEntry | null>(null)
 
-  // Glossary admin login state
-  const [loginPassword, setLoginPassword] = useState('')
-  const [loginLoading, setLoginLoading] = useState(false)
-  const [loginError, setLoginError] = useState<string | null>(null)
-  const [authRequired, setAuthRequired] = useState<boolean | null>(null)
+  // Auth form state
+  const [authMode, setAuthMode] = useState<'login' | 'register'>('login')
+  const [authUsername, setAuthUsername] = useState('')
+  const [authPassword, setAuthPassword] = useState('')
+  const [authConfirmPassword, setAuthConfirmPassword] = useState('')
+  const [authDisplayName, setAuthDisplayName] = useState('')
+  const [authLoading2, setAuthLoading2] = useState(false)
+  const [authError, setAuthError] = useState<string | null>(null)
 
-  // Check if auth is required on mount
-  useEffect(() => {
-    fetch('/api/glossary/auth')
-      .then(r => r.json())
-      .then(d => setAuthRequired(d.authRequired))
-      .catch(() => setAuthRequired(false))
-  }, [])
+  const isLoggedIn = user !== null
 
-  /** Get Bearer token from localStorage */
-  const getAuthToken = useCallback((): string | null => {
-    try {
-      const stored = localStorage.getItem('ubuntu-localization-glossary-auth')
-      if (stored) {
-        const data = JSON.parse(stored)
-        return data?.password || null
+  const handleAuth = async () => {
+    if (!authUsername.trim() || !authPassword.trim()) return
+    setAuthLoading2(true)
+    setAuthError(null)
+
+    if (authMode === 'register') {
+      if (authPassword !== authConfirmPassword) {
+        setAuthError(t('auth_error_password_mismatch', 'Passwords do not match'))
+        setAuthLoading2(false)
+        return
       }
-    } catch {}
-    return null
-  }, [])
+      const result = await register(authUsername, authPassword, authDisplayName || undefined)
+      if (!result.success) {
+        setAuthError(result.error || 'Registration failed')
+      }
+    } else {
+      const result = await login(authUsername, authPassword)
+      if (!result.success) {
+        setAuthError(result.error || 'Login failed')
+      }
+    }
 
-  /** Build auth headers for write requests */
-  const getAuthHeaders = useCallback((): Record<string, string> => {
-    const token = getAuthToken()
-    if (!token) return { 'Content-Type': 'application/json' }
-    return { 'Content-Type': 'application/json', Authorization: `Bearer ${token}` }
-  }, [getAuthToken])
-
-  const handleLogin = async () => {
-    if (!loginPassword.trim()) return
-    setLoginLoading(true)
-    setLoginError(null)
-    const ok = await glossaryLogin(loginPassword)
-    setLoginLoading(false)
-    if (!ok) setLoginError(t('glossary_login_error', 'Invalid password'))
-    else { setLoginPassword(''); setLoginError(null) }
+    setAuthLoading2(false)
   }
 
-  const handleLogout = () => {
-    glossaryLogout()
+  const handleLogout = async () => {
+    await logout()
     setDbEntries([])
   }
 
-  const isAdmin = user !== null || authRequired === false
-
-  // Load DB glossary when authenticated or when no auth is required
+  // Always load DB glossary (GET is public)
   const loadDbGlossary = useCallback(async () => {
     setDbLoading(true)
     try {
@@ -197,17 +188,13 @@ export default function GlossaryPage() {
   }, [])
 
   useEffect(() => {
-    if (isAdmin) {
-      loadDbGlossary()
-    }
-  }, [isAdmin, loadDbGlossary])
+    loadDbGlossary()
+  }, [loadDbGlossary])
 
-  // Combine static + DB entries
+  // Always use DB entries (GET is public)
   const allEntries = useMemo(() => {
-    const staticEntries = glossaryData.entries as GlossaryEntry[]
-    if (!isAdmin || dbEntries.length === 0) return staticEntries
-    return dbEntries
-  }, [dbEntries, isAdmin])
+    return dbEntries.length > 0 ? dbEntries : []
+  }, [dbEntries])
 
   const filtered = useMemo(() => {
     let result = allEntries
@@ -233,7 +220,8 @@ export default function GlossaryPage() {
   const handleAdd = async (data: { en: string; my: string; shn: string; mnw: string; ksw: string }) => {
     const res = await fetch('/api/glossary', {
       method: 'POST',
-      headers: getAuthHeaders(),
+      headers: { 'Content-Type': 'application/json' },
+      credentials: 'include',
       body: JSON.stringify(data),
     })
     if (!res.ok) {
@@ -247,7 +235,8 @@ export default function GlossaryPage() {
     if (!editingEntry) return
     const res = await fetch('/api/glossary', {
       method: 'PUT',
-      headers: getAuthHeaders(),
+      headers: { 'Content-Type': 'application/json' },
+      credentials: 'include',
       body: JSON.stringify({ id: editingEntry.id, ...data }),
     })
     if (!res.ok) {
@@ -261,7 +250,7 @@ export default function GlossaryPage() {
     if (!editingEntry) return
     const res = await fetch(`/api/glossary?id=${editingEntry.id}`, {
       method: 'DELETE',
-      headers: getAuthHeaders(),
+      credentials: 'include',
     })
     if (!res.ok) {
       const err = await res.json().catch(() => ({}))
@@ -278,58 +267,127 @@ export default function GlossaryPage() {
           <p className="text-[var(--tx-muted)] mt-1">{t('glossary_subtitle', 'Standardized terminology for consistent translations')}</p>
         </div>
         <div className="flex items-center gap-3">
-          {isAdmin && (
+          {isLoggedIn && (
             <button onClick={() => { setEditingEntry(null); setShowModal(true) }} className="btn-primary flex items-center gap-2 text-sm">
               <Plus size={16} />{t('glossary_add_term', 'Add Term')}
             </button>
+          )}
+          {isLoggedIn && (
+            <Link href="/glossary/history" className="btn-ghost flex items-center gap-2 text-sm">
+              <History size={16} />{t('glossary_view_history', 'History')}
+            </Link>
           )}
           <span className="text-sm text-[var(--tx-dim)]">{allEntries.length} {t('glossary_terms', 'terms')}</span>
         </div>
       </div>
 
-      {/* Glossary Admin Login */}
-      {authRequired === true && !user && (
-        <div className="glass-card p-4 border-l-4 border-ubuntu-orange/50">
-          <div className="flex items-center gap-3">
-            <Lock className="text-ubuntu-orange flex-shrink-0" size={18} />
-            <div className="flex-1 flex flex-col sm:flex-row gap-2">
-              <p className="text-sm text-[var(--tx-muted)] flex items-center gap-2">
-                {t('glossary_admin_login', 'Admin login to edit glossary')}
-              </p>
-              <div className="flex gap-2">
+      {/* Auth Form (Login/Register) */}
+      {!isLoggedIn && !authLoading && (
+        <div className="glass-card p-6 border-l-4 border-ubuntu-orange/50 max-w-md">
+          <div className="flex items-center gap-3 mb-4">
+            {authMode === 'login' ? <LogIn className="text-ubuntu-orange" size={20} /> : <UserPlus className="text-ubuntu-orange" size={20} />}
+            <h3 className="text-lg font-semibold text-[var(--tx-primary)]">
+              {authMode === 'login' ? t('auth_login_title', 'Sign In') : t('auth_register_title', 'Create Account')}
+            </h3>
+          </div>
+
+          <p className="text-sm text-[var(--tx-muted)] mb-4">
+            {authMode === 'login'
+              ? t('auth_login_desc', 'Sign in to edit glossary entries')
+              : t('auth_register_desc', 'Register to contribute glossary terms')}
+          </p>
+
+          <div className="space-y-3">
+            <div>
+              <label className="text-xs text-[var(--tx-dim)] mb-1 block">{t('auth_username', 'Username')}</label>
+              <input
+                type="text"
+                value={authUsername}
+                onChange={e => setAuthUsername(e.target.value)}
+                placeholder={t('auth_username', 'Username')}
+                className="input-field w-full"
+                onKeyDown={e => { if (e.key === 'Enter') handleAuth() }}
+              />
+            </div>
+
+            {authMode === 'register' && (
+              <div>
+                <label className="text-xs text-[var(--tx-dim)] mb-1 block">{t('auth_display_name', 'Display Name (optional)')}</label>
+                <input
+                  type="text"
+                  value={authDisplayName}
+                  onChange={e => setAuthDisplayName(e.target.value)}
+                  placeholder={t('auth_display_name', 'Display Name (optional)')}
+                  className="input-field w-full"
+                />
+              </div>
+            )}
+
+            <div>
+              <label className="text-xs text-[var(--tx-dim)] mb-1 block">{t('auth_password', 'Password')}</label>
+              <input
+                type="password"
+                value={authPassword}
+                onChange={e => setAuthPassword(e.target.value)}
+                placeholder={t('auth_password', 'Password')}
+                className="input-field w-full"
+                onKeyDown={e => { if (e.key === 'Enter') handleAuth() }}
+              />
+            </div>
+
+            {authMode === 'register' && (
+              <div>
+                <label className="text-xs text-[var(--tx-dim)] mb-1 block">{t('auth_confirm_password', 'Confirm Password')}</label>
                 <input
                   type="password"
-                  value={loginPassword}
-                  onChange={e => setLoginPassword(e.target.value)}
-                  onKeyDown={e => { if (e.key === 'Enter') handleLogin() }}
-                  placeholder={t('glossary_password', 'Password')}
-                  className="input-field text-sm px-3 py-1.5 w-48"
+                  value={authConfirmPassword}
+                  onChange={e => setAuthConfirmPassword(e.target.value)}
+                  placeholder={t('auth_confirm_password', 'Confirm Password')}
+                  className="input-field w-full"
+                  onKeyDown={e => { if (e.key === 'Enter') handleAuth() }}
                 />
-                <button onClick={handleLogin} disabled={loginLoading || !loginPassword.trim()} className="btn-primary text-sm px-3 py-1.5 flex items-center gap-1.5">
-                  {loginLoading ? <Loader2 size={14} className="animate-spin" /> : <LogIn size={14} />}
-                  {t('glossary_login', 'Login')}
-                </button>
               </div>
-              {loginError && <p className="text-xs text-red-400 mt-1">{loginError}</p>}
-            </div>
+            )}
+
+            {authError && <p className="text-sm text-red-400">{authError}</p>}
+
+            <button
+              onClick={handleAuth}
+              disabled={authLoading2 || !authUsername.trim() || !authPassword.trim()}
+              className="btn-primary w-full flex items-center justify-center gap-2"
+            >
+              {authLoading2 ? <Loader2 size={16} className="animate-spin" /> : authMode === 'login' ? <LogIn size={16} /> : <UserPlus size={16} />}
+              {authMode === 'login' ? t('auth_login', 'Login') : t('auth_register', 'Register')}
+            </button>
+
+            <p className="text-xs text-center text-[var(--tx-muted)]">
+              {authMode === 'login' ? t('auth_no_account', "Don't have an account?") : t('auth_has_account', 'Already have an account?')}{' '}
+              <button
+                onClick={() => { setAuthMode(authMode === 'login' ? 'register' : 'login'); setAuthError(null) }}
+                className="text-ubuntu-orange hover:underline"
+              >
+                {authMode === 'login' ? t('auth_register', 'Register') : t('auth_login', 'Login')}
+              </button>
+            </p>
           </div>
         </div>
       )}
 
-      {/* Logged-in admin bar */}
-      {(user || authRequired === false) && (
+      {/* Logged-in user bar */}
+      {isLoggedIn && (
         <div className="glass-card p-3 border-l-4 border-emerald-500/50">
           <div className="flex items-center justify-between">
             <span className="text-sm text-emerald-400 flex items-center gap-2">
               <CheckCircle2 size={14} />
-              {t('glossary_admin_active', 'Admin mode active — you can edit glossary entries')}
+              {t('auth_welcome', 'Welcome')}, @{user!.username}
+              {user!.isAdmin && (
+                <span className="px-2 py-0.5 text-xs bg-purple-500/20 text-purple-400 rounded-full">{t('auth_role_admin', 'Admin')}</span>
+              )}
             </span>
-            {user && (
-              <button onClick={handleLogout} className="btn-ghost text-xs text-[var(--tx-muted)] hover:text-[var(--tx-primary)] flex items-center gap-1">
-                <LogOut size={12} />
-                {t('glossary_logout', 'Logout')}
-              </button>
-            )}
+            <button onClick={handleLogout} className="btn-ghost text-xs text-[var(--tx-muted)] hover:text-[var(--tx-primary)] flex items-center gap-1">
+              <LogOut size={12} />
+              {t('auth_logout', 'Logout')}
+            </button>
           </div>
         </div>
       )}
@@ -387,7 +445,7 @@ export default function GlossaryPage() {
                   <th key={lang.code} className={selectedLang && selectedLang !== lang.code ? 'hidden' : ''}>{lang.flag} {t(lang.labelKey, lang.label)}</th>
                 ))}
                 <th className="w-24">{t('glossary_status', 'Status')}</th>
-                {isAdmin && <th className="w-20">{t('glossary_actions', 'Actions')}</th>}
+                {isLoggedIn && <th className="w-20">{t('glossary_actions', 'Actions')}</th>}
               </tr>
             </thead>
             <tbody>
@@ -405,7 +463,7 @@ export default function GlossaryPage() {
                       {s === 'partial' && <span className="status-partial"><Clock size={10} className="mr-1" />{c}/4</span>}
                       {s === 'pending' && <span className="status-pending">{t('glossary_pending', 'Pending')}</span>}
                     </td>
-                    {isAdmin && (
+                    {isLoggedIn && (
                       <td data-label={t('glossary_actions', 'Actions')}>
                         <button onClick={() => { setEditingEntry(entry); setShowModal(true) }}
                           className="p-1.5 rounded-lg hover:bg-[var(--surface-overlay)] text-[var(--tx-dim)] hover:text-[var(--tx-primary)] transition-colors">
@@ -433,7 +491,7 @@ export default function GlossaryPage() {
                   {s === 'translated' && <span className="status-translated"><CheckCircle2 size={10} className="mr-1" />{t('glossary_full', 'Full')}</span>}
                   {s === 'partial' && <span className="status-partial"><Clock size={10} className="mr-1" />{c}/4</span>}
                   {s === 'pending' && <span className="status-pending">{t('glossary_pending', 'Pending')}</span>}
-                  {isAdmin && (
+                  {isLoggedIn && (
                     <button onClick={() => { setEditingEntry(entry); setShowModal(true) }}
                       className="p-1 rounded-lg hover:bg-[var(--surface-overlay)] text-[var(--tx-dim)]">
                       <Edit3 size={12} />

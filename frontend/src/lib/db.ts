@@ -3,7 +3,11 @@
 // ═══════════════════════════════════════════════════════════════════
 
 import { Pool } from 'pg'
+import crypto from 'crypto'
+import { promisify } from 'util'
 import glossaryData from '../data/glossary.json'
+
+const scryptAsync = promisify(crypto.scrypt)
 
 const pool = new Pool({
   connectionString: process.env.DATABASE_URL,
@@ -112,6 +116,31 @@ export async function initDB(): Promise<void> {
   await query(`CREATE INDEX IF NOT EXISTS idx_glossary_created_by ON glossary(created_by)`).catch(() => {})
   await query(`CREATE INDEX IF NOT EXISTS idx_translation_history_user ON translation_history(user_id)`).catch(() => {})
   await query(`CREATE INDEX IF NOT EXISTS idx_translation_history_action ON translation_history(action)`).catch(() => {})
+
+  // Migration: add auth columns to users table
+  await query(`ALTER TABLE users ADD COLUMN IF NOT EXISTS password_hash VARCHAR(512)`).catch(() => {})
+  await query(`ALTER TABLE users ADD COLUMN IF NOT EXISTS is_admin BOOLEAN DEFAULT FALSE`).catch(() => {})
+  await query(`ALTER TABLE users ADD COLUMN IF NOT EXISTS is_active BOOLEAN DEFAULT TRUE`).catch(() => {})
+
+  // Glossary history table
+  await query(`
+    CREATE TABLE IF NOT EXISTS glossary_history (
+      id              SERIAL PRIMARY KEY,
+      user_id         INTEGER REFERENCES users(id) ON DELETE SET NULL,
+      glossary_id     INTEGER,
+      action          VARCHAR(50) NOT NULL,
+      old_values      JSONB,
+      new_values      JSONB,
+      term_en         VARCHAR(500),
+      created_at      TIMESTAMP WITH TIME ZONE DEFAULT NOW()
+    )
+  `).catch(() => {})
+  await query(`CREATE INDEX IF NOT EXISTS idx_glossary_history_user ON glossary_history(user_id)`).catch(() => {})
+  await query(`CREATE INDEX IF NOT EXISTS idx_glossary_history_glossary ON glossary_history(glossary_id)`).catch(() => {})
+  await query(`CREATE INDEX IF NOT EXISTS idx_glossary_history_created ON glossary_history(created_at DESC)`).catch(() => {})
+
+  // Cleanup expired sessions (opportunistic)
+  await query(`DELETE FROM user_sessions WHERE expires_at < NOW()`).catch(() => {})
 }
 
 /**
@@ -283,4 +312,205 @@ export async function getGlossaryForTranslation(langCode: string): Promise<{ en:
     `SELECT en, ${lang} AS translated, note FROM glossary WHERE ${lang} != '' AND ${lang} IS NOT NULL ORDER BY en`
   )
   return rows.map(r => ({ en: r.en, translated: String(r.translated || ''), note: r.note || '' }))
+}
+
+// ── Password Hashing ───────────────────────────────────────────
+
+/**
+ * Hash a password with salt using scrypt
+ */
+export async function hashPassword(password: string): Promise<string> {
+  const salt = crypto.randomBytes(16).toString('hex')
+  const hash = (await scryptAsync(password, salt, 64)) as Buffer
+  return `${salt}:${hash.toString('hex')}`
+}
+
+/**
+ * Verify a password against a stored hash
+ */
+export async function verifyPassword(password: string, stored: string): Promise<boolean> {
+  const [salt, hash] = stored.split(':')
+  if (!salt || !hash) return false
+  const hashToVerify = (await scryptAsync(password, salt, 64)) as Buffer
+  return hashToVerify.toString('hex') === hash
+}
+
+// ── Session Management ─────────────────────────────────────────
+
+export interface DbSessionUser {
+  id: number
+  username: string
+  displayName: string
+  isAdmin: boolean
+}
+
+/**
+ * Create a new session for a user
+ */
+export async function createSession(userId: number): Promise<string> {
+  const token = crypto.randomBytes(32).toString('hex')
+  const expiresAt = new Date(Date.now() + 7 * 24 * 60 * 60 * 1000) // 7 days
+  await query(
+    'INSERT INTO user_sessions (session_token, user_id, expires_at) VALUES ($1, $2, $3)',
+    [token, userId, expiresAt],
+  )
+  return token
+}
+
+/**
+ * Get a valid session and its user
+ */
+export async function getSessionUser(token: string): Promise<DbSessionUser | null> {
+  const session = await queryOne<{ user_id: number }>(
+    'SELECT user_id FROM user_sessions WHERE session_token = $1 AND expires_at > NOW()',
+    [token],
+  )
+  if (!session) return null
+
+  const user = await queryOne<{ id: number; username: string; display_name: string; is_admin: boolean }>(
+    'SELECT id, username, display_name, is_admin FROM users WHERE id = $1',
+    [session.user_id],
+  )
+  if (!user) return null
+
+  return {
+    id: user.id,
+    username: user.username,
+    displayName: user.display_name || user.username,
+    isAdmin: user.is_admin,
+  }
+}
+
+/**
+ * Delete a session (logout)
+ */
+export async function deleteSession(token: string): Promise<void> {
+  await query('DELETE FROM user_sessions WHERE session_token = $1', [token])
+}
+
+// ── User Management ────────────────────────────────────────────
+
+export interface DbUser {
+  id: number
+  username: string
+  displayName: string
+  isAdmin: boolean
+  createdAt: Date
+}
+
+/**
+ * Create a new user with password
+ */
+export async function createUser(
+  username: string,
+  password: string,
+  displayName?: string,
+): Promise<DbUser> {
+  const passwordHash = await hashPassword(password)
+  const launchpadId = `local-${username}`
+  const result = await queryOne<DbUser>(
+    `INSERT INTO users (launchpad_id, username, display_name, password_hash)
+     VALUES ($1, $2, $3, $4)
+     RETURNING id, username, display_name AS "displayName", is_admin AS "isAdmin", created_at AS "createdAt"`,
+    [launchpadId, username, displayName || username, passwordHash],
+  )
+  if (!result) throw new Error('Failed to create user')
+  return result
+}
+
+/**
+ * Get a user by username (for login)
+ */
+export async function getUserByUsername(username: string): Promise<(DbUser & { passwordHash: string }) | null> {
+  return queryOne(
+    `SELECT id, username, display_name AS "displayName", is_admin AS "isAdmin", created_at AS "createdAt", password_hash AS "passwordHash"
+     FROM users WHERE username = $1`,
+    [username],
+  )
+}
+
+/**
+ * Get a user by ID
+ */
+export async function getUserById(id: number): Promise<DbUser | null> {
+  return queryOne(
+    `SELECT id, username, display_name AS "displayName", is_admin AS "isAdmin", created_at AS "createdAt"
+     FROM users WHERE id = $1`,
+    [id],
+  )
+}
+
+// ── Glossary History ───────────────────────────────────────────
+
+export interface DbGlossaryHistoryEntry {
+  id: number
+  userId: number | null
+  glossaryId: number | null
+  action: string
+  oldValues: Record<string, any> | null
+  newValues: Record<string, any> | null
+  termEn: string | null
+  username: string | null
+  displayName: string | null
+  createdAt: Date
+}
+
+/**
+ * Record a glossary change
+ */
+export async function recordGlossaryHistory(entry: {
+  userId: number
+  glossaryId: number | null
+  action: 'add' | 'update' | 'delete'
+  oldValues?: Record<string, any>
+  newValues?: Record<string, any>
+  termEn: string
+}): Promise<void> {
+  await query(
+    `INSERT INTO glossary_history (user_id, glossary_id, action, old_values, new_values, term_en)
+     VALUES ($1, $2, $3, $4, $5, $6)`,
+    [
+      entry.userId,
+      entry.glossaryId,
+      entry.action,
+      entry.oldValues ? JSON.stringify(entry.oldValues) : null,
+      entry.newValues ? JSON.stringify(entry.newValues) : null,
+      entry.termEn,
+    ],
+  )
+}
+
+/**
+ * Get glossary history entries
+ * If userId is provided, filter by user; otherwise return all (for admin)
+ */
+export async function getGlossaryHistory(
+  limit: number,
+  offset: number,
+  userId?: number,
+): Promise<{ entries: DbGlossaryHistoryEntry[]; total: number }> {
+  const whereClause = userId ? 'WHERE gh.user_id = $1' : ''
+  const params = userId ? [userId, limit, offset] : [limit, offset]
+  const countParams = userId ? [userId] : []
+
+  const countResult = await queryOne<{ count: string }>(
+    `SELECT COUNT(*)::text AS count FROM glossary_history gh ${whereClause}`,
+    countParams,
+  )
+  const total = parseInt(countResult?.count || '0', 10)
+
+  const entries = await query<DbGlossaryHistoryEntry>(
+    `SELECT gh.id, gh.user_id AS "userId", gh.glossary_id AS "glossaryId",
+            gh.action, gh.old_values AS "oldValues", gh.new_values AS "newValues",
+            gh.term_en AS "termEn", gh.created_at AS "createdAt",
+            u.username, u.display_name AS "displayName"
+     FROM glossary_history gh
+     LEFT JOIN users u ON gh.user_id = u.id
+     ${whereClause}
+     ORDER BY gh.created_at DESC
+     LIMIT $${userId ? 2 : 1} OFFSET $${userId ? 3 : 2}`,
+    params,
+  )
+
+  return { entries, total }
 }
