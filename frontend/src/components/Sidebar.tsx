@@ -16,11 +16,15 @@ import {
   Github,
   ExternalLink,
   Globe,
+  LogIn,
+  LogOut,
 } from 'lucide-react'
 import TuxLogo from './TuxLogo'
 import ThemeToggle from './ThemeToggle'
+import AuthModal from './AuthModal'
 import { useI18n, type LanguageCode } from '@/lib/i18n'
 import { UI_LANGUAGES } from '@/lib/constants'
+import { useAuth } from '@/lib/auth-context'
 
 const HIT_STORAGE_KEY = 'ubuntu-localization-hits'
 
@@ -70,8 +74,10 @@ const uiLanguages = UI_LANGUAGES
 
 export default function Sidebar() {
   const [isOpen, setIsOpen] = useState(false)
+  const [showAuthModal, setShowAuthModal] = useState(false)
   const { lang, setLang, t } = useI18n()
   const pathname = usePathname()
+  const { user, loading: authLoading, logout } = useAuth()
 
   return (
     <>
@@ -173,6 +179,40 @@ export default function Sidebar() {
             </div>
           </div>
 
+          {/* Auth Section */}
+          {!authLoading && (
+            <div className="p-3 border-t border-[var(--border-theme)]">
+              {user ? (
+                <div className="px-3 py-2 space-y-2">
+                  <div className="flex items-center gap-2">
+                    <div className="w-7 h-7 rounded-full bg-ubuntu-orange/20 flex items-center justify-center text-ubuntu-orange text-xs font-bold">
+                      {user.username[0].toUpperCase()}
+                    </div>
+                    <div className="flex-1 min-w-0">
+                      <p className="text-sm text-[var(--tx-primary)] font-medium truncate">{user.displayName || user.username}</p>
+                      <p className="text-[10px] text-[var(--tx-dim)] truncate">@{user.username}</p>
+                    </div>
+                  </div>
+                  <button
+                    onClick={async () => { await logout(); setIsOpen(false) }}
+                    className="sidebar-link text-xs w-full"
+                  >
+                    <LogOut size={16} />
+                    <span>{t('auth_logout', 'Logout')}</span>
+                  </button>
+                </div>
+              ) : (
+                <button
+                  onClick={() => { setShowAuthModal(true); setIsOpen(false) }}
+                  className="sidebar-link w-full"
+                >
+                  <LogIn size={18} />
+                  <span>{t('auth_login_title', 'Sign In')}</span>
+                </button>
+              )}
+            </div>
+          )}
+
           {/* Footer */}
           <div className="p-3 border-t border-[var(--border-theme)]">
             <a
@@ -197,6 +237,8 @@ export default function Sidebar() {
           </div>
         </div>
       </aside>
+
+      {showAuthModal && <AuthModal onClose={() => setShowAuthModal(false)} />}
     </>
   )
 }
