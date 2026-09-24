@@ -11,17 +11,14 @@ import {
   BookMarked,
   Users,
   History,
-  Menu,
   X,
   Github,
   ExternalLink,
   Globe,
-  LogIn,
-  LogOut,
+  Settings,
 } from 'lucide-react'
 import TuxLogo from './TuxLogo'
 import ThemeToggle from './ThemeToggle'
-import AuthModal from './AuthModal'
 import { useI18n, type LanguageCode } from '@/lib/i18n'
 import { UI_LANGUAGES } from '@/lib/constants'
 import { useAuth } from '@/lib/auth-context'
@@ -60,6 +57,11 @@ function HitCounter() {
   )
 }
 
+interface SidebarProps {
+  isOpen: boolean
+  onClose: () => void
+}
+
 const navItems = [
   { href: '/', labelKey: 'sidebar_dashboard', icon: LayoutDashboard, fallback: 'Dashboard' },
   { href: '/templates', labelKey: 'sidebar_templates', icon: FileCode, fallback: 'Templates' },
@@ -73,31 +75,18 @@ const navItems = [
 
 const uiLanguages = UI_LANGUAGES
 
-export default function Sidebar() {
-  const [isOpen, setIsOpen] = useState(false)
-  const [showAuthModal, setShowAuthModal] = useState(false)
+export default function Sidebar({ isOpen, onClose }: SidebarProps) {
   const { lang, setLang, t } = useI18n()
   const pathname = usePathname()
-  const { user, loading: authLoading, logout } = useAuth()
+  const { user, loading: authLoading } = useAuth()
 
   return (
     <>
-      {/* Mobile hamburger — hidden when sidebar is open */}
-      <button
-        onClick={() => setIsOpen(true)}
-        className={`lg:hidden fixed top-4 left-4 z-50 p-2.5 rounded-xl bg-[var(--surface-overlay)] backdrop-blur-sm text-[var(--tx-primary)] hover:bg-[var(--surface-card-hover)] transition-colors border border-[var(--border-theme)] ${
-          isOpen ? 'invisible' : ''
-        }`}
-        aria-label="Open menu"
-      >
-        <Menu size={20} />
-      </button>
-
       {/* Backdrop */}
       {isOpen && (
         <div
           className="lg:hidden fixed inset-0 bg-black/60 backdrop-blur-sm z-40"
-          onClick={() => setIsOpen(false)}
+          onClick={onClose}
         />
       )}
 
@@ -112,7 +101,7 @@ export default function Sidebar() {
           <div className="relative p-5 pr-12 border-b border-[var(--border-theme)]">
             {/* Mobile close button — top-right of header */}
             <button
-              onClick={() => setIsOpen(false)}
+              onClick={onClose}
               className="lg:hidden absolute top-3 right-3 p-2 rounded-lg text-[var(--tx-muted)] hover:text-[var(--tx-primary)] hover:bg-[var(--surface-card-hover)] transition-colors"
               aria-label="Close menu"
             >
@@ -143,7 +132,7 @@ export default function Sidebar() {
                 <Link
                   key={item.href}
                   href={item.href}
-                  onClick={() => setIsOpen(false)}
+                  onClick={onClose}
                   className={`sidebar-link relative ${isActive ? 'active' : ''}`}
                 >
                   <item.icon size={18} />
@@ -151,6 +140,18 @@ export default function Sidebar() {
                 </Link>
               )
             })}
+
+            {/* Admin-only: UI Translations */}
+            {!authLoading && user?.isAdmin && (
+              <Link
+                href="/admin/ui-translations"
+                onClick={onClose}
+                className={`sidebar-link relative ${pathname.startsWith('/admin/ui-translations') ? 'active' : ''}`}
+              >
+                <Settings size={18} />
+                <span>{t('sidebar_ui_translations', 'UI Translations')}</span>
+              </Link>
+            )}
           </nav>
 
           {/* Theme Toggle — icon only */}
@@ -180,40 +181,6 @@ export default function Sidebar() {
             </div>
           </div>
 
-          {/* Auth Section */}
-          {!authLoading && (
-            <div className="p-3 border-t border-[var(--border-theme)]">
-              {user ? (
-                <div className="px-3 py-2 space-y-2">
-                  <div className="flex items-center gap-2">
-                    <div className="w-7 h-7 rounded-full bg-ubuntu-orange/20 flex items-center justify-center text-ubuntu-orange text-xs font-bold">
-                      {user.username[0].toUpperCase()}
-                    </div>
-                    <div className="flex-1 min-w-0">
-                      <p className="text-sm text-[var(--tx-primary)] font-medium truncate">{user.displayName || user.username}</p>
-                      <p className="text-[10px] text-[var(--tx-dim)] truncate">@{user.username}</p>
-                    </div>
-                  </div>
-                  <button
-                    onClick={async () => { await logout(); setIsOpen(false) }}
-                    className="sidebar-link text-xs w-full"
-                  >
-                    <LogOut size={16} />
-                    <span>{t('auth_logout', 'Logout')}</span>
-                  </button>
-                </div>
-              ) : (
-                <button
-                  onClick={() => { setShowAuthModal(true); setIsOpen(false) }}
-                  className="sidebar-link w-full"
-                >
-                  <LogIn size={18} />
-                  <span>{t('auth_login_title', 'Sign In')}</span>
-                </button>
-              )}
-            </div>
-          )}
-
           {/* Footer */}
           <div className="p-3 border-t border-[var(--border-theme)]">
             <a
@@ -238,8 +205,6 @@ export default function Sidebar() {
           </div>
         </div>
       </aside>
-
-      {showAuthModal && <AuthModal onClose={() => setShowAuthModal(false)} />}
     </>
   )
 }

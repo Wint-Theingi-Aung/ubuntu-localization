@@ -139,6 +139,38 @@ export async function initDB(): Promise<void> {
   await query(`CREATE INDEX IF NOT EXISTS idx_glossary_history_glossary ON glossary_history(glossary_id)`).catch(() => {})
   await query(`CREATE INDEX IF NOT EXISTS idx_glossary_history_created ON glossary_history(created_at DESC)`).catch(() => {})
 
+  // UI translations table
+  await query(`
+    CREATE TABLE IF NOT EXISTS ui_translations (
+      id              SERIAL PRIMARY KEY,
+      lang            VARCHAR(10) NOT NULL,
+      key             VARCHAR(255) NOT NULL,
+      value           TEXT NOT NULL DEFAULT '',
+      updated_by      INTEGER REFERENCES users(id) ON DELETE SET NULL,
+      created_at      TIMESTAMP WITH TIME ZONE DEFAULT NOW(),
+      updated_at      TIMESTAMP WITH TIME ZONE DEFAULT NOW(),
+      UNIQUE(lang, key)
+    )
+  `).catch(() => {})
+  await query(`CREATE INDEX IF NOT EXISTS idx_ui_translations_lang ON ui_translations(lang)`).catch(() => {})
+  await query(`CREATE INDEX IF NOT EXISTS idx_ui_translations_key ON ui_translations(key)`).catch(() => {})
+
+  // UI translation history table
+  await query(`
+    CREATE TABLE IF NOT EXISTS ui_translation_history (
+      id              SERIAL PRIMARY KEY,
+      user_id         INTEGER REFERENCES users(id) ON DELETE SET NULL,
+      lang            VARCHAR(10) NOT NULL,
+      key             VARCHAR(255) NOT NULL,
+      old_value       TEXT,
+      new_value       TEXT,
+      created_at      TIMESTAMP WITH TIME ZONE DEFAULT NOW()
+    )
+  `).catch(() => {})
+  await query(`CREATE INDEX IF NOT EXISTS idx_ui_translation_history_user ON ui_translation_history(user_id)`).catch(() => {})
+  await query(`CREATE INDEX IF NOT EXISTS idx_ui_translation_history_lang ON ui_translation_history(lang)`).catch(() => {})
+  await query(`CREATE INDEX IF NOT EXISTS idx_ui_translation_history_created ON ui_translation_history(created_at DESC)`).catch(() => {})
+
   // Cleanup expired sessions (opportunistic)
   await query(`DELETE FROM user_sessions WHERE expires_at < NOW()`).catch(() => {})
 }
@@ -509,6 +541,135 @@ export async function getGlossaryHistory(
      ${whereClause}
      ORDER BY gh.created_at DESC
      LIMIT $${userId ? 2 : 1} OFFSET $${userId ? 3 : 2}`,
+    params,
+  )
+
+  return { entries, total }
+}
+
+// ── UI Translations ───────────────────────────────────────────
+
+export interface DbUiTranslation {
+  id: number
+  lang: string
+  key: string
+  value: string
+  updatedBy: number | null
+  createdAt: Date
+  updatedAt: Date
+}
+
+/**
+ * Get all UI translations for a specific language
+ */
+export async function getUiTranslations(lang: string): Promise<Record<string, string>> {
+  const rows = await query<{ key: string; value: string }>(
+    'SELECT key, value FROM ui_translations WHERE lang = $1',
+    [lang],
+  )
+  const map: Record<string, string> = {}
+  for (const row of rows) {
+    map[row.key] = row.value
+  }
+  return map
+}
+
+/**
+ * Get all UI translations across all languages, grouped by language
+ */
+export async function getAllUiTranslations(): Promise<Record<string, Record<string, string>>> {
+  const rows = await query<{ lang: string; key: string; value: string }>(
+    'SELECT lang, key, value FROM ui_translations ORDER BY lang, key',
+  )
+  const result: Record<string, Record<string, string>> = {}
+  for (const row of rows) {
+    if (!result[row.lang]) result[row.lang] = {}
+    result[row.lang][row.key] = row.value
+  }
+  return result
+}
+
+/**
+ * Get distinct translation keys that have been stored in the DB
+ */
+export async function getUiTranslationKeys(): Promise<string[]> {
+  const rows = await query<{ key: string }>('SELECT DISTINCT key FROM ui_translations ORDER BY key')
+  return rows.map(r => r.key)
+}
+
+/**
+ * Batch upsert UI translations for a language
+ * Only updates keys that have non-empty values (admin edits)
+ */
+export async function upsertUiTranslations(
+  lang: string,
+  translations: Record<string, string>,
+  userId: number,
+): Promise<void> {
+  for (const [key, value] of Object.entries(translations)) {
+    // Get old value for history
+    const old = await queryOne<{ value: string }>(
+      'SELECT value FROM ui_translations WHERE lang = $1 AND key = $2',
+      [lang, key],
+    )
+
+    await query(
+      `INSERT INTO ui_translations (lang, key, value, updated_by, updated_at)
+       VALUES ($1, $2, $3, $4, NOW())
+       ON CONFLICT (lang, key) DO UPDATE SET value = $3, updated_by = $4, updated_at = NOW()`,
+      [lang, key, value, userId],
+    )
+
+    // Record history only if value changed
+    if (old && old.value === value) continue
+    await query(
+      `INSERT INTO ui_translation_history (user_id, lang, key, old_value, new_value)
+       VALUES ($1, $2, $3, $4, $5)`,
+      [userId, lang, key, old?.value || null, value],
+    )
+  }
+}
+
+/**
+ * Get UI translation change history
+ */
+export interface DbUiTranslationHistoryEntry {
+  id: number
+  userId: number | null
+  lang: string
+  key: string
+  oldValue: string | null
+  newValue: string | null
+  username: string | null
+  displayName: string | null
+  createdAt: Date
+}
+
+export async function getUiTranslationHistory(
+  limit: number = 50,
+  offset: number = 0,
+  lang?: string,
+): Promise<{ entries: DbUiTranslationHistoryEntry[]; total: number }> {
+  const whereClause = lang ? 'WHERE uth.lang = $1' : ''
+  const params = lang ? [lang, limit, offset] : [limit, offset]
+  const countParams = lang ? [lang] : []
+
+  const countResult = await queryOne<{ count: string }>(
+    `SELECT COUNT(*)::text AS count FROM ui_translation_history uth ${whereClause}`,
+    countParams,
+  )
+  const total = parseInt(countResult?.count || '0', 10)
+
+  const entries = await query<DbUiTranslationHistoryEntry>(
+    `SELECT uth.id, uth.user_id AS "userId", uth.lang, uth.key,
+            uth.old_value AS "oldValue", uth.new_value AS "newValue",
+            uth.created_at AS "createdAt",
+            u.username, u.display_name AS "displayName"
+     FROM ui_translation_history uth
+     LEFT JOIN users u ON uth.user_id = u.id
+     ${whereClause}
+     ORDER BY uth.created_at DESC
+     LIMIT $${lang ? 2 : 1} OFFSET $${lang ? 3 : 2}`,
     params,
   )
 

@@ -237,5 +237,17 @@
   "activity_visitors": "လားပ်: {count}",
   "activity_visitors_loading": "လားပ် ဖွံ့...",
   "translation_contribution_title": "လၢအဂီု Ubuntu ကျိာ်ထံးစိကီးအတၢ်မၤစၢၤလီၤစိၤ",
-  "translation_contribution_note": "တၢ်ပန်းဃီခီအံၤ လၢအဂီု Ubuntu ကျိာ်ထံးစိကီးအတၢ်မၤစၢၤလီၤစိၤ။ ပဆဲးကျိးစၢၤဝဲ .po ဖုဲလ်လၢတၢ်ကျိာ်ထံးတိုက်ရိုက်အဂီုလီၤ။ မၤလီၤတံၢ်လၢ ဖုဲလ်သုးအံၤ ဟဲထီုလၢ Launchpad တက့ၢ်။"
+  "translation_contribution_note": "တၢ်ပန်းဃီခီအံၤ လၢအဂီု Ubuntu ကျိာ်ထံးစိကီးအတၢ်မၤစၢၤလီၤစိၤ။ ပဆဲးကျိးစၢၤဝဲ .po ဖုဲလ်လၢတၢ်ကျိာ်ထံးတိုက်ရိုက်အဂီုလီၤ။ မၤလီၤတံၢ်လၢ ဖုဲလ်သုးအံၤ ဟဲထီုလၢ Launchpad တက့ၢ်။",
+  "sidebar_ui_translations": "UI ဘာသာပြန်",
+  "admin_ui_translations_title": "UI ဘာသာပြန်",
+  "admin_ui_translations_subtitle": "ဘာသာစကားအားလုံးအတွက် interface ဘာသာပြန် စီမံခန့်ခွဲရန်",
+  "admin_ui_translations_search": "ဘာသာပြန် key များ ရှာရန်...",
+  "admin_ui_translations_history": "မှတ်တမ်း",
+  "admin_ui_translations_change_history": "ပြောင်းလဲမှု မှတ်တမ်း",
+  "admin_ui_translations_no_history": "ဘာသာပြန်ပြောင်းလဲမှု မှတ်တမ်း မရှိသေးပါ",
+  "admin_ui_translations_save": "သိမ်းဆည်းရန်",
+  "admin_ui_translations_save_all": "အားလုံး သိမ်းဆည်းရန်",
+  "admin_ui_translations_saved": "{lang} အတွက် ဘာသာပြန်မှု {count} ခု သိမ်းဆည်းပြီး",
+  "admin_ui_translations_no_changes": "သိမ်းဆည်းရန် ပြောင်းလဲမှု မရှိပါ",
+  "admin_ui_translations_admin_required": "စီမံခန့်ခွဲသူ ခွင့်ပြုချက် လိုအပ်ပါသည်"
 }

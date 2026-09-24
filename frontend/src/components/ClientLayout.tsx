@@ -1,11 +1,16 @@
 'use client'
 
-import { type ReactNode, useEffect } from 'react'
+import { type ReactNode, useEffect, useState, useCallback } from 'react'
 import Sidebar from '@/components/Sidebar'
+import Header from '@/components/Header'
 import { useI18n } from '@/lib/i18n'
 
 export function ClientLayout({ children }: { children: ReactNode }) {
   const { lang } = useI18n()
+  const [sidebarOpen, setSidebarOpen] = useState(false)
+
+  const toggleSidebar = useCallback(() => setSidebarOpen(prev => !prev), [])
+  const closeSidebar = useCallback(() => setSidebarOpen(false), [])
 
   // Dynamically update <html lang="..."> for SEO and accessibility
   useEffect(() => {
@@ -14,8 +19,9 @@ export function ClientLayout({ children }: { children: ReactNode }) {
 
   return (
     <div className="flex min-h-screen">
-      <Sidebar />
-      <main className="flex-1 lg:ml-64 p-4 pt-16 lg:p-8 lg:pt-8">
+      <Sidebar isOpen={sidebarOpen} onClose={closeSidebar} />
+      <Header onMenuToggle={toggleSidebar} />
+      <main className="flex-1 lg:ml-64 pt-14 p-4 lg:p-8">
         {children}
       </main>
     </div>
