@@ -17,7 +17,7 @@ export default function Header({ onMenuToggle }: HeaderProps) {
 
   return (
     <>
-      <header className="fixed top-0 left-0 right-0 h-14 z-50 flex items-center justify-between px-4 lg:px-6 border-b border-[var(--border-theme)] bg-[var(--surface-sidebar)]/95 backdrop-blur-sm">
+      <header className="fixed top-0 left-0 right-0 lg:left-64 h-14 z-50 flex items-center justify-between px-4 lg:px-6 border-b border-[var(--border-theme)] bg-[var(--surface-sidebar)]/95 backdrop-blur-sm">
         {/* Mobile menu button */}
         <button
           onClick={onMenuToggle}
