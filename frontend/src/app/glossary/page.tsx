@@ -4,10 +4,9 @@ import { useState, useMemo, useEffect, useCallback } from 'react'
 import SearchInput from '@/components/SearchInput'
 import Pagination from '@/components/Pagination'
 import AuthModal from '@/components/AuthModal'
-import { BookOpen, AlertCircle, CheckCircle2, Clock, HelpCircle, Plus, Edit3, Trash2, X, Loader2, LogIn, History } from 'lucide-react'
+import { BookOpen, AlertCircle, CheckCircle2, Clock, HelpCircle, Plus, Edit3, Trash2, X, Loader2, LogIn } from 'lucide-react'
 import { useI18n } from '@/lib/i18n'
 import { useAuth } from '@/lib/auth-context'
-import Link from 'next/link'
 
 const ITEMS_PER_PAGE = 20
 
@@ -233,22 +232,14 @@ export default function GlossaryPage() {
         </div>
         <div className="flex items-center gap-2 flex-wrap">
           {isLoggedIn ? (
-            <>
-              <button onClick={() => { setEditingEntry(null); setShowModal(true) }} className="btn-primary flex items-center gap-2 text-sm">
-                <Plus size={16} />{t('glossary_add_term', 'Add Term')}
-              </button>
-              <Link href="/glossary/history" className="btn-ghost flex items-center gap-2 text-sm">
-                <History size={16} />{t('glossary_view_history', 'History')}
-              </Link>
-            </>
+            <button onClick={() => { setEditingEntry(null); setShowModal(true) }} className="btn-primary flex items-center gap-2 text-sm">
+              <Plus size={16} />{t('glossary_add_term', 'Add Term')}
+            </button>
           ) : (
             <>
               <button onClick={() => setShowAuthModal(true)} className="btn-primary flex items-center gap-2 text-sm">
                 <Plus size={16} />{t('glossary_add_term', 'Add Term')}
               </button>
-              <Link href="/glossary/history" className="btn-ghost flex items-center gap-2 text-sm">
-                <History size={16} />{t('glossary_view_history', 'History')}
-              </Link>
               <button onClick={() => setShowAuthModal(true)} className="btn-ghost flex items-center gap-2 text-sm text-ubuntu-orange">
                 <LogIn size={16} />{t('auth_login_title', 'Sign In')}
               </button>
