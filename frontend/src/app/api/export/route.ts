@@ -66,7 +66,10 @@ export async function POST(request: NextRequest) {
     // Build timestamped filename
     const now = new Date()
     const ts = `${now.getFullYear()}-${String(now.getMonth() + 1).padStart(2, '0')}-${String(now.getDate()).padStart(2, '0')}-${String(now.getHours()).padStart(2, '0')}${String(now.getMinutes()).padStart(2, '0')}${String(now.getSeconds()).padStart(2, '0')}`
-    const baseName = (filename || 'messages.po').replace(/\.pot?$/, '')
+    // Strip .po/.pot extension and any existing timestamp suffixes (e.g. -2026-09-24-230125)
+    const baseName = (filename || 'messages.po')
+      .replace(/\.pot?$/, '')
+      .replace(/-\d{4}-\d{2}-\d{2}-\d{6}(?:-\d{6})?$/, '')
 
     // Return as downloadable file
     return new NextResponse(poContent, {

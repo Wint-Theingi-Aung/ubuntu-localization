@@ -39,6 +39,9 @@ export default function TranslatePage() {
   const [poHeaders, setPoHeaders] = useState<Record<string, string>>({})
   const [reviewMode, setReviewMode] = useState(false)
   const [formatErrors, setFormatErrors] = useState<Record<number, string>>({})
+  const [initialUploadTimestamp, setInitialUploadTimestamp] = useState<string>('')
+  const [originalBaseFilename, setOriginalBaseFilename] = useState<string>('')
+  const [initialConfirmedCount, setInitialConfirmedCount] = useState<number>(0)
 
   const languages = LANGUAGES
 
@@ -143,8 +146,15 @@ export default function TranslatePage() {
         ...e,
         status: e.msgstr ? 'confirmed' as const : 'pending' as const,
       }))
+      const confirmedOnUpload = merged.filter(e => e.status === 'confirmed').length
+      const baseName = (d.filename || 'messages.po').replace(/\.po$/, '')
+      const now = new Date()
+      const ts = `${now.getFullYear()}-${String(now.getMonth() + 1).padStart(2, '0')}-${String(now.getDate()).padStart(2, '0')}-${String(now.getHours()).padStart(2, '0')}${String(now.getMinutes()).padStart(2, '0')}${String(now.getSeconds()).padStart(2, '0')}`
       setEntries(merged)
       setPoHeaders(d.po_headers || {})
+      setInitialConfirmedCount(confirmedOnUpload)
+      setOriginalBaseFilename(baseName)
+      setInitialUploadTimestamp(ts)
       setCurrentBatch(0)
       setReviewMode(false)
       setExpandedEntry(null)
@@ -283,14 +293,14 @@ export default function TranslatePage() {
           entries: entries.map(e => ({
             index: e.index,
             msgid: e.msgid,
-            msgstr: e.status === 'confirmed' ? e.msgstr : '',
+            msgstr: e.msgstr || '',
             msgctxt: e.msgctxt || '',
             flags: e.flags || [],
             occurrences: e.occurrences || [],
             tcomment: e.tcomment || '',
           })),
           language_code: targetLang,
-          filename: file?.name || 'messages.po',
+          filename: `${originalBaseFilename || (file?.name || 'messages.po').replace(/\.po$/, '')}.po`,
           po_headers: poHeaders,
         }),
       })
@@ -303,8 +313,10 @@ export default function TranslatePage() {
       a.href = url
       const now = new Date()
       const ts = `${now.getFullYear()}-${String(now.getMonth() + 1).padStart(2, '0')}-${String(now.getDate()).padStart(2, '0')}-${String(now.getHours()).padStart(2, '0')}${String(now.getMinutes()).padStart(2, '0')}${String(now.getSeconds()).padStart(2, '0')}`
-      const baseName = (file?.name || 'messages.po').replace(/\.po$/, '')
-      a.download = `${baseName}-${ts}.po`
+      const baseName = originalBaseFilename || (file?.name || 'messages.po').replace(/\.po$/, '')
+      a.download = initialUploadTimestamp
+        ? `${baseName}-${initialUploadTimestamp}-${ts}.po`
+        : `${baseName}-${ts}.po`
       document.body.appendChild(a); a.click(); document.body.removeChild(a)
       URL.revokeObjectURL(url)
       const cc = entries.filter(e => e.status === 'confirmed').length
@@ -321,7 +333,7 @@ export default function TranslatePage() {
         detailsParams: { count: cc, percent: pct },
       })
     } catch (err: any) { setError(err.message) }
-  }, [entries, targetLang, file, poHeaders, formatErrors, t, recordAndSyncHistory])
+  }, [entries, targetLang, file, poHeaders, formatErrors, t, recordAndSyncHistory, originalBaseFilename, initialUploadTimestamp])
 
   return (
     <div className="max-w-6xl mx-auto space-y-6">
@@ -462,7 +474,7 @@ export default function TranslatePage() {
               </div>
               <button
                 onClick={handleExport}
-                disabled={totalCount === 0}
+                disabled={confirmedCount === 0 || confirmedCount <= initialConfirmedCount}
                 className="btn-secondary flex items-center gap-2 text-sm"
               >
                 <Download size={16} />{t('translation_download_progress', 'Download Progress')}
@@ -750,6 +762,7 @@ export default function TranslatePage() {
             <button onClick={() => {
               if (file) localStorage.removeItem(`ubuntu-translate-${file.name}-${targetLang}`)
               setStep('upload'); setFile(null); setEntries([]); setCurrentBatch(0); setReviewMode(false)
+              setInitialUploadTimestamp(''); setOriginalBaseFilename(''); setInitialConfirmedCount(0)
             }} className="btn-secondary">
               {t('translation_start_new', 'Start New')}
             </button>
