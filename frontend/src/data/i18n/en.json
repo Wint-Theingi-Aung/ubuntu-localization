@@ -297,5 +297,8 @@
   "admin_ui_translations_save_all": "Save All",
   "admin_ui_translations_saved": "Saved {count} translation(s) for {lang}",
   "admin_ui_translations_no_changes": "No changes to save",
-  "admin_ui_translations_admin_required": "Admin access required"
+  "admin_ui_translations_admin_required": "Admin access required",
+  "history_glossary_added": "Added glossary term \"{term}\"",
+  "history_glossary_updated": "Updated glossary term \"{term}\"",
+  "history_glossary_deleted": "Deleted glossary term \"{term}\""
 }

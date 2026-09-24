@@ -249,5 +249,8 @@
   "admin_ui_translations_save_all": "ႁူဝ်ႁိူၼ်း သိမ်း",
   "admin_ui_translations_saved": "{lang} တီႈ ပိၼ်ႇၽၢသႃ {count} ၶိုင်ႈ သိမ်းႁဵတ်း",
   "admin_ui_translations_no_changes": "လွင်ႈႁဵၼ်း ဘွင်ႇမိူင်းႁဵတ်း",
-  "admin_ui_translations_admin_required": "ႁူဝ်ႁိူၼ်း ၶုင်ႈႁဵတ်း လိူဝ်"
+  "admin_ui_translations_admin_required": "ႁူဝ်ႁိူၼ်း ၶုင်ႈႁဵတ်း လိူဝ်",
+  "history_glossary_added": "ဝေါဟာရ \"{term}\" ၶိုင်ႈ ထပ်ႁဵတ်း",
+  "history_glossary_updated": "ဝေါဟာရ \"{term}\" ၶိုင်ႈ လွင်ႈႁဵၼ်း",
+  "history_glossary_deleted": "ဝေါဟာရ \"{term}\" ၶိုင်ႈ ဖျူႇၶႂၢမ်း"
 }

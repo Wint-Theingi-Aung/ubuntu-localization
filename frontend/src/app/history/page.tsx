@@ -1,13 +1,13 @@
 'use client'
 
 import { useState, useMemo, useEffect, useCallback } from 'react'
-import { History, Download, Languages, FileText, Clock, BookOpen, Trash2 } from 'lucide-react'
+import { History, Download, Languages, FileText, Clock, BookOpen, Trash2, Plus, Edit3, Trash } from 'lucide-react'
 import { useI18n } from '@/lib/i18n'
 import { useAuth } from '@/lib/auth-context'
 import { getHistory, clearHistory, formatTimestamp, type HistoryEntry } from '@/lib/history'
 
-const actionIcons: Record<string, typeof Languages> = { translate: Languages, export: Download, upload: FileText, glossary: BookOpen }
-const actionColors: Record<string, string> = { translate: 'text-ubuntu-orange bg-ubuntu-orange/20', export: 'text-emerald-400 bg-emerald-400/20', upload: 'text-blue-400 bg-blue-400/20', glossary: 'text-purple-400 bg-purple-400/20' }
+const actionIcons: Record<string, typeof Languages> = { translate: Languages, export: Download, upload: FileText, glossary: BookOpen, glossary_add: Plus, glossary_update: Edit3, glossary_delete: Trash }
+const actionColors: Record<string, string> = { translate: 'text-ubuntu-orange bg-ubuntu-orange/20', export: 'text-emerald-400 bg-emerald-400/20', upload: 'text-blue-400 bg-blue-400/20', glossary: 'text-purple-400 bg-purple-400/20', glossary_add: 'text-emerald-400 bg-emerald-400/20', glossary_update: 'text-amber-400 bg-amber-400/20', glossary_delete: 'text-red-400 bg-red-400/20' }
 
 const filterOptions: { key: string | null; labelKey: string; fallback: string }[] = [
   { key: null, labelKey: 'history_filter_all', fallback: 'All' },
@@ -16,6 +16,35 @@ const filterOptions: { key: string | null; labelKey: string; fallback: string }[
   { key: 'upload', labelKey: 'history_filter_upload', fallback: 'Upload' },
   { key: 'glossary', labelKey: 'history_filter_glossary', fallback: 'Glossary' },
 ]
+
+interface GlossaryHistoryApiEntry {
+  id: number
+  userId: number | null
+  glossaryId: number | null
+  action: 'add' | 'update' | 'delete'
+  oldValues: Record<string, any> | null
+  newValues: Record<string, any> | null
+  termEn: string | null
+  username: string | null
+  displayName: string | null
+  createdAt: number
+}
+
+function glossaryApiToHistoryEntry(e: GlossaryHistoryApiEntry): HistoryEntry {
+  const actionType = `glossary_${e.action}` as 'glossary_add' | 'glossary_update' | 'glossary_delete'
+  const termLabel = e.termEn ? ` "${e.termEn}"` : ''
+  const actionKey = e.action === 'add' ? 'history_glossary_added' : e.action === 'update' ? 'history_glossary_updated' : 'history_glossary_deleted'
+  const fallback = e.action === 'add' ? `Added glossary term${termLabel}` : e.action === 'update' ? `Updated glossary term${termLabel}` : `Deleted glossary term${termLabel}`
+  return {
+    id: `glossary-${e.id}`,
+    timestamp: e.createdAt,
+    user: e.displayName || e.username || undefined,
+    action: actionType,
+    description: fallback,
+    descriptionKey: actionKey,
+    descriptionParams: e.termEn ? { term: e.termEn } : undefined,
+  }
+}
 
 export default function HistoryPage() {
   const { t, ti } = useI18n()
@@ -27,19 +56,33 @@ export default function HistoryPage() {
 
   const loadHistory = useCallback(async () => {
     if (user) {
-      // Fetch from DB when authenticated
       try {
-        const res = await fetch('/api/history')
-        if (res.ok) {
-          const data = await res.json()
-          setAllHistory(data.entries || [])
+        const [historyRes, glossaryRes] = await Promise.all([
+          fetch('/api/history'),
+          fetch('/api/glossary/history?limit=100'),
+        ])
+
+        const generalEntries: HistoryEntry[] = []
+        if (historyRes.ok) {
+          const data = await historyRes.json()
+          generalEntries.push(...(data.entries || []))
         }
+
+        const glossaryEntries: HistoryEntry[] = []
+        if (glossaryRes.ok) {
+          const data = await glossaryRes.json()
+          const raw: GlossaryHistoryApiEntry[] = data.entries || []
+          for (const entry of raw) {
+            glossaryEntries.push(glossaryApiToHistoryEntry(entry))
+          }
+        }
+
+        const merged = [...generalEntries, ...glossaryEntries].sort((a, b) => b.timestamp - a.timestamp)
+        setAllHistory(merged)
       } catch {
-        // Fall back to localStorage
         setAllHistory(getHistory())
       }
     } else {
-      // Use localStorage for anonymous users
       setAllHistory(getHistory())
     }
   }, [user])
@@ -50,7 +93,13 @@ export default function HistoryPage() {
     loadHistory()
   }, [refreshKey, loadHistory])
 
-  const filtered = useMemo(() => filter ? allHistory.filter(h => h.action === filter) : allHistory, [filter, allHistory])
+  const filtered = useMemo(() => {
+    if (!filter) return allHistory
+    if (filter === 'glossary') {
+      return allHistory.filter(h => h.action === 'glossary' || h.action === 'glossary_add' || h.action === 'glossary_update' || h.action === 'glossary_delete')
+    }
+    return allHistory.filter(h => h.action === filter)
+  }, [filter, allHistory])
 
   const handleClear = () => {
     if (window.confirm(t('history_clear_confirm', 'Are you sure you want to clear all translation history? This cannot be undone.'))) {

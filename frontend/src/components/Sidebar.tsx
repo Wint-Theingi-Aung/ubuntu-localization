@@ -67,7 +67,6 @@ const navItems = [
   { href: '/templates', labelKey: 'sidebar_templates', icon: FileCode, fallback: 'Templates' },
   { href: '/translate', labelKey: 'sidebar_translation', icon: Languages, fallback: 'Translation' },
   { href: '/glossary', labelKey: 'sidebar_glossary', icon: BookOpen, fallback: 'Glossary' },
-  { href: '/glossary/history', labelKey: 'sidebar_glossary_history', icon: History, fallback: 'Glossary History' },
   { href: '/guide', labelKey: 'sidebar_guide', icon: BookMarked, fallback: 'Guide' },
   { href: '/contributors', labelKey: 'sidebar_contributors', icon: Users, fallback: 'Contributors' },
   { href: '/history', labelKey: 'sidebar_history', icon: History, fallback: 'History' },

@@ -7,7 +7,7 @@ export interface HistoryEntry {
   timestamp: number
   /** User identifier — undefined for local (no-auth) actions; set by authenticated sessions */
   user?: string
-  action: 'translate' | 'export' | 'upload' | 'glossary'
+  action: 'translate' | 'export' | 'upload' | 'glossary' | 'glossary_add' | 'glossary_update' | 'glossary_delete'
   /** Plain-text fallback (English) — used when no descriptionKey is set, or for old localStorage entries */
   description: string
   /** i18n key for the description (supports {param} interpolation via ti()) */

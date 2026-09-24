@@ -249,5 +249,8 @@
   "admin_ui_translations_save_all": "အားလုံး သိမ်းဆည်းရန်",
   "admin_ui_translations_saved": "{lang} အတွက် ဘာသာပြန်မှု {count} ခု သိမ်းဆည်းပြီး",
   "admin_ui_translations_no_changes": "သိမ်းဆည်းရန် ပြောင်းလဲမှု မရှိပါ",
-  "admin_ui_translations_admin_required": "စီမံခန့်ခွဲသူ ခွင့်ပြုချက် လိုအပ်ပါသည်"
+  "admin_ui_translations_admin_required": "စီမံခန့်ခွဲသူ ခွင့်ပြုချက် လိုအပ်ပါသည်",
+  "history_glossary_added": "ဝေါဟာရ \"{term}\" ကို ထည့်သွင်းပြီး",
+  "history_glossary_updated": "ဝေါဟာရ \"{term}\" ကို ပြောင်းလဲပြီး",
+  "history_glossary_deleted": "ဝေါဟာရ \"{term}\" ကို ဖျက်သိမ်းပြီး"
 }
