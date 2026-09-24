@@ -4,7 +4,7 @@ import { useState, useMemo, useEffect, useCallback } from 'react'
 import SearchInput from '@/components/SearchInput'
 import Pagination from '@/components/Pagination'
 import AuthModal from '@/components/AuthModal'
-import { BookOpen, AlertCircle, CheckCircle2, Clock, HelpCircle, Plus, Edit3, Trash2, X, Loader2, LogIn } from 'lucide-react'
+import { BookOpen, AlertCircle, CheckCircle2, Clock, HelpCircle, Plus, Edit3, Trash2, X, Loader2 } from 'lucide-react'
 import { useI18n } from '@/lib/i18n'
 import { useAuth } from '@/lib/auth-context'
 
@@ -236,14 +236,9 @@ export default function GlossaryPage() {
               <Plus size={16} />{t('glossary_add_term', 'Add Term')}
             </button>
           ) : (
-            <>
-              <button onClick={() => setShowAuthModal(true)} className="btn-primary flex items-center gap-2 text-sm">
-                <Plus size={16} />{t('glossary_add_term', 'Add Term')}
-              </button>
-              <button onClick={() => setShowAuthModal(true)} className="btn-ghost flex items-center gap-2 text-sm text-ubuntu-orange">
-                <LogIn size={16} />{t('auth_login_title', 'Sign In')}
-              </button>
-            </>
+            <button onClick={() => setShowAuthModal(true)} className="btn-primary flex items-center gap-2 text-sm">
+              <Plus size={16} />{t('glossary_add_term', 'Add Term')}
+            </button>
           )}
           <span className="text-sm text-[var(--tx-dim)]">{allEntries.length} {t('glossary_terms', 'terms')}</span>
         </div>

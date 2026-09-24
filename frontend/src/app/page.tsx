@@ -99,11 +99,6 @@ export default function Dashboard() {
           </div>
           <p className="text-[var(--tx-secondary)] mt-1">{t('dashboard_subtitle', 'AI-powered Ubuntu localization for indigenous Burmese languages')}</p>
         </div>
-        <Link href="/get-started" className="btn-primary flex items-center gap-2 w-fit">
-          <Languages size={18} />
-          {t('get_started_title', 'Get Started')}
-          <ArrowRight size={16} />
-        </Link>
       </div>
 
       <div className="grid grid-cols-2 lg:grid-cols-4 gap-4">

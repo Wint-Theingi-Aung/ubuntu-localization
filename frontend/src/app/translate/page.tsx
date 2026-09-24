@@ -139,9 +139,10 @@ export default function TranslatePage() {
       const r = await fetch('/api/upload', { method: 'POST', body: fd })
       if (!r.ok) { const d = await r.json(); throw new Error(d.error || 'Upload failed') }
       const d = await r.json()
-      const saveKey = `ubuntu-translate-${file!.name}-${targetLang}`
-      localStorage.removeItem(saveKey)
-      const merged: TranslationEntry[] = d.entries.map((e: any) => ({ ...e, msgstr: '', status: 'pending' as const }))
+      const merged: TranslationEntry[] = d.all_entries.map((e: any) => ({
+        ...e,
+        status: e.msgstr ? 'confirmed' as const : 'pending' as const,
+      }))
       setEntries(merged)
       setPoHeaders(d.po_headers || {})
       setCurrentBatch(0)
@@ -270,8 +271,7 @@ export default function TranslatePage() {
   }, [])
 
   const handleExport = useCallback(async () => {
-    const confirmedEntries = entries.filter(e => e.status === 'confirmed')
-    if (confirmedEntries.length === 0) {
+    if (entries.length === 0) {
       setError(t('translation_no_confirmed', 'No confirmed translations to export. Confirm at least one entry first.'))
       return
     }
@@ -280,10 +280,10 @@ export default function TranslatePage() {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({
-          entries: confirmedEntries.map(e => ({
+          entries: entries.map(e => ({
             index: e.index,
             msgid: e.msgid,
-            msgstr: e.msgstr,
+            msgstr: e.status === 'confirmed' ? e.msgstr : '',
             msgctxt: e.msgctxt || '',
             flags: e.flags || [],
             occurrences: e.occurrences || [],
@@ -462,7 +462,7 @@ export default function TranslatePage() {
               </div>
               <button
                 onClick={handleExport}
-                disabled={totalCount === 0 || !hasConfirmedEntry}
+                disabled={totalCount === 0}
                 className="btn-secondary flex items-center gap-2 text-sm"
               >
                 <Download size={16} />{t('translation_download_progress', 'Download Progress')}
@@ -744,7 +744,7 @@ export default function TranslatePage() {
           </p>
 
           <div className="flex flex-col sm:flex-row justify-center gap-3">
-            <button onClick={handleExport} disabled={!hasConfirmedEntry} className="btn-primary flex items-center justify-center gap-2">
+            <button onClick={handleExport} disabled={entries.length === 0} className="btn-primary flex items-center justify-center gap-2">
               <Download size={18} />{t('translation_download_po', 'Download .po File')}
             </button>
             <button onClick={() => {
