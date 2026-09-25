@@ -228,7 +228,7 @@ export default function TranslatePage() {
       setEntries(prev => prev.map(e => {
         const translated = translationMap.get(e.index)
         if (translated !== undefined) {
-          return { ...e, msgstr: translated, status: 'translated' as const }
+          return { ...e, msgstr: translated, status: 'reviewing' as const }
         }
         return e
       }))
