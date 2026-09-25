@@ -210,18 +210,17 @@ export default function TranslatePage() {
         }
       }
 
-      const updatedEntries = entries.map(e => {
+      setEntries(prev => prev.map(e => {
         const translated = translationMap.get(e.index)
         if (translated !== undefined) {
           return { ...e, msgstr: translated, status: 'reviewing' as const }
         }
         return e
-      })
-      setEntries(updatedEntries)
+      }))
       setFormatErrors(prev => ({ ...prev, ...newErrors }))
     } catch (err: any) { setError(err.message) }
     finally { setIsTranslating(false) }
-  }, [currentBatchEntries, targetLang, file, entries])
+  }, [currentBatchEntries, targetLang])
 
   const handleStartReview = useCallback(() => {
     setEntries(prev => prev.map(e => {
