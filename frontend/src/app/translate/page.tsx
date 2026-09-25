@@ -78,7 +78,8 @@ export default function TranslatePage() {
   const batchAllConfirmed = currentBatchEntries.length > 0 &&
     currentBatchEntries.every(e => e.status === 'confirmed')
   const batchHasPending = currentBatchEntries.some(e => e.status === 'pending')
-  const canReview = currentBatchEntries.some(e => e.msgstr.trim().length > 0)
+  const canReview = currentBatchEntries.length > 0 &&
+    currentBatchEntries.every(e => (e.status === 'translated' || e.status === 'reviewing' || e.status === 'confirmed') && e.msgstr.trim().length > 0)
   const workPhase: 'translate' | 'review' = reviewMode ? 'review' : 'translate'
 
   const translatedCount = entries.filter(e =>
@@ -187,6 +188,19 @@ export default function TranslatePage() {
         throw new Error('Invalid translation response')
       }
 
+      // A batch is atomic: do not show a partially translated batch.
+      // One Gemini request must return every pending entry before Review is enabled.
+      if (d.translations.length !== batch.length) {
+        throw new Error(`Translation batch incomplete: received ${d.translations.length} of ${batch.length} translations.`)
+      }
+
+      const missingTranslation = d.translations.find(
+        (t: any) => !t || typeof t.index !== 'number' || typeof t.translated !== 'string' || !t.translated.trim()
+      )
+      if (missingTranslation) {
+        throw new Error('Translation batch returned an empty translation. No partial results were applied.')
+      }
+
       const translationMap = new Map<number, string>()
       for (const t of d.translations) {
         if (t && typeof t.index === 'number' && typeof t.translated === 'string') {
@@ -210,10 +224,11 @@ export default function TranslatePage() {
         }
       }
 
+      // Apply the whole batch only after all translations are present.
       setEntries(prev => prev.map(e => {
         const translated = translationMap.get(e.index)
         if (translated !== undefined) {
-          return { ...e, msgstr: translated, status: 'reviewing' as const }
+          return { ...e, msgstr: translated, status: 'translated' as const }
         }
         return e
       }))
