@@ -14,6 +14,10 @@ import { useAuth } from '@/lib/auth-context'
 
 const BATCH_SIZE = 10
 
+function stripTimestamps(name: string): string {
+  return name.replace(/-\d{4}-\d{2}-\d{2}-\d{6}/g, '')
+}
+
 interface TranslationEntry {
   index: number
   msgid: string
@@ -147,7 +151,7 @@ export default function TranslatePage() {
         status: e.msgstr ? 'confirmed' as const : 'pending' as const,
       }))
       const confirmedOnUpload = merged.filter(e => e.status === 'confirmed').length
-      const baseName = (d.filename || 'messages.po').replace(/\.po$/, '')
+      const baseName = stripTimestamps((d.filename || 'messages.po').replace(/\.po$/, ''))
       const now = new Date()
       const ts = `${now.getFullYear()}-${String(now.getMonth() + 1).padStart(2, '0')}-${String(now.getDate()).padStart(2, '0')}-${String(now.getHours()).padStart(2, '0')}${String(now.getMinutes()).padStart(2, '0')}${String(now.getSeconds()).padStart(2, '0')}`
       setEntries(merged)
@@ -178,27 +182,31 @@ export default function TranslatePage() {
       })
       if (!r.ok) { const d = await r.json(); throw new Error(d.error || 'Translation failed') }
       const d = await r.json()
+
+      const translationMap = new Map<number, any>(d.translations.map((t: any) => [t.index, t]))
+
       const newErrors: Record<number, string> = {}
-      setEntries(prev => {
-        const updated = prev.map(e => {
-          const m = d.translations.find((t: any) => t.index === e.index)
-          if (m) {
-            if (m.translated.trim().length > 0) {
-              const { missing, extra, orderMismatch } = compareFormatSpecifiers(e.msgid, m.translated)
-              if (missing.length > 0 || extra.length > 0 || orderMismatch) {
-                const parts: string[] = []
-                if (missing.length) parts.push(`Missing: ${missing.join(', ')}`)
-                if (extra.length) parts.push(`Extra: ${extra.join(', ')}`)
-                if (orderMismatch) parts.push('Placeholder order changed')
-                newErrors[e.index] = parts.join('; ')
-              }
-            }
-            return { ...e, msgstr: m.translated, status: 'reviewing' as const }
+      for (const t of d.translations) {
+        const entry = batch.find(e => e.index === t.index)
+        if (entry && t.translated.trim().length > 0) {
+          const { missing, extra, orderMismatch } = compareFormatSpecifiers(entry.msgid, t.translated)
+          if (missing.length > 0 || extra.length > 0 || orderMismatch) {
+            const parts: string[] = []
+            if (missing.length) parts.push(`Missing: ${missing.join(', ')}`)
+            if (extra.length) parts.push(`Extra: ${extra.join(', ')}`)
+            if (orderMismatch) parts.push('Placeholder order changed')
+            newErrors[t.index] = parts.join('; ')
           }
-          return e
-        })
-        return updated
-      })
+        }
+      }
+
+      setEntries(prev => prev.map(e => {
+        const m = translationMap.get(e.index)
+        if (m) {
+          return { ...e, msgstr: m.translated, status: 'reviewing' as const }
+        }
+        return e
+      }))
       setFormatErrors(prev => ({ ...prev, ...newErrors }))
     } catch (err: any) { setError(err.message) }
     finally { setIsTranslating(false) }
@@ -313,10 +321,8 @@ export default function TranslatePage() {
       a.href = url
       const now = new Date()
       const ts = `${now.getFullYear()}-${String(now.getMonth() + 1).padStart(2, '0')}-${String(now.getDate()).padStart(2, '0')}-${String(now.getHours()).padStart(2, '0')}${String(now.getMinutes()).padStart(2, '0')}${String(now.getSeconds()).padStart(2, '0')}`
-      const baseName = originalBaseFilename || (file?.name || 'messages.po').replace(/\.po$/, '')
-      a.download = initialUploadTimestamp
-        ? `${baseName}-${initialUploadTimestamp}-${ts}.po`
-        : `${baseName}-${ts}.po`
+      const baseName = stripTimestamps(originalBaseFilename || (file?.name || 'messages.po').replace(/\.po$/, ''))
+      a.download = `${baseName}-${ts}.po`
       document.body.appendChild(a); a.click(); document.body.removeChild(a)
       URL.revokeObjectURL(url)
       const cc = entries.filter(e => e.status === 'confirmed').length
@@ -333,7 +339,7 @@ export default function TranslatePage() {
         detailsParams: { count: cc, percent: pct },
       })
     } catch (err: any) { setError(err.message) }
-  }, [entries, targetLang, file, poHeaders, formatErrors, t, recordAndSyncHistory, originalBaseFilename, initialUploadTimestamp])
+  }, [entries, targetLang, file, poHeaders, formatErrors, t, recordAndSyncHistory, originalBaseFilename])
 
   return (
     <div className="max-w-6xl mx-auto space-y-6">

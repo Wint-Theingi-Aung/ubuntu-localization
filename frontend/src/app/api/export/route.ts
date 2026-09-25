@@ -69,7 +69,7 @@ export async function POST(request: NextRequest) {
     // Strip .po/.pot extension and any existing timestamp suffixes (e.g. -2026-09-24-230125)
     const baseName = (filename || 'messages.po')
       .replace(/\.pot?$/, '')
-      .replace(/-\d{4}-\d{2}-\d{2}-\d{6}(?:-\d{6})?$/, '')
+      .replace(/-\d{4}-\d{2}-\d{2}-\d{6}/g, '')
 
     // Return as downloadable file
     return new NextResponse(poContent, {
