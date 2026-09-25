@@ -110,9 +110,12 @@ export async function translateBatch(
         }],
         generationConfig: {
           temperature: 0.2,
+          maxOutputTokens: 8192,
           responseMimeType: 'application/json',
           responseSchema: {
             type: 'ARRAY',
+            minItems: texts.length,
+            maxItems: texts.length,
             items: { type: 'STRING' }
           }
         }
@@ -138,12 +141,25 @@ export async function translateBatch(
     throw new Error('Invalid response format from Gemini API')
   }
 
-  // Ensure correct length
-  while (parsed.length < texts.length) {
-    parsed.push(texts[parsed.length])
+  // Never silently accept a partial/empty batch. The UI must receive
+  // all 10 translations from this single API request so it can show
+  // the complete batch before Review.
+  if (parsed.length !== texts.length) {
+    throw new Error(
+      `Gemini returned ${parsed.length} of ${texts.length} translations. Please try this batch again.`
+    )
   }
 
-  return parsed.slice(0, texts.length)
+  const invalid = parsed.findIndex(
+    (value) => typeof value !== 'string' || value.trim().length === 0
+  )
+  if (invalid !== -1) {
+    throw new Error(
+      `Gemini returned an empty translation for item ${invalid + 1} of ${texts.length}. Please try this batch again.`
+    )
+  }
+
+  return parsed
 }
 
 export interface QACheck {
