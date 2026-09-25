@@ -183,12 +183,22 @@ export default function TranslatePage() {
       if (!r.ok) { const d = await r.json(); throw new Error(d.error || 'Translation failed') }
       const d = await r.json()
 
-      const translationMap = new Map<number, any>(d.translations.map((t: any) => [t.index, t]))
+      if (!d.translations || !Array.isArray(d.translations)) {
+        throw new Error('Invalid translation response')
+      }
+
+      const translationMap = new Map<number, string>()
+      for (const t of d.translations) {
+        if (t && typeof t.index === 'number' && typeof t.translated === 'string') {
+          translationMap.set(t.index, t.translated)
+        }
+      }
 
       const newErrors: Record<number, string> = {}
       for (const t of d.translations) {
+        if (!t || typeof t.index !== 'number') continue
         const entry = batch.find(e => e.index === t.index)
-        if (entry && t.translated.trim().length > 0) {
+        if (entry && t.translated && t.translated.trim().length > 0) {
           const { missing, extra, orderMismatch } = compareFormatSpecifiers(entry.msgid, t.translated)
           if (missing.length > 0 || extra.length > 0 || orderMismatch) {
             const parts: string[] = []
@@ -200,17 +210,18 @@ export default function TranslatePage() {
         }
       }
 
-      setEntries(prev => prev.map(e => {
-        const m = translationMap.get(e.index)
-        if (m) {
-          return { ...e, msgstr: m.translated, status: 'reviewing' as const }
+      const updatedEntries = entries.map(e => {
+        const translated = translationMap.get(e.index)
+        if (translated !== undefined) {
+          return { ...e, msgstr: translated, status: 'reviewing' as const }
         }
         return e
-      }))
+      })
+      setEntries(updatedEntries)
       setFormatErrors(prev => ({ ...prev, ...newErrors }))
     } catch (err: any) { setError(err.message) }
     finally { setIsTranslating(false) }
-  }, [currentBatchEntries, targetLang, file])
+  }, [currentBatchEntries, targetLang, file, entries])
 
   const handleStartReview = useCallback(() => {
     setEntries(prev => prev.map(e => {

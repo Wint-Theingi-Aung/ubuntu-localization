@@ -21,7 +21,7 @@ export function ClientLayout({ children }: { children: ReactNode }) {
     <div className="flex min-h-screen">
       <Sidebar isOpen={sidebarOpen} onClose={closeSidebar} />
       <Header onMenuToggle={toggleSidebar} />
-      <main className="flex-1 lg:ml-64 pt-14 p-4 lg:p-8">
+      <main className="flex-1 lg:ml-64 pt-14 px-4 lg:px-8 pb-4 lg:pb-8">
         {children}
       </main>
     </div>
