@@ -1,4 +1,4 @@
-'use client'
+ 'use client'
 
 import { useState, useCallback, useMemo, useEffect } from 'react'
 import {
@@ -9,7 +9,7 @@ import {
 import { useI18n } from '@/lib/i18n'
 import { LANGUAGES, TRANSLATION_CONFIG } from '@/lib/constants'
 import { recordHistory } from '@/lib/history'
-import { compareFormatSpecifiers } from '@/lib/translate'
+import { compareFormatSpecifiers, validateBatchResponse } from '@/lib/translate'
 import { useAuth } from '@/lib/auth-context'
 
 const BATCH_SIZE = 10
@@ -26,7 +26,7 @@ interface TranslationEntry {
   flags: string[]
   occurrences: string[]
   tcomment?: string
-  status: 'pending' | 'translated' | 'reviewing' | 'confirmed'
+  status: 'pending' | 'reviewing' | 'confirmed'
 }
 
 export default function TranslatePage() {
@@ -83,14 +83,14 @@ export default function TranslatePage() {
   const workPhase: 'translate' | 'review' = reviewMode ? 'review' : 'translate'
 
   const translatedCount = entries.filter(e =>
-    e.status === 'translated' || e.status === 'reviewing' || e.status === 'confirmed'
+    e.status === 'reviewing' || e.status === 'confirmed'
   ).length
   const confirmedCount = entries.filter(e => e.status === 'confirmed').length
   const hasConfirmedEntry = confirmedCount > 0
   const untranslatedCount = entries.filter(e => e.status === 'pending').length
   const totalCount = entries.length
 
-  const batchReviewingCount = currentBatchEntries.filter(e => e.status === 'reviewing' || e.status === 'translated').length
+  const batchReviewingCount = currentBatchEntries.filter(e => e.status === 'reviewing').length
   const batchConfirmedCount = currentBatchEntries.filter(e => e.status === 'confirmed').length
   const batchFormatErrorCount = currentBatchEntries.filter(e => formatErrors[e.index]).length
   const totalFormatErrorCount = Object.keys(formatErrors).length
@@ -184,6 +184,7 @@ export default function TranslatePage() {
       if (!r.ok) { const d = await r.json(); throw new Error(d.error || 'Translation failed') }
       const d = await r.json()
 
+
       if (!d.translations || !Array.isArray(d.translations)) {
         throw new Error('Invalid translation response')
       }
@@ -206,20 +207,26 @@ export default function TranslatePage() {
         if (t && typeof t.index === 'number' && typeof t.translated === 'string') {
           translationMap.set(t.index, t.translated)
         }
+
+      const requestedIndexes = batch.map(e => e.index)
+      const validation = validateBatchResponse(d.translations, requestedIndexes)
+      if (!validation.ok) {
+        throw new Error(validation.error)
+
       }
+      const translationMap = validation.translationMap!
 
       const newErrors: Record<number, string> = {}
-      for (const t of d.translations) {
-        if (!t || typeof t.index !== 'number') continue
-        const entry = batch.find(e => e.index === t.index)
-        if (entry && t.translated && t.translated.trim().length > 0) {
-          const { missing, extra, orderMismatch } = compareFormatSpecifiers(entry.msgid, t.translated)
+      for (const [idx, translated] of translationMap) {
+        const entry = batch.find(e => e.index === idx)
+        if (entry) {
+          const { missing, extra, orderMismatch } = compareFormatSpecifiers(entry.msgid, translated)
           if (missing.length > 0 || extra.length > 0 || orderMismatch) {
             const parts: string[] = []
             if (missing.length) parts.push(`Missing: ${missing.join(', ')}`)
             if (extra.length) parts.push(`Extra: ${extra.join(', ')}`)
             if (orderMismatch) parts.push('Placeholder order changed')
-            newErrors[t.index] = parts.join('; ')
+            newErrors[idx] = parts.join('; ')
           }
         }
       }
@@ -296,7 +303,7 @@ export default function TranslatePage() {
     const start = currentBatch * BATCH_SIZE
     const end = start + BATCH_SIZE
     setEntries(prev => prev.map((e, i) =>
-      i >= start && i < end && (e.status === 'reviewing' || e.status === 'translated') && !formatErrors[e.index]
+      i >= start && i < end && e.status === 'reviewing' && !formatErrors[e.index]
         ? { ...e, status: 'confirmed' as const }
         : e
     ))
@@ -559,11 +566,11 @@ export default function TranslatePage() {
                         <div className="flex flex-col">
                           <p className="text-xs text-[var(--tx-dim)] mb-1 flex items-center gap-1">
                             <Languages size={10} />
-                            {entry.status === 'translated' || entry.status === 'reviewing'
+                            {entry.status === 'reviewing'
                               ? t('translation_preview', 'AI Translation \u2014 edit to refine')
                               : t('translation_pending', 'Pending translation')}
                           </p>
-                          {entry.status === 'translated' || entry.status === 'reviewing'
+                          {entry.status === 'reviewing'
                             ? (
                               <textarea
                                 value={entry.msgstr}
@@ -576,7 +583,7 @@ export default function TranslatePage() {
                             : <p className="text-[var(--tx-faint)] italic text-sm p-2.5 min-h-[4rem] flex items-center">{t('translation_pending_hint', 'Click Translate Batch to generate')}</p>}
                         </div>
                       </div>
-                      {(entry.status === 'translated' || entry.status === 'reviewing') && (
+                      {entry.status === 'reviewing' && (
                         <div className="flex items-center gap-2 mt-2 ml-auto">
                           {formatErrors[entry.index] ? (
                             <span className="text-[10px] text-red-400 flex items-center gap-1">
@@ -644,7 +651,7 @@ export default function TranslatePage() {
                 {currentBatchEntries.map(entry => {
                   const isExpanded = expandedEntry === entry.index
                   const isConfirmed = entry.status === 'confirmed'
-                  const isReviewing = entry.status === 'reviewing' || entry.status === 'translated'
+                  const isReviewing = entry.status === 'reviewing'
 
                   return (
                     <div

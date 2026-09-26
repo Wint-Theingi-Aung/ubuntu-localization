@@ -29,6 +29,95 @@ export interface GlossaryTerm {
   note: string
 }
 
+export interface BatchValidationResult {
+  ok: boolean
+  error?: string
+  translationMap?: Map<number, string>
+}
+
+/**
+ * Validate a batch translation response from the API.
+ *
+ * Rejects the entire batch if:
+ * - response is not an array
+ * - any result object is malformed (missing numeric index or string translated)
+ * - count doesn't match requested count
+ * - duplicate indexes
+ * - missing indexes (requested but not in response)
+ * - unexpected indexes (in response but not requested)
+ * - any translated value is empty or whitespace-only
+ *
+ * On success, returns a Map of index → translated string.
+ */
+export function validateBatchResponse(
+  response: unknown,
+  requestedIndexes: number[],
+): BatchValidationResult {
+  if (!response || !Array.isArray(response)) {
+    return { ok: false, error: 'Invalid translation response: expected an array' }
+  }
+
+  for (const t of response) {
+    if (!t || typeof t !== 'object' || typeof t.index !== 'number' || typeof t.translated !== 'string') {
+      return { ok: false, error: 'Invalid translation result object: each result must have numeric index and string translated' }
+    }
+  }
+
+  if (response.length !== requestedIndexes.length) {
+    return {
+      ok: false,
+      error: `Incomplete batch response: expected ${requestedIndexes.length} results, got ${response.length}. No translations applied.`,
+    }
+  }
+
+  const responseIndexes = response.map((t: { index: number }) => t.index)
+  const responseSet = new Set(responseIndexes)
+
+  if (responseSet.size !== responseIndexes.length) {
+    const seen = new Set<number>()
+    const dupes = responseIndexes.filter((i: number) => seen.has(i) || (seen.add(i), false))
+    return {
+      ok: false,
+      error: `Duplicate indexes in response: [${dupes.join(', ')}]. No translations applied.`,
+    }
+  }
+
+  const requestedSet = new Set(requestedIndexes)
+  for (const idx of requestedIndexes) {
+    if (!responseSet.has(idx)) {
+      return {
+        ok: false,
+        error: `Missing index ${idx} in batch response. No translations applied.`,
+      }
+    }
+  }
+
+  for (const idx of responseSet) {
+    if (!requestedSet.has(idx)) {
+      return {
+        ok: false,
+        error: `Unexpected index ${idx} in batch response. No translations applied.`,
+      }
+    }
+  }
+
+  for (const t of response) {
+    if (!t.translated || t.translated.trim().length === 0) {
+      return {
+        ok: false,
+        error: `Empty translation for index ${t.index}. No translations applied.`,
+      }
+    }
+  }
+
+  const translationMap = new Map<number, string>()
+  for (const t of response) {
+    translationMap.set(t.index, t.translated)
+  }
+
+  return { ok: true, translationMap }
+}
+
 export function buildSystemPrompt(
   targetLang: string,
   langCode: string,
