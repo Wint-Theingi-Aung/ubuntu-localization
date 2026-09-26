@@ -31,8 +31,10 @@ type Suggestion = {
 
 type FilterStatus = 'pending' | 'approved' | 'rejected' | ''
 
-function formatTime(ts: string): string {
+function formatTime(ts: string | number | null | undefined): string {
+  if (ts === null || ts === undefined || ts === '') return 'Unknown date'
   const d = new Date(ts)
+  if (isNaN(d.getTime())) return 'Unknown date'
   return d.toLocaleDateString() + ' ' + d.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })
 }
 
@@ -252,7 +254,7 @@ export default function AdminGlossaryPage() {
 
                   {s.reviewerUsername && (
                     <p className="text-xs text-[var(--tx-dim)]">
-                      Reviewed by {s.reviewerDisplayName || s.reviewerUsername} · {formatTime(s.reviewedAt!)}
+                      Reviewed by {s.reviewerDisplayName || s.reviewerUsername} · {formatTime(s.reviewedAt)}
                     </p>
                   )}
                 </div>

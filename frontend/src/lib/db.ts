@@ -574,7 +574,11 @@ export async function createGlossarySuggestion(
   const result = await queryOne<DbGlossarySuggestion>(
     `INSERT INTO glossary_suggestions (submitted_by, action, glossary_id, en, my, shn, mnw, ksw, note, status)
      VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9, 'pending')
-     RETURNING *`,
+     RETURNING id, submitted_by AS "submittedBy", action, glossary_id AS "glossaryId",
+               en, my, shn, mnw, ksw, note, status,
+               reviewed_by AS "reviewedBy", reviewed_at AS "reviewedAt",
+               review_note AS "reviewNote",
+               created_at AS "createdAt", updated_at AS "updatedAt"`,
     [
       userId,
       data.action,
@@ -622,7 +626,11 @@ export async function listGlossarySuggestions(
   const total = parseInt(countResult?.count || '0', 10)
 
   const entries = await query<DbGlossarySuggestion>(
-    `SELECT gs.*,
+    `SELECT gs.id, gs.submitted_by AS "submittedBy", gs.action, gs.glossary_id AS "glossaryId",
+            gs.en, gs.my, gs.shn, gs.mnw, gs.ksw, gs.note, gs.status,
+            gs.reviewed_by AS "reviewedBy", gs.reviewed_at AS "reviewedAt",
+            gs.review_note AS "reviewNote",
+            gs.created_at AS "createdAt", gs.updated_at AS "updatedAt",
             su.username AS "submitterUsername", su.display_name AS "submitterDisplayName",
             ru.username AS "reviewerUsername", ru.display_name AS "reviewerDisplayName"
      FROM glossary_suggestions gs
@@ -650,7 +658,11 @@ export async function updateGlossarySuggestionStatus(
     `UPDATE glossary_suggestions
      SET status = $1, reviewed_by = $2, reviewed_at = NOW(), review_note = $3, updated_at = NOW()
      WHERE id = $4
-     RETURNING *`,
+     RETURNING id, submitted_by AS "submittedBy", action, glossary_id AS "glossaryId",
+               en, my, shn, mnw, ksw, note, status,
+               reviewed_by AS "reviewedBy", reviewed_at AS "reviewedAt",
+               review_note AS "reviewNote",
+               created_at AS "createdAt", updated_at AS "updatedAt"`,
     [status, reviewedBy, reviewNote || '', id],
   )
 }

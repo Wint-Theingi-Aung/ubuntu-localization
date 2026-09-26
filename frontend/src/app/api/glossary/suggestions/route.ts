@@ -16,6 +16,17 @@ import {
 } from '@/lib/db'
 import { getAuthUser } from '@/lib/auth'
 
+// ── Serialize dates to ISO strings for JSON response ────────────
+
+function serializeDates(entry: Record<string, any>): Record<string, any> {
+  return {
+    ...entry,
+    createdAt: entry.createdAt instanceof Date ? entry.createdAt.toISOString() : entry.createdAt ?? null,
+    updatedAt: entry.updatedAt instanceof Date ? entry.updatedAt.toISOString() : entry.updatedAt ?? null,
+    reviewedAt: entry.reviewedAt instanceof Date ? entry.reviewedAt.toISOString() : entry.reviewedAt ?? null,
+  }
+}
+
 // ── GET: List suggestions ───────────────────────────────────────
 
 export async function GET(request: NextRequest) {
@@ -41,7 +52,7 @@ export async function GET(request: NextRequest) {
 
     const { entries, total } = await listGlossarySuggestions(limit, offset, effectiveStatus, userId)
 
-    return NextResponse.json({ entries, total })
+    return NextResponse.json({ entries: entries.map(serializeDates), total })
   } catch (error) {
     console.error('Glossary suggestions fetch error:', error)
     return NextResponse.json(
@@ -134,7 +145,7 @@ export async function PUT(request: NextRequest) {
       // Future: handle 'update' and 'delete' suggestion actions
     }
 
-    return NextResponse.json({ suggestion })
+    return NextResponse.json({ suggestion: serializeDates(suggestion) })
   } catch (error) {
     console.error('Glossary suggestion review error:', error)
     return NextResponse.json(
