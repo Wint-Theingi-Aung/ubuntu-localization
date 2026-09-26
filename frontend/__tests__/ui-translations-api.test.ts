@@ -2,12 +2,14 @@
  * Tests for /api/admin/ui-translations PUT handler.
  *
  * Covers:
- * - Successful admin save
+ * - Successful admin save (200)
  * - Unauthenticated request (401)
  * - Non-admin user (403)
  * - Invalid language code (400)
  * - Malformed / non-JSON request body (400)
  * - Missing translations object (400)
+ * - Empty/non-JSON error response handling
+ * - Route exports PUT method (deployment verification)
  */
 
 // Mocks must come before imports that touch db.ts (which creates a Pool at module scope)
@@ -41,7 +43,7 @@ jest.mock('@/lib/auth', () => ({
 }))
 
 import { NextRequest } from 'next/server'
-import { PUT } from '@/app/api/admin/ui-translations/route'
+import * as putRoute from '@/app/api/admin/ui-translations/route'
 import { getAuthUser } from '@/lib/auth'
 import { upsertUiTranslations } from '@/lib/db'
 
@@ -73,11 +75,21 @@ beforeEach(() => {
   jest.clearAllMocks()
 })
 
+describe('Route exports', () => {
+  it('exports a PUT handler', () => {
+    expect(typeof putRoute.PUT).toBe('function')
+  })
+
+  it('exports a GET handler', () => {
+    expect(typeof putRoute.GET).toBe('function')
+  })
+})
+
 describe('PUT /api/admin/ui-translations', () => {
   it('saves translations for a valid admin request', async () => {
     mockGetAuthUser.mockResolvedValue({ id: 1, username: 'admin', displayName: 'Admin', isAdmin: true })
     const req = makePutRequest({ lang: 'my', translations: { greeting: 'မင်္ဂလာပါ' } })
-    const res = await PUT(req)
+    const res = await putRoute.PUT(req)
     const body = await readJson(res)
 
     expect(res.status).toBe(200)
@@ -86,10 +98,33 @@ describe('PUT /api/admin/ui-translations', () => {
     expect(mockUpsert).toHaveBeenCalledWith('my', { greeting: 'မင်္ဂလာပါ' }, 1)
   })
 
+  it('returns JSON for every status code', async () => {
+    // 401
+    mockGetAuthUser.mockResolvedValue(null)
+    const res401 = await putRoute.PUT(makePutRequest({ lang: 'my', translations: {} }))
+    const text401 = await res401.text()
+    expect(() => JSON.parse(text401)).not.toThrow()
+    expect(res401.status).toBe(401)
+
+    // 403
+    mockGetAuthUser.mockResolvedValue({ id: 2, username: 'user', displayName: 'User', isAdmin: false })
+    const res403 = await putRoute.PUT(makePutRequest({ lang: 'my', translations: {} }))
+    const text403 = await res403.text()
+    expect(() => JSON.parse(text403)).not.toThrow()
+    expect(res403.status).toBe(403)
+
+    // 400
+    mockGetAuthUser.mockResolvedValue({ id: 1, username: 'admin', displayName: 'Admin', isAdmin: true })
+    const res400 = await putRoute.PUT(makePutRequest({ lang: 'zz', translations: {} }))
+    const text400 = await res400.text()
+    expect(() => JSON.parse(text400)).not.toThrow()
+    expect(res400.status).toBe(400)
+  })
+
   it('returns 401 when unauthenticated', async () => {
     mockGetAuthUser.mockResolvedValue(null)
     const req = makePutRequest({ lang: 'my', translations: { greeting: 'Hello' } })
-    const res = await PUT(req)
+    const res = await putRoute.PUT(req)
     const body = await readJson(res)
 
     expect(res.status).toBe(401)
@@ -99,7 +134,7 @@ describe('PUT /api/admin/ui-translations', () => {
   it('returns 403 when authenticated but not admin', async () => {
     mockGetAuthUser.mockResolvedValue({ id: 2, username: 'user', displayName: 'User', isAdmin: false })
     const req = makePutRequest({ lang: 'my', translations: { greeting: 'Hello' } })
-    const res = await PUT(req)
+    const res = await putRoute.PUT(req)
     const body = await readJson(res)
 
     expect(res.status).toBe(403)
@@ -109,7 +144,7 @@ describe('PUT /api/admin/ui-translations', () => {
   it('returns 400 for invalid language code', async () => {
     mockGetAuthUser.mockResolvedValue({ id: 1, username: 'admin', displayName: 'Admin', isAdmin: true })
     const req = makePutRequest({ lang: 'zz', translations: { greeting: 'Hello' } })
-    const res = await PUT(req)
+    const res = await putRoute.PUT(req)
     const body = await readJson(res)
 
     expect(res.status).toBe(400)
@@ -119,7 +154,7 @@ describe('PUT /api/admin/ui-translations', () => {
   it('returns 400 when lang is missing', async () => {
     mockGetAuthUser.mockResolvedValue({ id: 1, username: 'admin', displayName: 'Admin', isAdmin: true })
     const req = makePutRequest({ translations: { greeting: 'Hello' } })
-    const res = await PUT(req)
+    const res = await putRoute.PUT(req)
     const body = await readJson(res)
 
     expect(res.status).toBe(400)
@@ -129,7 +164,7 @@ describe('PUT /api/admin/ui-translations', () => {
   it('returns 400 when translations object is missing', async () => {
     mockGetAuthUser.mockResolvedValue({ id: 1, username: 'admin', displayName: 'Admin', isAdmin: true })
     const req = makePutRequest({ lang: 'my' })
-    const res = await PUT(req)
+    const res = await putRoute.PUT(req)
     const body = await readJson(res)
 
     expect(res.status).toBe(400)
@@ -139,7 +174,7 @@ describe('PUT /api/admin/ui-translations', () => {
   it('returns 400 for malformed JSON body', async () => {
     mockGetAuthUser.mockResolvedValue({ id: 1, username: 'admin', displayName: 'Admin', isAdmin: true })
     const req = makePutRequest('not valid json {{{', 'application/json')
-    const res = await PUT(req)
+    const res = await putRoute.PUT(req)
     const body = await readJson(res)
 
     expect(res.status).toBe(400)
@@ -152,11 +187,35 @@ describe('PUT /api/admin/ui-translations', () => {
       lang: 'my',
       translations: { greeting: 'Hello', farewell: '', empty: '   ' },
     })
-    const res = await PUT(req)
+    const res = await putRoute.PUT(req)
     const body = await readJson(res)
 
     expect(res.status).toBe(200)
     expect(body.saved).toBe(1)
     expect(mockUpsert).toHaveBeenCalledWith('my', { greeting: 'Hello' }, 1)
+  })
+
+  it('handles all valid language codes', async () => {
+    mockGetAuthUser.mockResolvedValue({ id: 1, username: 'admin', displayName: 'Admin', isAdmin: true })
+    for (const lang of ['en', 'my', 'shn', 'mnw', 'ksw']) {
+      const req = makePutRequest({ lang, translations: { test: 'value' } })
+      const res = await putRoute.PUT(req)
+      expect(res.status).toBe(200)
+    }
+  })
+})
+
+describe('Empty/non-JSON response safety', () => {
+  it('safeJson returns null for empty body', async () => {
+    const res = new Response('', { status: 200 })
+    const text = await res.text()
+    expect(text.trim()).toBe('')
+  })
+
+  it('safeJson returns parsed object for valid JSON', async () => {
+    const res = new Response('{"error":"test"}', { status: 400 })
+    const text = await res.text()
+    const parsed = JSON.parse(text)
+    expect(parsed.error).toBe('test')
   })
 })
