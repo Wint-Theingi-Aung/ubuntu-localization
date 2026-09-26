@@ -1,5 +1,9 @@
 // ═══════════════════════════════════════════════════════════════════
-// /api/glossary — Glossary CRUD (reads public, writes require login)
+// /api/glossary — Glossary CRUD with suggestion + moderation
+// GET: public (approved entries only)
+// POST: auth required (creates pending suggestion)
+// PUT: admin-only (updates approved entries)
+// DELETE: admin-only (deletes approved entries)
 // ═══════════════════════════════════════════════════════════════════
 
 import { NextRequest, NextResponse } from 'next/server'
@@ -8,6 +12,7 @@ import {
   addDbGlossaryEntry,
   updateDbGlossaryEntry,
   deleteDbGlossaryEntry,
+  createGlossarySuggestion,
   queryOne,
   recordGlossaryHistory,
   initDB,
@@ -16,7 +21,7 @@ import {
 } from '@/lib/db'
 import { getAuthUser } from '@/lib/auth'
 
-// ── GET: List glossary entries (public) ────────────────────────
+// ── GET: List approved glossary entries (public) ────────────────
 
 export async function GET() {
   try {
@@ -33,7 +38,7 @@ export async function GET() {
   }
 }
 
-// ── POST: Add a glossary entry (login required) ───────────────
+// ── POST: Submit a glossary suggestion (login required) ─────────
 
 export async function POST(request: NextRequest) {
   try {
@@ -42,7 +47,7 @@ export async function POST(request: NextRequest) {
     const user = await getAuthUser(request)
     if (!user) {
       return NextResponse.json(
-        { error: 'Authentication required to add glossary entries' },
+        { error: 'Authentication required to submit suggestions' },
         { status: 401 },
       )
     }
@@ -57,31 +62,30 @@ export async function POST(request: NextRequest) {
       )
     }
 
-    const entry = await addDbGlossaryEntry(
-      { en: en.trim(), my: my || '', shn: shn || '', mnw: mnw || '', ksw: ksw || '', note: note || '' },
-      user.id,
-    )
-
-    // Record history
-    await recordGlossaryHistory({
-      userId: user.id,
-      glossaryId: entry.id,
+    const suggestion = await createGlossarySuggestion(user.id, {
       action: 'add',
-      newValues: { en: entry.en, my: entry.my, shn: entry.shn, mnw: entry.mnw, ksw: entry.ksw, note: entry.note },
-      termEn: entry.en,
+      en: en.trim(),
+      my: my || '',
+      shn: shn || '',
+      mnw: mnw || '',
+      ksw: ksw || '',
+      note: note || '',
     })
 
-    return NextResponse.json({ entry }, { status: 201 })
+    return NextResponse.json({
+      suggestion,
+      message: 'Suggestion submitted for review',
+    }, { status: 201 })
   } catch (error) {
-    console.error('Glossary add error:', error)
+    console.error('Glossary suggestion error:', error)
     return NextResponse.json(
-      { error: 'Failed to add glossary entry' },
+      { error: 'Failed to submit suggestion' },
       { status: 500 },
     )
   }
 }
 
-// ── PUT: Update a glossary entry (login required) ─────────────
+// ── PUT: Update an approved glossary entry (admin-only) ─────────
 
 export async function PUT(request: NextRequest) {
   try {
@@ -92,6 +96,12 @@ export async function PUT(request: NextRequest) {
       return NextResponse.json(
         { error: 'Authentication required to update glossary entries' },
         { status: 401 },
+      )
+    }
+    if (!user.isAdmin) {
+      return NextResponse.json(
+        { error: 'Admin access required to update approved glossary entries' },
+        { status: 403 },
       )
     }
 
@@ -105,7 +115,6 @@ export async function PUT(request: NextRequest) {
       )
     }
 
-    // Get old entry for history
     const oldEntry = await queryOne<DbGlossaryEntry>(
       'SELECT * FROM glossary WHERE id = $1',
       [id],
@@ -120,7 +129,6 @@ export async function PUT(request: NextRequest) {
       )
     }
 
-    // Record history
     await recordGlossaryHistory({
       userId: user.id,
       glossaryId: id,
@@ -140,7 +148,7 @@ export async function PUT(request: NextRequest) {
   }
 }
 
-// ── DELETE: Remove a glossary entry (login required) ───────────
+// ── DELETE: Remove an approved glossary entry (admin-only) ──────
 
 export async function DELETE(request: NextRequest) {
   try {
@@ -151,6 +159,12 @@ export async function DELETE(request: NextRequest) {
       return NextResponse.json(
         { error: 'Authentication required to delete glossary entries' },
         { status: 401 },
+      )
+    }
+    if (!user.isAdmin) {
+      return NextResponse.json(
+        { error: 'Admin access required to delete approved glossary entries' },
+        { status: 403 },
       )
     }
 
@@ -172,7 +186,6 @@ export async function DELETE(request: NextRequest) {
       )
     }
 
-    // Get entry before deletion for history
     const entry = await queryOne<DbGlossaryEntry>(
       'SELECT * FROM glossary WHERE id = $1',
       [id],
@@ -187,7 +200,6 @@ export async function DELETE(request: NextRequest) {
       )
     }
 
-    // Record history
     if (entry) {
       await recordGlossaryHistory({
         userId: user.id,

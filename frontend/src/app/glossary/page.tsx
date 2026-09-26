@@ -4,7 +4,7 @@ import { useState, useMemo, useEffect, useCallback } from 'react'
 import SearchInput from '@/components/SearchInput'
 import Pagination from '@/components/Pagination'
 import AuthModal from '@/components/AuthModal'
-import { BookOpen, AlertCircle, CheckCircle2, Clock, HelpCircle, Plus, Edit3, Trash2, X, Loader2 } from 'lucide-react'
+import { BookOpen, AlertCircle, CheckCircle2, Clock, HelpCircle, Plus, Edit3, Trash2, X, Loader2, Send } from 'lucide-react'
 import { useI18n } from '@/lib/i18n'
 import { useAuth } from '@/lib/auth-context'
 
@@ -18,7 +18,7 @@ const langColumns = [
   { code: 'ksw', label: "S'gaw Karen", flag: '🇲🇲', labelKey: 'glossary_karen' },
 ]
 
-type GlossaryEntry = { id: number; en: string; my: string; shn: string; mnw: string; ksw: string }
+type GlossaryEntry = { id: number; en: string; my: string; shn: string; mnw: string; ksw: string; note?: string }
 
 function getTranslationStatus(entry: GlossaryEntry): 'translated' | 'partial' | 'pending' {
   const c = [entry.my, entry.shn, entry.mnw, entry.ksw].filter(f => f && f.trim().length > 0).length
@@ -28,16 +28,125 @@ function getTranslatedCount(entry: GlossaryEntry): number {
   return [entry.my, entry.shn, entry.mnw, entry.ksw].filter(f => f && f.trim().length > 0).length
 }
 
-interface GlossaryModalProps {
-  entry?: GlossaryEntry | null
+// ── Suggestion Modal ────────────────────────────────────────────
+
+interface SuggestionModalProps {
+  onClose: () => void
+}
+
+function SuggestionModal({ onClose }: SuggestionModalProps) {
+  const { t } = useI18n()
+  const [form, setForm] = useState({ en: '', my: '', shn: '', mnw: '', ksw: '', note: '' })
+  const [saving, setSaving] = useState(false)
+  const [success, setSuccess] = useState(false)
+  const [error, setError] = useState('')
+
+  const handleSubmit = async () => {
+    if (!form.en.trim()) return
+    setSaving(true)
+    setError('')
+    try {
+      const res = await fetch('/api/glossary', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        credentials: 'include',
+        body: JSON.stringify(form),
+      })
+      const data = await res.json()
+      if (!res.ok) throw new Error(data.error || 'Failed to submit suggestion')
+      setSuccess(true)
+    } catch (err: any) {
+      setError(err.message || 'Failed to submit suggestion')
+    } finally {
+      setSaving(false)
+    }
+  }
+
+  if (success) {
+    return (
+      <div className="fixed inset-0 bg-black/60 backdrop-blur-sm z-50 flex items-center justify-center p-4" onClick={onClose}>
+        <div className="glass-card p-6 w-full max-w-md text-center space-y-4" onClick={e => e.stopPropagation()}>
+          <div className="w-12 h-12 rounded-full bg-emerald-500/20 flex items-center justify-center mx-auto">
+            <CheckCircle2 size={24} className="text-emerald-400" />
+          </div>
+          <h3 className="text-lg font-semibold text-[var(--tx-primary)]">{t('glossary_suggestion_submitted', 'Suggestion Submitted')}</h3>
+          <p className="text-sm text-[var(--tx-muted)]">{t('glossary_suggestion_pending_review', 'Your suggestion has been submitted for review. An admin will review it soon.')}</p>
+          <button onClick={onClose} className="btn-primary text-sm">{t('glossary_close', 'Close')}</button>
+        </div>
+      </div>
+    )
+  }
+
+  return (
+    <div className="fixed inset-0 bg-black/60 backdrop-blur-sm z-50 flex items-center justify-center p-4" onClick={onClose}>
+      <div className="glass-card p-6 w-full max-w-lg space-y-4" onClick={e => e.stopPropagation()}>
+        <div className="flex items-center justify-between">
+          <h3 className="text-lg font-semibold text-[var(--tx-primary)]">
+            {t('glossary_suggest_term', 'Suggest Term')}
+          </h3>
+          <button onClick={onClose} className="p-1 rounded-lg hover:bg-[var(--surface-overlay)] text-[var(--tx-muted)]"><X size={18} /></button>
+        </div>
+
+        <p className="text-xs text-[var(--tx-muted)]">
+          {t('glossary_suggestion_note', 'Your suggestion will be reviewed by an admin before being added to the glossary.')}
+        </p>
+
+        {error && (
+          <div className="p-3 rounded-lg bg-red-500/10 border border-red-500/20 text-sm text-red-400">
+            {error}
+          </div>
+        )}
+
+        <div className="space-y-3">
+          {langColumns.map(col => (
+            <div key={col.code}>
+              <label className="text-xs text-[var(--tx-dim)] mb-1 block">{col.flag} {t(col.labelKey, col.label)}</label>
+              <input
+                type="text"
+                value={form[col.code as keyof typeof form]}
+                onChange={e => setForm({ ...form, [col.code]: e.target.value })}
+                placeholder={col.code === 'en' ? t('glossary_english_placeholder', 'English term (required)') : ''}
+                className="input-field w-full"
+              />
+            </div>
+          ))}
+          <div>
+            <label className="text-xs text-[var(--tx-dim)] mb-1 block">📝 {t('glossary_note', 'Note')}</label>
+            <input
+              type="text"
+              value={form.note}
+              onChange={e => setForm({ ...form, note: e.target.value })}
+              placeholder={t('glossary_note_placeholder', 'Optional note about this term')}
+              className="input-field w-full"
+            />
+          </div>
+        </div>
+
+        <div className="flex items-center justify-end gap-2 pt-2">
+          <button onClick={onClose} className="btn-ghost text-sm">{t('glossary_cancel', 'Cancel')}</button>
+          <button onClick={handleSubmit} disabled={saving || !form.en.trim()} className="btn-primary text-sm flex items-center gap-1.5">
+            {saving && <Loader2 size={14} className="animate-spin" />}
+            <Send size={14} />
+            {t('glossary_submit_suggestion', 'Submit Suggestion')}
+          </button>
+        </div>
+      </div>
+    </div>
+  )
+}
+
+// ── Edit Modal (Admin only) ─────────────────────────────────────
+
+interface EditModalProps {
+  entry: GlossaryEntry
   onSave: (data: { en: string; my: string; shn: string; mnw: string; ksw: string }) => Promise<void>
   onDelete?: () => Promise<void>
   onClose: () => void
 }
 
-function GlossaryModal({ entry, onSave, onDelete, onClose }: GlossaryModalProps) {
+function EditModal({ entry, onSave, onDelete, onClose }: EditModalProps) {
   const { t } = useI18n()
-  const [form, setForm] = useState({ en: entry?.en || '', my: entry?.my || '', shn: entry?.shn || '', mnw: entry?.mnw || '', ksw: entry?.ksw || '' })
+  const [form, setForm] = useState({ en: entry.en, my: entry.my, shn: entry.shn, mnw: entry.mnw, ksw: entry.ksw })
   const [saving, setSaving] = useState(false)
   const [deleting, setDeleting] = useState(false)
 
@@ -73,7 +182,7 @@ function GlossaryModal({ entry, onSave, onDelete, onClose }: GlossaryModalProps)
       <div className="glass-card p-6 w-full max-w-lg space-y-4" onClick={e => e.stopPropagation()}>
         <div className="flex items-center justify-between">
           <h3 className="text-lg font-semibold text-[var(--tx-primary)]">
-            {entry ? t('glossary_edit_term', 'Edit Term') : t('glossary_add_term', 'Add Term')}
+            {t('glossary_edit_term', 'Edit Term')}
           </h3>
           <button onClick={onClose} className="p-1 rounded-lg hover:bg-[var(--surface-overlay)] text-[var(--tx-muted)]"><X size={18} /></button>
         </div>
@@ -88,7 +197,7 @@ function GlossaryModal({ entry, onSave, onDelete, onClose }: GlossaryModalProps)
                 onChange={e => setForm({ ...form, [col.code]: e.target.value })}
                 placeholder={col.code === 'en' ? t('glossary_english_placeholder', 'English term (required)') : ''}
                 className="input-field w-full"
-                disabled={col.code === 'en' && !!entry}
+                disabled={col.code === 'en'}
               />
             </div>
           ))}
@@ -96,7 +205,7 @@ function GlossaryModal({ entry, onSave, onDelete, onClose }: GlossaryModalProps)
 
         <div className="flex items-center justify-between pt-2">
           <div>
-            {entry && onDelete && (
+            {onDelete && (
               <button onClick={handleDelete} disabled={deleting} className="btn-ghost text-sm text-red-400 hover:text-red-300 flex items-center gap-1.5">
                 {deleting ? <Loader2 size={14} className="animate-spin" /> : <Trash2 size={14} />}
                 {t('glossary_delete', 'Delete')}
@@ -107,7 +216,7 @@ function GlossaryModal({ entry, onSave, onDelete, onClose }: GlossaryModalProps)
             <button onClick={onClose} className="btn-ghost text-sm">{t('glossary_cancel', 'Cancel')}</button>
             <button onClick={handleSave} disabled={saving || !form.en.trim()} className="btn-primary text-sm flex items-center gap-1.5">
               {saving && <Loader2 size={14} className="animate-spin" />}
-              {entry ? t('glossary_save', 'Save') : t('glossary_add', 'Add')}
+              {t('glossary_save', 'Save')}
             </button>
           </div>
         </div>
@@ -115,6 +224,8 @@ function GlossaryModal({ entry, onSave, onDelete, onClose }: GlossaryModalProps)
     </div>
   )
 }
+
+// ── Main Page ───────────────────────────────────────────────────
 
 export default function GlossaryPage() {
   const { t } = useI18n()
@@ -124,18 +235,16 @@ export default function GlossaryPage() {
   const [selectedLang, setSelectedLang] = useState<string | null>(null)
   const [statusFilter, setStatusFilter] = useState<string | null>(null)
 
-  // DB glossary entries
   const [dbEntries, setDbEntries] = useState<GlossaryEntry[]>([])
   const [dbLoading, setDbLoading] = useState(false)
-  const [showModal, setShowModal] = useState(false)
+  const [showSuggestionModal, setShowSuggestionModal] = useState(false)
+  const [showEditModal, setShowEditModal] = useState(false)
   const [editingEntry, setEditingEntry] = useState<GlossaryEntry | null>(null)
-
-  // Auth form state
   const [showAuthModal, setShowAuthModal] = useState(false)
 
   const isLoggedIn = user !== null
+  const isAdmin = user?.isAdmin === true
 
-  // Always load DB glossary (GET is public)
   const loadDbGlossary = useCallback(async () => {
     setDbLoading(true)
     try {
@@ -144,21 +253,14 @@ export default function GlossaryPage() {
         const data = await res.json()
         setDbEntries(data.entries || [])
       }
-    } catch {
-      // Ignore errors
-    } finally {
+    } catch {} finally {
       setDbLoading(false)
     }
   }, [])
 
-  useEffect(() => {
-    loadDbGlossary()
-  }, [loadDbGlossary])
+  useEffect(() => { loadDbGlossary() }, [loadDbGlossary])
 
-  // Always use DB entries (GET is public)
-  const allEntries = useMemo(() => {
-    return dbEntries.length > 0 ? dbEntries : []
-  }, [dbEntries])
+  const allEntries = useMemo(() => dbEntries.length > 0 ? dbEntries : [], [dbEntries])
 
   const filtered = useMemo(() => {
     let result = allEntries
@@ -180,20 +282,6 @@ export default function GlossaryPage() {
   const totalTranslated = allEntries.filter(e => getTranslationStatus(e) === 'translated').length
   const totalPartial = allEntries.filter(e => getTranslationStatus(e) === 'partial').length
   const totalPending = allEntries.filter(e => getTranslationStatus(e) === 'pending').length
-
-  const handleAdd = async (data: { en: string; my: string; shn: string; mnw: string; ksw: string }) => {
-    const res = await fetch('/api/glossary', {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
-      credentials: 'include',
-      body: JSON.stringify(data),
-    })
-    if (!res.ok) {
-      const err = await res.json().catch(() => ({}))
-      throw new Error(err.error || 'Failed to add term')
-    }
-    await loadDbGlossary()
-  }
 
   const handleUpdate = async (data: { en: string; my: string; shn: string; mnw: string; ksw: string }) => {
     if (!editingEntry) return
@@ -232,12 +320,12 @@ export default function GlossaryPage() {
         </div>
         <div className="flex items-center gap-2 flex-wrap">
           {isLoggedIn ? (
-            <button onClick={() => { setEditingEntry(null); setShowModal(true) }} className="btn-primary flex items-center gap-2 text-sm">
-              <Plus size={16} />{t('glossary_add_term', 'Add Term')}
+            <button onClick={() => setShowSuggestionModal(true)} className="btn-primary flex items-center gap-2 text-sm">
+              <Plus size={16} />{t('glossary_suggest_term', 'Suggest Term')}
             </button>
           ) : (
             <button onClick={() => setShowAuthModal(true)} className="btn-primary flex items-center gap-2 text-sm">
-              <Plus size={16} />{t('glossary_add_term', 'Add Term')}
+              <Plus size={16} />{t('glossary_suggest_term', 'Suggest Term')}
             </button>
           )}
           <span className="text-sm text-[var(--tx-dim)]">{allEntries.length} {t('glossary_terms', 'terms')}</span>
@@ -297,7 +385,7 @@ export default function GlossaryPage() {
                   <th key={lang.code} className={selectedLang && selectedLang !== lang.code ? 'hidden' : ''}>{lang.flag} {t(lang.labelKey, lang.label)}</th>
                 ))}
                 <th className="w-24">{t('glossary_status', 'Status')}</th>
-                <th className="w-20">{t('glossary_actions', 'Actions')}</th>
+                {isAdmin && <th className="w-20">{t('glossary_actions', 'Actions')}</th>}
               </tr>
             </thead>
             <tbody>
@@ -315,15 +403,14 @@ export default function GlossaryPage() {
                       {s === 'partial' && <span className="status-partial"><Clock size={10} className="mr-1" />{c}/4</span>}
                       {s === 'pending' && <span className="status-pending">{t('glossary_pending', 'Pending')}</span>}
                     </td>
-                    <td data-label={t('glossary_actions', 'Actions')}>
-                      <button onClick={() => {
-                          if (isLoggedIn) { setEditingEntry(entry); setShowModal(true) }
-                          else { setShowAuthModal(true) }
-                        }}
-                        className="p-1.5 rounded-lg hover:bg-[var(--surface-overlay)] text-[var(--tx-dim)] hover:text-[var(--tx-primary)] transition-colors">
-                        <Edit3 size={14} />
-                      </button>
-                    </td>
+                    {isAdmin && (
+                      <td data-label={t('glossary_actions', 'Actions')}>
+                        <button onClick={() => { setEditingEntry(entry); setShowEditModal(true) }}
+                          className="p-1.5 rounded-lg hover:bg-[var(--surface-overlay)] text-[var(--tx-dim)] hover:text-[var(--tx-primary)] transition-colors">
+                          <Edit3 size={14} />
+                        </button>
+                      </td>
+                    )}
                   </tr>
                 )
               })}
@@ -344,13 +431,12 @@ export default function GlossaryPage() {
                   {s === 'translated' && <span className="status-translated"><CheckCircle2 size={10} className="mr-1" />{t('glossary_full', 'Full')}</span>}
                   {s === 'partial' && <span className="status-partial"><Clock size={10} className="mr-1" />{c}/4</span>}
                   {s === 'pending' && <span className="status-pending">{t('glossary_pending', 'Pending')}</span>}
-                  <button onClick={() => {
-                      if (isLoggedIn) { setEditingEntry(entry); setShowModal(true) }
-                      else { setShowAuthModal(true) }
-                    }}
-                    className="p-1 rounded-lg hover:bg-[var(--surface-overlay)] text-[var(--tx-dim)]">
-                    <Edit3 size={12} />
-                  </button>
+                  {isAdmin && (
+                    <button onClick={() => { setEditingEntry(entry); setShowEditModal(true) }}
+                      className="p-1 rounded-lg hover:bg-[var(--surface-overlay)] text-[var(--tx-dim)]">
+                      <Edit3 size={12} />
+                    </button>
+                  )}
                 </div>
               </div>
               <div className={`grid gap-2 ${selectedLang ? 'grid-cols-1' : 'grid-cols-2'}`}>
@@ -376,12 +462,16 @@ export default function GlossaryPage() {
 
       <Pagination currentPage={currentPage} totalPages={totalPages} onPageChange={setCurrentPage} />
 
-      {showModal && (
-        <GlossaryModal
+      {showSuggestionModal && (
+        <SuggestionModal onClose={() => setShowSuggestionModal(false)} />
+      )}
+
+      {showEditModal && editingEntry && isAdmin && (
+        <EditModal
           entry={editingEntry}
-          onSave={editingEntry ? handleUpdate : handleAdd}
-          onDelete={editingEntry ? handleDelete : undefined}
-          onClose={() => { setShowModal(false); setEditingEntry(null) }}
+          onSave={handleUpdate}
+          onDelete={handleDelete}
+          onClose={() => { setShowEditModal(false); setEditingEntry(null) }}
         />
       )}
 

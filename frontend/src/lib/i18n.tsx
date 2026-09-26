@@ -1,6 +1,6 @@
 'use client'
 
-import { createContext, useContext, useState, useEffect, useCallback, useRef, type ReactNode } from 'react'
+import { createContext, useContext, useState, useEffect, useCallback, type ReactNode } from 'react'
 import en from '@/data/i18n/en.json'
 import my from '@/data/i18n/my.json'
 import shn from '@/data/i18n/shn.json'
@@ -29,28 +29,7 @@ const langNames: Record<string, string> = {
 }
 
 export function I18nProvider({ children }: { children: ReactNode }) {
-  // Start with 'en' so server and client match during hydration.
-  // After hydration, useEffect reads the saved preference from localStorage.
   const [lang, setLangState] = useState<LanguageCode>('en')
-  const [overrides, setOverrides] = useState<Record<string, Record<string, string>>>({})
-  const loadedRef = useRef(false)
-
-  // Load admin translation overrides once on mount
-  useEffect(() => {
-    if (loadedRef.current) return
-    loadedRef.current = true
-
-    fetch('/api/admin/ui-translations')
-      .then(r => r.json())
-      .then(data => {
-        if (data.translations && typeof data.translations === 'object') {
-          setOverrides(data.translations)
-        }
-      })
-      .catch(() => {
-        // API not available or failed — fall back to static translations only
-      })
-  }, [])
 
   useEffect(() => {
     try {
@@ -68,17 +47,11 @@ export function I18nProvider({ children }: { children: ReactNode }) {
 
   const t = useCallback(
     (key: string, fallback?: string): string => {
-      // For English, check override first, then return fallback or key
-      if (lang === 'en') {
-        return overrides.en?.[key] || fallback || key
-      }
-      // For other languages: override → static → English static → fallback → key
-      return overrides[lang]?.[key] || baseTranslations[lang]?.[key] || overrides.en?.[key] || baseTranslations['en']?.[key] || fallback || key
+      return baseTranslations[lang]?.[key] || baseTranslations['en']?.[key] || fallback || key
     },
-    [lang, overrides]
+    [lang],
   )
 
-  /** Translate with interpolation — replaces {param} placeholders in the resolved string */
   const ti = useCallback(
     (key: string, params: Record<string, string | number>, fallback?: string): string => {
       const raw = t(key, fallback)

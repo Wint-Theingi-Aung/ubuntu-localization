@@ -15,11 +15,11 @@ import {
   Github,
   ExternalLink,
   Globe,
-  Settings,
+  Shield,
 } from 'lucide-react'
 import TuxLogo from './TuxLogo'
 import ThemeToggle from './ThemeToggle'
-import { useI18n, type LanguageCode } from '@/lib/i18n'
+import { useI18n } from '@/lib/i18n'
 import { UI_LANGUAGES } from '@/lib/constants'
 import { useAuth } from '@/lib/auth-context'
 
@@ -140,15 +140,15 @@ export default function Sidebar({ isOpen, onClose }: SidebarProps) {
               )
             })}
 
-            {/* Admin-only: UI Translations */}
+            {/* Admin-only: Glossary Moderation */}
             {!authLoading && user?.isAdmin && (
               <Link
-                href="/admin/ui-translations"
+                href="/admin/glossary"
                 onClick={onClose}
-                className={`sidebar-link relative ${pathname.startsWith('/admin/ui-translations') ? 'active' : ''}`}
+                className={`sidebar-link relative ${pathname.startsWith('/admin/glossary') ? 'active' : ''}`}
               >
-                <Settings size={18} />
-                <span>{t('sidebar_ui_translations', 'UI Translations')}</span>
+                <Shield size={18} />
+                <span>{t('sidebar_glossary_moderation', 'Glossary Moderation')}</span>
               </Link>
             )}
           </nav>

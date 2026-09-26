@@ -139,37 +139,29 @@ export async function initDB(): Promise<void> {
   await query(`CREATE INDEX IF NOT EXISTS idx_glossary_history_glossary ON glossary_history(glossary_id)`).catch(() => {})
   await query(`CREATE INDEX IF NOT EXISTS idx_glossary_history_created ON glossary_history(created_at DESC)`).catch(() => {})
 
-  // UI translations table
+  // Glossary suggestions table (for suggestion + moderation workflow)
   await query(`
-    CREATE TABLE IF NOT EXISTS ui_translations (
+    CREATE TABLE IF NOT EXISTS glossary_suggestions (
       id              SERIAL PRIMARY KEY,
-      lang            VARCHAR(10) NOT NULL,
-      key             VARCHAR(255) NOT NULL,
-      value           TEXT NOT NULL DEFAULT '',
-      updated_by      INTEGER REFERENCES users(id) ON DELETE SET NULL,
+      submitted_by    INTEGER REFERENCES users(id) ON DELETE SET NULL,
+      action          VARCHAR(20) NOT NULL DEFAULT 'add',
+      glossary_id     INTEGER,
+      en              VARCHAR(500) NOT NULL DEFAULT '',
+      my              VARCHAR(500) DEFAULT '',
+      shn             VARCHAR(500) DEFAULT '',
+      mnw             VARCHAR(500) DEFAULT '',
+      ksw             VARCHAR(500) DEFAULT '',
+      note            TEXT DEFAULT '',
+      status          VARCHAR(20) NOT NULL DEFAULT 'pending',
+      reviewed_by     INTEGER REFERENCES users(id) ON DELETE SET NULL,
+      reviewed_at     TIMESTAMP WITH TIME ZONE,
+      review_note     TEXT DEFAULT '',
       created_at      TIMESTAMP WITH TIME ZONE DEFAULT NOW(),
-      updated_at      TIMESTAMP WITH TIME ZONE DEFAULT NOW(),
-      UNIQUE(lang, key)
+      updated_at      TIMESTAMP WITH TIME ZONE DEFAULT NOW()
     )
   `).catch(() => {})
-  await query(`CREATE INDEX IF NOT EXISTS idx_ui_translations_lang ON ui_translations(lang)`).catch(() => {})
-  await query(`CREATE INDEX IF NOT EXISTS idx_ui_translations_key ON ui_translations(key)`).catch(() => {})
-
-  // UI translation history table
-  await query(`
-    CREATE TABLE IF NOT EXISTS ui_translation_history (
-      id              SERIAL PRIMARY KEY,
-      user_id         INTEGER REFERENCES users(id) ON DELETE SET NULL,
-      lang            VARCHAR(10) NOT NULL,
-      key             VARCHAR(255) NOT NULL,
-      old_value       TEXT,
-      new_value       TEXT,
-      created_at      TIMESTAMP WITH TIME ZONE DEFAULT NOW()
-    )
-  `).catch(() => {})
-  await query(`CREATE INDEX IF NOT EXISTS idx_ui_translation_history_user ON ui_translation_history(user_id)`).catch(() => {})
-  await query(`CREATE INDEX IF NOT EXISTS idx_ui_translation_history_lang ON ui_translation_history(lang)`).catch(() => {})
-  await query(`CREATE INDEX IF NOT EXISTS idx_ui_translation_history_created ON ui_translation_history(created_at DESC)`).catch(() => {})
+  await query(`CREATE INDEX IF NOT EXISTS idx_glossary_suggestions_status ON glossary_suggestions(status)`).catch(() => {})
+  await query(`CREATE INDEX IF NOT EXISTS idx_glossary_suggestions_submitted ON glossary_suggestions(submitted_by)`).catch(() => {})
 
   // Cleanup expired sessions (opportunistic)
   await query(`DELETE FROM user_sessions WHERE expires_at < NOW()`).catch(() => {})
@@ -547,131 +539,118 @@ export async function getGlossaryHistory(
   return { entries, total }
 }
 
-// ── UI Translations ───────────────────────────────────────────
+// ── Glossary Suggestions ────────────────────────────────────────
 
-export interface DbUiTranslation {
+export interface DbGlossarySuggestion {
   id: number
-  lang: string
-  key: string
-  value: string
-  updatedBy: number | null
+  submittedBy: number | null
+  action: string
+  glossaryId: number | null
+  en: string
+  my: string
+  shn: string
+  mnw: string
+  ksw: string
+  note: string
+  status: string
+  reviewedBy: number | null
+  reviewedAt: Date | null
+  reviewNote: string
   createdAt: Date
   updatedAt: Date
+  submitterUsername?: string
+  submitterDisplayName?: string
+  reviewerUsername?: string
+  reviewerDisplayName?: string
 }
 
 /**
- * Get all UI translations for a specific language
+ * Create a new glossary suggestion (regular users)
  */
-export async function getUiTranslations(lang: string): Promise<Record<string, string>> {
-  const rows = await query<{ key: string; value: string }>(
-    'SELECT key, value FROM ui_translations WHERE lang = $1',
-    [lang],
+export async function createGlossarySuggestion(
+  userId: number,
+  data: { action: string; glossaryId?: number; en: string; my?: string; shn?: string; mnw?: string; ksw?: string; note?: string },
+): Promise<DbGlossarySuggestion> {
+  const result = await queryOne<DbGlossarySuggestion>(
+    `INSERT INTO glossary_suggestions (submitted_by, action, glossary_id, en, my, shn, mnw, ksw, note, status)
+     VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9, 'pending')
+     RETURNING *`,
+    [
+      userId,
+      data.action,
+      data.glossaryId || null,
+      data.en,
+      data.my || '',
+      data.shn || '',
+      data.mnw || '',
+      data.ksw || '',
+      data.note || '',
+    ],
   )
-  const map: Record<string, string> = {}
-  for (const row of rows) {
-    map[row.key] = row.value
-  }
-  return map
-}
-
-/**
- * Get all UI translations across all languages, grouped by language
- */
-export async function getAllUiTranslations(): Promise<Record<string, Record<string, string>>> {
-  const rows = await query<{ lang: string; key: string; value: string }>(
-    'SELECT lang, key, value FROM ui_translations ORDER BY lang, key',
-  )
-  const result: Record<string, Record<string, string>> = {}
-  for (const row of rows) {
-    if (!result[row.lang]) result[row.lang] = {}
-    result[row.lang][row.key] = row.value
-  }
+  if (!result) throw new Error('Failed to create suggestion')
   return result
 }
 
 /**
- * Get distinct translation keys that have been stored in the DB
+ * List glossary suggestions (admin: all, regular user: own only)
  */
-export async function getUiTranslationKeys(): Promise<string[]> {
-  const rows = await query<{ key: string }>('SELECT DISTINCT key FROM ui_translations ORDER BY key')
-  return rows.map(r => r.key)
-}
-
-/**
- * Batch upsert UI translations for a language
- * Only updates keys that have non-empty values (admin edits)
- */
-export async function upsertUiTranslations(
-  lang: string,
-  translations: Record<string, string>,
-  userId: number,
-): Promise<void> {
-  for (const [key, value] of Object.entries(translations)) {
-    // Get old value for history
-    const old = await queryOne<{ value: string }>(
-      'SELECT value FROM ui_translations WHERE lang = $1 AND key = $2',
-      [lang, key],
-    )
-
-    await query(
-      `INSERT INTO ui_translations (lang, key, value, updated_by, updated_at)
-       VALUES ($1, $2, $3, $4, NOW())
-       ON CONFLICT (lang, key) DO UPDATE SET value = $3, updated_by = $4, updated_at = NOW()`,
-      [lang, key, value, userId],
-    )
-
-    // Record history only if value changed
-    if (old && old.value === value) continue
-    await query(
-      `INSERT INTO ui_translation_history (user_id, lang, key, old_value, new_value)
-       VALUES ($1, $2, $3, $4, $5)`,
-      [userId, lang, key, old?.value || null, value],
-    )
-  }
-}
-
-/**
- * Get UI translation change history
- */
-export interface DbUiTranslationHistoryEntry {
-  id: number
-  userId: number | null
-  lang: string
-  key: string
-  oldValue: string | null
-  newValue: string | null
-  username: string | null
-  displayName: string | null
-  createdAt: Date
-}
-
-export async function getUiTranslationHistory(
+export async function listGlossarySuggestions(
   limit: number = 50,
   offset: number = 0,
-  lang?: string,
-): Promise<{ entries: DbUiTranslationHistoryEntry[]; total: number }> {
-  const whereClause = lang ? 'WHERE uth.lang = $1' : ''
-  const params = lang ? [lang, limit, offset] : [limit, offset]
-  const countParams = lang ? [lang] : []
+  status?: string,
+  userId?: number,
+): Promise<{ entries: DbGlossarySuggestion[]; total: number }> {
+  const conditions: string[] = []
+  const params: any[] = []
+  let paramIdx = 1
+
+  if (status) {
+    conditions.push(`gs.status = $${paramIdx++}`)
+    params.push(status)
+  }
+  if (userId) {
+    conditions.push(`gs.submitted_by = $${paramIdx++}`)
+    params.push(userId)
+  }
+
+  const whereClause = conditions.length > 0 ? `WHERE ${conditions.join(' AND ')}` : ''
 
   const countResult = await queryOne<{ count: string }>(
-    `SELECT COUNT(*)::text AS count FROM ui_translation_history uth ${whereClause}`,
-    countParams,
+    `SELECT COUNT(*)::text AS count FROM glossary_suggestions gs ${whereClause}`,
+    params.slice(0, paramIdx - 1),
   )
   const total = parseInt(countResult?.count || '0', 10)
 
-  const entries = await query<DbUiTranslationHistoryEntry>(
-    `SELECT uth.id, uth.user_id AS "userId", uth.lang, uth.key,
-            uth.old_value AS "oldValue", uth.new_value AS "newValue",
-            uth.created_at AS "createdAt",
-            u.username, u.display_name AS "displayName"
-     FROM ui_translation_history uth
-     LEFT JOIN users u ON uth.user_id = u.id
+  const entries = await query<DbGlossarySuggestion>(
+    `SELECT gs.*,
+            su.username AS "submitterUsername", su.display_name AS "submitterDisplayName",
+            ru.username AS "reviewerUsername", ru.display_name AS "reviewerDisplayName"
+     FROM glossary_suggestions gs
+     LEFT JOIN users su ON gs.submitted_by = su.id
+     LEFT JOIN users ru ON gs.reviewed_by = ru.id
      ${whereClause}
-     ORDER BY uth.created_at DESC
-     LIMIT $${lang ? 2 : 1} OFFSET $${lang ? 3 : 2}`,
-    params,
+     ORDER BY gs.created_at DESC
+     LIMIT $${paramIdx++} OFFSET $${paramIdx}`,
+    [...params, limit, offset],
   )
 
   return { entries, total }
+}
+
+/**
+ * Update suggestion status (admin only: approve/reject)
+ */
+export async function updateGlossarySuggestionStatus(
+  id: number,
+  status: 'approved' | 'rejected',
+  reviewedBy: number,
+  reviewNote?: string,
+): Promise<DbGlossarySuggestion | null> {
+  return queryOne<DbGlossarySuggestion>(
+    `UPDATE glossary_suggestions
+     SET status = $1, reviewed_by = $2, reviewed_at = NOW(), review_note = $3, updated_at = NOW()
+     WHERE id = $4
+     RETURNING *`,
+    [status, reviewedBy, reviewNote || '', id],
+  )
 }
