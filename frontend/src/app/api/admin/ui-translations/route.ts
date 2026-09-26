@@ -50,7 +50,16 @@ export async function PUT(request: NextRequest) {
       )
     }
 
-    const body = await request.json()
+    let body: Record<string, unknown>
+    try {
+      body = await request.json()
+    } catch {
+      return NextResponse.json(
+        { error: 'Invalid JSON in request body' },
+        { status: 400 },
+      )
+    }
+
     const { lang, translations } = body
 
     if (!lang || typeof lang !== 'string') {

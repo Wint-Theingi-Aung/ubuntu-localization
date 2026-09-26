@@ -38,6 +38,20 @@ const LANGUAGES: { code: LanguageCode; label: string; native: string }[] = [
   { code: 'ksw', label: "S'gaw Karen", native: 'စကောကရင်' },
 ]
 
+/**
+ * Safely parse a fetch Response as JSON.
+ * Returns null if the body is empty, non-JSON, or malformed.
+ */
+async function safeJson(res: Response): Promise<Record<string, unknown> | null> {
+  const text = await res.text().catch(() => '')
+  if (!text.trim()) return null
+  try {
+    return JSON.parse(text) as Record<string, unknown>
+  } catch {
+    return null
+  }
+}
+
 function formatTime(timestamp: number): string {
   const diff = Date.now() - timestamp
   const mins = Math.floor(diff / 60000)
@@ -84,9 +98,9 @@ export default function UiTranslationsPage() {
       // Fetch static JSON keys (source of truth for all available keys)
       const staticRes = await fetch('/api/admin/ui-translations')
       if (!staticRes.ok) throw new Error('Failed to fetch')
-      const staticData = await staticRes.json()
-      const dbTranslations = staticData.translations || {}
-      const dbKeysList = staticData.keys || []
+      const staticData = await safeJson(staticRes)
+      const dbTranslations = (staticData && typeof staticData.translations === 'object' ? staticData.translations : {}) as Record<string, Record<string, string>>
+      const dbKeysList = Array.isArray(staticData?.keys) ? staticData.keys as string[] : []
 
       // Get all keys from static JSON imports
       const enJson: Record<string, string> = (await import('@/data/i18n/en.json')).default
@@ -128,8 +142,8 @@ export default function UiTranslationsPage() {
       if (lang) params.set('lang', lang)
       const res = await fetch(`/api/admin/ui-translations/history?${params}`, { credentials: 'include' })
       if (res.ok) {
-        const data = await res.json()
-        setHistory(data.entries || [])
+        const data = await safeJson(res)
+        setHistory(Array.isArray(data?.entries) ? data.entries as TranslationHistoryEntry[] : [])
       }
     } catch (err) {
       console.error('Failed to load history:', err)
@@ -206,8 +220,11 @@ export default function UiTranslationsPage() {
       })
 
       if (!res.ok) {
-        const data = await res.json()
-        throw new Error(data.error || 'Save failed')
+        const data = await safeJson(res)
+        throw new Error(
+          (data && typeof data.error === 'string' ? data.error : null) ||
+          `Save failed (HTTP ${res.status})`,
+        )
       }
 
       // Reload translations
