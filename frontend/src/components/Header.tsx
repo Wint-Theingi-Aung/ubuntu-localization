@@ -1,6 +1,7 @@
 'use client'
 
 import { useState } from 'react'
+import { useRouter } from 'next/navigation'
 import { Menu, LogIn, LogOut } from 'lucide-react'
 import AuthModal from './AuthModal'
 import { useI18n } from '@/lib/i18n'
@@ -14,6 +15,7 @@ export default function Header({ onMenuToggle }: HeaderProps) {
   const [showAuthModal, setShowAuthModal] = useState(false)
   const { t } = useI18n()
   const { user, loading: authLoading, logout } = useAuth()
+  const router = useRouter()
 
   return (
     <>
@@ -45,7 +47,13 @@ export default function Header({ onMenuToggle }: HeaderProps) {
                   </div>
                 </div>
                 <button
-                  onClick={async () => await logout()}
+                  onClick={async () => {
+                    const result = await logout()
+                    if (result.success) {
+                      router.push('/')
+                      router.refresh()
+                    }
+                  }}
                   className="p-2 rounded-lg text-[var(--tx-muted)] hover:text-[var(--tx-primary)] hover:bg-[var(--surface-card-hover)] transition-colors"
                   title={t('auth_logout', 'Logout')}
                 >

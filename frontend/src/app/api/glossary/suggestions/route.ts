@@ -9,6 +9,8 @@ import {
   listGlossarySuggestions,
   updateGlossarySuggestionStatus,
   addDbGlossaryEntry,
+  updateDbGlossaryEntry,
+  deleteDbGlossaryEntry,
   recordGlossaryHistory,
   queryOne,
   initDB,
@@ -141,8 +143,75 @@ export async function PUT(request: NextRequest) {
           newValues: { en: entry.en, my: entry.my, shn: entry.shn, mnw: entry.mnw, ksw: entry.ksw, note: entry.note },
           termEn: entry.en,
         })
+      } else if (suggestion.action === 'update' && suggestion.glossaryId) {
+        // Fetch existing entry for history
+        const oldEntry = await queryOne<DbGlossaryEntry>(
+          'SELECT * FROM glossary WHERE id = $1',
+          [suggestion.glossaryId],
+        )
+
+        if (!oldEntry) {
+          return NextResponse.json(
+            { error: 'Original term not found' },
+            { status: 404 },
+          )
+        }
+
+        const updatedEntry = await updateDbGlossaryEntry(suggestion.glossaryId, {
+          en: suggestion.en,
+          my: suggestion.my,
+          shn: suggestion.shn,
+          mnw: suggestion.mnw,
+          ksw: suggestion.ksw,
+          note: suggestion.note,
+        })
+
+        if (!updatedEntry) {
+          return NextResponse.json(
+            { error: 'Failed to update term' },
+            { status: 500 },
+          )
+        }
+
+        await recordGlossaryHistory({
+          userId: user.id,
+          glossaryId: suggestion.glossaryId,
+          action: 'update',
+          oldValues: { en: oldEntry.en, my: oldEntry.my, shn: oldEntry.shn, mnw: oldEntry.mnw, ksw: oldEntry.ksw, note: oldEntry.note },
+          newValues: { en: updatedEntry.en, my: updatedEntry.my, shn: updatedEntry.shn, mnw: updatedEntry.mnw, ksw: updatedEntry.ksw, note: updatedEntry.note },
+          termEn: updatedEntry.en,
+        })
+      } else if (suggestion.action === 'delete' && suggestion.glossaryId) {
+        // Fetch existing entry for history before deletion
+        const existingEntry = await queryOne<DbGlossaryEntry>(
+          'SELECT * FROM glossary WHERE id = $1',
+          [suggestion.glossaryId],
+        )
+
+        if (!existingEntry) {
+          return NextResponse.json(
+            { error: 'Term not found' },
+            { status: 404 },
+          )
+        }
+
+        const deleted = await deleteDbGlossaryEntry(suggestion.glossaryId)
+
+        if (!deleted) {
+          return NextResponse.json(
+            { error: 'Failed to delete term' },
+            { status: 500 },
+          )
+        }
+
+        await recordGlossaryHistory({
+          userId: user.id,
+          glossaryId: suggestion.glossaryId,
+          action: 'delete',
+          oldValues: { en: existingEntry.en, my: existingEntry.my, shn: existingEntry.shn, mnw: existingEntry.mnw, ksw: existingEntry.ksw, note: existingEntry.note },
+          termEn: existingEntry.en,
+        })
       }
-      // Future: handle 'update' and 'delete' suggestion actions
     }
 
     return NextResponse.json({ suggestion: serializeDates(suggestion) })

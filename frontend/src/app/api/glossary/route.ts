@@ -1,20 +1,16 @@
 // ═══════════════════════════════════════════════════════════════════
 // /api/glossary — Glossary CRUD with suggestion + moderation
 // GET: public (approved entries only)
-// POST: auth required (creates pending suggestion)
-// PUT: admin-only (updates approved entries)
-// DELETE: admin-only (deletes approved entries)
+// POST: auth required (creates pending suggestion for add/update/delete)
+// PUT: auth required (creates pending update suggestion)
+// DELETE: auth required (creates pending delete suggestion)
 // ═══════════════════════════════════════════════════════════════════
 
 import { NextRequest, NextResponse } from 'next/server'
 import {
   getDbGlossary,
-  addDbGlossaryEntry,
-  updateDbGlossaryEntry,
-  deleteDbGlossaryEntry,
   createGlossarySuggestion,
   queryOne,
-  recordGlossaryHistory,
   initDB,
   seedGlossaryIfEmpty,
   type DbGlossaryEntry,
@@ -53,23 +49,56 @@ export async function POST(request: NextRequest) {
     }
 
     const body = await request.json()
-    const { en, my, shn, mnw, ksw, note } = body
+    const { action, id, en, my, shn, mnw, ksw, note } = body
 
-    if (!en || typeof en !== 'string' || en.trim().length === 0) {
+    // Validate action
+    if (!action || !['add', 'update', 'delete'].includes(action)) {
+      return NextResponse.json(
+        { error: 'Action must be "add", "update", or "delete"' },
+        { status: 400 },
+      )
+    }
+
+    // For update and delete, require existing term id
+    if ((action === 'update' || action === 'delete') && (!id || typeof id !== 'number')) {
+      return NextResponse.json(
+        { error: 'Term id is required for update/delete actions' },
+        { status: 400 },
+      )
+    }
+
+    // For add and update, require English term
+    if ((action === 'add' || action === 'update') && (!en || typeof en !== 'string' || en.trim().length === 0)) {
       return NextResponse.json(
         { error: 'English term (en) is required' },
         { status: 400 },
       )
     }
 
+    // For update/delete, fetch existing entry to store old values
+    let existingEntry: DbGlossaryEntry | null = null
+    if (action === 'update' || action === 'delete') {
+      existingEntry = await queryOne<DbGlossaryEntry>(
+        'SELECT * FROM glossary WHERE id = $1',
+        [id],
+      )
+      if (!existingEntry) {
+        return NextResponse.json(
+          { error: 'Term not found' },
+          { status: 404 },
+        )
+      }
+    }
+
     const suggestion = await createGlossarySuggestion(user.id, {
-      action: 'add',
-      en: en.trim(),
-      my: my || '',
-      shn: shn || '',
-      mnw: mnw || '',
-      ksw: ksw || '',
-      note: note || '',
+      action,
+      glossaryId: action !== 'add' ? id : undefined,
+      en: en?.trim() || existingEntry?.en || '',
+      my: my ?? existingEntry?.my ?? '',
+      shn: shn ?? existingEntry?.shn ?? '',
+      mnw: mnw ?? existingEntry?.mnw ?? '',
+      ksw: ksw ?? existingEntry?.ksw ?? '',
+      note: note ?? existingEntry?.note ?? '',
     })
 
     return NextResponse.json({
@@ -85,7 +114,7 @@ export async function POST(request: NextRequest) {
   }
 }
 
-// ── PUT: Update an approved glossary entry (admin-only) ─────────
+// ── PUT: Submit an update suggestion (login required) ───────────
 
 export async function PUT(request: NextRequest) {
   try {
@@ -96,12 +125,6 @@ export async function PUT(request: NextRequest) {
       return NextResponse.json(
         { error: 'Authentication required to update glossary entries' },
         { status: 401 },
-      )
-    }
-    if (!user.isAdmin) {
-      return NextResponse.json(
-        { error: 'Admin access required to update approved glossary entries' },
-        { status: 403 },
       )
     }
 
@@ -115,40 +138,45 @@ export async function PUT(request: NextRequest) {
       )
     }
 
-    const oldEntry = await queryOne<DbGlossaryEntry>(
+    // Fetch existing entry
+    const existingEntry = await queryOne<DbGlossaryEntry>(
       'SELECT * FROM glossary WHERE id = $1',
       [id],
     )
 
-    const entry = await updateDbGlossaryEntry(id, { en, my, shn, mnw, ksw, note })
-
-    if (!entry) {
+    if (!existingEntry) {
       return NextResponse.json(
-        { error: 'Entry not found or no changes' },
+        { error: 'Entry not found' },
         { status: 404 },
       )
     }
 
-    await recordGlossaryHistory({
-      userId: user.id,
-      glossaryId: id,
+    // Create update suggestion
+    const suggestion = await createGlossarySuggestion(user.id, {
       action: 'update',
-      oldValues: oldEntry ? { en: oldEntry.en, my: oldEntry.my, shn: oldEntry.shn, mnw: oldEntry.mnw, ksw: oldEntry.ksw, note: oldEntry.note } : undefined,
-      newValues: { en: entry.en, my: entry.my, shn: entry.shn, mnw: entry.mnw, ksw: entry.ksw, note: entry.note },
-      termEn: entry.en,
+      glossaryId: id,
+      en: en?.trim() || existingEntry.en,
+      my: my ?? existingEntry.my,
+      shn: shn ?? existingEntry.shn,
+      mnw: mnw ?? existingEntry.mnw,
+      ksw: ksw ?? existingEntry.ksw,
+      note: note ?? existingEntry.note,
     })
 
-    return NextResponse.json({ entry })
+    return NextResponse.json({
+      suggestion,
+      message: 'Update suggestion submitted for review',
+    }, { status: 201 })
   } catch (error) {
-    console.error('Glossary update error:', error)
+    console.error('Glossary update suggestion error:', error)
     return NextResponse.json(
-      { error: 'Failed to update glossary entry' },
+      { error: 'Failed to submit update suggestion' },
       { status: 500 },
     )
   }
 }
 
-// ── DELETE: Remove an approved glossary entry (admin-only) ──────
+// ── DELETE: Submit a delete suggestion (login required) ─────────
 
 export async function DELETE(request: NextRequest) {
   try {
@@ -159,12 +187,6 @@ export async function DELETE(request: NextRequest) {
       return NextResponse.json(
         { error: 'Authentication required to delete glossary entries' },
         { status: 401 },
-      )
-    }
-    if (!user.isAdmin) {
-      return NextResponse.json(
-        { error: 'Admin access required to delete approved glossary entries' },
-        { status: 403 },
       )
     }
 
@@ -191,30 +213,33 @@ export async function DELETE(request: NextRequest) {
       [id],
     )
 
-    const deleted = await deleteDbGlossaryEntry(id)
-
-    if (!deleted) {
+    if (!entry) {
       return NextResponse.json(
         { error: 'Entry not found' },
         { status: 404 },
       )
     }
 
-    if (entry) {
-      await recordGlossaryHistory({
-        userId: user.id,
-        glossaryId: id,
-        action: 'delete',
-        oldValues: { en: entry.en, my: entry.my, shn: entry.shn, mnw: entry.mnw, ksw: entry.ksw, note: entry.note },
-        termEn: entry.en,
-      })
-    }
+    // Create delete suggestion
+    const suggestion = await createGlossarySuggestion(user.id, {
+      action: 'delete',
+      glossaryId: id,
+      en: entry.en,
+      my: entry.my,
+      shn: entry.shn,
+      mnw: entry.mnw,
+      ksw: entry.ksw,
+      note: entry.note,
+    })
 
-    return NextResponse.json({ success: true })
+    return NextResponse.json({
+      suggestion,
+      message: 'Delete suggestion submitted for review',
+    }, { status: 201 })
   } catch (error) {
-    console.error('Glossary delete error:', error)
+    console.error('Glossary delete suggestion error:', error)
     return NextResponse.json(
-      { error: 'Failed to delete glossary entry' },
+      { error: 'Failed to submit delete suggestion' },
       { status: 500 },
     )
   }

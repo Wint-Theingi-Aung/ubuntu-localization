@@ -22,7 +22,7 @@ interface AuthContextType {
   /** Login with username and password */
   login: (username: string, password: string) => Promise<{ success: boolean; error?: string }>
   /** Logout current user */
-  logout: () => Promise<void>
+  logout: () => Promise<{ success: boolean; error?: string }>
 }
 
 const AuthContext = createContext<AuthContextType | null>(null)
@@ -84,12 +84,19 @@ export function AuthProvider({ children }: { children: ReactNode }) {
 
   const logout = useCallback(async () => {
     try {
-      await fetch('/api/auth/logout', {
+      const res = await fetch('/api/auth/logout', {
         method: 'POST',
         credentials: 'include',
       })
-    } catch {}
-    setUser(null)
+      const data = await res.json()
+      if (res.ok && data.success) {
+        setUser(null)
+        return { success: true }
+      }
+      return { success: false, error: data.error || 'Logout failed' }
+    } catch {
+      return { success: false, error: 'Network error' }
+    }
   }, [])
 
   return (
