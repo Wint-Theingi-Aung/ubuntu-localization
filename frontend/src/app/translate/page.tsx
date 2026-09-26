@@ -79,7 +79,7 @@ export default function TranslatePage() {
     currentBatchEntries.every(e => e.status === 'confirmed')
   const batchHasPending = currentBatchEntries.some(e => e.status === 'pending')
   const canReview = currentBatchEntries.length > 0 &&
-    currentBatchEntries.every(e => (e.status === 'translated' || e.status === 'reviewing' || e.status === 'confirmed') && e.msgstr.trim().length > 0)
+    currentBatchEntries.every(e => (e.status === 'reviewing' || e.status === 'confirmed') && e.msgstr.trim().length > 0)
   const workPhase: 'translate' | 'review' = reviewMode ? 'review' : 'translate'
 
   const translatedCount = entries.filter(e =>
@@ -169,79 +169,105 @@ export default function TranslatePage() {
   }, [file, targetLang])
 
   const handleTranslate = useCallback(async () => {
-    setIsTranslating(true); setError(null)
+    setIsTranslating(true)
+    setError(null)
+
     const batch = currentBatchEntries.filter(e => e.status === 'pending')
-    if (batch.length === 0) { setIsTranslating(false); return }
+    if (batch.length === 0) {
+      setIsTranslating(false)
+      return
+    }
+
     try {
-      const r = await fetch('/api/translate', {
+      const response = await fetch('/api/translate', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({
-          entries: batch.map(e => ({ index: e.index, msgid: e.msgid })),
+          entries: batch.map(e => ({
+            index: e.index,
+            msgid: e.msgid,
+          })),
           target_lang: targetLang,
         }),
       })
-      if (!r.ok) { const d = await r.json(); throw new Error(d.error || 'Translation failed') }
-      const d = await r.json()
 
-
-      if (!d.translations || !Array.isArray(d.translations)) {
-        throw new Error('Invalid translation response')
-      }
-
-      // A batch is atomic: do not show a partially translated batch.
-      // One Gemini request must return every pending entry before Review is enabled.
-      if (d.translations.length !== batch.length) {
-        throw new Error(`Translation batch incomplete: received ${d.translations.length} of ${batch.length} translations.`)
-      }
-
-      const missingTranslation = d.translations.find(
-        (t: any) => !t || typeof t.index !== 'number' || typeof t.translated !== 'string' || !t.translated.trim()
-      )
-      if (missingTranslation) {
-        throw new Error('Translation batch returned an empty translation. No partial results were applied.')
-      }
-
-      const translationMap = new Map<number, string>()
-      for (const t of d.translations) {
-        if (t && typeof t.index === 'number' && typeof t.translated === 'string') {
-          translationMap.set(t.index, t.translated)
+      if (!response.ok) {
+        let message = 'Translation failed'
+        try {
+          const data = await response.json()
+          if (data?.error) message = data.error
+        } catch {
+          message = `Translation failed with status ${response.status}`
         }
+        throw new Error(message)
+      }
 
+      const data = await response.json()
       const requestedIndexes = batch.map(e => e.index)
-      const validation = validateBatchResponse(d.translations, requestedIndexes)
+
+      const validation = validateBatchResponse(
+        data.translations,
+        requestedIndexes,
+      )
+
       if (!validation.ok) {
         throw new Error(validation.error)
-
       }
+
       const translationMap = validation.translationMap!
-
       const newErrors: Record<number, string> = {}
-      for (const [idx, translated] of translationMap) {
-        const entry = batch.find(e => e.index === idx)
-        if (entry) {
-          const { missing, extra, orderMismatch } = compareFormatSpecifiers(entry.msgid, translated)
-          if (missing.length > 0 || extra.length > 0 || orderMismatch) {
-            const parts: string[] = []
-            if (missing.length) parts.push(`Missing: ${missing.join(', ')}`)
-            if (extra.length) parts.push(`Extra: ${extra.join(', ')}`)
-            if (orderMismatch) parts.push('Placeholder order changed')
-            newErrors[idx] = parts.join('; ')
+
+      for (const [index, translated] of translationMap) {
+        const entry = batch.find(e => e.index === index)
+        if (!entry) continue
+
+        const { missing, extra, orderMismatch } =
+          compareFormatSpecifiers(entry.msgid, translated)
+
+        if (missing.length > 0 || extra.length > 0 || orderMismatch) {
+          const parts: string[] = []
+
+          if (missing.length > 0) {
+            parts.push(`Missing: ${missing.join(', ')}`)
           }
+          if (extra.length > 0) {
+            parts.push(`Extra: ${extra.join(', ')}`)
+          }
+          if (orderMismatch) {
+            parts.push('Placeholder order changed')
+          }
+
+          newErrors[index] = parts.join('; ')
         }
       }
 
-      // Apply the whole batch only after all translations are present.
-      setEntries(prev => prev.map(e => {
-        const translated = translationMap.get(e.index)
-        if (translated !== undefined) {
-          return { ...e, msgstr: translated, status: 'reviewing' as const }
-        }
-        return e
+      // Apply the complete validated batch atomically.
+      // Format errors must not hide the non-empty translation.
+      setEntries(prev =>
+        prev.map(entry => {
+          const translated = translationMap.get(entry.index)
+
+          if (translated !== undefined) {
+            return {
+              ...entry,
+              msgstr: translated,
+              status: 'reviewing' as const,
+            }
+          }
+
+          return entry
+        }),
+      )
+
+      setFormatErrors(prev => ({
+        ...prev,
+        ...newErrors,
       }))
-      setFormatErrors(prev => ({ ...prev, ...newErrors }))
-    } catch (err: any) { setError(err.message) }
-    finally { setIsTranslating(false) }
+    } catch (err: any) {
+      setError(err?.message || 'Translation failed')
+    } finally {
+      setIsTranslating(false)
+    }
   }, [currentBatchEntries, targetLang])
 
   const handleStartReview = useCallback(() => {
