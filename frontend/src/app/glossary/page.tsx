@@ -135,7 +135,7 @@ function SuggestionModal({ onClose }: SuggestionModalProps) {
   )
 }
 
-// ── Edit Modal (Admin only) ─────────────────────────────────────
+// ── Edit Modal (logged-in users) ─────────────────────────────
 
 interface EditModalProps {
   entry: GlossaryEntry
@@ -149,15 +149,18 @@ function EditModal({ entry, onSave, onDelete, onClose }: EditModalProps) {
   const [form, setForm] = useState({ en: entry.en, my: entry.my, shn: entry.shn, mnw: entry.mnw, ksw: entry.ksw })
   const [saving, setSaving] = useState(false)
   const [deleting, setDeleting] = useState(false)
+  const [success, setSuccess] = useState<'edit' | 'delete' | null>(null)
+  const [error, setError] = useState('')
 
   const handleSave = async () => {
     if (!form.en.trim()) return
     setSaving(true)
+    setError('')
     try {
       await onSave(form)
-      onClose()
-    } catch (err) {
-      console.error('Save error:', err)
+      setSuccess('edit')
+    } catch (err: any) {
+      setError(err.message || 'Failed to submit edit')
     } finally {
       setSaving(false)
     }
@@ -167,14 +170,38 @@ function EditModal({ entry, onSave, onDelete, onClose }: EditModalProps) {
     if (!onDelete) return
     if (!window.confirm(t('glossary_delete_confirm', 'Are you sure you want to delete this term?'))) return
     setDeleting(true)
+    setError('')
     try {
       await onDelete()
-      onClose()
-    } catch (err) {
-      console.error('Delete error:', err)
+      setSuccess('delete')
+    } catch (err: any) {
+      setError(err.message || 'Failed to submit deletion')
     } finally {
       setDeleting(false)
     }
+  }
+
+  if (success) {
+    return (
+      <div className="fixed inset-0 bg-black/60 backdrop-blur-sm z-50 flex items-center justify-center p-4" onClick={onClose}>
+        <div className="glass-card p-6 w-full max-w-md text-center space-y-4" onClick={e => e.stopPropagation()}>
+          <div className="w-12 h-12 rounded-full bg-emerald-500/20 flex items-center justify-center mx-auto">
+            <CheckCircle2 size={24} className="text-emerald-400" />
+          </div>
+          <h3 className="text-lg font-semibold text-[var(--tx-primary)]">
+            {success === 'edit'
+              ? t('glossary_edit_submitted', 'Edit Submitted for Review')
+              : t('glossary_delete_submitted', 'Deletion Submitted for Review')}
+          </h3>
+          <p className="text-sm text-[var(--tx-muted)]">
+            {success === 'edit'
+              ? t('glossary_edit_pending_review', 'Your edit has been submitted for review. An admin will review it soon.')
+              : t('glossary_delete_pending_review', 'Your deletion request has been submitted for review. An admin will review it soon.')}
+          </p>
+          <button onClick={onClose} className="btn-primary text-sm">{t('glossary_close', 'Close')}</button>
+        </div>
+      </div>
+    )
   }
 
   return (
@@ -186,6 +213,16 @@ function EditModal({ entry, onSave, onDelete, onClose }: EditModalProps) {
           </h3>
           <button onClick={onClose} className="p-1 rounded-lg hover:bg-[var(--surface-overlay)] text-[var(--tx-muted)]"><X size={18} /></button>
         </div>
+
+        <p className="text-xs text-[var(--tx-muted)]">
+          {t('glossary_edit_note', 'Your changes will be reviewed by an admin before being applied to the glossary.')}
+        </p>
+
+        {error && (
+          <div className="p-3 rounded-lg bg-red-500/10 border border-red-500/20 text-sm text-red-400">
+            {error}
+          </div>
+        )}
 
         <div className="space-y-3">
           {langColumns.map(col => (
@@ -208,7 +245,7 @@ function EditModal({ entry, onSave, onDelete, onClose }: EditModalProps) {
             {onDelete && (
               <button onClick={handleDelete} disabled={deleting} className="btn-ghost text-sm text-red-400 hover:text-red-300 flex items-center gap-1.5">
                 {deleting ? <Loader2 size={14} className="animate-spin" /> : <Trash2 size={14} />}
-                {t('glossary_delete', 'Delete')}
+                {t('glossary_submit_deletion', 'Submit Deletion for Review')}
               </button>
             )}
           </div>
@@ -216,7 +253,8 @@ function EditModal({ entry, onSave, onDelete, onClose }: EditModalProps) {
             <button onClick={onClose} className="btn-ghost text-sm">{t('glossary_cancel', 'Cancel')}</button>
             <button onClick={handleSave} disabled={saving || !form.en.trim()} className="btn-primary text-sm flex items-center gap-1.5">
               {saving && <Loader2 size={14} className="animate-spin" />}
-              {t('glossary_save', 'Save')}
+              <Send size={14} />
+              {t('glossary_submit_edit', 'Submit Edit for Review')}
             </button>
           </div>
         </div>
@@ -293,9 +331,8 @@ export default function GlossaryPage() {
     })
     if (!res.ok) {
       const err = await res.json().catch(() => ({}))
-      throw new Error(err.error || 'Failed to update term')
+      throw new Error(err.error || 'Failed to submit edit')
     }
-    await loadDbGlossary()
   }
 
   const handleDelete = async () => {
@@ -306,9 +343,8 @@ export default function GlossaryPage() {
     })
     if (!res.ok) {
       const err = await res.json().catch(() => ({}))
-      throw new Error(err.error || 'Failed to delete term')
+      throw new Error(err.error || 'Failed to submit deletion')
     }
-    await loadDbGlossary()
   }
 
   return (
@@ -385,7 +421,7 @@ export default function GlossaryPage() {
                   <th key={lang.code} className={selectedLang && selectedLang !== lang.code ? 'hidden' : ''}>{lang.flag} {t(lang.labelKey, lang.label)}</th>
                 ))}
                 <th className="w-24">{t('glossary_status', 'Status')}</th>
-                {isAdmin && <th className="w-20">{t('glossary_actions', 'Actions')}</th>}
+                {isLoggedIn && <th className="w-20">{t('glossary_actions', 'Actions')}</th>}
               </tr>
             </thead>
             <tbody>
@@ -403,7 +439,7 @@ export default function GlossaryPage() {
                       {s === 'partial' && <span className="status-partial"><Clock size={10} className="mr-1" />{c}/4</span>}
                       {s === 'pending' && <span className="status-pending">{t('glossary_pending', 'Pending')}</span>}
                     </td>
-                    {isAdmin && (
+                    {isLoggedIn && (
                       <td data-label={t('glossary_actions', 'Actions')}>
                         <button onClick={() => { setEditingEntry(entry); setShowEditModal(true) }}
                           className="p-1.5 rounded-lg hover:bg-[var(--surface-overlay)] text-[var(--tx-dim)] hover:text-[var(--tx-primary)] transition-colors">
@@ -431,7 +467,7 @@ export default function GlossaryPage() {
                   {s === 'translated' && <span className="status-translated"><CheckCircle2 size={10} className="mr-1" />{t('glossary_full', 'Full')}</span>}
                   {s === 'partial' && <span className="status-partial"><Clock size={10} className="mr-1" />{c}/4</span>}
                   {s === 'pending' && <span className="status-pending">{t('glossary_pending', 'Pending')}</span>}
-                  {isAdmin && (
+                  {isLoggedIn && (
                     <button onClick={() => { setEditingEntry(entry); setShowEditModal(true) }}
                       className="p-1 rounded-lg hover:bg-[var(--surface-overlay)] text-[var(--tx-dim)]">
                       <Edit3 size={12} />
@@ -466,7 +502,7 @@ export default function GlossaryPage() {
         <SuggestionModal onClose={() => setShowSuggestionModal(false)} />
       )}
 
-      {showEditModal && editingEntry && isAdmin && (
+      {showEditModal && editingEntry && isLoggedIn && (
         <EditModal
           entry={editingEntry}
           onSave={handleUpdate}

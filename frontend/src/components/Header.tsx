@@ -47,12 +47,9 @@ export default function Header({ onMenuToggle }: HeaderProps) {
                   </div>
                 </div>
                 <button
-                  onClick={async () => {
-                    const result = await logout()
-                    if (result.success) {
-                      router.push('/')
-                      router.refresh()
-                    }
+                  onClick={() => {
+                    logout()
+                    router.push('/')
                   }}
                   className="p-2 rounded-lg text-[var(--tx-muted)] hover:text-[var(--tx-primary)] hover:bg-[var(--surface-card-hover)] transition-colors"
                   title={t('auth_logout', 'Logout')}

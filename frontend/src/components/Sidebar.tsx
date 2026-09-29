@@ -1,6 +1,6 @@
 'use client'
 
-import { useState, useEffect } from 'react'
+import { useState, useEffect, useCallback } from 'react'
 import Link from 'next/link'
 import { usePathname } from 'next/navigation'
 import {
@@ -78,6 +78,26 @@ export default function Sidebar({ isOpen, onClose }: SidebarProps) {
   const { lang, setLang, t } = useI18n()
   const pathname = usePathname()
   const { user, loading: authLoading } = useAuth()
+  const [pendingCount, setPendingCount] = useState(0)
+
+  const fetchPendingCount = useCallback(async () => {
+    if (!user?.isAdmin) { setPendingCount(0); return }
+    try {
+      const res = await fetch('/api/glossary/suggestions?countOnly=true', { credentials: 'include' })
+      if (res.ok) {
+        const data = await res.json()
+        setPendingCount(data.count || 0)
+      }
+    } catch {}
+  }, [user?.isAdmin])
+
+  useEffect(() => { fetchPendingCount() }, [fetchPendingCount])
+
+  useEffect(() => {
+    if (!user?.isAdmin) return
+    const interval = setInterval(fetchPendingCount, 30000)
+    return () => clearInterval(interval)
+  }, [user?.isAdmin, fetchPendingCount])
 
   return (
     <>
@@ -149,6 +169,11 @@ export default function Sidebar({ isOpen, onClose }: SidebarProps) {
               >
                 <Shield size={18} />
                 <span>{t('sidebar_glossary_moderation', 'Glossary Moderation')}</span>
+                {pendingCount > 0 && (
+                  <span className="ml-auto inline-flex items-center justify-center min-w-[1.25rem] h-5 px-1.5 rounded-full bg-amber-500 text-white text-[10px] font-bold leading-none">
+                    {pendingCount}
+                  </span>
+                )}
               </Link>
             )}
           </nav>

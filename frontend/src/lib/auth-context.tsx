@@ -83,6 +83,7 @@ export function AuthProvider({ children }: { children: ReactNode }) {
   }, [])
 
   const logout = useCallback(async () => {
+    setUser(null)
     try {
       const res = await fetch('/api/auth/logout', {
         method: 'POST',
@@ -90,7 +91,6 @@ export function AuthProvider({ children }: { children: ReactNode }) {
       })
       const data = await res.json()
       if (res.ok && data.success) {
-        setUser(null)
         return { success: true }
       }
       return { success: false, error: data.error || 'Logout failed' }

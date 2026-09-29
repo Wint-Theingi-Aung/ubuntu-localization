@@ -56,8 +56,12 @@ export async function transaction<T>(fn: (q: typeof query) => Promise<T>): Promi
   }
 }
 
-/** Initialize database schema — safe to call multiple times */
+let dbInitialized = false
+
+/** Initialize database schema — safe to call multiple times (skips if already done) */
 export async function initDB(): Promise<void> {
+  if (dbInitialized) return
+
   await query(`
     CREATE TABLE IF NOT EXISTS users (
       id              SERIAL PRIMARY KEY,
@@ -165,6 +169,8 @@ export async function initDB(): Promise<void> {
 
   // Cleanup expired sessions (opportunistic)
   await query(`DELETE FROM user_sessions WHERE expires_at < NOW()`).catch(() => {})
+
+  dbInitialized = true
 }
 
 /**
@@ -382,26 +388,23 @@ export async function createSession(userId: number): Promise<string> {
 }
 
 /**
- * Get a valid session and its user
+ * Get a valid session and its user (single JOIN query for performance)
  */
 export async function getSessionUser(token: string): Promise<DbSessionUser | null> {
-  const session = await queryOne<{ user_id: number }>(
-    'SELECT user_id FROM user_sessions WHERE session_token = $1 AND expires_at > NOW()',
+  const row = await queryOne<{ id: number; username: string; display_name: string; is_admin: boolean }>(
+    `SELECT u.id, u.username, u.display_name, u.is_admin
+     FROM user_sessions s
+     JOIN users u ON s.user_id = u.id
+     WHERE s.session_token = $1 AND s.expires_at > NOW()`,
     [token],
   )
-  if (!session) return null
-
-  const user = await queryOne<{ id: number; username: string; display_name: string; is_admin: boolean }>(
-    'SELECT id, username, display_name, is_admin FROM users WHERE id = $1',
-    [session.user_id],
-  )
-  if (!user) return null
+  if (!row) return null
 
   return {
-    id: user.id,
-    username: user.username,
-    displayName: user.display_name || user.username,
-    isAdmin: user.is_admin,
+    id: row.id,
+    username: row.username,
+    displayName: row.display_name || row.username,
+    isAdmin: row.is_admin,
   }
 }
 
@@ -665,4 +668,14 @@ export async function updateGlossarySuggestionStatus(
                created_at AS "createdAt", updated_at AS "updatedAt"`,
     [status, reviewedBy, reviewNote || '', id],
   )
+}
+
+/**
+ * Get count of pending glossary suggestions (for sidebar badge)
+ */
+export async function getPendingSuggestionCount(): Promise<number> {
+  const result = await queryOne<{ count: string }>(
+    "SELECT COUNT(*)::text AS count FROM glossary_suggestions WHERE status = 'pending'"
+  )
+  return parseInt(result?.count || '0', 10)
 }

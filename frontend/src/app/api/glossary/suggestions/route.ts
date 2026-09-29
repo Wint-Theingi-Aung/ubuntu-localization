@@ -14,6 +14,7 @@ import {
   recordGlossaryHistory,
   queryOne,
   initDB,
+  getPendingSuggestionCount,
   type DbGlossaryEntry,
 } from '@/lib/db'
 import { getAuthUser } from '@/lib/auth'
@@ -44,6 +45,13 @@ export async function GET(request: NextRequest) {
     }
 
     const url = new URL(request.url)
+
+    // Lightweight pending count only (for sidebar badge)
+    if (url.searchParams.get('countOnly') === 'true' && user.isAdmin) {
+      const count = await getPendingSuggestionCount()
+      return NextResponse.json({ count })
+    }
+
     const limit = parseInt(url.searchParams.get('limit') || '50', 10)
     const offset = parseInt(url.searchParams.get('offset') || '0', 10)
     const status = url.searchParams.get('status') || undefined
