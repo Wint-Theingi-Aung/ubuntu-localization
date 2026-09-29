@@ -8,6 +8,7 @@ import { NextRequest, NextResponse } from 'next/server'
 import {
   listGlossarySuggestions,
   updateGlossarySuggestionStatus,
+  resubmitGlossarySuggestion,
   addDbGlossaryEntry,
   updateDbGlossaryEntry,
   deleteDbGlossaryEntry,
@@ -56,9 +57,9 @@ export async function GET(request: NextRequest) {
     const offset = parseInt(url.searchParams.get('offset') || '0', 10)
     const status = url.searchParams.get('status') || undefined
 
-    // Admin sees all suggestions; regular user sees only their own
+    // Admin sees all suggestions; regular user sees pending + changes_requested
     const userId = user.isAdmin ? undefined : user.id
-    const effectiveStatus = user.isAdmin ? status : 'pending'
+    const effectiveStatus = user.isAdmin ? status : ['pending', 'changes_requested']
 
     const { entries, total } = await listGlossarySuggestions(limit, offset, effectiveStatus, userId)
 
@@ -102,9 +103,9 @@ export async function PUT(request: NextRequest) {
       )
     }
 
-    if (!status || !['approved', 'rejected'].includes(status)) {
+    if (!status || !['approved', 'rejected', 'changes_requested'].includes(status)) {
       return NextResponse.json(
-        { error: 'Status must be "approved" or "rejected"' },
+        { error: 'Status must be "approved", "rejected", or "changes_requested"' },
         { status: 400 },
       )
     }
@@ -227,6 +228,63 @@ export async function PUT(request: NextRequest) {
     console.error('Glossary suggestion review error:', error)
     return NextResponse.json(
       { error: 'Failed to review suggestion' },
+      { status: 500 },
+    )
+  }
+}
+
+// ── PATCH: Resubmit a changes_requested suggestion (original submitter) ──
+
+export async function PATCH(request: NextRequest) {
+  try {
+    await initDB()
+
+    const user = await getAuthUser(request)
+    if (!user) {
+      return NextResponse.json(
+        { error: 'Authentication required' },
+        { status: 401 },
+      )
+    }
+
+    const body = await request.json()
+    const { id, en, my, shn, mnw, ksw, note } = body
+
+    if (!id || typeof id !== 'number') {
+      return NextResponse.json(
+        { error: 'Suggestion id is required' },
+        { status: 400 },
+      )
+    }
+
+    if (!en || typeof en !== 'string' || en.trim().length === 0) {
+      return NextResponse.json(
+        { error: 'English term (en) is required' },
+        { status: 400 },
+      )
+    }
+
+    const suggestion = await resubmitGlossarySuggestion(id, user.id, {
+      en: en.trim(),
+      my: my || '',
+      shn: shn || '',
+      mnw: mnw || '',
+      ksw: ksw || '',
+      note: note || '',
+    })
+
+    if (!suggestion) {
+      return NextResponse.json(
+        { error: 'Suggestion not found or not eligible for resubmission' },
+        { status: 404 },
+      )
+    }
+
+    return NextResponse.json({ suggestion: serializeDates(suggestion) })
+  } catch (error) {
+    console.error('Glossary suggestion resubmit error:', error)
+    return NextResponse.json(
+      { error: 'Failed to resubmit suggestion' },
       { status: 500 },
     )
   }

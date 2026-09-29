@@ -4,7 +4,7 @@ import { useState, useMemo, useEffect, useCallback } from 'react'
 import SearchInput from '@/components/SearchInput'
 import Pagination from '@/components/Pagination'
 import AuthModal from '@/components/AuthModal'
-import { BookOpen, AlertCircle, CheckCircle2, Clock, HelpCircle, Plus, Edit3, Trash2, X, Loader2, Send } from 'lucide-react'
+import { BookOpen, AlertCircle, CheckCircle2, Clock, HelpCircle, Plus, Edit3, Trash2, X, Loader2, Send, MessageSquare } from 'lucide-react'
 import { useI18n } from '@/lib/i18n'
 import { useAuth } from '@/lib/auth-context'
 
@@ -19,6 +19,20 @@ const langColumns = [
 ]
 
 type GlossaryEntry = { id: number; en: string; my: string; shn: string; mnw: string; ksw: string; note?: string }
+
+type UserSuggestion = {
+  id: number
+  action: string
+  en: string
+  my: string
+  shn: string
+  mnw: string
+  ksw: string
+  note: string
+  status: string
+  reviewNote: string
+  createdAt: string
+}
 
 function getTranslationStatus(entry: GlossaryEntry): 'translated' | 'partial' | 'pending' {
   const c = [entry.my, entry.shn, entry.mnw, entry.ksw].filter(f => f && f.trim().length > 0).length
@@ -245,7 +259,7 @@ function EditModal({ entry, onSave, onDelete, onClose }: EditModalProps) {
             {onDelete && (
               <button onClick={handleDelete} disabled={deleting} className="btn-ghost text-sm text-red-400 hover:text-red-300 flex items-center gap-1.5">
                 {deleting ? <Loader2 size={14} className="animate-spin" /> : <Trash2 size={14} />}
-                {t('glossary_submit_deletion', 'Submit Deletion for Review')}
+                {t('glossary_request_delete', 'Request Delete')}
               </button>
             )}
           </div>
@@ -254,9 +268,121 @@ function EditModal({ entry, onSave, onDelete, onClose }: EditModalProps) {
             <button onClick={handleSave} disabled={saving || !form.en.trim()} className="btn-primary text-sm flex items-center gap-1.5">
               {saving && <Loader2 size={14} className="animate-spin" />}
               <Send size={14} />
-              {t('glossary_submit_edit', 'Submit Edit for Review')}
+              {t('glossary_request_edit', 'Request Edit')}
             </button>
           </div>
+        </div>
+      </div>
+    </div>
+  )
+}
+
+// ── Resubmit Modal (for changes_requested suggestions) ─────────
+
+interface ResubmitModalProps {
+  suggestion: UserSuggestion
+  onClose: () => void
+  onResubmitted: () => void
+}
+
+function ResubmitModal({ suggestion, onClose, onResubmitted }: ResubmitModalProps) {
+  const { t } = useI18n()
+  const [form, setForm] = useState({ en: suggestion.en, my: suggestion.my, shn: suggestion.shn, mnw: suggestion.mnw, ksw: suggestion.ksw, note: suggestion.note })
+  const [saving, setSaving] = useState(false)
+  const [success, setSuccess] = useState(false)
+  const [error, setError] = useState('')
+
+  const handleResubmit = async () => {
+    if (!form.en.trim()) return
+    setSaving(true)
+    setError('')
+    try {
+      const res = await fetch('/api/glossary/suggestions', {
+        method: 'PATCH',
+        headers: { 'Content-Type': 'application/json' },
+        credentials: 'include',
+        body: JSON.stringify({ id: suggestion.id, ...form }),
+      })
+      const data = await res.json()
+      if (!res.ok) throw new Error(data.error || 'Failed to resubmit')
+      setSuccess(true)
+      onResubmitted()
+    } catch (err: any) {
+      setError(err.message || 'Failed to resubmit')
+    } finally {
+      setSaving(false)
+    }
+  }
+
+  if (success) {
+    return (
+      <div className="fixed inset-0 bg-black/60 backdrop-blur-sm z-50 flex items-center justify-center p-4" onClick={onClose}>
+        <div className="glass-card p-6 w-full max-w-md text-center space-y-4" onClick={e => e.stopPropagation()}>
+          <div className="w-12 h-12 rounded-full bg-emerald-500/20 flex items-center justify-center mx-auto">
+            <CheckCircle2 size={24} className="text-emerald-400" />
+          </div>
+          <h3 className="text-lg font-semibold text-[var(--tx-primary)]">Resubmitted for Review</h3>
+          <p className="text-sm text-[var(--tx-muted)]">Your updated suggestion has been resubmitted. An admin will review it soon.</p>
+          <button onClick={onClose} className="btn-primary text-sm">{t('glossary_close', 'Close')}</button>
+        </div>
+      </div>
+    )
+  }
+
+  return (
+    <div className="fixed inset-0 bg-black/60 backdrop-blur-sm z-50 flex items-center justify-center p-4" onClick={onClose}>
+      <div className="glass-card p-6 w-full max-w-lg space-y-4" onClick={e => e.stopPropagation()}>
+        <div className="flex items-center justify-between">
+          <h3 className="text-lg font-semibold text-[var(--tx-primary)]">Edit & Resubmit</h3>
+          <button onClick={onClose} className="p-1 rounded-lg hover:bg-[var(--surface-overlay)] text-[var(--tx-muted)]"><X size={18} /></button>
+        </div>
+
+        {suggestion.reviewNote && (
+          <div className="p-3 rounded-lg bg-blue-500/10 border border-blue-500/20 text-sm text-blue-400">
+            <p className="font-medium mb-1">Reviewer feedback:</p>
+            <p>{suggestion.reviewNote}</p>
+          </div>
+        )}
+
+        {error && (
+          <div className="p-3 rounded-lg bg-red-500/10 border border-red-500/20 text-sm text-red-400">
+            {error}
+          </div>
+        )}
+
+        <div className="space-y-3">
+          {langColumns.map(col => (
+            <div key={col.code}>
+              <label className="text-xs text-[var(--tx-dim)] mb-1 block">{col.flag} {t(col.labelKey, col.label)}</label>
+              <input
+                type="text"
+                value={form[col.code as keyof typeof form]}
+                onChange={e => setForm({ ...form, [col.code]: e.target.value })}
+                placeholder={col.code === 'en' ? t('glossary_english_placeholder', 'English term (required)') : ''}
+                className="input-field w-full"
+                disabled={col.code === 'en'}
+              />
+            </div>
+          ))}
+          <div>
+            <label className="text-xs text-[var(--tx-dim)] mb-1 block">📝 {t('glossary_note', 'Note')}</label>
+            <input
+              type="text"
+              value={form.note}
+              onChange={e => setForm({ ...form, note: e.target.value })}
+              placeholder={t('glossary_note_placeholder', 'Optional note about this term')}
+              className="input-field w-full"
+            />
+          </div>
+        </div>
+
+        <div className="flex items-center justify-end gap-2 pt-2">
+          <button onClick={onClose} className="btn-ghost text-sm">{t('glossary_cancel', 'Cancel')}</button>
+          <button onClick={handleResubmit} disabled={saving || !form.en.trim()} className="btn-primary text-sm flex items-center gap-1.5">
+            {saving && <Loader2 size={14} className="animate-spin" />}
+            <Send size={14} />
+            Resubmit for Review
+          </button>
         </div>
       </div>
     </div>
@@ -279,6 +405,9 @@ export default function GlossaryPage() {
   const [showEditModal, setShowEditModal] = useState(false)
   const [editingEntry, setEditingEntry] = useState<GlossaryEntry | null>(null)
   const [showAuthModal, setShowAuthModal] = useState(false)
+  const [mySuggestions, setMySuggestions] = useState<UserSuggestion[]>([])
+  const [mySuggestionsLoading, setMySuggestionsLoading] = useState(false)
+  const [resubmitSuggestion, setResubmitSuggestion] = useState<UserSuggestion | null>(null)
 
   const isLoggedIn = user !== null
   const isAdmin = user?.isAdmin === true
@@ -297,6 +426,22 @@ export default function GlossaryPage() {
   }, [])
 
   useEffect(() => { loadDbGlossary() }, [loadDbGlossary])
+
+  const loadMySuggestions = useCallback(async () => {
+    if (!isLoggedIn) return
+    setMySuggestionsLoading(true)
+    try {
+      const res = await fetch('/api/glossary/suggestions?limit=50', { credentials: 'include' })
+      if (res.ok) {
+        const data = await res.json()
+        setMySuggestions(data.entries || [])
+      }
+    } catch {} finally {
+      setMySuggestionsLoading(false)
+    }
+  }, [isLoggedIn])
+
+  useEffect(() => { loadMySuggestions() }, [loadMySuggestions])
 
   const allEntries = useMemo(() => dbEntries.length > 0 ? dbEntries : [], [dbEntries])
 
@@ -367,6 +512,50 @@ export default function GlossaryPage() {
           <span className="text-sm text-[var(--tx-dim)]">{allEntries.length} {t('glossary_terms', 'terms')}</span>
         </div>
       </div>
+
+      {/* My Suggestions (pending + changes_requested) */}
+      {isLoggedIn && mySuggestions.length > 0 && (
+        <div className="space-y-3">
+          <h2 className="text-lg font-semibold text-[var(--tx-primary)]">My Suggestions</h2>
+          <div className="space-y-2">
+            {mySuggestions.map(s => {
+              const isChangesRequested = s.status === 'changes_requested'
+              const actionLabel = s.action === 'add' ? 'Add' : s.action === 'update' ? 'Edit' : 'Delete'
+              return (
+                <div key={s.id} className={`glass-card p-4 ${isChangesRequested ? 'border-l-4 border-l-blue-400/50' : 'border-l-4 border-l-amber-400/50'}`}>
+                  <div className="flex items-center justify-between gap-3">
+                    <div className="flex-1 min-w-0">
+                      <div className="flex items-center gap-2 flex-wrap">
+                        <code className="text-sm font-mono text-[var(--tx-primary)]">{s.en}</code>
+                        <span className={`text-[10px] px-1.5 py-0.5 rounded ${isChangesRequested ? 'bg-blue-400/20 text-blue-400' : 'bg-amber-400/20 text-amber-400'}`}>
+                          {isChangesRequested ? 'Changes Requested' : 'Pending Review'}
+                        </span>
+                        <span className="text-[10px] text-[var(--tx-faint)] px-1.5 py-0.5 rounded bg-[var(--surface-overlay)]">
+                          {actionLabel}
+                        </span>
+                      </div>
+                      {isChangesRequested && s.reviewNote && (
+                        <p className="text-xs text-blue-400 mt-1">
+                          💬 {s.reviewNote}
+                        </p>
+                      )}
+                    </div>
+                    {isChangesRequested && s.action !== 'delete' && (
+                      <button
+                        onClick={() => setResubmitSuggestion(s)}
+                        className="px-3 py-1.5 rounded-lg text-xs font-medium bg-blue-600 text-white hover:bg-blue-700 transition-colors flex items-center gap-1"
+                      >
+                        <MessageSquare size={12} />
+                        Edit & Resubmit
+                      </button>
+                    )}
+                  </div>
+                </div>
+              )
+            })}
+          </div>
+        </div>
+      )}
 
       <div className="glass-card p-4 border-l-4 border-amber-500/50">
         <div className="flex gap-3">
@@ -513,6 +702,14 @@ export default function GlossaryPage() {
 
       {showAuthModal && (
         <AuthModal onClose={() => setShowAuthModal(false)} />
+      )}
+
+      {resubmitSuggestion && (
+        <ResubmitModal
+          suggestion={resubmitSuggestion}
+          onClose={() => setResubmitSuggestion(null)}
+          onResubmitted={() => { setResubmitSuggestion(null); loadMySuggestions() }}
+        />
       )}
     </div>
   )
