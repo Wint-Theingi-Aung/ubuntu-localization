@@ -599,7 +599,7 @@ export async function createGlossarySuggestion(
 }
 
 /**
- * List glossary suggestions (admin: all, regular user: own pending + changes_requested)
+ * List glossary suggestions (admin: all, regular user: own pending)
  */
 export async function listGlossarySuggestions(
   limit: number = 50,
@@ -654,11 +654,11 @@ export async function listGlossarySuggestions(
 }
 
 /**
- * Update suggestion status (admin only: approve/reject/request changes)
+ * Update suggestion status (admin only: approve/reject)
  */
 export async function updateGlossarySuggestionStatus(
   id: number,
-  status: 'approved' | 'rejected' | 'changes_requested',
+  status: 'approved' | 'rejected',
   reviewedBy: number,
   reviewNote?: string,
 ): Promise<DbGlossarySuggestion | null> {
@@ -676,35 +676,31 @@ export async function updateGlossarySuggestionStatus(
 }
 
 /**
- * Resubmit a changes_requested suggestion with updated fields
+ * Edit a suggestion's fields (admin only)
  */
-export async function resubmitGlossarySuggestion(
+export async function editGlossarySuggestion(
   id: number,
-  userId: number,
   data: { en: string; my?: string; shn?: string; mnw?: string; ksw?: string; note?: string },
 ): Promise<DbGlossarySuggestion | null> {
   return queryOne<DbGlossarySuggestion>(
     `UPDATE glossary_suggestions
-     SET en = $1, my = $2, shn = $3, mnw = $4, ksw = $5, note = $6,
-         status = 'pending', reviewed_by = NULL, reviewed_at = NULL, review_note = '',
-         updated_at = NOW()
-     WHERE id = $7 AND submitted_by = $8 AND status = 'changes_requested'
+     SET en = $1, my = $2, shn = $3, mnw = $4, ksw = $5, note = $6, updated_at = NOW()
+     WHERE id = $7
      RETURNING id, submitted_by AS "submittedBy", action, glossary_id AS "glossaryId",
                en, my, shn, mnw, ksw, note, status,
                reviewed_by AS "reviewedBy", reviewed_at AS "reviewedAt",
                review_note AS "reviewNote",
                created_at AS "createdAt", updated_at AS "updatedAt"`,
-    [data.en, data.my || '', data.shn || '', data.mnw || '', data.ksw || '', data.note || '', id, userId],
+    [data.en, data.my || '', data.shn || '', data.mnw || '', data.ksw || '', data.note || '', id],
   )
 }
 
 /**
- * Get count of pending/actionable glossary suggestions (for sidebar badge)
- * Counts both 'pending' and 'changes_requested' statuses
+ * Get count of pending glossary suggestions (for sidebar badge)
  */
 export async function getPendingSuggestionCount(): Promise<number> {
   const result = await queryOne<{ count: string }>(
-    "SELECT COUNT(*)::text AS count FROM glossary_suggestions WHERE status IN ('pending', 'changes_requested')"
+    "SELECT COUNT(*)::text AS count FROM glossary_suggestions WHERE status = 'pending'"
   )
   return parseInt(result?.count || '0', 10)
 }

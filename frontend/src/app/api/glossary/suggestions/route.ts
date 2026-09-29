@@ -8,7 +8,7 @@ import { NextRequest, NextResponse } from 'next/server'
 import {
   listGlossarySuggestions,
   updateGlossarySuggestionStatus,
-  resubmitGlossarySuggestion,
+  editGlossarySuggestion,
   addDbGlossaryEntry,
   updateDbGlossaryEntry,
   deleteDbGlossaryEntry,
@@ -57,9 +57,9 @@ export async function GET(request: NextRequest) {
     const offset = parseInt(url.searchParams.get('offset') || '0', 10)
     const status = url.searchParams.get('status') || undefined
 
-    // Admin sees all suggestions; regular user sees pending + changes_requested
+    // Admin sees all suggestions; regular user sees own pending
     const userId = user.isAdmin ? undefined : user.id
-    const effectiveStatus = user.isAdmin ? status : ['pending', 'changes_requested']
+    const effectiveStatus = user.isAdmin ? status : 'pending'
 
     const { entries, total } = await listGlossarySuggestions(limit, offset, effectiveStatus, userId)
 
@@ -103,9 +103,9 @@ export async function PUT(request: NextRequest) {
       )
     }
 
-    if (!status || !['approved', 'rejected', 'changes_requested'].includes(status)) {
+    if (!status || !['approved', 'rejected'].includes(status)) {
       return NextResponse.json(
-        { error: 'Status must be "approved", "rejected", or "changes_requested"' },
+        { error: 'Status must be "approved" or "rejected"' },
         { status: 400 },
       )
     }
@@ -233,7 +233,7 @@ export async function PUT(request: NextRequest) {
   }
 }
 
-// ── PATCH: Resubmit a changes_requested suggestion (original submitter) ──
+// ── PATCH: Edit a suggestion's fields (admin-only) ───────────────
 
 export async function PATCH(request: NextRequest) {
   try {
@@ -244,6 +244,12 @@ export async function PATCH(request: NextRequest) {
       return NextResponse.json(
         { error: 'Authentication required' },
         { status: 401 },
+      )
+    }
+    if (!user.isAdmin) {
+      return NextResponse.json(
+        { error: 'Admin access required' },
+        { status: 403 },
       )
     }
 
@@ -264,7 +270,7 @@ export async function PATCH(request: NextRequest) {
       )
     }
 
-    const suggestion = await resubmitGlossarySuggestion(id, user.id, {
+    const suggestion = await editGlossarySuggestion(id, {
       en: en.trim(),
       my: my || '',
       shn: shn || '',
@@ -275,16 +281,16 @@ export async function PATCH(request: NextRequest) {
 
     if (!suggestion) {
       return NextResponse.json(
-        { error: 'Suggestion not found or not eligible for resubmission' },
+        { error: 'Suggestion not found' },
         { status: 404 },
       )
     }
 
     return NextResponse.json({ suggestion: serializeDates(suggestion) })
   } catch (error) {
-    console.error('Glossary suggestion resubmit error:', error)
+    console.error('Glossary suggestion edit error:', error)
     return NextResponse.json(
-      { error: 'Failed to resubmit suggestion' },
+      { error: 'Failed to edit suggestion' },
       { status: 500 },
     )
   }
