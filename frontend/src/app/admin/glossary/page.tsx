@@ -93,6 +93,7 @@ export default function AdminGlossaryPage() {
   const [showEditModal, setShowEditModal] = useState<EditModalState | null>(null)
   const [view, setView] = useState<'pending' | 'history'>('pending')
   const [reviewHistory, setReviewHistory] = useState<ReviewHistoryEntry[]>([])
+  const [error, setError] = useState<string | null>(null)
 
   const loadSuggestions = useCallback(async () => {
     setLoading(true)
@@ -120,8 +121,29 @@ export default function AdminGlossaryPage() {
     if (!authLoading && (!user || !user.isAdmin)) router.push('/')
   }, [user, authLoading, router])
 
+  // Dismiss error after 4s
+  useEffect(() => {
+    if (!error) return
+    const t = setTimeout(() => setError(null), 4000)
+    return () => clearTimeout(t)
+  }, [error])
+
   const handleReview = async (id: number, status: 'approved' | 'rejected', note?: string) => {
-    setActionLoading(id)
+    const suggestion = suggestions.find(s => s.id === id)
+    if (!suggestion) return
+
+    // Optimistic: remove from list + close modal + record history immediately
+    setSuggestions(prev => prev.filter(s => s.id !== id))
+    setShowNoteModal(null)
+    setReviewNote('')
+    setActionLoading(null)
+    addReviewHistory({
+      termEn: suggestion.en,
+      action: status,
+      reviewerNote: note || undefined,
+    })
+    loadReviewHistory()
+
     try {
       const res = await fetch('/api/glossary/suggestions', {
         method: 'PUT',
@@ -129,56 +151,51 @@ export default function AdminGlossaryPage() {
         credentials: 'include',
         body: JSON.stringify({ id, status, reviewNote: note || '' }),
       })
-      if (res.ok) {
-        const suggestion = suggestions.find(s => s.id === id)
-        if (suggestion) {
-          addReviewHistory({
-            termEn: suggestion.en,
-            action: status,
-            reviewerNote: note || undefined,
-          })
-        }
-        await loadSuggestions()
-        loadReviewHistory()
-      }
-    } catch {} finally {
-      setActionLoading(null)
-      setShowNoteModal(null)
-      setReviewNote('')
+      if (!res.ok) throw new Error('Action failed')
+    } catch {
+      // Rollback: restore item to list
+      setSuggestions(prev => [suggestion, ...prev].sort((a, b) => new Date(b.createdAt).getTime() - new Date(a.createdAt).getTime()))
+      setError(`Failed to ${status === 'approved' ? 'approve' : 'reject'} "${suggestion.en}". Please try again.`)
     }
   }
 
   const handleEditAndApprove = async (id: number, data: EditModalState) => {
-    setActionLoading(id)
+    const suggestion = suggestions.find(s => s.id === id)
+    if (!suggestion) return
+
+    // Optimistic: remove from list + close modal + record history immediately
+    setSuggestions(prev => prev.filter(s => s.id !== id))
+    setShowEditModal(null)
+    setActionLoading(null)
+    addReviewHistory({
+      termEn: data.en,
+      action: 'approved',
+      reviewerNote: 'Approved after edit',
+    })
+    loadReviewHistory()
+
     try {
-      // First, edit the suggestion fields
+      // Edit fields
       const editRes = await fetch('/api/glossary/suggestions', {
         method: 'PATCH',
         headers: { 'Content-Type': 'application/json' },
         credentials: 'include',
         body: JSON.stringify({ id, en: data.en, my: data.my, shn: data.shn, mnw: data.mnw, ksw: data.ksw, note: data.note }),
       })
-      if (!editRes.ok) return
+      if (!editRes.ok) throw new Error('Edit failed')
 
-      // Then approve it
+      // Approve
       const approveRes = await fetch('/api/glossary/suggestions', {
         method: 'PUT',
         headers: { 'Content-Type': 'application/json' },
         credentials: 'include',
         body: JSON.stringify({ id, status: 'approved', reviewNote: 'Approved after edit' }),
       })
-      if (approveRes.ok) {
-        addReviewHistory({
-          termEn: data.en,
-          action: 'approved',
-          reviewerNote: 'Approved after edit',
-        })
-        await loadSuggestions()
-        loadReviewHistory()
-      }
-    } catch {} finally {
-      setActionLoading(null)
-      setShowEditModal(null)
+      if (!approveRes.ok) throw new Error('Approval failed')
+    } catch {
+      // Rollback: restore item to list
+      setSuggestions(prev => [suggestion, ...prev].sort((a, b) => new Date(b.createdAt).getTime() - new Date(a.createdAt).getTime()))
+      setError(`Failed to edit & approve "${suggestion.en}". Please try again.`)
     }
   }
 
@@ -284,6 +301,17 @@ export default function AdminGlossaryPage() {
 
   return (
     <div className="max-w-5xl mx-auto space-y-6">
+      {/* Error toast */}
+      {error && (
+        <div className="fixed top-4 right-4 z-50 glass-card px-4 py-3 flex items-center gap-2 border-l-4 border-l-red-500/50 shadow-lg">
+          <AlertCircle size={16} className="text-red-400 flex-shrink-0" />
+          <p className="text-sm text-[var(--tx-primary)]">{error}</p>
+          <button onClick={() => setError(null)} className="ml-2 text-[var(--tx-dim)] hover:text-[var(--tx-primary)]">
+            <X size={14} />
+          </button>
+        </div>
+      )}
+
       {/* Header */}
       <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4">
         <div className="flex items-center gap-3">
@@ -577,10 +605,10 @@ export default function AdminGlossaryPage() {
               <button onClick={() => setShowEditModal(null)} className="btn-ghost text-sm">Cancel</button>
               <button
                 onClick={() => handleEditAndApprove(showEditModal.id, showEditModal)}
-                disabled={!showEditModal.en.trim() || actionLoading === showEditModal.id}
+                disabled={!showEditModal.en.trim()}
                 className="px-4 py-2 rounded-lg text-sm font-medium text-white bg-emerald-600 hover:bg-emerald-700 transition-colors disabled:opacity-50 flex items-center gap-1"
               >
-                {actionLoading === showEditModal.id ? <Loader2 size={14} className="animate-spin" /> : <CheckCircle2 size={14} />}
+                <CheckCircle2 size={14} />
                 Save & Approve
               </button>
             </div>
