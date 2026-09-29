@@ -50,7 +50,7 @@ function SuggestionModal({ onClose }: SuggestionModalProps) {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         credentials: 'include',
-        body: JSON.stringify(form),
+        body: JSON.stringify({ action: 'add', ...form }),
       })
       const data = await res.json()
       if (!res.ok) throw new Error(data.error || 'Failed to submit suggestion')
