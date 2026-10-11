@@ -35,6 +35,32 @@ export interface BatchValidationResult {
   translationMap?: Map<number, string>
 }
 
+/** Minimal entry shape needed to decide review eligibility. */
+export interface ReviewEligibleEntry {
+  msgstr: string
+  status: string
+}
+
+/**
+ * An entry is review-eligible when it holds a non-empty translation that is
+ * either awaiting review or already confirmed. Empty and pending strings are
+ * skipped — never treated as completed translations.
+ */
+export function isReviewEligible(entry: ReviewEligibleEntry): boolean {
+  return (
+    (entry.status === 'reviewing' || entry.status === 'confirmed') &&
+    entry.msgstr.trim().length > 0
+  )
+}
+
+/**
+ * A batch can enter review as soon as at least one entry is review-eligible.
+ * A batch where every string is empty cannot be reviewed.
+ */
+export function canReviewBatch(entries: ReviewEligibleEntry[]): boolean {
+  return entries.some(isReviewEligible)
+}
+
 /**
  * Validate a batch translation response from the API.
  *
