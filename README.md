@@ -87,13 +87,14 @@ ubuntu-localization/
 
 ```bash
 git clone https://github.com/Wint-Theingi-Aung/ubuntu-localization.git
-cd ubuntu-localization/frontend
+cd ubuntu-localization
+
+# Create the frontend environment file from the repository-root template
+cp .env.example frontend/.env
 
 # Install dependencies
+cd frontend
 npm install
-
-# Create the frontend environment file from the repository template
-cp .env.example frontend/.env
 # Edit frontend/.env and set the values you need:
 # GOOGLE_API_KEY=your_gemini_api_key_here
 # DATABASE_URL=... (only if using database-backed features)
