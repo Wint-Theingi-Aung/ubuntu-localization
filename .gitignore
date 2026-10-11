@@ -31,5 +31,8 @@ next-env.d.ts
 # Misc
 *.pem
 
+# CPU profiling artifacts
+*.cpuprofile
+
 # Playwright MCP
 .playwright-mcp/
