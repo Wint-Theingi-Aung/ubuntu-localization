@@ -72,7 +72,14 @@ npm --version
 ```bash
 # 1. Clone your fork (see "Git Workflow" below)
 git clone https://github.com/<your-username>/ubuntu-localization.git
-cd ubuntu-localization/frontend
+cd ubuntu-localization
+
+# 2. Create the frontend environment file (template is at repository root)
+cp .env.example frontend/.env
+
+# 3. Install dependencies
+cd frontend
+npm install
 
 # 2. Install dependencies (run from frontend/)
 npm install
@@ -103,7 +110,11 @@ DATABASE_URL=postgresql://user:password@host/dbname?sslmode=require
 > There is no `SESSION_SECRET` and no signed-cookie scheme.
 
 > Replace the values above with your own. **Never commit `.env`** — it is
-> already listed in `.gitignore`.
+> already listed in `.gitignore`. `SESSION_SECRET` is intended to be a
+> secret for session-token signing/generation, but the current runtime code
+> creates random database session tokens with `crypto.randomBytes` and does
+> not currently read `SESSION_SECRET`. Do not rely on this variable as an
+> active security control unless the implementation is updated.
 
 ### Start the app
 
@@ -346,18 +357,44 @@ npx playwright test
 
 ### Suggested checklist before opening a PR
 
+Run these commands while your terminal is already in `frontend/`:
+
 ```bash
-cd frontend
 npm run lint
 npx jest
 npm run build
 ```
+
+Optional browser tests (also from `frontend/`):
+
+```bash
+npx playwright install chromium   # one-time browser installation
+npx playwright test
+```
+
+The Playwright config starts the dev server on port 3000. The E2E suite may be
+slower or flaky; treat it as supplementary and do not commit `test-results/`.
 
 If you changed translation logic, also verify a real string by hand: upload a
 `.po` file on `/translate`, translate a small batch, and confirm the exported
 file still parses.
 
 ---
+
+## MCP Servers and Claude Code Memory
+
+The repository's root `.mcp.json` includes the existing `launchpad-bridge`
+server and may include Chrome DevTools and Caveman. Chrome DevTools is launched
+with `npx -y chrome-devtools-mcp@latest`; Caveman uses
+`npx -y caveman-mcp`. The GitHub and Launchpad bridge entries currently use
+machine-specific absolute paths, so contributors must adapt those paths locally
+rather than assume they work on every computer.
+
+Claude-Mem is installed separately with `npx claude-mem install` or through
+Claude Code's plugin marketplace; follow its official installer rather than
+adding an unverified manual command to `.mcp.json`. After changing MCP setup,
+restart Claude Code and run `/mcp` to verify connectivity. Only install MCP
+servers and plugins you trust.
 
 ## Git Workflow
 
