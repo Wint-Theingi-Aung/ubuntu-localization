@@ -80,7 +80,19 @@ cp .env.example frontend/.env
 # 3. Install dependencies
 cd frontend
 npm install
+
+# 2. Install dependencies (run from frontend/)
+npm install
+
+# 3. Create your local environment file (run from the repository root)
+cd ..
+cp .env.example frontend/.env
+cd frontend
 ```
+
+The `.env.example` template lives at the **repository root**, but Next.js
+reads environment variables from `frontend/.env` — so the copy target is
+`frontend/.env`, not `.env` inside `frontend/`.
 
 Then edit `frontend/.env` and fill in the values you need:
 
@@ -90,10 +102,12 @@ GOOGLE_API_KEY=your_gemini_api_key_here
 
 # Neon PostgreSQL connection string — enables auth, glossary, and history
 DATABASE_URL=postgresql://user:password@host/dbname?sslmode=require
-
-# Session secret — a random string of your own
-SESSION_SECRET=generate_a_random_string_here
 ```
+
+> **Sessions need no secret.** `createSession()` in
+> `frontend/src/lib/db.ts` generates each session token with
+> `crypto.randomBytes(32)` and stores it in the `user_sessions` table.
+> There is no `SESSION_SECRET` and no signed-cookie scheme.
 
 > Replace the values above with your own. **Never commit `.env`** — it is
 > already listed in `.gitignore`. `SESSION_SECRET` is intended to be a
@@ -127,9 +141,13 @@ npm start
 | `/translate/` | Upload `.po` → translate (AI or manual) → export |
 | `/templates/` | Browse Ubuntu packages on Launchpad |
 | `/glossary/` | Standardized translation terms |
+| `/glossary/history/` | Glossary change history |
 | `/guide/` | Interactive translator guide |
+| `/guide/quickref/` | Condensed quick-reference sheet |
+| `/get-started/` | Onboarding walkthrough for new translators |
 | `/contributors/` | Contributor rankings |
-| `/history/` | Export history |
+| `/history/` | Translation activity history (uploads, translations, exports) |
+| `/admin/glossary/` | Glossary moderation (admin access required) |
 
 ---
 
@@ -450,8 +468,9 @@ Use the placeholder style shown in `.env.example` when documenting configuration
 ```bash
 GOOGLE_API_KEY=your_gemini_api_key_here
 DATABASE_URL=postgresql://user:password@host/dbname?sslmode=require
-SESSION_SECRET=generate_a_random_string_here
 ```
+
+(No `SESSION_SECRET` is required — see "Local Development Setup".)
 
 If you accidentally commit a secret, **rotate it immediately** — removing it
 from a later commit does not erase it from Git history — and mention it in the
