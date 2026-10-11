@@ -9,7 +9,7 @@ import {
 import { useI18n } from '@/lib/i18n'
 import { LANGUAGES, TRANSLATION_CONFIG } from '@/lib/constants'
 import { recordHistory } from '@/lib/history'
-import { compareFormatSpecifiers, validateBatchResponse } from '@/lib/translate'
+import { compareFormatSpecifiers, validateBatchResponse, canReviewBatch, isReviewEligible } from '@/lib/translate'
 import { useAuth } from '@/lib/auth-context'
 
 const BATCH_SIZE = 10
@@ -78,8 +78,15 @@ export default function TranslatePage() {
   const batchAllConfirmed = currentBatchEntries.length > 0 &&
     currentBatchEntries.every(e => e.status === 'confirmed')
   const batchHasPending = currentBatchEntries.some(e => e.status === 'pending')
-  const canReview = currentBatchEntries.length > 0 &&
-    currentBatchEntries.every(e => (e.status === 'reviewing' || e.status === 'confirmed') && e.msgstr.trim().length > 0)
+  // Partial batches are reviewable: at least one non-empty translation is enough.
+  const canReview = canReviewBatch(currentBatchEntries)
+  // Review lists only translated strings; empty/skipped entries stay in the
+  // translate phase and are never treated as completed translations.
+  const batchReviewEntries = useMemo(
+    () => currentBatchEntries.filter(isReviewEligible),
+    [currentBatchEntries]
+  )
+  const batchSkippedCount = currentBatchEntries.length - batchReviewEntries.length
   const workPhase: 'translate' | 'review' = reviewMode ? 'review' : 'translate'
 
   const translatedCount = entries.filter(e =>
@@ -90,10 +97,16 @@ export default function TranslatePage() {
   const untranslatedCount = entries.filter(e => e.status === 'pending').length
   const totalCount = entries.length
 
-  const batchReviewingCount = currentBatchEntries.filter(e => e.status === 'reviewing').length
-  const batchConfirmedCount = currentBatchEntries.filter(e => e.status === 'confirmed').length
-  const batchFormatErrorCount = currentBatchEntries.filter(e => formatErrors[e.index]).length
+  const batchReviewingCount = batchReviewEntries.filter(e => e.status === 'reviewing').length
+  const batchConfirmedCount = batchReviewEntries.filter(e => e.status === 'confirmed').length
+  const batchFormatErrorCount = batchReviewEntries.filter(e => formatErrors[e.index]).length
   const totalFormatErrorCount = Object.keys(formatErrors).length
+  // True when clicking Confirm All would confirm every entry in the batch,
+  // which is what triggers the auto-advance to the next batch.
+  const batchWillBeFullyConfirmed = currentBatchEntries.length > 0 &&
+    currentBatchEntries.every(e =>
+      e.status === 'confirmed' || (e.status === 'reviewing' && !formatErrors[e.index])
+    )
 
   const activeStepKey = step === 'upload' ? 'upload'
     : step === 'complete' ? 'complete'
@@ -271,6 +284,7 @@ export default function TranslatePage() {
   }, [currentBatchEntries, targetLang])
 
   const handleStartReview = useCallback(() => {
+    if (!canReviewBatch(currentBatchEntries)) return
     setEntries(prev => prev.map(e => {
       if (currentBatchEntries.some(be => be.index === e.index) && e.msgstr.trim().length > 0 && e.status !== 'confirmed') {
         return { ...e, status: 'reviewing' as const }
@@ -640,6 +654,11 @@ export default function TranslatePage() {
                     <span className="text-[var(--tx-muted)]">
                       <span className="text-emerald-400 font-semibold">{batchConfirmedCount}</span> {t('translation_confirmed_in_batch', 'confirmed in batch')}
                     </span>
+                    {batchSkippedCount > 0 && (
+                      <span className="text-[var(--tx-muted)]">
+                        <span className="text-[var(--tx-dim)] font-semibold">{batchSkippedCount}</span> {t('translation_skipped_for_now', 'not translated \u2014 skipped for now')}
+                      </span>
+                    )}
                     {batchFormatErrorCount > 0 && (
                       <span className="text-[var(--tx-muted)]">
                         <span className="text-red-400 font-semibold">{batchFormatErrorCount}</span> {t('translation_format_errors', 'format mismatch')}
@@ -658,9 +677,9 @@ export default function TranslatePage() {
                       disabled={batchReviewingCount === batchFormatErrorCount}
                       className="btn-primary flex items-center gap-2 text-sm"
                     >
-                      <Check size={16} />{batchFormatErrorCount > 0
-                        ? t('translation_confirm_all_fix', 'Confirm Valid ({count})').replace('{count}', String(batchReviewingCount - batchFormatErrorCount))
-                        : t('translation_confirm_all_next', 'Confirm All & Next Batch ({count})').replace('{count}', String(batchReviewingCount))}
+                      <Check size={16} />{batchWillBeFullyConfirmed
+                        ? t('translation_confirm_all_next', 'Confirm All & Next Batch ({count})').replace('{count}', String(batchReviewingCount))
+                        : t('translation_confirm_all_fix', 'Confirm Valid ({count})').replace('{count}', String(batchReviewingCount - batchFormatErrorCount))}
                     </button>
                   </div>
                 </div>
@@ -673,8 +692,15 @@ export default function TranslatePage() {
                 )}
               </div>
 
+              {batchReviewEntries.length === 0 && (
+                <div className="glass-card p-6 text-center">
+                  <p className="text-sm text-[var(--tx-muted)]">
+                    {t('translation_review_empty', 'No translated strings in this batch yet. Go back to Edit and translate at least one string.')}
+                  </p>
+                </div>
+              )}
               <div className="space-y-3">
-                {currentBatchEntries.map(entry => {
+                {batchReviewEntries.map(entry => {
                   const isExpanded = expandedEntry === entry.index
                   const isConfirmed = entry.status === 'confirmed'
                   const isReviewing = entry.status === 'reviewing'

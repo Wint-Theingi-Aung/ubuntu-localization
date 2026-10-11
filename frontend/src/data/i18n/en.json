@@ -297,5 +297,7 @@
   "glossary_suggestion_note": "Your suggestion will be reviewed by an admin before being added to the glossary.",
   "glossary_note": "Note",
   "glossary_note_placeholder": "Optional note about this term",
-  "glossary_close": "Close"
+  "glossary_close": "Close",
+  "translation_skipped_for_now": "not translated — skipped for now",
+  "translation_review_empty": "No translated strings in this batch yet. Go back to Edit and translate at least one string."
 }
