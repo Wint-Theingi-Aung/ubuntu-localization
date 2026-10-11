@@ -92,8 +92,12 @@ cd ubuntu-localization/frontend
 # Install dependencies
 npm install
 
-# Set your Gemini API key
-echo "GOOGLE_API_KEY=your_key_here" > .env
+# Create the frontend environment file from the repository template
+cp .env.example frontend/.env
+# Edit frontend/.env and set the values you need:
+# GOOGLE_API_KEY=your_gemini_api_key_here
+# DATABASE_URL=... (only if using database-backed features)
+# SESSION_SECRET is documented in the template but is not currently read by the runtime code.
 ```
 
 ## Development
@@ -107,17 +111,39 @@ npm run dev
 
 Open **http://localhost:3000** — the app hot-reloads on file changes.
 
-## Build
+## Testing and Validation
+
+Run these commands from the `frontend/` directory:
 
 ```bash
-cd frontend
-
-# Production build
+npm run lint
+npx jest
 npm run build
+```
 
-# Start production server
+- `npm run lint` runs Next.js linting.
+- `npx jest` runs the configured Jest unit tests. There is currently no `test` script in `package.json`.
+- Optional browser tests: run `npx playwright install chromium` once, then `npx playwright test`. The Playwright config starts the development server on port 3000. E2E tests may be slower or flaky; do not commit `frontend/test-results/`.
+- If you change translation logic, upload a small `.po` file, translate a few strings, export it, and confirm the exported PO still parses.
+
+## Build
+
+Run from `frontend/`:
+
+```bash
+npm run build
 npm start
 ```
+
+## MCP Servers and Claude Code Memory
+
+The project-level `.mcp.json` can configure MCP servers used by Claude Code. It includes the existing custom `launchpad-bridge` server, plus Chrome DevTools and Caveman for browser debugging and context compression. Some existing entries (such as the GitHub and Launchpad bridge commands) point to machine-specific paths under `/home/wint/`; replace those paths with the correct paths on your own machine before using this config.
+
+- **Chrome DevTools MCP**: launched with `npx -y chrome-devtools-mcp@latest`; requires Node.js and a compatible Chrome installation.
+- **Caveman MCP**: launched with `npx -y caveman-mcp`; its first run downloads a verified platform binary.
+- **Claude-Mem**: install separately using `npx claude-mem install` or the Claude Code plugin marketplace. Its installer manages its hooks/plugin integration; do not add a guessed manual server command to `.mcp.json`.
+
+After changing MCP configuration, restart Claude Code and run `/mcp` to check server status. Only enable servers you trust.
 
 ## Deployment (Vercel)
 
