@@ -158,6 +158,8 @@ Set `GOOGLE_API_KEY` as an environment variable in the Vercel dashboard.
 
 ## Contributing
 
+See [CONTRIBUTING.md](CONTRIBUTING.md) for setup, translation guidelines, and the pull request workflow.
+
 1. Fork the repository
 2. Create a feature branch (`git checkout -b feature/amazing-feature`)
 3. Commit your changes (`git commit -m 'Add amazing feature'`)

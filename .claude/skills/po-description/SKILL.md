@@ -1,3 +1,8 @@
+---
+name: po-description
+description: Generate human-readable .po file summaries and priority breakdowns
+---
+
 # po-description
 
 Generates human-readable summaries of .po file contents: language, string count, translation coverage percentage, and a breakdown by priority tier. Used for project status reports and onboarding new translators.

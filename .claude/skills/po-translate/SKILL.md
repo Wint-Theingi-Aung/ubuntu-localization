@@ -1,3 +1,8 @@
+---
+name: po-translate
+description: AI batch translation with 3-reviewer QA verification
+---
+
 # po-translate
 
 Orchestrates the full .po translation pipeline: loads untranslated strings from the queue, dispatches them in batches to the translate-batch agent (Gemini-powered), then runs triple-lens adversarial QA verification via the qa-reviewer agent. Merges majority-vote results (2+/3 lenses must pass per entry). Writes approved translations back and reports pass/fail stats.

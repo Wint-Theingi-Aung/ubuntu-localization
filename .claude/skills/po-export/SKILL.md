@@ -1,3 +1,8 @@
+---
+name: po-export
+description: Write back to .po file for download from the unified translate page
+---
+
 # po-export
 
 Writes QA-verified translations back into .po format with proper headers, language tags, and timestamps. Auto-generates filenames like `translated_shan_messages_20260212.po`. Produces a downloadable .po file.

@@ -1,3 +1,8 @@
+---
+name: po-upload
+description: Parse .po files, extract untranslated strings
+---
+
 # po-upload
 
 Parses uploaded .po files, extracts msgid/msgstr pairs, msgctxt context metadata, and translator comments. Detects untranslated entries and fuzzy translations. Loads them into the translation queue for batch processing by po-translate.

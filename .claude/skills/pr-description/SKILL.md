@@ -1,3 +1,8 @@
+---
+name: pr-description
+description: Auto-generate structured pull request descriptions for translation contributions
+---
+
 # pr-description
 
 Generates structured pull request descriptions for translation contributions. Analyzes export history, session data, and translation records to produce consistent, review-ready PR bodies for manual submission to GitHub.

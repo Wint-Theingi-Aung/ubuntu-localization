@@ -1,3 +1,8 @@
+---
+name: po-detect
+description: Scan for missing/fuzzy translations, prioritize by importance
+---
+
 # po-detect
 
 Scans the loaded .po file for missing translations and fuzzy entries. Prioritizes by UI visibility (p1 = system menus/dialogs, p2 = help text/tooltips, p3 = debug/developer strings). Produces a ranked translation queue ready for batch dispatch via po-translate.
