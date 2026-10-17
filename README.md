@@ -21,7 +21,7 @@ An AI-powered localization tool for translating Ubuntu `.po` files into indigeno
 - **Single-page workflow** — upload, translate, and export all on one unified page
 - **Interactive guide** — 6-chapter walkthrough for new translators
 - **Contributors** — per-language contributor rankings and stats
-- **Templates** — browse 547 Ubuntu packages on Launchpad
+- **Templates** — browse 552 Ubuntu packages on Launchpad
 - **Glossary** — 101 standardized translation terms across 4 languages
 - **Dark/Light theme** — Ubuntu-themed UI with system preference detection
 - **i18n** — UI available in English, Myanmar, Shan, Mon, and S'gaw Karen
@@ -32,7 +32,7 @@ An AI-powered localization tool for translating Ubuntu `.po` files into indigeno
 *Dashboard — Dark theme with English UI*
 
 ![Templates — Shan](screenshots/template-shan.png)
-*Templates page — 547 Ubuntu packages, Shan language*
+*Templates page — 552 Ubuntu packages, Shan language*
 
 ![Translate — Mon](screenshots/translate-mon.png)
 *Translation workspace — AI-powered .po file translation, Mon language*
@@ -89,6 +89,10 @@ ubuntu-localization/
 
 ## Installation
 
+The environment template lives at the **repository root** (`.env.example`).
+Next.js reads `frontend/.env`, so copy the template there before installing
+or running frontend commands:
+
 ```bash
 git clone https://github.com/Wint-Theingi-Aung/ubuntu-localization.git
 cd ubuntu-localization
@@ -99,22 +103,9 @@ cp .env.example frontend/.env
 # Install dependencies
 cd frontend
 npm install
-# Edit frontend/.env and set the values you need:
-# GOOGLE_API_KEY=your_gemini_api_key_here
-# DATABASE_URL=... (only if using database-backed features)
-# SESSION_SECRET is documented in the template but is not currently read by the runtime code.
-
-# Install dependencies (from frontend/)
-npm install
-
-# Create the local env file (from the repository root: cp .env.example frontend/.env)
-cd ..
-cp .env.example frontend/.env
-cd frontend
 ```
 
-The `.env.example` template is at the **repository root**; Next.js reads
-`frontend/.env`. Edit `frontend/.env` and set at least:
+Edit `frontend/.env` and set at least:
 
 ```bash
 GOOGLE_API_KEY=your_gemini_api_key_here
@@ -122,6 +113,8 @@ GOOGLE_API_KEY=your_gemini_api_key_here
 
 `DATABASE_URL` is optional — without it, features that need storage
 (authentication, glossary moderation, history) stay disabled.
+`SESSION_SECRET` is not used by the current runtime (session tokens are
+random values stored in the database).
 
 ## Development
 
@@ -160,13 +153,31 @@ npm start
 
 ## MCP Servers and Claude Code Memory
 
-The project-level `.mcp.json` can configure MCP servers used by Claude Code. It includes the existing custom `launchpad-bridge` server, plus Chrome DevTools and Caveman for browser debugging and context compression. Some existing entries (such as the GitHub and Launchpad bridge commands) point to machine-specific paths under `/home/wint/`; replace those paths with the correct paths on your own machine before using this config.
+The project-level `.mcp.json` configures MCP servers for Claude Code. Paths in
+that file are **project-relative** (no personal home-directory paths). Servers:
 
-- **Chrome DevTools MCP**: launched with `npx -y chrome-devtools-mcp@latest`; requires Node.js and a compatible Chrome installation.
-- **Caveman MCP**: launched with `npx -y caveman-mcp`; its first run downloads a verified platform binary.
-- **Claude-Mem**: install separately using `npx claude-mem install` or the Claude Code plugin marketplace. Its installer manages its hooks/plugin integration; do not add a guessed manual server command to `.mcp.json`.
+- **launchpad-bridge** — in-repo Python server at
+  `.claude/mcp-servers/launchpad-bridge/run.sh`. It uses a project `venv/`
+  with `launchpadlib` and `mcp`. Create the venv and install dependencies
+  before first use; optional OAuth setup is `setup_auth.py` in the same
+  directory. Anonymous Launchpad reads work without login.
+- **postgres** — `npx -y @modelcontextprotocol/server-postgres` against a
+  local `ubuntu_localization` database. Adjust the connection string in
+  `.mcp.json` if your database differs.
+- **filesystem** — allows the project root and `/tmp/ubuntu-localization`.
+- **chrome-devtools** — `npx -y chrome-devtools-mcp@latest`; requires Node.js
+  and a compatible Chrome installation.
+- **caveman** — `npx -y caveman-mcp`; first run downloads a platform binary.
 
-After changing MCP configuration, restart Claude Code and run `/mcp` to check server status. Only enable servers you trust.
+Optional extras (not in `.mcp.json`):
+
+- **Claude-Mem**: install with `npx claude-mem install` or the Claude Code
+  plugin marketplace. Do not hand-add an unverified server command.
+- **GitHub MCP**: add your own server if you need repo browsing; this project
+  does not ship a GitHub MCP binary or path.
+
+After changing MCP configuration, restart Claude Code and run `/mcp` to check
+server status. Only enable servers you trust.
 
 ## Deployment (Vercel)
 

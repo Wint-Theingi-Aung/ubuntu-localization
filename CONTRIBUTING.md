@@ -77,22 +77,15 @@ cd ubuntu-localization
 # 2. Create the frontend environment file (template is at repository root)
 cp .env.example frontend/.env
 
-# 3. Install dependencies
+# 3. Install dependencies (run from frontend/)
 cd frontend
 npm install
-
-# 2. Install dependencies (run from frontend/)
-npm install
-
-# 3. Create your local environment file (run from the repository root)
-cd ..
-cp .env.example frontend/.env
-cd frontend
 ```
 
 The `.env.example` template lives at the **repository root**, but Next.js
 reads environment variables from `frontend/.env` — so the copy target is
-`frontend/.env`, not `.env` inside `frontend/`.
+`frontend/.env`, not `.env` inside `frontend/`. Always run frontend commands
+from `frontend/` after that copy.
 
 Then edit `frontend/.env` and fill in the values you need:
 
@@ -104,17 +97,10 @@ GOOGLE_API_KEY=your_gemini_api_key_here
 DATABASE_URL=postgresql://user:password@host/dbname?sslmode=require
 ```
 
-> **Sessions need no secret.** `createSession()` in
-> `frontend/src/lib/db.ts` generates each session token with
-> `crypto.randomBytes(32)` and stores it in the `user_sessions` table.
-> There is no `SESSION_SECRET` and no signed-cookie scheme.
-
-> Replace the values above with your own. **Never commit `.env`** — it is
-> already listed in `.gitignore`. `SESSION_SECRET` is intended to be a
-> secret for session-token signing/generation, but the current runtime code
-> creates random database session tokens with `crypto.randomBytes` and does
-> not currently read `SESSION_SECRET`. Do not rely on this variable as an
-> active security control unless the implementation is updated.
+> **Never commit `.env`** — it is already listed in `.gitignore`. Replace the
+> values above with your own. `SESSION_SECRET` is not required: session tokens
+> are generated with `crypto.randomBytes(32)` and stored in the
+> `user_sessions` table (`createSession()` in `frontend/src/lib/db.ts`).
 
 ### Start the app
 
