@@ -69,20 +69,22 @@ export const API = {
 
 // ── Translation Stats (can be fetched from API at runtime) ──────────
 
-// Source: Launchpad translations (fetched 2026-07-03)
-// Total: 397,822 strings across all Ubuntu 26.10 (stonking) packages
+// Source: Launchpad series overview (fetched 2026-10-17)
+// Total: 401,517 strings across all Ubuntu 26.10 (stonking) templates
 export const TRANSLATION_STATS = [
-  { code: 'my',  totalEntries: 398033, translatedEntries: 74074,  progress: 18.6 },
-  { code: 'shn', totalEntries: 398033, translatedEntries: 1634,   progress: 0.4  },
-  { code: 'mnw', totalEntries: 398033, translatedEntries: 6898,   progress: 1.7  },
-  { code: 'ksw', totalEntries: 398033, translatedEntries: 0,      progress: 0    },
+  { code: 'my',  totalEntries: 401517, translatedEntries: 75244,  progress: 18.7 },
+  { code: 'shn', totalEntries: 401517, translatedEntries: 1633,   progress: 0.4  },
+  { code: 'mnw', totalEntries: 401517, translatedEntries: 6945,   progress: 1.7  },
+  { code: 'ksw', totalEntries: 401517, translatedEntries: 0,      progress: 0    },
 ]
 
 // ── Dashboard Stats ───────────────────────────────────────────────────
+// templates = Launchpad series.getTranslationTemplates() count (2026-10-17)
+// contributors = unique people in ubuntu-l10n-* teams + language pages (2026-10-17)
 
 export const DASHBOARD_STATS = {
   languages:    4,
-  templates:    547,
+  templates:    552,
   glossaryTerms: 153,
   contributors: 161,
 }

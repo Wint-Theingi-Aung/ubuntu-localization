@@ -1,14 +1,16 @@
 {
   "meta": {
     "total": 161,
-    "source": "Ubuntu Launchpad API",
-    "description": "Real Ubuntu translation contributors extracted from Launchpad"
+    "source": "Launchpad API",
+    "series": "stonking",
+    "fetchedAt": "2026-10-17T12:39:56Z",
+    "description": "Ubuntu translation contributors (my/shn/mnw/ksw) ranked by Launchpad karma. Source: ubuntu-l10n-* teams + translations.launchpad.net language pages."
   },
   "contributors": [
     {
       "username": "wint-theingi-aung",
       "display_name": "Wint Theingi Aung",
-      "karma": 282243,
+      "karma": 98470,
       "web_link": "https://launchpad.net/~wint-theingi-aung",
       "languages": [
         "my"
@@ -17,14 +19,13 @@
         "my"
       ],
       "teams": [
-        "Ubuntu Myanmar Translators",
-        "Ubuntu Translators"
+        "Burmese Localization Team"
       ]
     },
     {
       "username": "rockrock2222222",
       "display_name": "Rockworld",
-      "karma": 11448,
+      "karma": 6894,
       "web_link": "https://launchpad.net/~rockrock2222222",
       "languages": [
         "my",
@@ -35,31 +36,14 @@
         "shn"
       ],
       "teams": [
-        "Ubuntu Myanmar Translators",
-        "Ubuntu Translators",
-        "Ubuntu Shan Translators"
-      ]
-    },
-    {
-      "username": "clementlefebvre",
-      "display_name": "Clement Lefebvre",
-      "karma": 4558,
-      "web_link": "https://launchpad.net/~clementlefebvre",
-      "languages": [
-        "ksw"
-      ],
-      "language_codes": [
-        "ksw"
-      ],
-      "teams": [
-        "S'gaw Karen Translation Team for Linux Mint",
-        "Ubuntu Translators"
+        "Burmese Localization Team",
+        "Ubuntu Shan Localization"
       ]
     },
     {
       "username": "trh",
       "display_name": "Thura",
-      "karma": 172,
+      "karma": 54,
       "web_link": "https://launchpad.net/~trh",
       "languages": [
         "my"
@@ -68,14 +52,13 @@
         "my"
       ],
       "teams": [
-        "Ubuntu Myanmar Translators",
-        "Ubuntu Translators"
+        "Burmese Localization Team"
       ]
     },
     {
       "username": "gipsyhnh",
       "display_name": "Pyae Sone",
-      "karma": 86,
+      "karma": 27,
       "web_link": "https://launchpad.net/~gipsyhnh",
       "languages": [
         "my",
@@ -86,15 +69,14 @@
         "shn"
       ],
       "teams": [
-        "Ubuntu Myanmar Translators",
-        "Ubuntu Translators",
-        "Ubuntu Shan Translators"
+        "Burmese Localization Team",
+        "Ubuntu Shan Localization"
       ]
     },
     {
       "username": "htetminaung2018",
       "display_name": "Tao Mon Lae",
-      "karma": 86,
+      "karma": 27,
       "web_link": "https://launchpad.net/~htetminaung2018",
       "languages": [
         "mnw",
@@ -105,15 +87,29 @@
         "my"
       ],
       "teams": [
-        "Ubuntu Myanmar Translators",
-        "Ubuntu Translators",
-        "Ubuntu Mon Translators"
+        "Burmese Localization Team",
+        "Ubuntu Mon Translation"
+      ]
+    },
+    {
+      "username": "mon601",
+      "display_name": "banyarhongsar",
+      "karma": 27,
+      "web_link": "https://launchpad.net/~mon601",
+      "languages": [
+        "mnw"
+      ],
+      "language_codes": [
+        "mnw"
+      ],
+      "teams": [
+        "Ubuntu Mon Translation"
       ]
     },
     {
       "username": "thohi",
       "display_name": "Ye Htut Win",
-      "karma": 43,
+      "karma": 27,
       "web_link": "https://launchpad.net/~thohi",
       "languages": [
         "my"
@@ -122,190 +118,22 @@
         "my"
       ],
       "teams": [
-        "Ubuntu Myanmar Translators",
-        "Ubuntu Translators"
+        "Burmese Localization Team"
       ]
     },
     {
-      "username": "paing-phyoe",
-      "display_name": "Yuki Painglay",
-      "karma": 43,
-      "web_link": "https://launchpad.net/~paing-phyoe",
+      "username": "19panpha90",
+      "display_name": "saisaepanpha",
+      "karma": 0,
+      "web_link": "https://launchpad.net/~19panpha90",
       "languages": [
-        "my"
-      ],
-      "language_codes": [
-        "my"
-      ],
-      "teams": [
-        "Ubuntu Myanmar Translators",
-        "Ubuntu Translators"
-      ]
-    },
-    {
-      "username": "zyl65535",
-      "display_name": "Zayar Lwin",
-      "karma": 2,
-      "web_link": "https://launchpad.net/~zyl65535",
-      "languages": [
-        "my"
-      ],
-      "language_codes": [
-        "my"
-      ],
-      "teams": [
-        "Ubuntu Myanmar Translators",
-        "Ubuntu Translators"
-      ]
-    },
-    {
-      "username": "kokoye2007",
-      "display_name": "kokoye2007 \ue0ff",
-      "karma": 1,
-      "web_link": "https://launchpad.net/~kokoye2007",
-      "languages": [
-        "mnw",
-        "my",
         "shn"
       ],
       "language_codes": [
-        "mnw",
-        "my",
         "shn"
       ],
       "teams": [
-        "Ubuntu Myanmar Translators",
-        "Ubuntu Translators",
-        "Ubuntu Mon Translators",
-        "Ubuntu Shan Translators"
-      ]
-    },
-    {
-      "username": "krer",
-      "display_name": "Adob Tail",
-      "karma": 0,
-      "web_link": "https://launchpad.net/~krer",
-      "languages": [
-        "my"
-      ],
-      "language_codes": [
-        "my"
-      ],
-      "teams": [
-        "Ubuntu Myanmar Translators",
-        "Ubuntu Translators"
-      ]
-    },
-    {
-      "username": "g-crazydemon",
-      "display_name": "AlphaCool",
-      "karma": 0,
-      "web_link": "https://launchpad.net/~g-crazydemon",
-      "languages": [
-        "my"
-      ],
-      "language_codes": [
-        "my"
-      ],
-      "teams": [
-        "Ubuntu Myanmar Translators",
-        "Ubuntu Translators"
-      ]
-    },
-    {
-      "username": "anandrajny",
-      "display_name": "Anand Raj",
-      "karma": 0,
-      "web_link": "https://launchpad.net/~anandrajny",
-      "languages": [
-        "my"
-      ],
-      "language_codes": [
-        "my"
-      ],
-      "teams": [
-        "Ubuntu Myanmar Translators",
-        "Ubuntu Translators"
-      ]
-    },
-    {
-      "username": "anontamon",
-      "display_name": "anontamon",
-      "karma": 0,
-      "web_link": "https://launchpad.net/~anontamon",
-      "languages": [
-        "mnw"
-      ],
-      "language_codes": [
-        "mnw"
-      ],
-      "teams": [
-        "Ubuntu Mon Translators",
-        "Ubuntu Translators"
-      ]
-    },
-    {
-      "username": "4htet",
-      "display_name": "ANyarThar",
-      "karma": 0,
-      "web_link": "https://launchpad.net/~4htet",
-      "languages": [
-        "my"
-      ],
-      "language_codes": [
-        "my"
-      ],
-      "teams": [
-        "Ubuntu Myanmar Translators",
-        "Ubuntu Translators"
-      ]
-    },
-    {
-      "username": "auenai",
-      "display_name": "auenai",
-      "karma": 0,
-      "web_link": "https://launchpad.net/~auenai",
-      "languages": [
-        "mnw"
-      ],
-      "language_codes": [
-        "mnw"
-      ],
-      "teams": [
-        "Ubuntu Mon Translators",
-        "Ubuntu Translators"
-      ]
-    },
-    {
-      "username": "aungkokomyintoo",
-      "display_name": "Aung Ko Ko Myint Oo",
-      "karma": 0,
-      "web_link": "https://launchpad.net/~aungkokomyintoo",
-      "languages": [
-        "my"
-      ],
-      "language_codes": [
-        "my"
-      ],
-      "teams": [
-        "Ubuntu Myanmar Translators",
-        "Ubuntu Translators"
-      ]
-    },
-    {
-      "username": "aungmyokyaw",
-      "display_name": "Aung Myo Kyaw",
-      "karma": 0,
-      "web_link": "https://launchpad.net/~aungmyokyaw",
-      "languages": [
-        "my"
-      ],
-      "language_codes": [
-        "my"
-      ],
-      "teams": [
-        "Ubuntu Myanmar Translators",
-        "Ubuntu Translators"
+        "Ubuntu Shan Localization"
       ]
     },
     {
@@ -320,1080 +148,22 @@
         "my"
       ],
       "teams": [
-        "Ubuntu Myanmar Translators",
-        "Ubuntu Translators"
+        "Burmese Localization Team"
       ]
     },
     {
-      "username": "aungswan",
-      "display_name": "Aung Swan",
+      "username": "4htet",
+      "display_name": "ANyarThar",
       "karma": 0,
-      "web_link": "https://launchpad.net/~aungswan",
+      "web_link": "https://launchpad.net/~4htet",
       "languages": [
-        "mnw"
-      ],
-      "language_codes": [
-        "mnw"
-      ],
-      "teams": [
-        "Ubuntu Mon Translators",
-        "Ubuntu Translators"
-      ]
-    },
-    {
-      "username": "aungkhantbo",
-      "display_name": "AungKhantBo",
-      "karma": 0,
-      "web_link": "https://launchpad.net/~aungkhantbo",
-      "languages": [
-        "my"
-      ],
-      "language_codes": [
-        "my"
-      ],
-      "teams": [
-        "Ubuntu Myanmar Translators",
-        "Ubuntu Translators"
-      ]
-    },
-    {
-      "username": "aungsitt",
-      "display_name": "aungsitt",
-      "karma": 0,
-      "web_link": "https://launchpad.net/~aungsitt",
-      "languages": [
-        "my"
-      ],
-      "language_codes": [
-        "my"
-      ],
-      "teams": [
-        "Ubuntu Myanmar Translators",
-        "Ubuntu Translators"
-      ]
-    },
-    {
-      "username": "aungthetkhaing",
-      "display_name": "AungThetKhaing",
-      "karma": 0,
-      "web_link": "https://launchpad.net/~aungthetkhaing",
-      "languages": [
-        "my"
-      ],
-      "language_codes": [
-        "my"
-      ],
-      "teams": [
-        "Ubuntu Myanmar Translators",
-        "Ubuntu Translators"
-      ]
-    },
-    {
-      "username": "aungzinnwp",
-      "display_name": "aungzin",
-      "karma": 0,
-      "web_link": "https://launchpad.net/~aungzinnwp",
-      "languages": [
-        "my"
-      ],
-      "language_codes": [
-        "my"
-      ],
-      "teams": [
-        "Ubuntu Myanmar Translators",
-        "Ubuntu Translators"
-      ]
-    },
-    {
-      "username": "ayekyar80",
-      "display_name": "Aye Kyar",
-      "karma": 0,
-      "web_link": "https://launchpad.net/~ayekyar80",
-      "languages": [
-        "ksw"
-      ],
-      "language_codes": [
-        "ksw"
-      ],
-      "teams": [
-        "S'gaw Karen Translation Team for Linux Mint",
-        "Ubuntu Translators"
-      ]
-    },
-    {
-      "username": "mon601",
-      "display_name": "banyarhongsar",
-      "karma": 0,
-      "web_link": "https://launchpad.net/~mon601",
-      "languages": [
-        "mnw"
-      ],
-      "language_codes": [
-        "mnw"
-      ],
-      "teams": [
-        "Ubuntu Mon Translators",
-        "Ubuntu Translators"
-      ]
-    },
-    {
-      "username": "battoe19",
-      "display_name": "Battoe19",
-      "karma": 0,
-      "web_link": "https://launchpad.net/~battoe19",
-      "languages": [
-        "my"
-      ],
-      "language_codes": [
-        "my"
-      ],
-      "teams": [
-        "Ubuntu Myanmar Translators",
-        "Ubuntu Translators"
-      ]
-    },
-    {
-      "username": "box02",
-      "display_name": "box02",
-      "karma": 0,
-      "web_link": "https://launchpad.net/~box02",
-      "languages": [
-        "my"
-      ],
-      "language_codes": [
-        "my"
-      ],
-      "teams": [
-        "Ubuntu Myanmar Translators",
-        "Ubuntu Translators"
-      ]
-    },
-    {
-      "username": "chanhtaw75",
-      "display_name": "chanhtaw75",
-      "karma": 0,
-      "web_link": "https://launchpad.net/~chanhtaw75",
-      "languages": [
-        "mnw"
-      ],
-      "language_codes": [
-        "mnw"
-      ],
-      "teams": [
-        "Ubuntu Mon Translators",
-        "Ubuntu Translators"
-      ]
-    },
-    {
-      "username": "chenheting",
-      "display_name": "Chenheting",
-      "karma": 0,
-      "web_link": "https://launchpad.net/~chenheting",
-      "languages": [
-        "my"
-      ],
-      "language_codes": [
-        "my"
-      ],
-      "teams": [
-        "Ubuntu Myanmar Translators",
-        "Ubuntu Translators"
-      ]
-    },
-    {
-      "username": "chipo-ngongoni",
-      "display_name": "Chipo Nancy Ngongoni",
-      "karma": 0,
-      "web_link": "https://launchpad.net/~chipo-ngongoni",
-      "languages": [
-        "shn"
-      ],
-      "language_codes": [
-        "shn"
-      ],
-      "teams": [
-        "Ubuntu Shan Translators",
-        "Ubuntu Translators"
-      ]
-    },
-    {
-      "username": "saintjohn769",
-      "display_name": "chitko",
-      "karma": 0,
-      "web_link": "https://launchpad.net/~saintjohn769",
-      "languages": [
-        "my"
-      ],
-      "language_codes": [
-        "my"
-      ],
-      "teams": [
-        "Ubuntu Myanmar Translators",
-        "Ubuntu Translators"
-      ]
-    },
-    {
-      "username": "chriskl",
-      "display_name": "chriskl",
-      "karma": 0,
-      "web_link": "https://launchpad.net/~chriskl",
-      "languages": [
-        "my"
-      ],
-      "language_codes": [
-        "my"
-      ],
-      "teams": [
-        "Ubuntu Myanmar Translators",
-        "Ubuntu Translators"
-      ]
-    },
-    {
-      "username": "dhoongjhaan",
-      "display_name": "Dho Ong Jhaan",
-      "karma": 0,
-      "web_link": "https://launchpad.net/~dhoongjhaan",
-      "languages": [
-        "mnw"
-      ],
-      "language_codes": [
-        "mnw"
-      ],
-      "teams": [
-        "Ubuntu Mon Translators",
-        "Ubuntu Translators"
-      ]
-    },
-    {
-      "username": "ethan-kurt",
-      "display_name": "Ethan Kurt",
-      "karma": 0,
-      "web_link": "https://launchpad.net/~ethan-kurt",
-      "languages": [
-        "my"
-      ],
-      "language_codes": [
-        "my"
-      ],
-      "teams": [
-        "Ubuntu Myanmar Translators",
-        "Ubuntu Translators"
-      ]
-    },
-    {
-      "username": "goldninjar-sbt",
-      "display_name": "Goldninjar",
-      "karma": 0,
-      "web_link": "https://launchpad.net/~goldninjar-sbt",
-      "languages": [
-        "shn"
-      ],
-      "language_codes": [
-        "shn"
-      ],
-      "teams": [
-        "Ubuntu Shan Translators",
-        "Ubuntu Translators"
-      ]
-    },
-    {
-      "username": "heinlu1986",
-      "display_name": "Hein Lu",
-      "karma": 0,
-      "web_link": "https://launchpad.net/~heinlu1986",
-      "languages": [
-        "my"
-      ],
-      "language_codes": [
-        "my"
-      ],
-      "teams": [
-        "Ubuntu Myanmar Translators",
-        "Ubuntu Translators"
-      ]
-    },
-    {
-      "username": "heinhtet",
-      "display_name": "Ho No",
-      "karma": 0,
-      "web_link": "https://launchpad.net/~heinhtet",
-      "languages": [
-        "my"
-      ],
-      "language_codes": [
-        "my"
-      ],
-      "teams": [
-        "Ubuntu Myanmar Translators",
-        "Ubuntu Translators"
-      ]
-    },
-    {
-      "username": "naing-htun28",
-      "display_name": "Htun Htun Naing",
-      "karma": 0,
-      "web_link": "https://launchpad.net/~naing-htun28",
-      "languages": [
-        "my"
-      ],
-      "language_codes": [
-        "my"
-      ],
-      "teams": [
-        "Ubuntu Myanmar Translators",
-        "Ubuntu Translators"
-      ]
-    },
-    {
-      "username": "htwelay",
-      "display_name": "Htwe Lay",
-      "karma": 0,
-      "web_link": "https://launchpad.net/~htwelay",
-      "languages": [
-        "mnw"
-      ],
-      "language_codes": [
-        "mnw"
-      ],
-      "teams": [
-        "Ubuntu Mon Translators",
-        "Ubuntu Translators"
-      ]
-    },
-    {
-      "username": "jaejyae",
-      "display_name": "Jae Jyae",
-      "karma": 0,
-      "web_link": "https://launchpad.net/~jaejyae",
-      "languages": [
-        "mnw"
-      ],
-      "language_codes": [
-        "mnw"
-      ],
-      "teams": [
-        "Ubuntu Mon Translators",
-        "Ubuntu Translators"
-      ]
-    },
-    {
-      "username": "jennyaungaung",
-      "display_name": "Jenny Aung",
-      "karma": 0,
-      "web_link": "https://launchpad.net/~jennyaungaung",
-      "languages": [
-        "my"
-      ],
-      "language_codes": [
-        "my"
-      ],
-      "teams": [
-        "Ubuntu Myanmar Translators",
-        "Ubuntu Translators"
-      ]
-    },
-    {
-      "username": "jiormajor",
-      "display_name": "JohnMajor",
-      "karma": 0,
-      "web_link": "https://launchpad.net/~jiormajor",
-      "languages": [
-        "my"
-      ],
-      "language_codes": [
-        "my"
-      ],
-      "teams": [
-        "Ubuntu Myanmar Translators",
-        "Ubuntu Translators"
-      ]
-    },
-    {
-      "username": "joinai77",
-      "display_name": "Joinai",
-      "karma": 0,
-      "web_link": "https://launchpad.net/~joinai77",
-      "languages": [
-        "mnw"
-      ],
-      "language_codes": [
-        "mnw"
-      ],
-      "teams": [
-        "Ubuntu Mon Translators",
-        "Ubuntu Translators"
-      ]
-    },
-    {
-      "username": "jotamoi",
-      "display_name": "Jotamoi",
-      "karma": 0,
-      "web_link": "https://launchpad.net/~jotamoi",
-      "languages": [
-        "mnw"
-      ],
-      "language_codes": [
-        "mnw"
-      ],
-      "teams": [
-        "Ubuntu Mon Translators",
-        "Ubuntu Translators"
-      ]
-    },
-    {
-      "username": "jumoun",
-      "display_name": "jumoun",
-      "karma": 0,
-      "web_link": "https://launchpad.net/~jumoun",
-      "languages": [
-        "my"
-      ],
-      "language_codes": [
-        "my"
-      ],
-      "teams": [
-        "Ubuntu Myanmar Translators",
-        "Ubuntu Translators"
-      ]
-    },
-    {
-      "username": "kadiparaungmyohan",
-      "display_name": "Kadipar Ag Myo Han",
-      "karma": 0,
-      "web_link": "https://launchpad.net/~kadiparaungmyohan",
-      "languages": [
-        "my"
-      ],
-      "language_codes": [
-        "my"
-      ],
-      "teams": [
-        "Ubuntu Myanmar Translators",
-        "Ubuntu Translators"
-      ]
-    },
-    {
-      "username": "geogrian1",
-      "display_name": "kaung htet aung",
-      "karma": 0,
-      "web_link": "https://launchpad.net/~geogrian1",
-      "languages": [
-        "my"
-      ],
-      "language_codes": [
-        "my"
-      ],
-      "teams": [
-        "Ubuntu Myanmar Translators",
-        "Ubuntu Translators"
-      ]
-    },
-    {
-      "username": "kogyikaunghtet",
-      "display_name": "Kaung Htet Htun",
-      "karma": 0,
-      "web_link": "https://launchpad.net/~kogyikaunghtet",
-      "languages": [
-        "my"
-      ],
-      "language_codes": [
-        "my"
-      ],
-      "teams": [
-        "Ubuntu Myanmar Translators",
-        "Ubuntu Translators"
-      ]
-    },
-    {
-      "username": "khinewin",
-      "display_name": "KhineWin",
-      "karma": 0,
-      "web_link": "https://launchpad.net/~khinewin",
-      "languages": [
-        "mnw"
-      ],
-      "language_codes": [
-        "mnw"
-      ],
-      "teams": [
-        "Ubuntu Mon Translators",
-        "Ubuntu Translators"
-      ]
-    },
-    {
-      "username": "kozawhtet",
-      "display_name": "Ko Zaw Htet",
-      "karma": 0,
-      "web_link": "https://launchpad.net/~kozawhtet",
-      "languages": [
-        "my"
-      ],
-      "language_codes": [
-        "my"
-      ],
-      "teams": [
-        "Ubuntu Myanmar Translators",
-        "Ubuntu Translators"
-      ]
-    },
-    {
-      "username": "royallyre7",
-      "display_name": "koaung",
-      "karma": 0,
-      "web_link": "https://launchpad.net/~royallyre7",
-      "languages": [
-        "my"
-      ],
-      "language_codes": [
-        "my"
-      ],
-      "teams": [
-        "Ubuntu Myanmar Translators",
-        "Ubuntu Translators"
-      ]
-    },
-    {
-      "username": "kokhy-ygn",
-      "display_name": "kokhy",
-      "karma": 0,
-      "web_link": "https://launchpad.net/~kokhy-ygn",
-      "languages": [
-        "my"
-      ],
-      "language_codes": [
-        "my"
-      ],
-      "teams": [
-        "Ubuntu Myanmar Translators",
-        "Ubuntu Translators"
-      ]
-    },
-    {
-      "username": "kyawkhine1992",
-      "display_name": "Kyaw Khine",
-      "karma": 0,
-      "web_link": "https://launchpad.net/~kyawkhine1992",
-      "languages": [
-        "my"
-      ],
-      "language_codes": [
-        "my"
-      ],
-      "teams": [
-        "Ubuntu Myanmar Translators",
-        "Ubuntu Translators"
-      ]
-    },
-    {
-      "username": "kyawsanoo",
-      "display_name": "Kyaw san oo",
-      "karma": 0,
-      "web_link": "https://launchpad.net/~kyawsanoo",
-      "languages": [
-        "mnw"
-      ],
-      "language_codes": [
-        "mnw"
-      ],
-      "teams": [
-        "Ubuntu Mon Translators",
-        "Ubuntu Translators"
-      ]
-    },
-    {
-      "username": "kyawhtetwinjr",
-      "display_name": "Kyaw Thet Win",
-      "karma": 0,
-      "web_link": "https://launchpad.net/~kyawhtetwinjr",
-      "languages": [
-        "my"
-      ],
-      "language_codes": [
-        "my"
-      ],
-      "teams": [
-        "Ubuntu Myanmar Translators",
-        "Ubuntu Translators"
-      ]
-    },
-    {
-      "username": "hein7",
-      "display_name": "kyaw zin",
-      "karma": 0,
-      "web_link": "https://launchpad.net/~hein7",
-      "languages": [
-        "my"
-      ],
-      "language_codes": [
-        "my"
-      ],
-      "teams": [
-        "Ubuntu Myanmar Translators",
-        "Ubuntu Translators"
-      ]
-    },
-    {
-      "username": "kyawmyatthu-ows",
-      "display_name": "kyawmyatthu.ows",
-      "karma": 0,
-      "web_link": "https://launchpad.net/~kyawmyatthu-ows",
-      "languages": [
-        "my"
-      ],
-      "language_codes": [
-        "my"
-      ],
-      "teams": [
-        "Ubuntu Myanmar Translators",
-        "Ubuntu Translators"
-      ]
-    },
-    {
-      "username": "mryotesoe",
-      "display_name": "KyawZayThu",
-      "karma": 0,
-      "web_link": "https://launchpad.net/~mryotesoe",
-      "languages": [
-        "my"
-      ],
-      "language_codes": [
-        "my"
-      ],
-      "teams": [
-        "Ubuntu Myanmar Translators",
-        "Ubuntu Translators"
-      ]
-    },
-    {
-      "username": "hansen-ross",
-      "display_name": "Laywah",
-      "karma": 0,
-      "web_link": "https://launchpad.net/~hansen-ross",
-      "languages": [
-        "ksw"
-      ],
-      "language_codes": [
-        "ksw"
-      ],
-      "teams": [
-        "S'gaw Karen Translation Team for Linux Mint",
-        "Ubuntu Translators"
-      ]
-    },
-    {
-      "username": "desefox",
-      "display_name": "Lin",
-      "karma": 0,
-      "web_link": "https://launchpad.net/~desefox",
-      "languages": [
         "my"
       ],
       "language_codes": [
         "my"
-      ],
-      "teams": [
-        "Ubuntu Myanmar Translators",
-        "Ubuntu Translators"
-      ]
-    },
-    {
-      "username": "slayeroflion",
-      "display_name": "Lionslayer",
-      "karma": 0,
-      "web_link": "https://launchpad.net/~slayeroflion",
-      "languages": [
-        "my"
-      ],
-      "language_codes": [
-        "my"
-      ],
-      "teams": [
-        "Ubuntu Myanmar Translators",
-        "Ubuntu Translators"
-      ]
-    },
-    {
-      "username": "littiger",
-      "display_name": "Lit_Tiger",
-      "karma": 0,
-      "web_link": "https://launchpad.net/~littiger",
-      "languages": [
-        "my"
-      ],
-      "language_codes": [
-        "my"
-      ],
-      "teams": [
-        "Ubuntu Myanmar Translators",
-        "Ubuntu Translators"
-      ]
-    },
-    {
-      "username": "lotusblack",
-      "display_name": "Lotus Black",
-      "karma": 0,
-      "web_link": "https://launchpad.net/~lotusblack",
-      "languages": [
-        "my"
-      ],
-      "language_codes": [
-        "my"
-      ],
-      "teams": [
-        "Ubuntu Myanmar Translators",
-        "Ubuntu Translators"
-      ]
-    },
-    {
-      "username": "lovetostrike",
-      "display_name": "lovetostrike",
-      "karma": 0,
-      "web_link": "https://launchpad.net/~lovetostrike",
-      "languages": [
-        "my"
-      ],
-      "language_codes": [
-        "my"
-      ],
-      "teams": [
-        "Ubuntu Myanmar Translators",
-        "Ubuntu Translators"
-      ]
-    },
-    {
-      "username": "lusoe302",
-      "display_name": "lusoe302",
-      "karma": 0,
-      "web_link": "https://launchpad.net/~lusoe302",
-      "languages": [
-        "my"
-      ],
-      "language_codes": [
-        "my"
-      ],
-      "teams": [
-        "Ubuntu Myanmar Translators",
-        "Ubuntu Translators"
-      ]
-    },
-    {
-      "username": "s.mark",
-      "display_name": "Mark",
-      "karma": 0,
-      "web_link": "https://launchpad.net/~s.mark",
-      "languages": [
-        "my"
-      ],
-      "language_codes": [
-        "my"
-      ],
-      "teams": [
-        "Ubuntu Myanmar Translators",
-        "Ubuntu Translators"
-      ]
-    },
-    {
-      "username": "jaraiya",
-      "display_name": "Maroah Chan",
-      "karma": 0,
-      "web_link": "https://launchpad.net/~jaraiya",
-      "languages": [
-        "mnw"
-      ],
-      "language_codes": [
-        "mnw"
-      ],
-      "teams": [
-        "Ubuntu Mon Translators",
-        "Ubuntu Translators"
-      ]
-    },
-    {
-      "username": "marigan",
-      "display_name": "Matt Marigan",
-      "karma": 0,
-      "web_link": "https://launchpad.net/~marigan",
-      "languages": [
-        "my"
-      ],
-      "language_codes": [
-        "my"
-      ],
-      "teams": [
-        "Ubuntu Myanmar Translators",
-        "Ubuntu Translators"
-      ]
-    },
-    {
-      "username": "maungthuu",
-      "display_name": "Maung Thuu",
-      "karma": 0,
-      "web_link": "https://launchpad.net/~maungthuu",
-      "languages": [
-        "my"
-      ],
-      "language_codes": [
-        "my"
-      ],
-      "teams": [
-        "Ubuntu Myanmar Translators",
-        "Ubuntu Translators"
-      ]
-    },
-    {
-      "username": "decembersnowlay15",
-      "display_name": "May Thu Aung",
-      "karma": 0,
-      "web_link": "https://launchpad.net/~decembersnowlay15",
-      "languages": [
-        "my"
-      ],
-      "language_codes": [
-        "my"
-      ],
-      "teams": [
-        "Ubuntu Myanmar Translators",
-        "Ubuntu Translators"
-      ]
-    },
-    {
-      "username": "maythuaung512",
-      "display_name": "May Thu Aung",
-      "karma": 0,
-      "web_link": "https://launchpad.net/~maythuaung512",
-      "languages": [
-        "my"
-      ],
-      "language_codes": [
-        "my"
-      ],
-      "teams": [
-        "Ubuntu Myanmar Translators",
-        "Ubuntu Translators"
-      ]
-    },
-    {
-      "username": "monbeeree",
-      "display_name": "Mehm Rattna",
-      "karma": 0,
-      "web_link": "https://launchpad.net/~monbeeree",
-      "languages": [
-        "mnw"
-      ],
-      "language_codes": [
-        "mnw"
-      ],
-      "teams": [
-        "Ubuntu Mon Translators",
-        "Ubuntu Translators"
-      ]
-    },
-    {
-      "username": "oung",
-      "display_name": "Mhem Aung Thu Win",
-      "karma": 0,
-      "web_link": "https://launchpad.net/~oung",
-      "languages": [
-        "mnw"
-      ],
-      "language_codes": [
-        "mnw"
-      ],
-      "teams": [
-        "Ubuntu Mon Translators",
-        "Ubuntu Translators"
-      ]
-    },
-    {
-      "username": "htawpone",
-      "display_name": "Mi Htaw Pone",
-      "karma": 0,
-      "web_link": "https://launchpad.net/~htawpone",
-      "languages": [
-        "mnw"
-      ],
-      "language_codes": [
-        "mnw"
-      ],
-      "teams": [
-        "Ubuntu Mon Translators",
-        "Ubuntu Translators"
-      ]
-    },
-    {
-      "username": "khamoomhtawh",
-      "display_name": "Mi Khamoom Htaw",
-      "karma": 0,
-      "web_link": "https://launchpad.net/~khamoomhtawh",
-      "languages": [
-        "mnw"
-      ],
-      "language_codes": [
-        "mnw"
-      ],
-      "teams": [
-        "Ubuntu Mon Translators",
-        "Ubuntu Translators"
-      ]
-    },
-    {
-      "username": "minhtaw",
-      "display_name": "Min Htaw",
-      "karma": 0,
-      "web_link": "https://launchpad.net/~minhtaw",
-      "languages": [
-        "mnw"
-      ],
-      "language_codes": [
-        "mnw"
-      ],
-      "teams": [
-        "Ubuntu Mon Translators",
-        "Ubuntu Translators"
-      ]
-    },
-    {
-      "username": "kyitaw1",
-      "display_name": "Min Mon",
-      "karma": 0,
-      "web_link": "https://launchpad.net/~kyitaw1",
-      "languages": [
-        "my"
-      ],
-      "language_codes": [
-        "my"
-      ],
-      "teams": [
-        "Ubuntu Myanmar Translators",
-        "Ubuntu Translators"
-      ]
-    },
-    {
-      "username": "technoyoungman",
-      "display_name": "Min Thaw Tun",
-      "karma": 0,
-      "web_link": "https://launchpad.net/~technoyoungman",
-      "languages": [
-        "my"
-      ],
-      "language_codes": [
-        "my"
-      ],
-      "teams": [
-        "Ubuntu Myanmar Translators",
-        "Ubuntu Translators"
-      ]
-    },
-    {
-      "username": "minnkhant257",
-      "display_name": "MinnHeinKhant",
-      "karma": 0,
-      "web_link": "https://launchpad.net/~minnkhant257",
-      "languages": [
-        "my"
-      ],
-      "language_codes": [
-        "my"
-      ],
-      "teams": [
-        "Ubuntu Myanmar Translators",
-        "Ubuntu Translators"
-      ]
-    },
-    {
-      "username": "mintun",
-      "display_name": "mintun",
-      "karma": 0,
-      "web_link": "https://launchpad.net/~mintun",
-      "languages": [
-        "mnw"
-      ],
-      "language_codes": [
-        "mnw"
-      ],
-      "teams": [
-        "Ubuntu Mon Translators",
-        "Ubuntu Translators"
-      ]
-    },
-    {
-      "username": "myanmarmenn",
-      "display_name": "mmmen",
-      "karma": 0,
-      "web_link": "https://launchpad.net/~myanmarmenn",
-      "languages": [
-        "my"
-      ],
-      "language_codes": [
-        "my"
-      ],
-      "teams": [
-        "Ubuntu Myanmar Translators",
-        "Ubuntu Translators"
-      ]
-    },
-    {
-      "username": "mohmohthanster",
-      "display_name": "mmt",
-      "karma": 0,
-      "web_link": "https://launchpad.net/~mohmohthanster",
-      "languages": [
-        "my"
-      ],
-      "language_codes": [
-        "my"
-      ],
-      "teams": [
-        "Ubuntu Myanmar Translators",
-        "Ubuntu Translators"
-      ]
-    },
-    {
-      "username": "moelonepyaeshan",
-      "display_name": "Moe Lone",
-      "karma": 0,
-      "web_link": "https://launchpad.net/~moelonepyaeshan",
-      "languages": [
-        "my"
-      ],
-      "language_codes": [
-        "my"
-      ],
-      "teams": [
-        "Ubuntu Myanmar Translators",
-        "Ubuntu Translators"
-      ]
-    },
-    {
-      "username": "monchanaie",
-      "display_name": "Mon Chan Aie",
-      "karma": 0,
-      "web_link": "https://launchpad.net/~monchanaie",
-      "languages": [
-        "mnw"
-      ],
-      "language_codes": [
-        "mnw"
-      ],
-      "teams": [
-        "Ubuntu Mon Translators",
-        "Ubuntu Translators"
-      ]
-    },
-    {
-      "username": "mongipsy",
-      "display_name": "Mongipsy",
-      "karma": 0,
-      "web_link": "https://launchpad.net/~mongipsy",
-      "languages": [
-        "mnw"
-      ],
-      "language_codes": [
-        "mnw"
       ],
       "teams": [
-        "Ubuntu Mon Translators",
-        "Ubuntu Translators"
+        "Burmese Localization Team"
       ]
     },
     {
@@ -1408,15 +178,44 @@
         "mnw"
       ],
       "teams": [
-        "Ubuntu Mon Translators",
-        "Ubuntu Translators"
+        "Ubuntu Mon Translation"
       ]
     },
     {
-      "username": "seiknyan",
-      "display_name": "Nai Seik Nyan",
+      "username": "ammdevl",
+      "display_name": "Aung Myint Myat",
       "karma": 0,
-      "web_link": "https://launchpad.net/~seiknyan",
+      "web_link": "https://launchpad.net/~ammdevl",
+      "languages": [
+        "my"
+      ],
+      "language_codes": [
+        "my"
+      ],
+      "teams": [
+        "Burmese Localization Team"
+      ]
+    },
+    {
+      "username": "anandrajny",
+      "display_name": "Anand Raj",
+      "karma": 0,
+      "web_link": "https://launchpad.net/~anandrajny",
+      "languages": [
+        "my"
+      ],
+      "language_codes": [
+        "my"
+      ],
+      "teams": [
+        "Burmese Localization Team"
+      ]
+    },
+    {
+      "username": "anontamon",
+      "display_name": "anontamon",
+      "karma": 0,
+      "web_link": "https://launchpad.net/~anontamon",
       "languages": [
         "mnw"
       ],
@@ -1424,15 +223,14 @@
         "mnw"
       ],
       "teams": [
-        "Ubuntu Mon Translators",
-        "Ubuntu Translators"
+        "Ubuntu Mon Translation"
       ]
     },
     {
-      "username": "naiseikrot",
-      "display_name": "Nai Seik Rot",
+      "username": "auenai",
+      "display_name": "auenai",
       "karma": 0,
-      "web_link": "https://launchpad.net/~naiseikrot",
+      "web_link": "https://launchpad.net/~auenai",
       "languages": [
         "mnw"
       ],
@@ -1440,8 +238,1164 @@
         "mnw"
       ],
       "teams": [
-        "Ubuntu Mon Translators",
-        "Ubuntu Translators"
+        "Ubuntu Mon Translation"
+      ]
+    },
+    {
+      "username": "aungkhantbo",
+      "display_name": "AungKhantBo",
+      "karma": 0,
+      "web_link": "https://launchpad.net/~aungkhantbo",
+      "languages": [
+        "my"
+      ],
+      "language_codes": [
+        "my"
+      ],
+      "teams": [
+        "Burmese Localization Team"
+      ]
+    },
+    {
+      "username": "aungkokomyintoo",
+      "display_name": "Aung Ko Ko Myint Oo",
+      "karma": 0,
+      "web_link": "https://launchpad.net/~aungkokomyintoo",
+      "languages": [
+        "my"
+      ],
+      "language_codes": [
+        "my"
+      ],
+      "teams": [
+        "Burmese Localization Team"
+      ]
+    },
+    {
+      "username": "aungmyokyaw",
+      "display_name": "Aung Myo Kyaw",
+      "karma": 0,
+      "web_link": "https://launchpad.net/~aungmyokyaw",
+      "languages": [
+        "my"
+      ],
+      "language_codes": [
+        "my"
+      ],
+      "teams": [
+        "Burmese Localization Team"
+      ]
+    },
+    {
+      "username": "aungsitt",
+      "display_name": "aungsitt",
+      "karma": 0,
+      "web_link": "https://launchpad.net/~aungsitt",
+      "languages": [
+        "my"
+      ],
+      "language_codes": [
+        "my"
+      ],
+      "teams": [
+        "Burmese Localization Team"
+      ]
+    },
+    {
+      "username": "aungswan",
+      "display_name": "Aung Swan",
+      "karma": 0,
+      "web_link": "https://launchpad.net/~aungswan",
+      "languages": [
+        "mnw"
+      ],
+      "language_codes": [
+        "mnw"
+      ],
+      "teams": [
+        "Ubuntu Mon Translation"
+      ]
+    },
+    {
+      "username": "aungthetkhaing",
+      "display_name": "AungThetKhaing",
+      "karma": 0,
+      "web_link": "https://launchpad.net/~aungthetkhaing",
+      "languages": [
+        "my"
+      ],
+      "language_codes": [
+        "my"
+      ],
+      "teams": [
+        "Burmese Localization Team"
+      ]
+    },
+    {
+      "username": "aungzinnwp",
+      "display_name": "aungzin",
+      "karma": 0,
+      "web_link": "https://launchpad.net/~aungzinnwp",
+      "languages": [
+        "my"
+      ],
+      "language_codes": [
+        "my"
+      ],
+      "teams": [
+        "Burmese Localization Team"
+      ]
+    },
+    {
+      "username": "ayngzawlatt",
+      "display_name": "zawlatt",
+      "karma": 0,
+      "web_link": "https://launchpad.net/~ayngzawlatt",
+      "languages": [
+        "mnw"
+      ],
+      "language_codes": [
+        "mnw"
+      ],
+      "teams": [
+        "Ubuntu Mon Translation"
+      ]
+    },
+    {
+      "username": "battoe19",
+      "display_name": "Battoe19",
+      "karma": 0,
+      "web_link": "https://launchpad.net/~battoe19",
+      "languages": [
+        "my"
+      ],
+      "language_codes": [
+        "my"
+      ],
+      "teams": [
+        "Burmese Localization Team"
+      ]
+    },
+    {
+      "username": "box02",
+      "display_name": "box02",
+      "karma": 0,
+      "web_link": "https://launchpad.net/~box02",
+      "languages": [
+        "my"
+      ],
+      "language_codes": [
+        "my"
+      ],
+      "teams": [
+        "Burmese Localization Team"
+      ]
+    },
+    {
+      "username": "bravesai-mm",
+      "display_name": "Ye Lwin Soe",
+      "karma": 0,
+      "web_link": "https://launchpad.net/~bravesai-mm",
+      "languages": [
+        "my"
+      ],
+      "language_codes": [
+        "my"
+      ],
+      "teams": [
+        "Burmese Localization Team"
+      ]
+    },
+    {
+      "username": "chanhtaw75",
+      "display_name": "chanhtaw75",
+      "karma": 0,
+      "web_link": "https://launchpad.net/~chanhtaw75",
+      "languages": [
+        "mnw"
+      ],
+      "language_codes": [
+        "mnw"
+      ],
+      "teams": [
+        "Ubuntu Mon Translation"
+      ]
+    },
+    {
+      "username": "chenheting",
+      "display_name": "Chenheting",
+      "karma": 0,
+      "web_link": "https://launchpad.net/~chenheting",
+      "languages": [
+        "my"
+      ],
+      "language_codes": [
+        "my"
+      ],
+      "teams": [
+        "Burmese Localization Team"
+      ]
+    },
+    {
+      "username": "chipo-ngongoni",
+      "display_name": "Chipo Nancy Ngongoni",
+      "karma": 0,
+      "web_link": "https://launchpad.net/~chipo-ngongoni",
+      "languages": [
+        "shn"
+      ],
+      "language_codes": [
+        "shn"
+      ],
+      "teams": [
+        "Ubuntu Shan Localization"
+      ]
+    },
+    {
+      "username": "chriskl",
+      "display_name": "chriskl",
+      "karma": 0,
+      "web_link": "https://launchpad.net/~chriskl",
+      "languages": [
+        "my"
+      ],
+      "language_codes": [
+        "my"
+      ],
+      "teams": [
+        "Burmese Localization Team"
+      ]
+    },
+    {
+      "username": "decembersnowlay15",
+      "display_name": "May Thu Aung",
+      "karma": 0,
+      "web_link": "https://launchpad.net/~decembersnowlay15",
+      "languages": [
+        "my"
+      ],
+      "language_codes": [
+        "my"
+      ],
+      "teams": [
+        "Burmese Localization Team"
+      ]
+    },
+    {
+      "username": "desefox",
+      "display_name": "Lin",
+      "karma": 0,
+      "web_link": "https://launchpad.net/~desefox",
+      "languages": [
+        "my"
+      ],
+      "language_codes": [
+        "my"
+      ],
+      "teams": [
+        "Burmese Localization Team"
+      ]
+    },
+    {
+      "username": "dhoongjhaan",
+      "display_name": "Dho Ong Jhaan",
+      "karma": 0,
+      "web_link": "https://launchpad.net/~dhoongjhaan",
+      "languages": [
+        "mnw"
+      ],
+      "language_codes": [
+        "mnw"
+      ],
+      "teams": [
+        "Ubuntu Mon Translation"
+      ]
+    },
+    {
+      "username": "eeeeyeeee",
+      "display_name": "yan naung soe",
+      "karma": 0,
+      "web_link": "https://launchpad.net/~eeeeyeeee",
+      "languages": [
+        "my"
+      ],
+      "language_codes": [
+        "my"
+      ],
+      "teams": [
+        "Burmese Localization Team"
+      ]
+    },
+    {
+      "username": "ethan-kurt",
+      "display_name": "Ethan Kurt",
+      "karma": 0,
+      "web_link": "https://launchpad.net/~ethan-kurt",
+      "languages": [
+        "my"
+      ],
+      "language_codes": [
+        "my"
+      ],
+      "teams": [
+        "Burmese Localization Team"
+      ]
+    },
+    {
+      "username": "g-crazydemon",
+      "display_name": "AlphaCool",
+      "karma": 0,
+      "web_link": "https://launchpad.net/~g-crazydemon",
+      "languages": [
+        "my"
+      ],
+      "language_codes": [
+        "my"
+      ],
+      "teams": [
+        "Burmese Localization Team"
+      ]
+    },
+    {
+      "username": "geogrian1",
+      "display_name": "kaung htet aung",
+      "karma": 0,
+      "web_link": "https://launchpad.net/~geogrian1",
+      "languages": [
+        "my"
+      ],
+      "language_codes": [
+        "my"
+      ],
+      "teams": [
+        "Burmese Localization Team"
+      ]
+    },
+    {
+      "username": "gladmanchikosha",
+      "display_name": "takapiwanashe",
+      "karma": 0,
+      "web_link": "https://launchpad.net/~gladmanchikosha",
+      "languages": [
+        "shn"
+      ],
+      "language_codes": [
+        "shn"
+      ],
+      "teams": [
+        "Ubuntu Shan Localization"
+      ]
+    },
+    {
+      "username": "goldninjar-sbt",
+      "display_name": "Goldninjar",
+      "karma": 0,
+      "web_link": "https://launchpad.net/~goldninjar-sbt",
+      "languages": [
+        "shn"
+      ],
+      "language_codes": [
+        "shn"
+      ],
+      "teams": [
+        "Ubuntu Shan Localization"
+      ]
+    },
+    {
+      "username": "hackforpeace01",
+      "display_name": "Zaw Myo Htet",
+      "karma": 0,
+      "web_link": "https://launchpad.net/~hackforpeace01",
+      "languages": [
+        "my"
+      ],
+      "language_codes": [
+        "my"
+      ],
+      "teams": [
+        "Burmese Localization Team"
+      ]
+    },
+    {
+      "username": "hein7",
+      "display_name": "kyaw zin",
+      "karma": 0,
+      "web_link": "https://launchpad.net/~hein7",
+      "languages": [
+        "my"
+      ],
+      "language_codes": [
+        "my"
+      ],
+      "teams": [
+        "Burmese Localization Team"
+      ]
+    },
+    {
+      "username": "heinhtet",
+      "display_name": "Ho No",
+      "karma": 0,
+      "web_link": "https://launchpad.net/~heinhtet",
+      "languages": [
+        "my"
+      ],
+      "language_codes": [
+        "my"
+      ],
+      "teams": [
+        "Burmese Localization Team"
+      ]
+    },
+    {
+      "username": "heinlu1986",
+      "display_name": "Hein Lu",
+      "karma": 0,
+      "web_link": "https://launchpad.net/~heinlu1986",
+      "languages": [
+        "my"
+      ],
+      "language_codes": [
+        "my"
+      ],
+      "teams": [
+        "Burmese Localization Team"
+      ]
+    },
+    {
+      "username": "htawpone",
+      "display_name": "Mi Htaw Pone",
+      "karma": 0,
+      "web_link": "https://launchpad.net/~htawpone",
+      "languages": [
+        "mnw"
+      ],
+      "language_codes": [
+        "mnw"
+      ],
+      "teams": [
+        "Ubuntu Mon Translation"
+      ]
+    },
+    {
+      "username": "htwelay",
+      "display_name": "Htwe Lay",
+      "karma": 0,
+      "web_link": "https://launchpad.net/~htwelay",
+      "languages": [
+        "mnw"
+      ],
+      "language_codes": [
+        "mnw"
+      ],
+      "teams": [
+        "Ubuntu Mon Translation"
+      ]
+    },
+    {
+      "username": "jaejyae",
+      "display_name": "Jae Jyae",
+      "karma": 0,
+      "web_link": "https://launchpad.net/~jaejyae",
+      "languages": [
+        "mnw"
+      ],
+      "language_codes": [
+        "mnw"
+      ],
+      "teams": [
+        "Ubuntu Mon Translation"
+      ]
+    },
+    {
+      "username": "jaraiya",
+      "display_name": "Maroah Chan",
+      "karma": 0,
+      "web_link": "https://launchpad.net/~jaraiya",
+      "languages": [
+        "mnw"
+      ],
+      "language_codes": [
+        "mnw"
+      ],
+      "teams": [
+        "Ubuntu Mon Translation"
+      ]
+    },
+    {
+      "username": "jclovesme-zi9",
+      "display_name": "Sargon Zi",
+      "karma": 0,
+      "web_link": "https://launchpad.net/~jclovesme-zi9",
+      "languages": [
+        "my"
+      ],
+      "language_codes": [
+        "my"
+      ],
+      "teams": [
+        "Burmese Localization Team"
+      ]
+    },
+    {
+      "username": "jennyaungaung",
+      "display_name": "Jenny Aung",
+      "karma": 0,
+      "web_link": "https://launchpad.net/~jennyaungaung",
+      "languages": [
+        "my"
+      ],
+      "language_codes": [
+        "my"
+      ],
+      "teams": [
+        "Burmese Localization Team"
+      ]
+    },
+    {
+      "username": "jiormajor",
+      "display_name": "JohnMajor",
+      "karma": 0,
+      "web_link": "https://launchpad.net/~jiormajor",
+      "languages": [
+        "my"
+      ],
+      "language_codes": [
+        "my"
+      ],
+      "teams": [
+        "Burmese Localization Team"
+      ]
+    },
+    {
+      "username": "joinai77",
+      "display_name": "Joinai",
+      "karma": 0,
+      "web_link": "https://launchpad.net/~joinai77",
+      "languages": [
+        "mnw"
+      ],
+      "language_codes": [
+        "mnw"
+      ],
+      "teams": [
+        "Ubuntu Mon Translation"
+      ]
+    },
+    {
+      "username": "jotamoi",
+      "display_name": "Jotamoi",
+      "karma": 0,
+      "web_link": "https://launchpad.net/~jotamoi",
+      "languages": [
+        "mnw"
+      ],
+      "language_codes": [
+        "mnw"
+      ],
+      "teams": [
+        "Ubuntu Mon Translation"
+      ]
+    },
+    {
+      "username": "jumoun",
+      "display_name": "jumoun",
+      "karma": 0,
+      "web_link": "https://launchpad.net/~jumoun",
+      "languages": [
+        "my"
+      ],
+      "language_codes": [
+        "my"
+      ],
+      "teams": [
+        "Burmese Localization Team"
+      ]
+    },
+    {
+      "username": "kadiparaungmyohan",
+      "display_name": "Kadipar Ag Myo Han",
+      "karma": 0,
+      "web_link": "https://launchpad.net/~kadiparaungmyohan",
+      "languages": [
+        "my"
+      ],
+      "language_codes": [
+        "my"
+      ],
+      "teams": [
+        "Burmese Localization Team"
+      ]
+    },
+    {
+      "username": "khamoomhtawh",
+      "display_name": "Mi Khamoom Htaw",
+      "karma": 0,
+      "web_link": "https://launchpad.net/~khamoomhtawh",
+      "languages": [
+        "mnw"
+      ],
+      "language_codes": [
+        "mnw"
+      ],
+      "teams": [
+        "Ubuntu Mon Translation"
+      ]
+    },
+    {
+      "username": "khinewin",
+      "display_name": "KhineWin",
+      "karma": 0,
+      "web_link": "https://launchpad.net/~khinewin",
+      "languages": [
+        "mnw"
+      ],
+      "language_codes": [
+        "mnw"
+      ],
+      "teams": [
+        "Ubuntu Mon Translation"
+      ]
+    },
+    {
+      "username": "kogyikaunghtet",
+      "display_name": "Kaung Htet Htun",
+      "karma": 0,
+      "web_link": "https://launchpad.net/~kogyikaunghtet",
+      "languages": [
+        "my"
+      ],
+      "language_codes": [
+        "my"
+      ],
+      "teams": [
+        "Burmese Localization Team"
+      ]
+    },
+    {
+      "username": "kokhy-ygn",
+      "display_name": "kokhy",
+      "karma": 0,
+      "web_link": "https://launchpad.net/~kokhy-ygn",
+      "languages": [
+        "my"
+      ],
+      "language_codes": [
+        "my"
+      ],
+      "teams": [
+        "Burmese Localization Team"
+      ]
+    },
+    {
+      "username": "kokoye2007",
+      "display_name": "kokoye2007 ",
+      "karma": 0,
+      "web_link": "https://launchpad.net/~kokoye2007",
+      "languages": [
+        "mnw",
+        "my",
+        "shn"
+      ],
+      "language_codes": [
+        "mnw",
+        "my",
+        "shn"
+      ],
+      "teams": [
+        "Burmese Localization Team",
+        "Ubuntu Mon Translation",
+        "Ubuntu Shan Localization"
+      ]
+    },
+    {
+      "username": "kotinhtooaung",
+      "display_name": "Tin Htoo Aung",
+      "karma": 0,
+      "web_link": "https://launchpad.net/~kotinhtooaung",
+      "languages": [
+        "my"
+      ],
+      "language_codes": [
+        "my"
+      ],
+      "teams": [
+        "Burmese Localization Team"
+      ]
+    },
+    {
+      "username": "kozawhtet",
+      "display_name": "Ko Zaw Htet",
+      "karma": 0,
+      "web_link": "https://launchpad.net/~kozawhtet",
+      "languages": [
+        "my"
+      ],
+      "language_codes": [
+        "my"
+      ],
+      "teams": [
+        "Burmese Localization Team"
+      ]
+    },
+    {
+      "username": "krer",
+      "display_name": "Adob Tail",
+      "karma": 0,
+      "web_link": "https://launchpad.net/~krer",
+      "languages": [
+        "my"
+      ],
+      "language_codes": [
+        "my"
+      ],
+      "teams": [
+        "Burmese Localization Team"
+      ]
+    },
+    {
+      "username": "kyawhtetwinjr",
+      "display_name": "Kyaw Thet Win",
+      "karma": 0,
+      "web_link": "https://launchpad.net/~kyawhtetwinjr",
+      "languages": [
+        "my"
+      ],
+      "language_codes": [
+        "my"
+      ],
+      "teams": [
+        "Burmese Localization Team"
+      ]
+    },
+    {
+      "username": "kyawkhine1992",
+      "display_name": "Kyaw Khine",
+      "karma": 0,
+      "web_link": "https://launchpad.net/~kyawkhine1992",
+      "languages": [
+        "my"
+      ],
+      "language_codes": [
+        "my"
+      ],
+      "teams": [
+        "Burmese Localization Team"
+      ]
+    },
+    {
+      "username": "kyawmyatthu-ows",
+      "display_name": "kyawmyatthu.ows",
+      "karma": 0,
+      "web_link": "https://launchpad.net/~kyawmyatthu-ows",
+      "languages": [
+        "my"
+      ],
+      "language_codes": [
+        "my"
+      ],
+      "teams": [
+        "Burmese Localization Team"
+      ]
+    },
+    {
+      "username": "kyawsanoo",
+      "display_name": "Kyaw san oo",
+      "karma": 0,
+      "web_link": "https://launchpad.net/~kyawsanoo",
+      "languages": [
+        "mnw"
+      ],
+      "language_codes": [
+        "mnw"
+      ],
+      "teams": [
+        "Ubuntu Mon Translation"
+      ]
+    },
+    {
+      "username": "kyitaw1",
+      "display_name": "Min Mon",
+      "karma": 0,
+      "web_link": "https://launchpad.net/~kyitaw1",
+      "languages": [
+        "my"
+      ],
+      "language_codes": [
+        "my"
+      ],
+      "teams": [
+        "Burmese Localization Team"
+      ]
+    },
+    {
+      "username": "littiger",
+      "display_name": "Lit_Tiger",
+      "karma": 0,
+      "web_link": "https://launchpad.net/~littiger",
+      "languages": [
+        "my"
+      ],
+      "language_codes": [
+        "my"
+      ],
+      "teams": [
+        "Burmese Localization Team"
+      ]
+    },
+    {
+      "username": "liuzen",
+      "display_name": "Stephen",
+      "karma": 0,
+      "web_link": "https://launchpad.net/~liuzen",
+      "languages": [
+        "my"
+      ],
+      "language_codes": [
+        "my"
+      ],
+      "teams": [
+        "Burmese Localization Team"
+      ]
+    },
+    {
+      "username": "lotusblack",
+      "display_name": "Lotus Black",
+      "karma": 0,
+      "web_link": "https://launchpad.net/~lotusblack",
+      "languages": [
+        "my"
+      ],
+      "language_codes": [
+        "my"
+      ],
+      "teams": [
+        "Burmese Localization Team"
+      ]
+    },
+    {
+      "username": "lovetostrike",
+      "display_name": "lovetostrike",
+      "karma": 0,
+      "web_link": "https://launchpad.net/~lovetostrike",
+      "languages": [
+        "my"
+      ],
+      "language_codes": [
+        "my"
+      ],
+      "teams": [
+        "Burmese Localization Team"
+      ]
+    },
+    {
+      "username": "lusoe302",
+      "display_name": "lusoe302",
+      "karma": 0,
+      "web_link": "https://launchpad.net/~lusoe302",
+      "languages": [
+        "my"
+      ],
+      "language_codes": [
+        "my"
+      ],
+      "teams": [
+        "Burmese Localization Team"
+      ]
+    },
+    {
+      "username": "man-shrek",
+      "display_name": "wataruMan",
+      "karma": 0,
+      "web_link": "https://launchpad.net/~man-shrek",
+      "languages": [
+        "my"
+      ],
+      "language_codes": [
+        "my"
+      ],
+      "teams": [
+        "Burmese Localization Team"
+      ]
+    },
+    {
+      "username": "maraohnonpon",
+      "display_name": "Saik Chan",
+      "karma": 0,
+      "web_link": "https://launchpad.net/~maraohnonpon",
+      "languages": [
+        "mnw"
+      ],
+      "language_codes": [
+        "mnw"
+      ],
+      "teams": [
+        "Ubuntu Mon Translation"
+      ]
+    },
+    {
+      "username": "marigan",
+      "display_name": "Matt Marigan",
+      "karma": 0,
+      "web_link": "https://launchpad.net/~marigan",
+      "languages": [
+        "my"
+      ],
+      "language_codes": [
+        "my"
+      ],
+      "teams": [
+        "Burmese Localization Team"
+      ]
+    },
+    {
+      "username": "maungthuu",
+      "display_name": "Maung Thuu",
+      "karma": 0,
+      "web_link": "https://launchpad.net/~maungthuu",
+      "languages": [
+        "my"
+      ],
+      "language_codes": [
+        "my"
+      ],
+      "teams": [
+        "Burmese Localization Team"
+      ]
+    },
+    {
+      "username": "maythuaung512",
+      "display_name": "May Thu Aung",
+      "karma": 0,
+      "web_link": "https://launchpad.net/~maythuaung512",
+      "languages": [
+        "my"
+      ],
+      "language_codes": [
+        "my"
+      ],
+      "teams": [
+        "Burmese Localization Team"
+      ]
+    },
+    {
+      "username": "mentawlya",
+      "display_name": "Mentawlyah",
+      "karma": 0,
+      "web_link": "https://launchpad.net/~mentawlya",
+      "languages": [
+        "mnw"
+      ],
+      "language_codes": [
+        "mnw"
+      ],
+      "teams": []
+    },
+    {
+      "username": "mhenyhazz177999000",
+      "display_name": "Yhaza",
+      "karma": 0,
+      "web_link": "https://launchpad.net/~mhenyhazz177999000",
+      "languages": [
+        "mnw"
+      ],
+      "language_codes": [
+        "mnw"
+      ],
+      "teams": [
+        "Ubuntu Mon Translation"
+      ]
+    },
+    {
+      "username": "minhtaw",
+      "display_name": "Min Htaw",
+      "karma": 0,
+      "web_link": "https://launchpad.net/~minhtaw",
+      "languages": [
+        "mnw"
+      ],
+      "language_codes": [
+        "mnw"
+      ],
+      "teams": [
+        "Ubuntu Mon Translation"
+      ]
+    },
+    {
+      "username": "minnkhant257",
+      "display_name": "MinnHeinKhant",
+      "karma": 0,
+      "web_link": "https://launchpad.net/~minnkhant257",
+      "languages": [
+        "my"
+      ],
+      "language_codes": [
+        "my"
+      ],
+      "teams": [
+        "Burmese Localization Team"
+      ]
+    },
+    {
+      "username": "mintun",
+      "display_name": "mintun",
+      "karma": 0,
+      "web_link": "https://launchpad.net/~mintun",
+      "languages": [
+        "mnw"
+      ],
+      "language_codes": [
+        "mnw"
+      ],
+      "teams": [
+        "Ubuntu Mon Translation"
+      ]
+    },
+    {
+      "username": "mipakowmon",
+      "display_name": "Mi Pakow Mon",
+      "karma": 0,
+      "web_link": "https://launchpad.net/~mipakowmon",
+      "languages": [
+        "mnw"
+      ],
+      "language_codes": [
+        "mnw"
+      ],
+      "teams": []
+    },
+    {
+      "username": "moelonepyaeshan",
+      "display_name": "Moe Lone",
+      "karma": 0,
+      "web_link": "https://launchpad.net/~moelonepyaeshan",
+      "languages": [
+        "my"
+      ],
+      "language_codes": [
+        "my"
+      ],
+      "teams": [
+        "Burmese Localization Team"
+      ]
+    },
+    {
+      "username": "mohmohthanster",
+      "display_name": "mmt",
+      "karma": 0,
+      "web_link": "https://launchpad.net/~mohmohthanster",
+      "languages": [
+        "my"
+      ],
+      "language_codes": [
+        "my"
+      ],
+      "teams": [
+        "Burmese Localization Team"
+      ]
+    },
+    {
+      "username": "monbeeree",
+      "display_name": "Mehm Rattna",
+      "karma": 0,
+      "web_link": "https://launchpad.net/~monbeeree",
+      "languages": [
+        "mnw"
+      ],
+      "language_codes": [
+        "mnw"
+      ],
+      "teams": [
+        "Ubuntu Mon Translation"
+      ]
+    },
+    {
+      "username": "monchanaie",
+      "display_name": "Mon Chan Aie",
+      "karma": 0,
+      "web_link": "https://launchpad.net/~monchanaie",
+      "languages": [
+        "mnw"
+      ],
+      "language_codes": [
+        "mnw"
+      ],
+      "teams": [
+        "Ubuntu Mon Translation"
+      ]
+    },
+    {
+      "username": "mondser",
+      "display_name": "WiRa",
+      "karma": 0,
+      "web_link": "https://launchpad.net/~mondser",
+      "languages": [
+        "mnw"
+      ],
+      "language_codes": [
+        "mnw"
+      ],
+      "teams": [
+        "Ubuntu Mon Translation"
+      ]
+    },
+    {
+      "username": "mongipsy",
+      "display_name": "Mongipsy",
+      "karma": 0,
+      "web_link": "https://launchpad.net/~mongipsy",
+      "languages": [
+        "mnw"
+      ],
+      "language_codes": [
+        "mnw"
+      ],
+      "teams": [
+        "Ubuntu Mon Translation"
+      ]
+    },
+    {
+      "username": "mryotesoe",
+      "display_name": "KyawZayThu",
+      "karma": 0,
+      "web_link": "https://launchpad.net/~mryotesoe",
+      "languages": [
+        "my"
+      ],
+      "language_codes": [
+        "my"
+      ],
+      "teams": [
+        "Burmese Localization Team"
+      ]
+    },
+    {
+      "username": "myanmarmenn",
+      "display_name": "mmmen",
+      "karma": 0,
+      "web_link": "https://launchpad.net/~myanmarmenn",
+      "languages": [
+        "my"
+      ],
+      "language_codes": [
+        "my"
+      ],
+      "teams": [
+        "Burmese Localization Team"
+      ]
+    },
+    {
+      "username": "naing-htun28",
+      "display_name": "Htun Htun Naing",
+      "karma": 0,
+      "web_link": "https://launchpad.net/~naing-htun28",
+      "languages": [
+        "my"
+      ],
+      "language_codes": [
+        "my"
+      ],
+      "teams": [
+        "Burmese Localization Team"
       ]
     },
     {
@@ -1456,8 +1410,7 @@
         "my"
       ],
       "teams": [
-        "Ubuntu Myanmar Translators",
-        "Ubuntu Translators"
+        "Burmese Localization Team"
       ]
     },
     {
@@ -1472,24 +1425,22 @@
         "my"
       ],
       "teams": [
-        "Ubuntu Myanmar Translators",
-        "Ubuntu Translators"
+        "Burmese Localization Team"
       ]
     },
     {
-      "username": "naymyolay-gmail",
-      "display_name": "nanda",
+      "username": "naiseikrot",
+      "display_name": "Nai Seik Rot",
       "karma": 0,
-      "web_link": "https://launchpad.net/~naymyolay-gmail",
+      "web_link": "https://launchpad.net/~naiseikrot",
       "languages": [
-        "my"
+        "mnw"
       ],
       "language_codes": [
-        "my"
+        "mnw"
       ],
       "teams": [
-        "Ubuntu Myanmar Translators",
-        "Ubuntu Translators"
+        "Ubuntu Mon Translation"
       ]
     },
     {
@@ -1504,8 +1455,37 @@
         "my"
       ],
       "teams": [
-        "Ubuntu Myanmar Translators",
-        "Ubuntu Translators"
+        "Burmese Localization Team"
+      ]
+    },
+    {
+      "username": "naymyohaen",
+      "display_name": "ေနမ်ိဳးဟန္",
+      "karma": 0,
+      "web_link": "https://launchpad.net/~naymyohaen",
+      "languages": [
+        "my"
+      ],
+      "language_codes": [
+        "my"
+      ],
+      "teams": [
+        "Burmese Localization Team"
+      ]
+    },
+    {
+      "username": "naymyolay-gmail",
+      "display_name": "nanda",
+      "karma": 0,
+      "web_link": "https://launchpad.net/~naymyolay-gmail",
+      "languages": [
+        "my"
+      ],
+      "language_codes": [
+        "my"
+      ],
+      "teams": [
+        "Burmese Localization Team"
       ]
     },
     {
@@ -1520,88 +1500,7 @@
         "my"
       ],
       "teams": [
-        "Ubuntu Myanmar Translators",
-        "Ubuntu Translators"
-      ]
-    },
-    {
-      "username": "nonlawar",
-      "display_name": "Non Lawar",
-      "karma": 0,
-      "web_link": "https://launchpad.net/~nonlawar",
-      "languages": [
-        "mnw"
-      ],
-      "language_codes": [
-        "mnw"
-      ],
-      "teams": [
-        "Ubuntu Mon Translators",
-        "Ubuntu Translators"
-      ]
-    },
-    {
-      "username": "nsumon",
-      "display_name": "nsu mon",
-      "karma": 0,
-      "web_link": "https://launchpad.net/~nsumon",
-      "languages": [
-        "mnw"
-      ],
-      "language_codes": [
-        "mnw"
-      ],
-      "teams": [
-        "Ubuntu Mon Translators",
-        "Ubuntu Translators"
-      ]
-    },
-    {
-      "username": "nyanlintun2018",
-      "display_name": "Nyan Lin Tun",
-      "karma": 0,
-      "web_link": "https://launchpad.net/~nyanlintun2018",
-      "languages": [
-        "my"
-      ],
-      "language_codes": [
-        "my"
-      ],
-      "teams": [
-        "Ubuntu Myanmar Translators",
-        "Ubuntu Translators"
-      ]
-    },
-    {
-      "username": "nyeinchan-job",
-      "display_name": "Nyein Chan",
-      "karma": 0,
-      "web_link": "https://launchpad.net/~nyeinchan-job",
-      "languages": [
-        "my"
-      ],
-      "language_codes": [
-        "my"
-      ],
-      "teams": [
-        "Ubuntu Myanmar Translators",
-        "Ubuntu Translators"
-      ]
-    },
-    {
-      "username": "scorpionnyi",
-      "display_name": "Nyi Nyi Htwe",
-      "karma": 0,
-      "web_link": "https://launchpad.net/~scorpionnyi",
-      "languages": [
-        "my"
-      ],
-      "language_codes": [
-        "my"
-      ],
-      "teams": [
-        "Ubuntu Myanmar Translators",
-        "Ubuntu Translators"
+        "Burmese Localization Team"
       ]
     },
     {
@@ -1616,8 +1515,67 @@
         "my"
       ],
       "teams": [
-        "Ubuntu Myanmar Translators",
-        "Ubuntu Translators"
+        "Burmese Localization Team"
+      ]
+    },
+    {
+      "username": "nonlawar",
+      "display_name": "Non Lawar",
+      "karma": 0,
+      "web_link": "https://launchpad.net/~nonlawar",
+      "languages": [
+        "mnw"
+      ],
+      "language_codes": [
+        "mnw"
+      ],
+      "teams": [
+        "Ubuntu Mon Translation"
+      ]
+    },
+    {
+      "username": "nsumon",
+      "display_name": "nsu mon",
+      "karma": 0,
+      "web_link": "https://launchpad.net/~nsumon",
+      "languages": [
+        "mnw"
+      ],
+      "language_codes": [
+        "mnw"
+      ],
+      "teams": [
+        "Ubuntu Mon Translation"
+      ]
+    },
+    {
+      "username": "nyanlintun2018",
+      "display_name": "Nyan Lin Tun",
+      "karma": 0,
+      "web_link": "https://launchpad.net/~nyanlintun2018",
+      "languages": [
+        "my"
+      ],
+      "language_codes": [
+        "my"
+      ],
+      "teams": [
+        "Burmese Localization Team"
+      ]
+    },
+    {
+      "username": "nyeinchan-job",
+      "display_name": "Nyein Chan",
+      "karma": 0,
+      "web_link": "https://launchpad.net/~nyeinchan-job",
+      "languages": [
+        "my"
+      ],
+      "language_codes": [
+        "my"
+      ],
+      "teams": [
+        "Burmese Localization Team"
       ]
     },
     {
@@ -1632,31 +1590,14 @@
         "my"
       ],
       "teams": [
-        "Ubuntu Myanmar Translators",
-        "Ubuntu Translators"
+        "Burmese Localization Team"
       ]
     },
     {
-      "username": "www-nyinyisoewin-nnsw",
-      "display_name": "Nyi Nyi Soe Win",
+      "username": "oung",
+      "display_name": "Mhem Aung Thu Win",
       "karma": 0,
-      "web_link": "https://launchpad.net/~www-nyinyisoewin-nnsw",
-      "languages": [
-        "my"
-      ],
-      "language_codes": [
-        "my"
-      ],
-      "teams": [
-        "Ubuntu Myanmar Translators",
-        "Ubuntu Translators"
-      ]
-    },
-    {
-      "username": "pakaosorn",
-      "display_name": "Pakao Sorn",
-      "karma": 0,
-      "web_link": "https://launchpad.net/~pakaosorn",
+      "web_link": "https://launchpad.net/~oung",
       "languages": [
         "mnw"
       ],
@@ -1664,88 +1605,7 @@
         "mnw"
       ],
       "teams": [
-        "Ubuntu Mon Translators",
-        "Ubuntu Translators"
-      ]
-    },
-    {
-      "username": "pakowsajinmon",
-      "display_name": "Pakow Sajin Mon",
-      "karma": 0,
-      "web_link": "https://launchpad.net/~pakowsajinmon",
-      "languages": [
-        "mnw"
-      ],
-      "language_codes": [
-        "mnw"
-      ],
-      "teams": [
-        "Ubuntu Mon Translators",
-        "Ubuntu Translators"
-      ]
-    },
-    {
-      "username": "pmtpol77",
-      "display_name": "Phone Myint Thein",
-      "karma": 0,
-      "web_link": "https://launchpad.net/~pmtpol77",
-      "languages": [
-        "my"
-      ],
-      "language_codes": [
-        "my"
-      ],
-      "teams": [
-        "Ubuntu Myanmar Translators",
-        "Ubuntu Translators"
-      ]
-    },
-    {
-      "username": "phoohtoo",
-      "display_name": "Phoo Htoo",
-      "karma": 0,
-      "web_link": "https://launchpad.net/~phoohtoo",
-      "languages": [
-        "my"
-      ],
-      "language_codes": [
-        "my"
-      ],
-      "teams": [
-        "Ubuntu Myanmar Translators",
-        "Ubuntu Translators"
-      ]
-    },
-    {
-      "username": "phymng-ans",
-      "display_name": "phymng.ans",
-      "karma": 0,
-      "web_link": "https://launchpad.net/~phymng-ans",
-      "languages": [
-        "my"
-      ],
-      "language_codes": [
-        "my"
-      ],
-      "teams": [
-        "Ubuntu Myanmar Translators",
-        "Ubuntu Translators"
-      ]
-    },
-    {
-      "username": "phyothuyahtet-punk",
-      "display_name": "Phyo Thu Ya Htet",
-      "karma": 0,
-      "web_link": "https://launchpad.net/~phyothuyahtet-punk",
-      "languages": [
-        "my"
-      ],
-      "language_codes": [
-        "my"
-      ],
-      "teams": [
-        "Ubuntu Myanmar Translators",
-        "Ubuntu Translators"
+        "Ubuntu Mon Translation"
       ]
     },
     {
@@ -1760,8 +1620,97 @@
         "my"
       ],
       "teams": [
-        "Ubuntu Myanmar Translators",
-        "Ubuntu Translators"
+        "Burmese Localization Team"
+      ]
+    },
+    {
+      "username": "paing-phyoe",
+      "display_name": "Yuki Painglay",
+      "karma": 0,
+      "web_link": "https://launchpad.net/~paing-phyoe",
+      "languages": [
+        "my"
+      ],
+      "language_codes": [
+        "my"
+      ],
+      "teams": [
+        "Burmese Localization Team"
+      ]
+    },
+    {
+      "username": "pakaosorn",
+      "display_name": "Pakao Sorn",
+      "karma": 0,
+      "web_link": "https://launchpad.net/~pakaosorn",
+      "languages": [
+        "mnw"
+      ],
+      "language_codes": [
+        "mnw"
+      ],
+      "teams": [
+        "Ubuntu Mon Translation"
+      ]
+    },
+    {
+      "username": "pakowsajinmon",
+      "display_name": "Pakow Sajin Mon",
+      "karma": 0,
+      "web_link": "https://launchpad.net/~pakowsajinmon",
+      "languages": [
+        "mnw"
+      ],
+      "language_codes": [
+        "mnw"
+      ],
+      "teams": [
+        "Ubuntu Mon Translation"
+      ]
+    },
+    {
+      "username": "phoohtoo",
+      "display_name": "Phoo Htoo",
+      "karma": 0,
+      "web_link": "https://launchpad.net/~phoohtoo",
+      "languages": [
+        "my"
+      ],
+      "language_codes": [
+        "my"
+      ],
+      "teams": [
+        "Burmese Localization Team"
+      ]
+    },
+    {
+      "username": "phymng-ans",
+      "display_name": "phymng.ans",
+      "karma": 0,
+      "web_link": "https://launchpad.net/~phymng-ans",
+      "languages": [
+        "my"
+      ],
+      "language_codes": [
+        "my"
+      ],
+      "teams": [
+        "Burmese Localization Team"
+      ]
+    },
+    {
+      "username": "phyothuyahtet-punk",
+      "display_name": "Phyo Thu Ya Htet",
+      "karma": 0,
+      "web_link": "https://launchpad.net/~phyothuyahtet-punk",
+      "languages": [
+        "my"
+      ],
+      "language_codes": [
+        "my"
+      ],
+      "teams": [
+        "Burmese Localization Team"
       ]
     },
     {
@@ -1776,8 +1725,22 @@
         "my"
       ],
       "teams": [
-        "Ubuntu Myanmar Translators",
-        "Ubuntu Translators"
+        "Burmese Localization Team"
+      ]
+    },
+    {
+      "username": "pmtpol77",
+      "display_name": "Phone Myint Thein",
+      "karma": 0,
+      "web_link": "https://launchpad.net/~pmtpol77",
+      "languages": [
+        "my"
+      ],
+      "language_codes": [
+        "my"
+      ],
+      "teams": [
+        "Burmese Localization Team"
       ]
     },
     {
@@ -1792,8 +1755,7 @@
         "my"
       ],
       "teams": [
-        "Ubuntu Myanmar Translators",
-        "Ubuntu Translators"
+        "Burmese Localization Team"
       ]
     },
     {
@@ -1808,8 +1770,37 @@
         "my"
       ],
       "teams": [
-        "Ubuntu Myanmar Translators",
-        "Ubuntu Translators"
+        "Burmese Localization Team"
+      ]
+    },
+    {
+      "username": "royallyre7",
+      "display_name": "koaung",
+      "karma": 0,
+      "web_link": "https://launchpad.net/~royallyre7",
+      "languages": [
+        "my"
+      ],
+      "language_codes": [
+        "my"
+      ],
+      "teams": [
+        "Burmese Localization Team"
+      ]
+    },
+    {
+      "username": "s.mark",
+      "display_name": "Mark",
+      "karma": 0,
+      "web_link": "https://launchpad.net/~s.mark",
+      "languages": [
+        "my"
+      ],
+      "language_codes": [
+        "my"
+      ],
+      "teams": [
+        "Burmese Localization Team"
       ]
     },
     {
@@ -1824,8 +1815,22 @@
         "shn"
       ],
       "teams": [
-        "Ubuntu Shan Translators",
-        "Ubuntu Translators"
+        "Ubuntu Shan Localization"
+      ]
+    },
+    {
+      "username": "saikosennin",
+      "display_name": "Saiko",
+      "karma": 0,
+      "web_link": "https://launchpad.net/~saikosennin",
+      "languages": [
+        "my"
+      ],
+      "language_codes": [
+        "my"
+      ],
+      "teams": [
+        "Burmese Localization Team"
       ]
     },
     {
@@ -1842,32 +1847,15 @@
         "shn"
       ],
       "teams": [
-        "Ubuntu Myanmar Translators",
-        "Ubuntu Translators",
-        "Ubuntu Shan Translators"
+        "Burmese Localization Team",
+        "Ubuntu Shan Localization"
       ]
     },
     {
-      "username": "maraohnonpon",
-      "display_name": "Saik Chan",
+      "username": "saintjohn769",
+      "display_name": "chitko",
       "karma": 0,
-      "web_link": "https://launchpad.net/~maraohnonpon",
-      "languages": [
-        "mnw"
-      ],
-      "language_codes": [
-        "mnw"
-      ],
-      "teams": [
-        "Ubuntu Mon Translators",
-        "Ubuntu Translators"
-      ]
-    },
-    {
-      "username": "saikosennin",
-      "display_name": "Saiko",
-      "karma": 0,
-      "web_link": "https://launchpad.net/~saikosennin",
+      "web_link": "https://launchpad.net/~saintjohn769",
       "languages": [
         "my"
       ],
@@ -1875,56 +1863,7 @@
         "my"
       ],
       "teams": [
-        "Ubuntu Myanmar Translators",
-        "Ubuntu Translators"
-      ]
-    },
-    {
-      "username": "19panpha90",
-      "display_name": "saisaepanpha",
-      "karma": 0,
-      "web_link": "https://launchpad.net/~19panpha90",
-      "languages": [
-        "shn"
-      ],
-      "language_codes": [
-        "shn"
-      ],
-      "teams": [
-        "Ubuntu Shan Translators",
-        "Ubuntu Translators"
-      ]
-    },
-    {
-      "username": "sayakyi",
-      "display_name": "salai",
-      "karma": 0,
-      "web_link": "https://launchpad.net/~sayakyi",
-      "languages": [
-        "my"
-      ],
-      "language_codes": [
-        "my"
-      ],
-      "teams": [
-        "Ubuntu Myanmar Translators",
-        "Ubuntu Translators"
-      ]
-    },
-    {
-      "username": "jclovesme-zi9",
-      "display_name": "Sargon Zi",
-      "karma": 0,
-      "web_link": "https://launchpad.net/~jclovesme-zi9",
-      "languages": [
-        "my"
-      ],
-      "language_codes": [
-        "my"
-      ],
-      "teams": [
-        "Ubuntu Myanmar Translators",
-        "Ubuntu Translators"
+        "Burmese Localization Team"
       ]
     },
     {
@@ -1939,8 +1878,7 @@
         "my"
       ],
       "teams": [
-        "Ubuntu Myanmar Translators",
-        "Ubuntu Translators"
+        "Burmese Localization Team"
       ]
     },
     {
@@ -1955,8 +1893,140 @@
         "my"
       ],
       "teams": [
-        "Ubuntu Myanmar Translators",
-        "Ubuntu Translators"
+        "Burmese Localization Team"
+      ]
+    },
+    {
+      "username": "sayakyi",
+      "display_name": "salai",
+      "karma": 0,
+      "web_link": "https://launchpad.net/~sayakyi",
+      "languages": [
+        "my"
+      ],
+      "language_codes": [
+        "my"
+      ],
+      "teams": [
+        "Burmese Localization Team"
+      ]
+    },
+    {
+      "username": "scorpionnyi",
+      "display_name": "Nyi Nyi Htwe",
+      "karma": 0,
+      "web_link": "https://launchpad.net/~scorpionnyi",
+      "languages": [
+        "my"
+      ],
+      "language_codes": [
+        "my"
+      ],
+      "teams": [
+        "Burmese Localization Team"
+      ]
+    },
+    {
+      "username": "seiknon",
+      "display_name": "Mi Seik Non",
+      "karma": 0,
+      "web_link": "https://launchpad.net/~seiknon",
+      "languages": [
+        "mnw"
+      ],
+      "language_codes": [
+        "mnw"
+      ],
+      "teams": []
+    },
+    {
+      "username": "seiknyan",
+      "display_name": "Nai Seik Nyan",
+      "karma": 0,
+      "web_link": "https://launchpad.net/~seiknyan",
+      "languages": [
+        "mnw"
+      ],
+      "language_codes": [
+        "mnw"
+      ],
+      "teams": [
+        "Ubuntu Mon Translation"
+      ]
+    },
+    {
+      "username": "sithu-a",
+      "display_name": "Sithu Thwin",
+      "karma": 0,
+      "web_link": "https://launchpad.net/~sithu-a",
+      "languages": [
+        "my"
+      ],
+      "language_codes": [
+        "my"
+      ],
+      "teams": [
+        "Burmese Localization Team"
+      ]
+    },
+    {
+      "username": "sithu015",
+      "display_name": "Sithu Aung",
+      "karma": 0,
+      "web_link": "https://launchpad.net/~sithu015",
+      "languages": [
+        "my"
+      ],
+      "language_codes": [
+        "my"
+      ],
+      "teams": [
+        "Burmese Localization Team"
+      ]
+    },
+    {
+      "username": "slayeroflion",
+      "display_name": "Lionslayer",
+      "karma": 0,
+      "web_link": "https://launchpad.net/~slayeroflion",
+      "languages": [
+        "my"
+      ],
+      "language_codes": [
+        "my"
+      ],
+      "teams": [
+        "Burmese Localization Team"
+      ]
+    },
+    {
+      "username": "soiroelyahmon",
+      "display_name": "Soi Roe Lyah Mon",
+      "karma": 0,
+      "web_link": "https://launchpad.net/~soiroelyahmon",
+      "languages": [
+        "mnw"
+      ],
+      "language_codes": [
+        "mnw"
+      ],
+      "teams": [
+        "Ubuntu Mon Translation"
+      ]
+    },
+    {
+      "username": "sopykt",
+      "display_name": "soe paing",
+      "karma": 0,
+      "web_link": "https://launchpad.net/~sopykt",
+      "languages": [
+        "my"
+      ],
+      "language_codes": [
+        "my"
+      ],
+      "teams": [
+        "Burmese Localization Team"
       ]
     },
     {
@@ -1973,89 +2043,8 @@
         "shn"
       ],
       "teams": [
-        "Ubuntu Myanmar Translators",
-        "Ubuntu Translators",
-        "Ubuntu Shan Translators"
-      ]
-    },
-    {
-      "username": "sithu015",
-      "display_name": "Sithu Aung",
-      "karma": 0,
-      "web_link": "https://launchpad.net/~sithu015",
-      "languages": [
-        "my"
-      ],
-      "language_codes": [
-        "my"
-      ],
-      "teams": [
-        "Ubuntu Myanmar Translators",
-        "Ubuntu Translators"
-      ]
-    },
-    {
-      "username": "sithu-a",
-      "display_name": "Sithu Thwin",
-      "karma": 0,
-      "web_link": "https://launchpad.net/~sithu-a",
-      "languages": [
-        "my"
-      ],
-      "language_codes": [
-        "my"
-      ],
-      "teams": [
-        "Ubuntu Myanmar Translators",
-        "Ubuntu Translators"
-      ]
-    },
-    {
-      "username": "sopykt",
-      "display_name": "soe paing",
-      "karma": 0,
-      "web_link": "https://launchpad.net/~sopykt",
-      "languages": [
-        "my"
-      ],
-      "language_codes": [
-        "my"
-      ],
-      "teams": [
-        "Ubuntu Myanmar Translators",
-        "Ubuntu Translators"
-      ]
-    },
-    {
-      "username": "soiroelyahmon",
-      "display_name": "Soi Roe Lyah Mon",
-      "karma": 0,
-      "web_link": "https://launchpad.net/~soiroelyahmon",
-      "languages": [
-        "mnw"
-      ],
-      "language_codes": [
-        "mnw"
-      ],
-      "teams": [
-        "Ubuntu Mon Translators",
-        "Ubuntu Translators"
-      ]
-    },
-    {
-      "username": "liuzen",
-      "display_name": "Stephen",
-      "karma": 0,
-      "web_link": "https://launchpad.net/~liuzen",
-      "languages": [
-        "my"
-      ],
-      "language_codes": [
-        "my"
-      ],
-      "teams": [
-        "Ubuntu Myanmar Translators",
-        "Ubuntu Translators"
+        "Burmese Localization Team",
+        "Ubuntu Shan Localization"
       ]
     },
     {
@@ -2070,8 +2059,7 @@
         "my"
       ],
       "teams": [
-        "Ubuntu Myanmar Translators",
-        "Ubuntu Translators"
+        "Burmese Localization Team"
       ]
     },
     {
@@ -2086,24 +2074,7 @@
         "mnw"
       ],
       "teams": [
-        "Ubuntu Mon Translators",
-        "Ubuntu Translators"
-      ]
-    },
-    {
-      "username": "gladmanchikosha",
-      "display_name": "takapiwanashe",
-      "karma": 0,
-      "web_link": "https://launchpad.net/~gladmanchikosha",
-      "languages": [
-        "shn"
-      ],
-      "language_codes": [
-        "shn"
-      ],
-      "teams": [
-        "Ubuntu Shan Translators",
-        "Ubuntu Translators"
+        "Ubuntu Mon Translation"
       ]
     },
     {
@@ -2118,8 +2089,22 @@
         "mnw"
       ],
       "teams": [
-        "Ubuntu Mon Translators",
-        "Ubuntu Translators"
+        "Ubuntu Mon Translation"
+      ]
+    },
+    {
+      "username": "technoyoungman",
+      "display_name": "Min Thaw Tun",
+      "karma": 0,
+      "web_link": "https://launchpad.net/~technoyoungman",
+      "languages": [
+        "my"
+      ],
+      "language_codes": [
+        "my"
+      ],
+      "teams": [
+        "Burmese Localization Team"
       ]
     },
     {
@@ -2134,8 +2119,7 @@
         "my"
       ],
       "teams": [
-        "Ubuntu Myanmar Translators",
-        "Ubuntu Translators"
+        "Burmese Localization Team"
       ]
     },
     {
@@ -2150,8 +2134,7 @@
         "my"
       ],
       "teams": [
-        "Ubuntu Myanmar Translators",
-        "Ubuntu Translators"
+        "Burmese Localization Team"
       ]
     },
     {
@@ -2166,8 +2149,7 @@
         "my"
       ],
       "teams": [
-        "Ubuntu Myanmar Translators",
-        "Ubuntu Translators"
+        "Burmese Localization Team"
       ]
     },
     {
@@ -2182,8 +2164,7 @@
         "my"
       ],
       "teams": [
-        "Ubuntu Myanmar Translators",
-        "Ubuntu Translators"
+        "Burmese Localization Team"
       ]
     },
     {
@@ -2198,8 +2179,7 @@
         "mnw"
       ],
       "teams": [
-        "Ubuntu Mon Translators",
-        "Ubuntu Translators"
+        "Ubuntu Mon Translation"
       ]
     },
     {
@@ -2214,8 +2194,7 @@
         "mnw"
       ],
       "teams": [
-        "Ubuntu Mon Translators",
-        "Ubuntu Translators"
+        "Ubuntu Mon Translation"
       ]
     },
     {
@@ -2230,8 +2209,7 @@
         "my"
       ],
       "teams": [
-        "Ubuntu Myanmar Translators",
-        "Ubuntu Translators"
+        "Burmese Localization Team"
       ]
     },
     {
@@ -2246,24 +2224,7 @@
         "my"
       ],
       "teams": [
-        "Ubuntu Myanmar Translators",
-        "Ubuntu Translators"
-      ]
-    },
-    {
-      "username": "thu99ball",
-      "display_name": "Thu",
-      "karma": 0,
-      "web_link": "https://launchpad.net/~thu99ball",
-      "languages": [
-        "ksw"
-      ],
-      "language_codes": [
-        "ksw"
-      ],
-      "teams": [
-        "S'gaw Karen Translation Team for Linux Mint",
-        "Ubuntu Translators"
+        "Burmese Localization Team"
       ]
     },
     {
@@ -2278,24 +2239,7 @@
         "my"
       ],
       "teams": [
-        "Ubuntu Myanmar Translators",
-        "Ubuntu Translators"
-      ]
-    },
-    {
-      "username": "kotinhtooaung",
-      "display_name": "Tin Htoo Aung",
-      "karma": 0,
-      "web_link": "https://launchpad.net/~kotinhtooaung",
-      "languages": [
-        "my"
-      ],
-      "language_codes": [
-        "my"
-      ],
-      "teams": [
-        "Ubuntu Myanmar Translators",
-        "Ubuntu Translators"
+        "Burmese Localization Team"
       ]
     },
     {
@@ -2310,8 +2254,7 @@
         "my"
       ],
       "teams": [
-        "Ubuntu Myanmar Translators",
-        "Ubuntu Translators"
+        "Burmese Localization Team"
       ]
     },
     {
@@ -2326,8 +2269,7 @@
         "my"
       ],
       "teams": [
-        "Ubuntu Myanmar Translators",
-        "Ubuntu Translators"
+        "Burmese Localization Team"
       ]
     },
     {
@@ -2342,15 +2284,14 @@
         "my"
       ],
       "teams": [
-        "Ubuntu Myanmar Translators",
-        "Ubuntu Translators"
+        "Burmese Localization Team"
       ]
     },
     {
-      "username": "man-shrek",
-      "display_name": "wataruMan",
+      "username": "www-nyinyisoewin-nnsw",
+      "display_name": "Nyi Nyi Soe Win",
       "karma": 0,
-      "web_link": "https://launchpad.net/~man-shrek",
+      "web_link": "https://launchpad.net/~www-nyinyisoewin-nnsw",
       "languages": [
         "my"
       ],
@@ -2358,24 +2299,7 @@
         "my"
       ],
       "teams": [
-        "Ubuntu Myanmar Translators",
-        "Ubuntu Translators"
-      ]
-    },
-    {
-      "username": "mondser",
-      "display_name": "WiRa",
-      "karma": 0,
-      "web_link": "https://launchpad.net/~mondser",
-      "languages": [
-        "mnw"
-      ],
-      "language_codes": [
-        "mnw"
-      ],
-      "teams": [
-        "Ubuntu Mon Translators",
-        "Ubuntu Translators"
+        "Burmese Localization Team"
       ]
     },
     {
@@ -2390,8 +2314,7 @@
         "my"
       ],
       "teams": [
-        "Ubuntu Myanmar Translators",
-        "Ubuntu Translators"
+        "Burmese Localization Team"
       ]
     },
     {
@@ -2406,24 +2329,7 @@
         "my"
       ],
       "teams": [
-        "Ubuntu Myanmar Translators",
-        "Ubuntu Translators"
-      ]
-    },
-    {
-      "username": "eeeeyeeee",
-      "display_name": "yan naung soe",
-      "karma": 0,
-      "web_link": "https://launchpad.net/~eeeeyeeee",
-      "languages": [
-        "my"
-      ],
-      "language_codes": [
-        "my"
-      ],
-      "teams": [
-        "Ubuntu Myanmar Translators",
-        "Ubuntu Translators"
+        "Burmese Localization Team"
       ]
     },
     {
@@ -2438,56 +2344,7 @@
         "my"
       ],
       "teams": [
-        "Ubuntu Myanmar Translators",
-        "Ubuntu Translators"
-      ]
-    },
-    {
-      "username": "yeluaung",
-      "display_name": "YE LU AUNG",
-      "karma": 0,
-      "web_link": "https://launchpad.net/~yeluaung",
-      "languages": [
-        "my"
-      ],
-      "language_codes": [
-        "my"
-      ],
-      "teams": [
-        "Ubuntu Myanmar Translators",
-        "Ubuntu Translators"
-      ]
-    },
-    {
-      "username": "bravesai-mm",
-      "display_name": "Ye Lwin Soe",
-      "karma": 0,
-      "web_link": "https://launchpad.net/~bravesai-mm",
-      "languages": [
-        "my"
-      ],
-      "language_codes": [
-        "my"
-      ],
-      "teams": [
-        "Ubuntu Myanmar Translators",
-        "Ubuntu Translators"
-      ]
-    },
-    {
-      "username": "yeminphyo25",
-      "display_name": "Ye Min Phyo",
-      "karma": 0,
-      "web_link": "https://launchpad.net/~yeminphyo25",
-      "languages": [
-        "my"
-      ],
-      "language_codes": [
-        "my"
-      ],
-      "teams": [
-        "Ubuntu Myanmar Translators",
-        "Ubuntu Translators"
+        "Burmese Localization Team"
       ]
     },
     {
@@ -2502,8 +2359,37 @@
         "my"
       ],
       "teams": [
-        "Ubuntu Myanmar Translators",
-        "Ubuntu Translators"
+        "Burmese Localization Team"
+      ]
+    },
+    {
+      "username": "yeluaung",
+      "display_name": "YE LU AUNG",
+      "karma": 0,
+      "web_link": "https://launchpad.net/~yeluaung",
+      "languages": [
+        "my"
+      ],
+      "language_codes": [
+        "my"
+      ],
+      "teams": [
+        "Burmese Localization Team"
+      ]
+    },
+    {
+      "username": "yeminphyo25",
+      "display_name": "Ye Min Phyo",
+      "karma": 0,
+      "web_link": "https://launchpad.net/~yeminphyo25",
+      "languages": [
+        "my"
+      ],
+      "language_codes": [
+        "my"
+      ],
+      "teams": [
+        "Burmese Localization Team"
       ]
     },
     {
@@ -2518,29 +2404,12 @@
         "my"
       ],
       "teams": [
-        "Ubuntu Myanmar Translators",
-        "Ubuntu Translators"
-      ]
-    },
-    {
-      "username": "mhenyhazz177999000",
-      "display_name": "Yhaza",
-      "karma": 0,
-      "web_link": "https://launchpad.net/~mhenyhazz177999000",
-      "languages": [
-        "mnw"
-      ],
-      "language_codes": [
-        "mnw"
-      ],
-      "teams": [
-        "Ubuntu Mon Translators",
-        "Ubuntu Translators"
+        "Burmese Localization Team"
       ]
     },
     {
       "username": "yinmayoo",
-      "display_name": "YinMayOo (\u101a\u1009\u103a\u1019\u1031\u1026\u1038)",
+      "display_name": "YinMayOo (ယဉ်မေဦး)",
       "karma": 0,
       "web_link": "https://launchpad.net/~yinmayoo",
       "languages": [
@@ -2550,15 +2419,14 @@
         "my"
       ],
       "teams": [
-        "Ubuntu Myanmar Translators",
-        "Ubuntu Translators"
+        "Burmese Localization Team"
       ]
     },
     {
-      "username": "hackforpeace01",
-      "display_name": "Zaw Myo Htet",
+      "username": "zyl65535",
+      "display_name": "Zayar Lwin",
       "karma": 0,
-      "web_link": "https://launchpad.net/~hackforpeace01",
+      "web_link": "https://launchpad.net/~zyl65535",
       "languages": [
         "my"
       ],
@@ -2566,40 +2434,7 @@
         "my"
       ],
       "teams": [
-        "Ubuntu Myanmar Translators",
-        "Ubuntu Translators"
-      ]
-    },
-    {
-      "username": "ayngzawlatt",
-      "display_name": "zawlatt",
-      "karma": 0,
-      "web_link": "https://launchpad.net/~ayngzawlatt",
-      "languages": [
-        "mnw"
-      ],
-      "language_codes": [
-        "mnw"
-      ],
-      "teams": [
-        "Ubuntu Mon Translators",
-        "Ubuntu Translators"
-      ]
-    },
-    {
-      "username": "naymyohaen",
-      "display_name": "\u1031\u1014\u1019\u103a\u102d\u1033\u1038\u101f\u1014\u1039",
-      "karma": 0,
-      "web_link": "https://launchpad.net/~naymyohaen",
-      "languages": [
-        "my"
-      ],
-      "language_codes": [
-        "my"
-      ],
-      "teams": [
-        "Ubuntu Myanmar Translators",
-        "Ubuntu Translators"
+        "Burmese Localization Team"
       ]
     }
   ]

@@ -1,10 +1,11 @@
 {
   "meta": {
     "version": "2.0.0",
-    "lastUpdated": "2026-07-01",
+    "lastUpdated": "2026-10-17",
     "description": "Ubuntu Stonking (26.10) translation templates - official Launchpad packages",
-    "totalPackages": 547,
-    "source": "https://translations.launchpad.net/ubuntu/stonking/+index"
+    "totalPackages": 553,
+    "source": "https://translations.launchpad.net/ubuntu/stonking/+index",
+    "launchpadTemplateCount": 552
   },
   "packages": [
     {
@@ -13,7 +14,7 @@
       "description": "Accounts Service",
       "category": "Other",
       "priority": "medium",
-      "entries": 0,
+      "entries": 12,
       "sourcePackage": "accountsservice"
     },
     {
@@ -22,7 +23,7 @@
       "description": "Acl",
       "category": "Other",
       "priority": "medium",
-      "entries": 0,
+      "entries": 55,
       "sourcePackage": "acl"
     },
     {
@@ -31,7 +32,7 @@
       "description": "Adduser",
       "category": "Other",
       "priority": "medium",
-      "entries": 0,
+      "entries": 139,
       "sourcePackage": "adduser"
     },
     {
@@ -40,7 +41,7 @@
       "description": "Adsys",
       "category": "Other",
       "priority": "medium",
-      "entries": 0,
+      "entries": 88,
       "sourcePackage": "adsys"
     },
     {
@@ -49,7 +50,7 @@
       "description": "Alsa Utils",
       "category": "Multimedia",
       "priority": "medium",
-      "entries": 0,
+      "entries": 338,
       "sourcePackage": "alsa-utils"
     },
     {
@@ -58,7 +59,7 @@
       "description": "Amtk 5",
       "category": "Other",
       "priority": "medium",
-      "entries": 0,
+      "entries": 3,
       "sourcePackage": "amtk"
     },
     {
@@ -67,7 +68,7 @@
       "description": "Anjuta",
       "category": "Other",
       "priority": "medium",
-      "entries": 0,
+      "entries": 2062,
       "sourcePackage": "anjuta"
     },
     {
@@ -76,7 +77,7 @@
       "description": "Anjuta Extras",
       "category": "Other",
       "priority": "medium",
-      "entries": 0,
+      "entries": 119,
       "sourcePackage": "anjuta-extras"
     },
     {
@@ -85,7 +86,7 @@
       "description": "App Install Data",
       "category": "Other",
       "priority": "medium",
-      "entries": 0,
+      "entries": 6082,
       "sourcePackage": "app-install-data-ubuntu"
     },
     {
@@ -94,7 +95,7 @@
       "description": "Aa Enabled",
       "category": "Other",
       "priority": "low",
-      "entries": 0,
+      "entries": 9,
       "sourcePackage": "apparmor"
     },
     {
@@ -103,7 +104,7 @@
       "description": "Apparmor Parser",
       "category": "Other",
       "priority": "medium",
-      "entries": 0,
+      "entries": 207,
       "sourcePackage": "apparmor"
     },
     {
@@ -112,7 +113,7 @@
       "description": "Apparmor Utils",
       "category": "Other",
       "priority": "medium",
-      "entries": 0,
+      "entries": 243,
       "sourcePackage": "apparmor"
     },
     {
@@ -121,7 +122,7 @@
       "description": "Apparmorapplet",
       "category": "Other",
       "priority": "medium",
-      "entries": 0,
+      "entries": 7,
       "sourcePackage": "apparmor"
     },
     {
@@ -130,7 +131,7 @@
       "description": "Subdomain Parser",
       "category": "Other",
       "priority": "low",
-      "entries": 0,
+      "entries": 84,
       "sourcePackage": "apparmor"
     },
     {
@@ -139,7 +140,7 @@
       "description": "Apport",
       "category": "Ubuntu",
       "priority": "medium",
-      "entries": 0,
+      "entries": 193,
       "sourcePackage": "apport"
     },
     {
@@ -148,7 +149,7 @@
       "description": "Appstream",
       "category": "Other",
       "priority": "medium",
-      "entries": 0,
+      "entries": 825,
       "sourcePackage": "appstream"
     },
     {
@@ -157,7 +158,7 @@
       "description": "Appstream Glib",
       "category": "Other",
       "priority": "medium",
-      "entries": 0,
+      "entries": 97,
       "sourcePackage": "appstream-glib"
     },
     {
@@ -166,7 +167,7 @@
       "description": "Apt.C",
       "category": "Package Management",
       "priority": "high",
-      "entries": 0,
+      "entries": 541,
       "sourcePackage": "apt"
     },
     {
@@ -175,7 +176,7 @@
       "description": "Libapt Inst2.0",
       "category": "Package Management",
       "priority": "high",
-      "entries": 0,
+      "entries": 36,
       "sourcePackage": "apt"
     },
     {
@@ -184,7 +185,7 @@
       "description": "Libapt Pkg5.0.C",
       "category": "Package Management",
       "priority": "high",
-      "entries": 0,
+      "entries": 271,
       "sourcePackage": "apt"
     },
     {
@@ -193,7 +194,7 @@
       "description": "Libapt Pkg6.0",
       "category": "Package Management",
       "priority": "high",
-      "entries": 0,
+      "entries": 298,
       "sourcePackage": "apt"
     },
     {
@@ -202,7 +203,7 @@
       "description": "Apt",
       "category": "Package Management",
       "priority": "high",
-      "entries": 0,
+      "entries": 419,
       "sourcePackage": "apt"
     },
     {
@@ -211,7 +212,7 @@
       "description": "Apt All",
       "category": "Package Management",
       "priority": "high",
-      "entries": 0,
+      "entries": 897,
       "sourcePackage": "apt"
     },
     {
@@ -220,7 +221,7 @@
       "description": "Apt Utils",
       "category": "Package Management",
       "priority": "high",
-      "entries": 0,
+      "entries": 57,
       "sourcePackage": "apt"
     },
     {
@@ -229,7 +230,7 @@
       "description": "Apt.Sh",
       "category": "Package Management",
       "priority": "high",
-      "entries": 0,
+      "entries": 8,
       "sourcePackage": "apt"
     },
     {
@@ -238,7 +239,7 @@
       "description": "Libapt Inst",
       "category": "Package Management",
       "priority": "high",
-      "entries": 0,
+      "entries": 36,
       "sourcePackage": "apt"
     },
     {
@@ -247,7 +248,7 @@
       "description": "Libapt Pkg",
       "category": "Package Management",
       "priority": "high",
-      "entries": 0,
+      "entries": 271,
       "sourcePackage": "apt"
     },
     {
@@ -256,7 +257,7 @@
       "description": "Apt Listchanges",
       "category": "Package Management",
       "priority": "high",
-      "entries": 0,
+      "entries": 134,
       "sourcePackage": "apt-listchanges"
     },
     {
@@ -265,7 +266,7 @@
       "description": "Aptdaemon",
       "category": "Package Management",
       "priority": "high",
-      "entries": 0,
+      "entries": 274,
       "sourcePackage": "aptdaemon"
     },
     {
@@ -274,7 +275,7 @@
       "description": "Aptitude",
       "category": "Package Management",
       "priority": "high",
-      "entries": 0,
+      "entries": 1582,
       "sourcePackage": "aptitude"
     },
     {
@@ -283,7 +284,7 @@
       "description": "Apturl",
       "category": "Package Management",
       "priority": "high",
-      "entries": 0,
+      "entries": 34,
       "sourcePackage": "apturl"
     },
     {
@@ -301,7 +302,7 @@
       "description": "Aspell",
       "category": "Other",
       "priority": "medium",
-      "entries": 0,
+      "entries": 302,
       "sourcePackage": "aspell"
     },
     {
@@ -310,7 +311,7 @@
       "description": "At Spi2 Core",
       "category": "Library",
       "priority": "medium",
-      "entries": 0,
+      "entries": 2,
       "sourcePackage": "at-spi2-core"
     },
     {
@@ -319,7 +320,7 @@
       "description": "Atk10",
       "category": "Library",
       "priority": "medium",
-      "entries": 0,
+      "entries": 169,
       "sourcePackage": "atk1.0"
     },
     {
@@ -328,7 +329,7 @@
       "description": "Attr",
       "category": "Other",
       "priority": "medium",
-      "entries": 0,
+      "entries": 33,
       "sourcePackage": "attr"
     },
     {
@@ -337,7 +338,7 @@
       "description": "Avahi",
       "category": "Networking",
       "priority": "medium",
-      "entries": 0,
+      "entries": 161,
       "sourcePackage": "avahi"
     },
     {
@@ -346,7 +347,7 @@
       "description": "Balsa",
       "category": "Multimedia",
       "priority": "medium",
-      "entries": 0,
+      "entries": 1646,
       "sourcePackage": "balsa"
     },
     {
@@ -355,7 +356,7 @@
       "description": "Baobab",
       "category": "GNOME",
       "priority": "medium",
-      "entries": 0,
+      "entries": 78,
       "sourcePackage": "baobab"
     },
     {
@@ -364,7 +365,7 @@
       "description": "Bash",
       "category": "System",
       "priority": "high",
-      "entries": 0,
+      "entries": 612,
       "sourcePackage": "bash"
     },
     {
@@ -373,7 +374,7 @@
       "description": "Bfd",
       "category": "Other",
       "priority": "low",
-      "entries": 0,
+      "entries": 1997,
       "sourcePackage": "gdb"
     },
     {
@@ -382,7 +383,7 @@
       "description": "Binutils",
       "category": "Development",
       "priority": "medium",
-      "entries": 0,
+      "entries": 2751,
       "sourcePackage": "binutils"
     },
     {
@@ -391,7 +392,7 @@
       "description": "Gas",
       "category": "Other",
       "priority": "medium",
-      "entries": 0,
+      "entries": 4969,
       "sourcePackage": "binutils"
     },
     {
@@ -400,7 +401,7 @@
       "description": "Gold",
       "category": "Other",
       "priority": "medium",
-      "entries": 0,
+      "entries": 933,
       "sourcePackage": "binutils"
     },
     {
@@ -418,7 +419,7 @@
       "description": "Ld",
       "category": "Other",
       "priority": "medium",
-      "entries": 0,
+      "entries": 1230,
       "sourcePackage": "binutils"
     },
     {
@@ -445,7 +446,7 @@
       "description": "Bison Gnulib",
       "category": "Development",
       "priority": "low",
-      "entries": 0,
+      "entries": 46,
       "sourcePackage": "bison"
     },
     {
@@ -454,7 +455,7 @@
       "description": "Bison",
       "category": "Development",
       "priority": "medium",
-      "entries": 0,
+      "entries": 253,
       "sourcePackage": "bison"
     },
     {
@@ -463,7 +464,7 @@
       "description": "Bison Runtime",
       "category": "Development",
       "priority": "low",
-      "entries": 0,
+      "entries": 9,
       "sourcePackage": "bison"
     },
     {
@@ -472,7 +473,7 @@
       "description": "Brltty",
       "category": "Other",
       "priority": "medium",
-      "entries": 0,
+      "entries": 980,
       "sourcePackage": "brltty"
     },
     {
@@ -481,7 +482,7 @@
       "description": "Byobu",
       "category": "Other",
       "priority": "medium",
-      "entries": 0,
+      "entries": 44,
       "sourcePackage": "byobu"
     },
     {
@@ -490,7 +491,7 @@
       "description": "Bzr",
       "category": "Development",
       "priority": "medium",
-      "entries": 0,
+      "entries": 2380,
       "sourcePackage": "bzr"
     },
     {
@@ -499,7 +500,7 @@
       "description": "Checkbox",
       "category": "Other",
       "priority": "medium",
-      "entries": 0,
+      "entries": 726,
       "sourcePackage": "checkbox"
     },
     {
@@ -517,7 +518,7 @@
       "description": "Cinder",
       "category": "Other",
       "priority": "medium",
-      "entries": 0,
+      "entries": 2242,
       "sourcePackage": "cinder"
     },
     {
@@ -526,7 +527,7 @@
       "description": "Cluttergtk 1.0",
       "category": "Other",
       "priority": "medium",
-      "entries": 0,
+      "entries": 1,
       "sourcePackage": "clutter-gtk"
     },
     {
@@ -535,7 +536,7 @@
       "description": "Colord",
       "category": "Other",
       "priority": "medium",
-      "entries": 0,
+      "entries": 120,
       "sourcePackage": "colord"
     },
     {
@@ -544,7 +545,7 @@
       "description": "Command Not Found",
       "category": "Other",
       "priority": "medium",
-      "entries": 0,
+      "entries": 29,
       "sourcePackage": "command-not-found"
     },
     {
@@ -553,7 +554,7 @@
       "description": "Coreutils",
       "category": "System",
       "priority": "high",
-      "entries": 0,
+      "entries": 2292,
       "sourcePackage": "coreutils"
     },
     {
@@ -562,7 +563,7 @@
       "description": "Cpdb Libs",
       "category": "Library",
       "priority": "medium",
-      "entries": 0,
+      "entries": 78,
       "sourcePackage": "cpdb-libs"
     },
     {
@@ -571,7 +572,7 @@
       "description": "Cpio",
       "category": "Other",
       "priority": "medium",
-      "entries": 0,
+      "entries": 317,
       "sourcePackage": "cpio"
     },
     {
@@ -580,7 +581,7 @@
       "description": "Cracklib",
       "category": "Library",
       "priority": "medium",
-      "entries": 0,
+      "entries": 16,
       "sourcePackage": "cracklib2"
     },
     {
@@ -616,7 +617,7 @@
       "description": "Cryptsetup",
       "category": "System",
       "priority": "medium",
-      "entries": 0,
+      "entries": 920,
       "sourcePackage": "cryptsetup"
     },
     {
@@ -625,7 +626,7 @@
       "description": "Cryptsetup Luks",
       "category": "System",
       "priority": "medium",
-      "entries": 0,
+      "entries": 64,
       "sourcePackage": "cryptsetup"
     },
     {
@@ -634,7 +635,7 @@
       "description": "Luksformat",
       "category": "Other",
       "priority": "medium",
-      "entries": 0,
+      "entries": 10,
       "sourcePackage": "cryptsetup"
     },
     {
@@ -643,7 +644,7 @@
       "description": "Cups",
       "category": "Networking",
       "priority": "medium",
-      "entries": 0,
+      "entries": 4016,
       "sourcePackage": "cups"
     },
     {
@@ -652,7 +653,7 @@
       "description": "Cups Pk Helper",
       "category": "Networking",
       "priority": "medium",
-      "entries": 0,
+      "entries": 22,
       "sourcePackage": "cups-pk-helper"
     },
     {
@@ -661,7 +662,7 @@
       "description": "Cwidget",
       "category": "Other",
       "priority": "medium",
-      "entries": 0,
+      "entries": 14,
       "sourcePackage": "cwidget"
     },
     {
@@ -670,7 +671,7 @@
       "description": "Libcwidget3",
       "category": "Library",
       "priority": "medium",
-      "entries": 0,
+      "entries": 14,
       "sourcePackage": "cwidget"
     },
     {
@@ -679,7 +680,7 @@
       "description": "Dctrl Tools",
       "category": "Other",
       "priority": "medium",
-      "entries": 0,
+      "entries": 107,
       "sourcePackage": "dctrl-tools"
     },
     {
@@ -688,7 +689,7 @@
       "description": "Debconf",
       "category": "Other",
       "priority": "medium",
-      "entries": 0,
+      "entries": 77,
       "sourcePackage": "debconf"
     },
     {
@@ -697,7 +698,7 @@
       "description": "Debian Installer Help",
       "category": "Installer",
       "priority": "medium",
-      "entries": 0,
+      "entries": 177,
       "sourcePackage": "debian-installer"
     },
     {
@@ -706,7 +707,7 @@
       "description": "Debian Installer",
       "category": "Installer",
       "priority": "medium",
-      "entries": 0,
+      "entries": 1729,
       "sourcePackage": "debian-installer"
     },
     {
@@ -715,7 +716,7 @@
       "description": "Deja Dup",
       "category": "Ubuntu",
       "priority": "medium",
-      "entries": 0,
+      "entries": 343,
       "sourcePackage": "deja-dup"
     },
     {
@@ -724,7 +725,7 @@
       "description": "Devscripts",
       "category": "Development",
       "priority": "medium",
-      "entries": 0,
+      "entries": 4277,
       "sourcePackage": "devscripts"
     },
     {
@@ -733,7 +734,7 @@
       "description": "Diffutils",
       "category": "Other",
       "priority": "medium",
-      "entries": 0,
+      "entries": 265,
       "sourcePackage": "diffutils"
     },
     {
@@ -742,7 +743,7 @@
       "description": "Dnsmasq",
       "category": "Networking",
       "priority": "medium",
-      "entries": 0,
+      "entries": 309,
       "sourcePackage": "dnsmasq"
     },
     {
@@ -751,7 +752,7 @@
       "description": "Doc Base",
       "category": "Other",
       "priority": "medium",
-      "entries": 0,
+      "entries": 93,
       "sourcePackage": "doc-base"
     },
     {
@@ -760,7 +761,7 @@
       "description": "Dpkg",
       "category": "Package Management",
       "priority": "high",
-      "entries": 0,
+      "entries": 1209,
       "sourcePackage": "dpkg"
     },
     {
@@ -769,7 +770,7 @@
       "description": "Dpkg Dev",
       "category": "Package Management",
       "priority": "high",
-      "entries": 0,
+      "entries": 714,
       "sourcePackage": "dpkg"
     },
     {
@@ -778,7 +779,7 @@
       "description": "Dselect",
       "category": "Package Management",
       "priority": "medium",
-      "entries": 0,
+      "entries": 264,
       "sourcePackage": "dpkg"
     },
     {
@@ -787,7 +788,7 @@
       "description": "Dpkg Cross",
       "category": "Package Management",
       "priority": "high",
-      "entries": 0,
+      "entries": 64,
       "sourcePackage": "dpkg-cross"
     },
     {
@@ -796,7 +797,7 @@
       "description": "Duplicity",
       "category": "Other",
       "priority": "medium",
-      "entries": 0,
+      "entries": 327,
       "sourcePackage": "duplicity"
     },
     {
@@ -805,7 +806,7 @@
       "description": "E2Fsprogs",
       "category": "System",
       "priority": "medium",
-      "entries": 0,
+      "entries": 1682,
       "sourcePackage": "e2fsprogs"
     },
     {
@@ -814,7 +815,7 @@
       "description": "Ecryptfs Utils",
       "category": "Other",
       "priority": "medium",
-      "entries": 0,
+      "entries": 4,
       "sourcePackage": "ecryptfs-utils"
     },
     {
@@ -823,7 +824,7 @@
       "description": "Langpack Installer",
       "category": "Other",
       "priority": "medium",
-      "entries": 0,
+      "entries": 2,
       "sourcePackage": "edubuntu-live"
     },
     {
@@ -832,7 +833,7 @@
       "description": "Edubuntu Live",
       "category": "Ubuntu",
       "priority": "medium",
-      "entries": 0,
+      "entries": 15,
       "sourcePackage": "edubuntu-live"
     },
     {
@@ -850,7 +851,7 @@
       "description": "Eject",
       "category": "Other",
       "priority": "medium",
-      "entries": 0,
+      "entries": 78,
       "sourcePackage": "eject"
     },
     {
@@ -859,7 +860,7 @@
       "description": "Elfutils",
       "category": "Other",
       "priority": "medium",
-      "entries": 0,
+      "entries": 1397,
       "sourcePackage": "elfutils"
     },
     {
@@ -868,7 +869,7 @@
       "description": "Empathy",
       "category": "GNOME",
       "priority": "medium",
-      "entries": 0,
+      "entries": 767,
       "sourcePackage": "empathy"
     },
     {
@@ -877,7 +878,7 @@
       "description": "Empathy Tpaw",
       "category": "GNOME",
       "priority": "medium",
-      "entries": 0,
+      "entries": 182,
       "sourcePackage": "empathy"
     },
     {
@@ -886,7 +887,7 @@
       "description": "Epiphany",
       "category": "GNOME",
       "priority": "medium",
-      "entries": 0,
+      "entries": 716,
       "sourcePackage": "epiphany-browser"
     },
     {
@@ -895,7 +896,7 @@
       "description": "Evolution Data Server",
       "category": "GNOME",
       "priority": "medium",
-      "entries": 0,
+      "entries": 1756,
       "sourcePackage": "evolution-data-server"
     },
     {
@@ -904,7 +905,7 @@
       "description": "Evolution Indicator",
       "category": "GNOME",
       "priority": "medium",
-      "entries": 0,
+      "entries": 18,
       "sourcePackage": "evolution-indicator"
     },
     {
@@ -913,7 +914,7 @@
       "description": "Example Content",
       "category": "Other",
       "priority": "medium",
-      "entries": 0,
+      "entries": 2,
       "sourcePackage": "example-content"
     },
     {
@@ -922,7 +923,7 @@
       "description": "Exiv2",
       "category": "Other",
       "priority": "medium",
-      "entries": 0,
+      "entries": 7380,
       "sourcePackage": "exiv2"
     },
     {
@@ -931,7 +932,7 @@
       "description": "Fakeroot",
       "category": "Other",
       "priority": "medium",
-      "entries": 0,
+      "entries": 95,
       "sourcePackage": "fakeroot"
     },
     {
@@ -940,7 +941,7 @@
       "description": "Fetchmail",
       "category": "Other",
       "priority": "medium",
-      "entries": 0,
+      "entries": 772,
       "sourcePackage": "fetchmail"
     },
     {
@@ -949,7 +950,7 @@
       "description": "File Roller",
       "category": "GNOME",
       "priority": "medium",
-      "entries": 0,
+      "entries": 300,
       "sourcePackage": "file-roller"
     },
     {
@@ -958,7 +959,7 @@
       "description": "Findutils",
       "category": "System",
       "priority": "medium",
-      "entries": 0,
+      "entries": 255,
       "sourcePackage": "findutils"
     },
     {
@@ -967,7 +968,7 @@
       "description": "Flex",
       "category": "Development",
       "priority": "medium",
-      "entries": 0,
+      "entries": 169,
       "sourcePackage": "flex"
     },
     {
@@ -976,7 +977,7 @@
       "description": "Fontconfig",
       "category": "Other",
       "priority": "medium",
-      "entries": 0,
+      "entries": 112,
       "sourcePackage": "fontconfig"
     },
     {
@@ -985,7 +986,7 @@
       "description": "Fontconfig Conf",
       "category": "Other",
       "priority": "medium",
-      "entries": 0,
+      "entries": 33,
       "sourcePackage": "fontconfig"
     },
     {
@@ -994,7 +995,7 @@
       "description": "Fontforge",
       "category": "Other",
       "priority": "medium",
-      "entries": 0,
+      "entries": 7005,
       "sourcePackage": "fontforge"
     },
     {
@@ -1012,7 +1013,7 @@
       "description": "Fprintd",
       "category": "Other",
       "priority": "medium",
-      "entries": 0,
+      "entries": 67,
       "sourcePackage": "fprintd"
     },
     {
@@ -1021,7 +1022,7 @@
       "description": "Friendly Recovery",
       "category": "Ubuntu",
       "priority": "medium",
-      "entries": 0,
+      "entries": 46,
       "sourcePackage": "friendly-recovery"
     },
     {
@@ -1030,7 +1031,7 @@
       "description": "Fwupd",
       "category": "System",
       "priority": "medium",
-      "entries": 0,
+      "entries": 902,
       "sourcePackage": "fwupd"
     },
     {
@@ -1039,7 +1040,7 @@
       "description": "Gawk",
       "category": "Other",
       "priority": "medium",
-      "entries": 0,
+      "entries": 779,
       "sourcePackage": "gawk"
     },
     {
@@ -1048,7 +1049,7 @@
       "description": "Gcab",
       "category": "Other",
       "priority": "medium",
-      "entries": 0,
+      "entries": 35,
       "sourcePackage": "gcab"
     },
     {
@@ -1219,7 +1220,7 @@
       "description": "Gcr",
       "category": "GNOME",
       "priority": "medium",
-      "entries": 0,
+      "entries": 276,
       "sourcePackage": "gcr"
     },
     {
@@ -1228,7 +1229,7 @@
       "description": "Gcr 4",
       "category": "GNOME",
       "priority": "medium",
-      "entries": 0,
+      "entries": 189,
       "sourcePackage": "gcr4"
     },
     {
@@ -1246,7 +1247,7 @@
       "description": "Gdb",
       "category": "Development",
       "priority": "low",
-      "entries": 0,
+      "entries": 7884,
       "sourcePackage": "gdb"
     },
     {
@@ -1264,7 +1265,7 @@
       "description": "Gdbm",
       "category": "Development",
       "priority": "low",
-      "entries": 0,
+      "entries": 307,
       "sourcePackage": "gdbm"
     },
     {
@@ -1273,7 +1274,7 @@
       "description": "Gdk Pixbuf",
       "category": "GNOME",
       "priority": "medium",
-      "entries": 0,
+      "entries": 198,
       "sourcePackage": "gdk-pixbuf"
     },
     {
@@ -1291,7 +1292,7 @@
       "description": "Gdm",
       "category": "GNOME",
       "priority": "high",
-      "entries": 0,
+      "entries": 126,
       "sourcePackage": "gdm3"
     },
     {
@@ -1300,7 +1301,7 @@
       "description": "Geary",
       "category": "Other",
       "priority": "medium",
-      "entries": 0,
+      "entries": 663,
       "sourcePackage": "geary"
     },
     {
@@ -1309,7 +1310,7 @@
       "description": "Geoclue",
       "category": "Other",
       "priority": "medium",
-      "entries": 0,
+      "entries": 21,
       "sourcePackage": "geoclue-2.0"
     },
     {
@@ -1318,7 +1319,7 @@
       "description": "Geocode Glib",
       "category": "Library",
       "priority": "medium",
-      "entries": 0,
+      "entries": 1,
       "sourcePackage": "geocode-glib"
     },
     {
@@ -1327,7 +1328,7 @@
       "description": "Gettext Runtime",
       "category": "Other",
       "priority": "medium",
-      "entries": 0,
+      "entries": 72,
       "sourcePackage": "gettext"
     },
     {
@@ -1336,7 +1337,7 @@
       "description": "Gettext Tools",
       "category": "Other",
       "priority": "medium",
-      "entries": 0,
+      "entries": 808,
       "sourcePackage": "gettext"
     },
     {
@@ -1363,7 +1364,7 @@
       "description": "Gimp20",
       "category": "Other",
       "priority": "medium",
-      "entries": 0,
+      "entries": 5667,
       "sourcePackage": "gimp"
     },
     {
@@ -1372,7 +1373,7 @@
       "description": "Gimp20 Libgimp",
       "category": "Other",
       "priority": "medium",
-      "entries": 0,
+      "entries": 617,
       "sourcePackage": "gimp"
     },
     {
@@ -1381,7 +1382,7 @@
       "description": "Gimp20 Python",
       "category": "Other",
       "priority": "medium",
-      "entries": 0,
+      "entries": 180,
       "sourcePackage": "gimp"
     },
     {
@@ -1390,7 +1391,7 @@
       "description": "Gimp20 Script Fu",
       "category": "Other",
       "priority": "medium",
-      "entries": 0,
+      "entries": 390,
       "sourcePackage": "gimp"
     },
     {
@@ -1399,7 +1400,7 @@
       "description": "Gimp20 Std Plug Ins",
       "category": "Other",
       "priority": "medium",
-      "entries": 0,
+      "entries": 2795,
       "sourcePackage": "gimp"
     },
     {
@@ -1408,7 +1409,7 @@
       "description": "Gimp20 Tips",
       "category": "Other",
       "priority": "medium",
-      "entries": 0,
+      "entries": 28,
       "sourcePackage": "gimp"
     },
     {
@@ -1417,7 +1418,7 @@
       "description": "Git",
       "category": "Development",
       "priority": "medium",
-      "entries": 0,
+      "entries": 5282,
       "sourcePackage": "git"
     },
     {
@@ -1426,7 +1427,7 @@
       "description": "Git Gui Glossary",
       "category": "Development",
       "priority": "medium",
-      "entries": 0,
+      "entries": 96,
       "sourcePackage": "git"
     },
     {
@@ -1435,7 +1436,7 @@
       "description": "Git Gui",
       "category": "Development",
       "priority": "medium",
-      "entries": 0,
+      "entries": 579,
       "sourcePackage": "git"
     },
     {
@@ -1444,7 +1445,7 @@
       "description": "Glade",
       "category": "Other",
       "priority": "medium",
-      "entries": 0,
+      "entries": 12,
       "sourcePackage": "gtksourceview3"
     },
     {
@@ -1453,7 +1454,7 @@
       "description": "Glance",
       "category": "Other",
       "priority": "medium",
-      "entries": 0,
+      "entries": 695,
       "sourcePackage": "glance"
     },
     {
@@ -1462,7 +1463,7 @@
       "description": "Glib Networking",
       "category": "GNOME",
       "priority": "medium",
-      "entries": 0,
+      "entries": 68,
       "sourcePackage": "glib-networking"
     },
     {
@@ -1471,7 +1472,7 @@
       "description": "Glib20",
       "category": "Library",
       "priority": "medium",
-      "entries": 0,
+      "entries": 1271,
       "sourcePackage": "glib2.0"
     },
     {
@@ -1480,7 +1481,7 @@
       "description": "Libc",
       "category": "Other",
       "priority": "medium",
-      "entries": 0,
+      "entries": 1475,
       "sourcePackage": "glibc"
     },
     {
@@ -1498,7 +1499,7 @@
       "description": "Gnome Bluetooth2",
       "category": "GNOME",
       "priority": "medium",
-      "entries": 0,
+      "entries": 110,
       "sourcePackage": "gnome-bluetooth"
     },
     {
@@ -1516,7 +1517,7 @@
       "description": "Gnome Calculator",
       "category": "GNOME",
       "priority": "high",
-      "entries": 0,
+      "entries": 786,
       "sourcePackage": "gnome-calculator"
     },
     {
@@ -1525,7 +1526,7 @@
       "description": "Gnome Calendar",
       "category": "GNOME",
       "priority": "high",
-      "entries": 0,
+      "entries": 343,
       "sourcePackage": "gnome-calendar"
     },
     {
@@ -1534,7 +1535,7 @@
       "description": "Org.Gnome.Characters",
       "category": "GNOME",
       "priority": "medium",
-      "entries": 0,
+      "entries": 56,
       "sourcePackage": "gnome-characters"
     },
     {
@@ -1543,7 +1544,7 @@
       "description": "Gnome Clocks",
       "category": "GNOME",
       "priority": "high",
-      "entries": 0,
+      "entries": 187,
       "sourcePackage": "gnome-clocks"
     },
     {
@@ -1552,7 +1553,7 @@
       "description": "Gnome Color Manager",
       "category": "GNOME",
       "priority": "high",
-      "entries": 0,
+      "entries": 168,
       "sourcePackage": "gnome-color-manager"
     },
     {
@@ -1561,7 +1562,7 @@
       "description": "Kgx",
       "category": "GNOME",
       "priority": "medium",
-      "entries": 0,
+      "entries": 95,
       "sourcePackage": "gnome-console"
     },
     {
@@ -1570,7 +1571,7 @@
       "description": "Gnome Contacts",
       "category": "GNOME",
       "priority": "high",
-      "entries": 0,
+      "entries": 215,
       "sourcePackage": "gnome-contacts"
     },
     {
@@ -1579,7 +1580,7 @@
       "description": "Gnome Control Center 2.0",
       "category": "GNOME",
       "priority": "high",
-      "entries": 0,
+      "entries": 2249,
       "sourcePackage": "gnome-control-center"
     },
     {
@@ -1588,7 +1589,7 @@
       "description": "Gnome Desktop 3.0",
       "category": "GNOME",
       "priority": "high",
-      "entries": 0,
+      "entries": 31,
       "sourcePackage": "gnome-desktop"
     },
     {
@@ -1597,7 +1598,7 @@
       "description": "Gnome Dictionary",
       "category": "GNOME",
       "priority": "high",
-      "entries": 0,
+      "entries": 160,
       "sourcePackage": "gnome-dictionary"
     },
     {
@@ -1606,7 +1607,7 @@
       "description": "Gnome Disk Utility",
       "category": "GNOME",
       "priority": "high",
-      "entries": 0,
+      "entries": 753,
       "sourcePackage": "gnome-disk-utility"
     },
     {
@@ -1615,7 +1616,7 @@
       "description": "Gnome Font Viewer",
       "category": "GNOME",
       "priority": "high",
-      "entries": 0,
+      "entries": 206,
       "sourcePackage": "gnome-font-viewer"
     },
     {
@@ -1624,7 +1625,7 @@
       "description": "Gnome Games",
       "category": "GNOME",
       "priority": "high",
-      "entries": 0,
+      "entries": 244,
       "sourcePackage": "gnome-games-app"
     },
     {
@@ -1633,7 +1634,7 @@
       "description": "Gnome Icon Theme",
       "category": "GNOME",
       "priority": "high",
-      "entries": 0,
+      "entries": 2,
       "sourcePackage": "gnome-icon-theme"
     },
     {
@@ -1642,7 +1643,7 @@
       "description": "Gnome Initial Setup",
       "category": "GNOME",
       "priority": "high",
-      "entries": 0,
+      "entries": 238,
       "sourcePackage": "gnome-initial-setup"
     },
     {
@@ -1651,7 +1652,7 @@
       "description": "Gnome Keyring",
       "category": "GNOME",
       "priority": "high",
-      "entries": 0,
+      "entries": 99,
       "sourcePackage": "gnome-keyring"
     },
     {
@@ -1660,7 +1661,7 @@
       "description": "Gnome Logs",
       "category": "GNOME",
       "priority": "high",
-      "entries": 0,
+      "entries": 127,
       "sourcePackage": "gnome-logs"
     },
     {
@@ -1669,7 +1670,7 @@
       "description": "Gnome Menus",
       "category": "GNOME",
       "priority": "high",
-      "entries": 0,
+      "entries": 38,
       "sourcePackage": "gnome-menus"
     },
     {
@@ -1678,7 +1679,7 @@
       "description": "Gnome Online Accounts",
       "category": "GNOME",
       "priority": "high",
-      "entries": 0,
+      "entries": 161,
       "sourcePackage": "gnome-online-accounts"
     },
     {
@@ -1687,7 +1688,7 @@
       "description": "Gnome Photos",
       "category": "GNOME",
       "priority": "high",
-      "entries": 0,
+      "entries": 220,
       "sourcePackage": "gnome-photos"
     },
     {
@@ -1696,7 +1697,7 @@
       "description": "Gnome Remote Desktop",
       "category": "GNOME",
       "priority": "high",
-      "entries": 0,
+      "entries": 50,
       "sourcePackage": "gnome-remote-desktop"
     },
     {
@@ -1705,7 +1706,7 @@
       "description": "Gnome Screenshot",
       "category": "GNOME",
       "priority": "high",
-      "entries": 0,
+      "entries": 77,
       "sourcePackage": "gnome-screenshot"
     },
     {
@@ -1714,7 +1715,7 @@
       "description": "Gnome Session",
       "category": "GNOME",
       "priority": "high",
-      "entries": 0,
+      "entries": 45,
       "sourcePackage": "gnome-session"
     },
     {
@@ -1723,7 +1724,7 @@
       "description": "Gnome Settings Daemon",
       "category": "GNOME",
       "priority": "high",
-      "entries": 0,
+      "entries": 544,
       "sourcePackage": "gnome-settings-daemon"
     },
     {
@@ -1732,7 +1733,7 @@
       "description": "Gnome Shell",
       "category": "GNOME",
       "priority": "high",
-      "entries": 0,
+      "entries": 740,
       "sourcePackage": "gnome-shell"
     },
     {
@@ -1741,7 +1742,7 @@
       "description": "Extension Manager",
       "category": "GNOME",
       "priority": "medium",
-      "entries": 0,
+      "entries": 83,
       "sourcePackage": "gnome-shell-extension-manager"
     },
     {
@@ -1750,7 +1751,7 @@
       "description": "Appindicatorextension",
       "category": "GNOME",
       "priority": "medium",
-      "entries": 0,
+      "entries": 29,
       "sourcePackage": "gnome-shell-ubuntu-extensions"
     },
     {
@@ -1759,7 +1760,7 @@
       "description": "Dashtodock",
       "category": "GNOME",
       "priority": "medium",
-      "entries": 0,
+      "entries": 166,
       "sourcePackage": "gnome-shell-ubuntu-extensions"
     },
     {
@@ -1768,7 +1769,7 @@
       "description": "Ding",
       "category": "GNOME",
       "priority": "medium",
-      "entries": 0,
+      "entries": 200,
       "sourcePackage": "gnome-shell-ubuntu-extensions"
     },
     {
@@ -1777,7 +1778,7 @@
       "description": "Tiling Assistantleleat On Github",
       "category": "GNOME",
       "priority": "medium",
-      "entries": 0,
+      "entries": 10,
       "sourcePackage": "gnome-shell-ubuntu-extensions"
     },
     {
@@ -1786,7 +1787,7 @@
       "description": "Websearchprovidershellextension",
       "category": "GNOME",
       "priority": "medium",
-      "entries": 0,
+      "entries": 2,
       "sourcePackage": "gnome-shell-ubuntu-extensions"
     },
     {
@@ -1795,7 +1796,7 @@
       "description": "Gnome Sound Recorder",
       "category": "GNOME",
       "priority": "high",
-      "entries": 0,
+      "entries": 74,
       "sourcePackage": "gnome-sound-recorder"
     },
     {
@@ -1804,7 +1805,7 @@
       "description": "Org.Gnome.Soundrecorder",
       "category": "GNOME",
       "priority": "medium",
-      "entries": 0,
+      "entries": 92,
       "sourcePackage": "gnome-sound-recorder"
     },
     {
@@ -1813,7 +1814,7 @@
       "description": "Sushi",
       "category": "GNOME",
       "priority": "medium",
-      "entries": 0,
+      "entries": 14,
       "sourcePackage": "gnome-sushi"
     },
     {
@@ -1822,7 +1823,7 @@
       "description": "Gnome System Log",
       "category": "GNOME",
       "priority": "high",
-      "entries": 0,
+      "entries": 76,
       "sourcePackage": "gnome-system-log"
     },
     {
@@ -1831,7 +1832,7 @@
       "description": "Gnome Terminal",
       "category": "GNOME",
       "priority": "high",
-      "entries": 0,
+      "entries": 541,
       "sourcePackage": "gnome-terminal"
     },
     {
@@ -1840,7 +1841,7 @@
       "description": "Gnome Text Editor",
       "category": "GNOME",
       "priority": "high",
-      "entries": 0,
+      "entries": 288,
       "sourcePackage": "gnome-text-editor"
     },
     {
@@ -1849,7 +1850,7 @@
       "description": "Gnome Themes Extra",
       "category": "GNOME",
       "priority": "high",
-      "entries": 0,
+      "entries": 6,
       "sourcePackage": "gnome-themes-extra"
     },
     {
@@ -1858,7 +1859,7 @@
       "description": "Gnome Themes Standard",
       "category": "GNOME",
       "priority": "high",
-      "entries": 0,
+      "entries": 6,
       "sourcePackage": "gnome-themes-standard"
     },
     {
@@ -1867,7 +1868,7 @@
       "description": "Gnome Todo",
       "category": "GNOME",
       "priority": "high",
-      "entries": 0,
+      "entries": 158,
       "sourcePackage": "gnome-todo"
     },
     {
@@ -1876,7 +1877,7 @@
       "description": "Gnome Video Effects",
       "category": "GNOME",
       "priority": "high",
-      "entries": 0,
+      "entries": 68,
       "sourcePackage": "gnome-video-effects"
     },
     {
@@ -1885,7 +1886,7 @@
       "description": "Gnupg",
       "category": "Other",
       "priority": "medium",
-      "entries": 0,
+      "entries": 1297,
       "sourcePackage": "gnupg"
     },
     {
@@ -1894,7 +1895,7 @@
       "description": "Gnupg2",
       "category": "Other",
       "priority": "medium",
-      "entries": 0,
+      "entries": 2219,
       "sourcePackage": "gnupg2"
     },
     {
@@ -1903,7 +1904,7 @@
       "description": "Libgnutls",
       "category": "Library",
       "priority": "medium",
-      "entries": 0,
+      "entries": 280,
       "sourcePackage": "gnutls26"
     },
     {
@@ -1912,7 +1913,7 @@
       "description": "Gnutls28",
       "category": "Other",
       "priority": "medium",
-      "entries": 0,
+      "entries": 425,
       "sourcePackage": "gnutls28"
     },
     {
@@ -1921,7 +1922,7 @@
       "description": "Gnutls30",
       "category": "Other",
       "priority": "medium",
-      "entries": 0,
+      "entries": 425,
       "sourcePackage": "gnutls28"
     },
     {
@@ -1930,7 +1931,7 @@
       "description": "Gparted",
       "category": "Other",
       "priority": "medium",
-      "entries": 0,
+      "entries": 513,
       "sourcePackage": "gparted"
     },
     {
@@ -1939,7 +1940,7 @@
       "description": "Grep",
       "category": "System",
       "priority": "medium",
-      "entries": 0,
+      "entries": 115,
       "sourcePackage": "grep"
     },
     {
@@ -1948,7 +1949,7 @@
       "description": "Grilo",
       "category": "GNOME",
       "priority": "medium",
-      "entries": 0,
+      "entries": 36,
       "sourcePackage": "grilo"
     },
     {
@@ -1957,7 +1958,7 @@
       "description": "Grub",
       "category": "System",
       "priority": "high",
-      "entries": 0,
+      "entries": 1481,
       "sourcePackage": "grub2-unsigned"
     },
     {
@@ -1975,7 +1976,7 @@
       "description": "Gsasl",
       "category": "Other",
       "priority": "medium",
-      "entries": 0,
+      "entries": 103,
       "sourcePackage": "gsasl"
     },
     {
@@ -1984,7 +1985,7 @@
       "description": "Gsettings Desktop Schemas",
       "category": "GNOME",
       "priority": "medium",
-      "entries": 0,
+      "entries": 693,
       "sourcePackage": "gsettings-desktop-schemas"
     },
     {
@@ -1993,7 +1994,7 @@
       "description": "Gsettings Ubuntu Touch Schemas",
       "category": "GNOME",
       "priority": "medium",
-      "entries": 0,
+      "entries": 51,
       "sourcePackage": "gsettings-ubuntu-touch-schemas"
     },
     {
@@ -2002,7 +2003,7 @@
       "description": "Gspell 1",
       "category": "GNOME",
       "priority": "medium",
-      "entries": 0,
+      "entries": 31,
       "sourcePackage": "gspell"
     },
     {
@@ -2011,7 +2012,7 @@
       "description": "Gst Plugins Bad 1.0",
       "category": "Multimedia",
       "priority": "medium",
-      "entries": 0,
+      "entries": 29,
       "sourcePackage": "gst-plugins-bad1.0"
     },
     {
@@ -2020,7 +2021,7 @@
       "description": "Gst Plugins Base",
       "category": "Multimedia",
       "priority": "medium",
-      "entries": 0,
+      "entries": 237,
       "sourcePackage": "gst-plugins-base1.0"
     },
     {
@@ -2029,7 +2030,7 @@
       "description": "Gst Plugins Base 1.0",
       "category": "Multimedia",
       "priority": "medium",
-      "entries": 0,
+      "entries": 237,
       "sourcePackage": "gst-plugins-base1.0"
     },
     {
@@ -2038,7 +2039,7 @@
       "description": "Gst Plugins Good",
       "category": "Multimedia",
       "priority": "medium",
-      "entries": 0,
+      "entries": 104,
       "sourcePackage": "gst-plugins-good1.0"
     },
     {
@@ -2047,7 +2048,7 @@
       "description": "Gst Plugins Good 1.0",
       "category": "Multimedia",
       "priority": "medium",
-      "entries": 0,
+      "entries": 104,
       "sourcePackage": "gst-plugins-good1.0"
     },
     {
@@ -2056,7 +2057,7 @@
       "description": "Gstreamer",
       "category": "Multimedia",
       "priority": "medium",
-      "entries": 0,
+      "entries": 397,
       "sourcePackage": "gstreamer1.0"
     },
     {
@@ -2065,7 +2066,7 @@
       "description": "Gstreamer 1.0",
       "category": "Multimedia",
       "priority": "medium",
-      "entries": 0,
+      "entries": 397,
       "sourcePackage": "gstreamer1.0"
     },
     {
@@ -2074,7 +2075,7 @@
       "description": "Gtk",
       "category": "Other",
       "priority": "medium",
-      "entries": 0,
+      "entries": 862,
       "sourcePackage": "gtk+2.0"
     },
     {
@@ -2083,7 +2084,7 @@
       "description": "Gtk Properties",
       "category": "Other",
       "priority": "medium",
-      "entries": 0,
+      "entries": 1729,
       "sourcePackage": "gtk+2.0"
     },
     {
@@ -2092,7 +2093,7 @@
       "description": "Gtk 3.0",
       "category": "Other",
       "priority": "medium",
-      "entries": 0,
+      "entries": 1694,
       "sourcePackage": "gtk+3.0"
     },
     {
@@ -2101,7 +2102,7 @@
       "description": "Gtk 3.0 Properties",
       "category": "Other",
       "priority": "medium",
-      "entries": 0,
+      "entries": 2242,
       "sourcePackage": "gtk+3.0"
     },
     {
@@ -2110,7 +2111,7 @@
       "description": "Gtk40",
       "category": "Other",
       "priority": "medium",
-      "entries": 0,
+      "entries": 1007,
       "sourcePackage": "gtk4"
     },
     {
@@ -2119,7 +2120,7 @@
       "description": "Gtk40 Properties",
       "category": "Other",
       "priority": "medium",
-      "entries": 0,
+      "entries": 1859,
       "sourcePackage": "gtk4"
     },
     {
@@ -2155,7 +2156,7 @@
       "description": "Gtksourceview",
       "category": "Other",
       "priority": "medium",
-      "entries": 0,
+      "entries": 106,
       "sourcePackage": "gtksourceview3"
     },
     {
@@ -2164,7 +2165,7 @@
       "description": "Gtksourceview 4",
       "category": "Other",
       "priority": "medium",
-      "entries": 0,
+      "entries": 94,
       "sourcePackage": "gtksourceview4"
     },
     {
@@ -2182,7 +2183,7 @@
       "description": "Gtksourceview 5",
       "category": "Other",
       "priority": "medium",
-      "entries": 0,
+      "entries": 112,
       "sourcePackage": "gtksourceview5"
     },
     {
@@ -2200,7 +2201,7 @@
       "description": "Gutenprint",
       "category": "Other",
       "priority": "medium",
-      "entries": 0,
+      "entries": 4864,
       "sourcePackage": "gutenprint"
     },
     {
@@ -2209,7 +2210,7 @@
       "description": "Gvfs",
       "category": "GNOME",
       "priority": "medium",
-      "entries": 0,
+      "entries": 419,
       "sourcePackage": "gvfs"
     },
     {
@@ -2218,7 +2219,7 @@
       "description": "Heimdal Krb5",
       "category": "Other",
       "priority": "medium",
-      "entries": 0,
+      "entries": 307,
       "sourcePackage": "heimdal"
     },
     {
@@ -2227,7 +2228,7 @@
       "description": "Hello",
       "category": "Other",
       "priority": "medium",
-      "entries": 0,
+      "entries": 46,
       "sourcePackage": "hello"
     },
     {
@@ -2236,7 +2237,7 @@
       "description": "Hello Debhelper",
       "category": "Other",
       "priority": "low",
-      "entries": 0,
+      "entries": 31,
       "sourcePackage": "hello-debhelper"
     },
     {
@@ -2245,7 +2246,7 @@
       "description": "Help2Man",
       "category": "Other",
       "priority": "medium",
-      "entries": 0,
+      "entries": 49,
       "sourcePackage": "help2man"
     },
     {
@@ -2254,7 +2255,7 @@
       "description": "Hunspell",
       "category": "Other",
       "priority": "medium",
-      "entries": 0,
+      "entries": 79,
       "sourcePackage": "hunspell"
     },
     {
@@ -2263,7 +2264,7 @@
       "description": "Ibus10",
       "category": "Other",
       "priority": "medium",
-      "entries": 0,
+      "entries": 629,
       "sourcePackage": "ibus"
     },
     {
@@ -2272,7 +2273,7 @@
       "description": "Ibus Chewing",
       "category": "Other",
       "priority": "medium",
-      "entries": 0,
+      "entries": 73,
       "sourcePackage": "ibus-chewing"
     },
     {
@@ -2281,7 +2282,7 @@
       "description": "Ibus Hangul",
       "category": "Other",
       "priority": "medium",
-      "entries": 0,
+      "entries": 30,
       "sourcePackage": "ibus-hangul"
     },
     {
@@ -2290,7 +2291,7 @@
       "description": "Ibus Libpinyin",
       "category": "Other",
       "priority": "medium",
-      "entries": 0,
+      "entries": 178,
       "sourcePackage": "ibus-libpinyin"
     },
     {
@@ -2299,7 +2300,7 @@
       "description": "Ibus M17N",
       "category": "Other",
       "priority": "medium",
-      "entries": 0,
+      "entries": 25,
       "sourcePackage": "ibus-m17n"
     },
     {
@@ -2308,7 +2309,7 @@
       "description": "Ibus Table",
       "category": "Other",
       "priority": "medium",
-      "entries": 0,
+      "entries": 153,
       "sourcePackage": "ibus-table"
     },
     {
@@ -2317,7 +2318,7 @@
       "description": "Ibus Unikey",
       "category": "Other",
       "priority": "medium",
-      "entries": 0,
+      "entries": 39,
       "sourcePackage": "ibus-unikey"
     },
     {
@@ -2326,7 +2327,7 @@
       "description": "Im Config",
       "category": "Other",
       "priority": "medium",
-      "entries": 0,
+      "entries": 40,
       "sourcePackage": "im-config"
     },
     {
@@ -2335,7 +2336,7 @@
       "description": "Indent",
       "category": "Other",
       "priority": "medium",
-      "entries": 0,
+      "entries": 52,
       "sourcePackage": "indent"
     },
     {
@@ -2344,7 +2345,7 @@
       "description": "Indicator Appmenu",
       "category": "Unity",
       "priority": "medium",
-      "entries": 0,
+      "entries": 3,
       "sourcePackage": "indicator-appmenu"
     },
     {
@@ -2353,7 +2354,7 @@
       "description": "Indicator Bluetooth",
       "category": "Unity",
       "priority": "medium",
-      "entries": 0,
+      "entries": 11,
       "sourcePackage": "indicator-bluetooth"
     },
     {
@@ -2362,7 +2363,7 @@
       "description": "Indicator Datetime",
       "category": "Unity",
       "priority": "medium",
-      "entries": 0,
+      "entries": 13,
       "sourcePackage": "indicator-datetime"
     },
     {
@@ -2371,7 +2372,7 @@
       "description": "Indicator Keyboard",
       "category": "Unity",
       "priority": "medium",
-      "entries": 0,
+      "entries": 7,
       "sourcePackage": "indicator-keyboard"
     },
     {
@@ -2380,7 +2381,7 @@
       "description": "Indicator Messages",
       "category": "Unity",
       "priority": "medium",
-      "entries": 0,
+      "entries": 10,
       "sourcePackage": "indicator-messages"
     },
     {
@@ -2389,7 +2390,7 @@
       "description": "Indicator Power",
       "category": "Unity",
       "priority": "medium",
-      "entries": 0,
+      "entries": 37,
       "sourcePackage": "indicator-power"
     },
     {
@@ -2398,7 +2399,7 @@
       "description": "Indicator Printers",
       "category": "Unity",
       "priority": "medium",
-      "entries": 0,
+      "entries": 13,
       "sourcePackage": "indicator-printers"
     },
     {
@@ -2407,7 +2408,7 @@
       "description": "Indicator Session",
       "category": "Unity",
       "priority": "medium",
-      "entries": 0,
+      "entries": 29,
       "sourcePackage": "indicator-session"
     },
     {
@@ -2416,7 +2417,7 @@
       "description": "Indicator Sound",
       "category": "Unity",
       "priority": "medium",
-      "entries": 0,
+      "entries": 27,
       "sourcePackage": "indicator-sound"
     },
     {
@@ -2425,7 +2426,7 @@
       "description": "Iputils",
       "category": "Other",
       "priority": "medium",
-      "entries": 0,
+      "entries": 251,
       "sourcePackage": "iputils"
     },
     {
@@ -2434,7 +2435,7 @@
       "description": "Isoquery",
       "category": "Other",
       "priority": "medium",
-      "entries": 0,
+      "entries": 20,
       "sourcePackage": "isoquery"
     },
     {
@@ -2443,7 +2444,7 @@
       "description": "Json Glib",
       "category": "Library",
       "priority": "medium",
-      "entries": 0,
+      "entries": 48,
       "sourcePackage": "json-glib"
     },
     {
@@ -2452,7 +2453,7 @@
       "description": "Kbd",
       "category": "Other",
       "priority": "medium",
-      "entries": 0,
+      "entries": 358,
       "sourcePackage": "kbd"
     },
     {
@@ -2461,7 +2462,7 @@
       "description": "Desktop Kde Config Whoopsie",
       "category": "KDE",
       "priority": "medium",
-      "entries": 0,
+      "entries": 3,
       "sourcePackage": "kde-config-whoopsie"
     },
     {
@@ -2470,7 +2471,7 @@
       "description": "Kcm Whoopsie",
       "category": "KDE",
       "priority": "medium",
-      "entries": 0,
+      "entries": 13,
       "sourcePackage": "kde-config-whoopsie"
     },
     {
@@ -2479,7 +2480,7 @@
       "description": "Kdesudo",
       "category": "KDE",
       "priority": "high",
-      "entries": 0,
+      "entries": 39,
       "sourcePackage": "kdesudo"
     },
     {
@@ -2488,7 +2489,7 @@
       "description": "Kerneloops",
       "category": "Other",
       "priority": "medium",
-      "entries": 0,
+      "entries": 11,
       "sourcePackage": "kerneloops"
     },
     {
@@ -2497,7 +2498,7 @@
       "description": "Keystone",
       "category": "Other",
       "priority": "medium",
-      "entries": 0,
+      "entries": 323,
       "sourcePackage": "keystone"
     },
     {
@@ -2506,7 +2507,7 @@
       "description": "Mit Krb5",
       "category": "Other",
       "priority": "medium",
-      "entries": 0,
+      "entries": 1942,
       "sourcePackage": "krb5"
     },
     {
@@ -2515,7 +2516,7 @@
       "description": "Kubuntu Debug Installer",
       "category": "KDE",
       "priority": "medium",
-      "entries": 0,
+      "entries": 14,
       "sourcePackage": "kubuntu-debug-installer"
     },
     {
@@ -2524,7 +2525,7 @@
       "description": "Desktop Kubuntu Driver Manager",
       "category": "KDE",
       "priority": "medium",
-      "entries": 0,
+      "entries": 3,
       "sourcePackage": "kubuntu-driver-manager"
     },
     {
@@ -2533,7 +2534,7 @@
       "description": "Kcm Driver Manager",
       "category": "KDE",
       "priority": "medium",
-      "entries": 0,
+      "entries": 38,
       "sourcePackage": "kubuntu-driver-manager"
     },
     {
@@ -2542,7 +2543,7 @@
       "description": "Desktop Kubuntu Notification Helper",
       "category": "KDE",
       "priority": "medium",
-      "entries": 0,
+      "entries": 17,
       "sourcePackage": "kubuntu-notification-helper"
     },
     {
@@ -2551,7 +2552,7 @@
       "description": "Kcm Notificationhelper",
       "category": "KDE",
       "priority": "medium",
-      "entries": 0,
+      "entries": 16,
       "sourcePackage": "kubuntu-notification-helper"
     },
     {
@@ -2560,7 +2561,7 @@
       "description": "Notificationhelper",
       "category": "Other",
       "priority": "medium",
-      "entries": 0,
+      "entries": 25,
       "sourcePackage": "kubuntu-notification-helper"
     },
     {
@@ -2569,7 +2570,7 @@
       "description": "Kubuntu Patched L10N",
       "category": "KDE",
       "priority": "medium",
-      "entries": 0,
+      "entries": 39,
       "sourcePackage": "kubuntu-patched-l10n"
     },
     {
@@ -2578,7 +2579,7 @@
       "description": "Desktop Kubuntu Web Shortcuts",
       "category": "KDE",
       "priority": "medium",
-      "entries": 0,
+      "entries": 36,
       "sourcePackage": "kubuntu-web-shortcuts"
     },
     {
@@ -2587,7 +2588,7 @@
       "description": "Landscape Client",
       "category": "Other",
       "priority": "medium",
-      "entries": 0,
+      "entries": 34,
       "sourcePackage": "landscape-client"
     },
     {
@@ -2596,7 +2597,7 @@
       "description": "Language Selector",
       "category": "Ubuntu",
       "priority": "high",
-      "entries": 0,
+      "entries": 58,
       "sourcePackage": "language-selector"
     },
     {
@@ -2605,7 +2606,7 @@
       "description": "Ldm",
       "category": "Other",
       "priority": "medium",
-      "entries": 0,
+      "entries": 19,
       "sourcePackage": "ldm"
     },
     {
@@ -2614,7 +2615,7 @@
       "description": "Lftp",
       "category": "Other",
       "priority": "medium",
-      "entries": 0,
+      "entries": 503,
       "sourcePackage": "lftp"
     },
     {
@@ -2623,7 +2624,7 @@
       "description": "Libadwaita",
       "category": "GNOME",
       "priority": "medium",
-      "entries": 0,
+      "entries": 144,
       "sourcePackage": "libadwaita-1"
     },
     {
@@ -2632,7 +2633,7 @@
       "description": "Libbytesize",
       "category": "Other",
       "priority": "medium",
-      "entries": 0,
+      "entries": 17,
       "sourcePackage": "libbytesize"
     },
     {
@@ -2641,7 +2642,7 @@
       "description": "Libdazzle 1.0",
       "category": "Other",
       "priority": "medium",
-      "entries": 0,
+      "entries": 62,
       "sourcePackage": "libdazzle"
     },
     {
@@ -2650,7 +2651,7 @@
       "description": "Libdbusmenu",
       "category": "Library",
       "priority": "medium",
-      "entries": 0,
+      "entries": 2,
       "sourcePackage": "libdbusmenu"
     },
     {
@@ -2659,7 +2660,7 @@
       "description": "Libelf",
       "category": "Library",
       "priority": "medium",
-      "entries": 0,
+      "entries": 76,
       "sourcePackage": "libelf"
     },
     {
@@ -2668,7 +2669,7 @@
       "description": "Libexif 12",
       "category": "Library",
       "priority": "medium",
-      "entries": 0,
+      "entries": 1325,
       "sourcePackage": "libexif"
     },
     {
@@ -2677,7 +2678,7 @@
       "description": "Gdata",
       "category": "Other",
       "priority": "medium",
-      "entries": 0,
+      "entries": 87,
       "sourcePackage": "libgdata"
     },
     {
@@ -2686,7 +2687,7 @@
       "description": "Libgnome Games Support",
       "category": "GNOME",
       "priority": "high",
-      "entries": 0,
+      "entries": 14,
       "sourcePackage": "libgnome-games-support"
     },
     {
@@ -2695,7 +2696,7 @@
       "description": "Libgnomekbd",
       "category": "Library",
       "priority": "medium",
-      "entries": 0,
+      "entries": 39,
       "sourcePackage": "libgnomekbd"
     },
     {
@@ -2704,7 +2705,7 @@
       "description": "Libgpg Error",
       "category": "Library",
       "priority": "medium",
-      "entries": 0,
+      "entries": 489,
       "sourcePackage": "thunderbird"
     },
     {
@@ -2713,7 +2714,7 @@
       "description": "Libgphoto2 6",
       "category": "Library",
       "priority": "medium",
-      "entries": 0,
+      "entries": 3177,
       "sourcePackage": "libgphoto2"
     },
     {
@@ -2722,7 +2723,7 @@
       "description": "Libgphoto2 Port 12",
       "category": "Library",
       "priority": "medium",
-      "entries": 0,
+      "entries": 78,
       "sourcePackage": "libgphoto2"
     },
     {
@@ -2731,7 +2732,7 @@
       "description": "Libgphoto2 2",
       "category": "Library",
       "priority": "medium",
-      "entries": 0,
+      "entries": 2232,
       "sourcePackage": "libgphoto2"
     },
     {
@@ -2740,7 +2741,7 @@
       "description": "Libgphoto2 Port 0",
       "category": "Library",
       "priority": "medium",
-      "entries": 0,
+      "entries": 119,
       "sourcePackage": "libgphoto2"
     },
     {
@@ -2749,7 +2750,7 @@
       "description": "Libgpod",
       "category": "Library",
       "priority": "medium",
-      "entries": 0,
+      "entries": 185,
       "sourcePackage": "libgpod"
     },
     {
@@ -2758,7 +2759,7 @@
       "description": "Libgsf",
       "category": "Library",
       "priority": "medium",
-      "entries": 0,
+      "entries": 151,
       "sourcePackage": "libgsf"
     },
     {
@@ -2767,7 +2768,7 @@
       "description": "Libgtop",
       "category": "Library",
       "priority": "medium",
-      "entries": 0,
+      "entries": 40,
       "sourcePackage": "libgtop2"
     },
     {
@@ -2776,7 +2777,7 @@
       "description": "Libgtop2",
       "category": "Library",
       "priority": "medium",
-      "entries": 0,
+      "entries": 40,
       "sourcePackage": "libgtop2"
     },
     {
@@ -2785,7 +2786,7 @@
       "description": "Libgweather Locations",
       "category": "GNOME",
       "priority": "medium",
-      "entries": 0,
+      "entries": 4460,
       "sourcePackage": "libgweather"
     },
     {
@@ -2794,7 +2795,7 @@
       "description": "Libgweather 3.0",
       "category": "GNOME",
       "priority": "medium",
-      "entries": 0,
+      "entries": 240,
       "sourcePackage": "libgweather"
     },
     {
@@ -2803,7 +2804,7 @@
       "description": "Libgweather 4.0",
       "category": "GNOME",
       "priority": "medium",
-      "entries": 0,
+      "entries": 233,
       "sourcePackage": "libgweather4"
     },
     {
@@ -2812,7 +2813,7 @@
       "description": "Libgweather 4.0 Locations",
       "category": "GNOME",
       "priority": "medium",
-      "entries": 0,
+      "entries": 4926,
       "sourcePackage": "libgweather4"
     },
     {
@@ -2821,7 +2822,7 @@
       "description": "Libhandy",
       "category": "GNOME",
       "priority": "medium",
-      "entries": 0,
+      "entries": 308,
       "sourcePackage": "libhandy-1"
     },
     {
@@ -2830,7 +2831,7 @@
       "description": "Libhangul",
       "category": "Library",
       "priority": "medium",
-      "entries": 0,
+      "entries": 17,
       "sourcePackage": "libhangul"
     },
     {
@@ -2839,7 +2840,7 @@
       "description": "Libidn",
       "category": "Library",
       "priority": "medium",
-      "entries": 0,
+      "entries": 59,
       "sourcePackage": "libidn"
     },
     {
@@ -2848,7 +2849,7 @@
       "description": "Libidn2",
       "category": "Library",
       "priority": "medium",
-      "entries": 0,
+      "entries": 41,
       "sourcePackage": "libidn2"
     },
     {
@@ -2857,7 +2858,7 @@
       "description": "Libnih",
       "category": "Library",
       "priority": "medium",
-      "entries": 0,
+      "entries": 125,
       "sourcePackage": "libnih"
     },
     {
@@ -2866,7 +2867,7 @@
       "description": "Libnma",
       "category": "Library",
       "priority": "medium",
-      "entries": 0,
+      "entries": 184,
       "sourcePackage": "libnma"
     },
     {
@@ -2875,7 +2876,7 @@
       "description": "Nss Db",
       "category": "Other",
       "priority": "medium",
-      "entries": 0,
+      "entries": 18,
       "sourcePackage": "libnss-db"
     },
     {
@@ -2884,7 +2885,7 @@
       "description": "Libpanel",
       "category": "Library",
       "priority": "medium",
-      "entries": 0,
+      "entries": 30,
       "sourcePackage": "libpanel"
     },
     {
@@ -2893,7 +2894,7 @@
       "description": "Parse Debianchangelog",
       "category": "Other",
       "priority": "low",
-      "entries": 0,
+      "entries": 38,
       "sourcePackage": "libparse-debianchangelog-perl"
     },
     {
@@ -2902,7 +2903,7 @@
       "description": "Parse Debianchangelog Pod",
       "category": "Other",
       "priority": "low",
-      "entries": 0,
+      "entries": 191,
       "sourcePackage": "libparse-debianchangelog-perl"
     },
     {
@@ -2911,7 +2912,7 @@
       "description": "Libpeas 1.0",
       "category": "GNOME",
       "priority": "medium",
-      "entries": 0,
+      "entries": 29,
       "sourcePackage": "libpeas"
     },
     {
@@ -2920,7 +2921,7 @@
       "description": "Libpeas",
       "category": "GNOME",
       "priority": "medium",
-      "entries": 0,
+      "entries": 34,
       "sourcePackage": "libpeas"
     },
     {
@@ -2929,7 +2930,7 @@
       "description": "Libpwquality",
       "category": "Library",
       "priority": "medium",
-      "entries": 0,
+      "entries": 51,
       "sourcePackage": "libpwquality"
     },
     {
@@ -2938,7 +2939,7 @@
       "description": "Libsecret",
       "category": "Library",
       "priority": "medium",
-      "entries": 0,
+      "entries": 10,
       "sourcePackage": "libsecret"
     },
     {
@@ -2947,7 +2948,7 @@
       "description": "Libsmbios",
       "category": "Library",
       "priority": "medium",
-      "entries": 0,
+      "entries": 361,
       "sourcePackage": "libsmbios"
     },
     {
@@ -2956,7 +2957,7 @@
       "description": "Libsoup",
       "category": "Library",
       "priority": "medium",
-      "entries": 0,
+      "entries": 43,
       "sourcePackage": "libsoup2.4"
     },
     {
@@ -2965,7 +2966,7 @@
       "description": "Libsoup 3.0",
       "category": "Library",
       "priority": "medium",
-      "entries": 0,
+      "entries": 39,
       "sourcePackage": "libsoup3"
     },
     {
@@ -2974,7 +2975,7 @@
       "description": "Libvirt",
       "category": "Library",
       "priority": "medium",
-      "entries": 0,
+      "entries": 11167,
       "sourcePackage": "libvirt-hwe"
     },
     {
@@ -2992,7 +2993,7 @@
       "description": "Libvisual 0.4",
       "category": "Library",
       "priority": "medium",
-      "entries": 0,
+      "entries": 205,
       "sourcePackage": "libvisual"
     },
     {
@@ -3001,7 +3002,7 @@
       "description": "Libvisual Plugins",
       "category": "Library",
       "priority": "medium",
-      "entries": 0,
+      "entries": 109,
       "sourcePackage": "libvisual-plugins"
     },
     {
@@ -3010,7 +3011,7 @@
       "description": "Libwnck",
       "category": "GNOME",
       "priority": "medium",
-      "entries": 0,
+      "entries": 231,
       "sourcePackage": "libwnck3"
     },
     {
@@ -3028,7 +3029,7 @@
       "description": "Linux Base",
       "category": "Other",
       "priority": "medium",
-      "entries": 0,
+      "entries": 32,
       "sourcePackage": "linux-base"
     },
     {
@@ -3037,7 +3038,7 @@
       "description": "Live Build",
       "category": "Other",
       "priority": "medium",
-      "entries": 0,
+      "entries": 256,
       "sourcePackage": "live-build"
     },
     {
@@ -3046,7 +3047,7 @@
       "description": "Live Helper",
       "category": "Other",
       "priority": "medium",
-      "entries": 0,
+      "entries": 258,
       "sourcePackage": "live-build"
     },
     {
@@ -3055,7 +3056,7 @@
       "description": "Localsearch3",
       "category": "GNOME",
       "priority": "medium",
-      "entries": 0,
+      "entries": 185,
       "sourcePackage": "localsearch"
     },
     {
@@ -3064,7 +3065,7 @@
       "description": "Loupe",
       "category": "GNOME",
       "priority": "medium",
-      "entries": 0,
+      "entries": 211,
       "sourcePackage": "loupe"
     },
     {
@@ -3073,7 +3074,7 @@
       "description": "Lshw",
       "category": "Other",
       "priority": "medium",
-      "entries": 0,
+      "entries": 304,
       "sourcePackage": "lshw"
     },
     {
@@ -3082,7 +3083,7 @@
       "description": "Ltsp",
       "category": "Other",
       "priority": "medium",
-      "entries": 0,
+      "entries": 110,
       "sourcePackage": "ltsp"
     },
     {
@@ -3091,7 +3092,7 @@
       "description": "Ltsp Login",
       "category": "System",
       "priority": "medium",
-      "entries": 0,
+      "entries": 6,
       "sourcePackage": "ltsp"
     },
     {
@@ -3109,7 +3110,7 @@
       "description": "Lvm2",
       "category": "System",
       "priority": "medium",
-      "entries": 0,
+      "entries": 1556,
       "sourcePackage": "lvm2"
     },
     {
@@ -3118,7 +3119,7 @@
       "description": "Lxd",
       "category": "Other",
       "priority": "medium",
-      "entries": 0,
+      "entries": 696,
       "sourcePackage": "lxd"
     },
     {
@@ -3127,7 +3128,7 @@
       "description": "M17N Contrib",
       "category": "Other",
       "priority": "medium",
-      "entries": 0,
+      "entries": 7,
       "sourcePackage": "m17n-contrib"
     },
     {
@@ -3136,7 +3137,7 @@
       "description": "M17N Db",
       "category": "Other",
       "priority": "medium",
-      "entries": 0,
+      "entries": 74,
       "sourcePackage": "m17n-db"
     },
     {
@@ -3145,7 +3146,7 @@
       "description": "Mailman",
       "category": "Other",
       "priority": "medium",
-      "entries": 0,
+      "entries": 1472,
       "sourcePackage": "mailman"
     },
     {
@@ -3172,7 +3173,7 @@
       "description": "Malcontent",
       "category": "Other",
       "priority": "medium",
-      "entries": 0,
+      "entries": 235,
       "sourcePackage": "malcontent"
     },
     {
@@ -3181,7 +3182,7 @@
       "description": "Man Db",
       "category": "Other",
       "priority": "medium",
-      "entries": 0,
+      "entries": 204,
       "sourcePackage": "man-db"
     },
     {
@@ -3190,7 +3191,7 @@
       "description": "Man Db Gnulib",
       "category": "Other",
       "priority": "low",
-      "entries": 0,
+      "entries": 50,
       "sourcePackage": "man-db"
     },
     {
@@ -3199,7 +3200,7 @@
       "description": "Mlocate",
       "category": "Other",
       "priority": "medium",
-      "entries": 0,
+      "entries": 51,
       "sourcePackage": "mlocate"
     },
     {
@@ -3208,7 +3209,7 @@
       "description": "Modemmanager",
       "category": "Networking",
       "priority": "medium",
-      "entries": 0,
+      "entries": 19,
       "sourcePackage": "modemmanager"
     },
     {
@@ -3217,7 +3218,7 @@
       "description": "Jabberbot",
       "category": "Other",
       "priority": "medium",
-      "entries": 0,
+      "entries": 27,
       "sourcePackage": "moin"
     },
     {
@@ -3226,7 +3227,7 @@
       "description": "Moinmoin",
       "category": "Other",
       "priority": "medium",
-      "entries": 0,
+      "entries": 933,
       "sourcePackage": "moin"
     },
     {
@@ -3235,7 +3236,7 @@
       "description": "Monitoring Plugins",
       "category": "Other",
       "priority": "medium",
-      "entries": 0,
+      "entries": 1346,
       "sourcePackage": "monitoring-plugins"
     },
     {
@@ -3244,7 +3245,7 @@
       "description": "Mousetweaks",
       "category": "Other",
       "priority": "medium",
-      "entries": 0,
+      "entries": 34,
       "sourcePackage": "mousetweaks"
     },
     {
@@ -3253,7 +3254,7 @@
       "description": "Fcitx Mozc",
       "category": "Other",
       "priority": "medium",
-      "entries": 0,
+      "entries": 15,
       "sourcePackage": "mozc"
     },
     {
@@ -3262,7 +3263,7 @@
       "description": "Fcitx5 Mozc",
       "category": "Other",
       "priority": "medium",
-      "entries": 0,
+      "entries": 23,
       "sourcePackage": "mozc"
     },
     {
@@ -3271,7 +3272,7 @@
       "description": "Mutt",
       "category": "Other",
       "priority": "medium",
-      "entries": 0,
+      "entries": 1428,
       "sourcePackage": "mutt"
     },
     {
@@ -3280,7 +3281,7 @@
       "description": "Mutter",
       "category": "GNOME",
       "priority": "high",
-      "entries": 0,
+      "entries": 176,
       "sourcePackage": "mutter"
     },
     {
@@ -3289,7 +3290,7 @@
       "description": "Nano",
       "category": "Other",
       "priority": "medium",
-      "entries": 0,
+      "entries": 648,
       "sourcePackage": "nano"
     },
     {
@@ -3298,7 +3299,7 @@
       "description": "Nautilus",
       "category": "GNOME",
       "priority": "high",
-      "entries": 0,
+      "entries": 1180,
       "sourcePackage": "nautilus"
     },
     {
@@ -3307,7 +3308,7 @@
       "description": "Nautilus Sendto",
       "category": "GNOME",
       "priority": "high",
-      "entries": 0,
+      "entries": 10,
       "sourcePackage": "nautilus-sendto"
     },
     {
@@ -3316,7 +3317,7 @@
       "description": "Nautilus Share",
       "category": "GNOME",
       "priority": "high",
-      "entries": 0,
+      "entries": 37,
       "sourcePackage": "nautilus-share"
     },
     {
@@ -3325,7 +3326,7 @@
       "description": "Ndisc6",
       "category": "Other",
       "priority": "medium",
-      "entries": 0,
+      "entries": 108,
       "sourcePackage": "ndisc6"
     },
     {
@@ -3334,7 +3335,7 @@
       "description": "Needrestart",
       "category": "System",
       "priority": "medium",
-      "entries": 0,
+      "entries": 37,
       "sourcePackage": "needrestart"
     },
     {
@@ -3343,7 +3344,7 @@
       "description": "Needrestart Notify",
       "category": "System",
       "priority": "medium",
-      "entries": 0,
+      "entries": 5,
       "sourcePackage": "needrestart"
     },
     {
@@ -3361,7 +3362,7 @@
       "description": "Neon",
       "category": "Other",
       "priority": "medium",
-      "entries": 0,
+      "entries": 146,
       "sourcePackage": "neon27"
     },
     {
@@ -3370,7 +3371,7 @@
       "description": "Net Tools",
       "category": "Networking",
       "priority": "medium",
-      "entries": 0,
+      "entries": 582,
       "sourcePackage": "net-tools"
     },
     {
@@ -3379,7 +3380,7 @@
       "description": "Networkmanager",
       "category": "Networking",
       "priority": "high",
-      "entries": 0,
+      "entries": 2377,
       "sourcePackage": "network-manager"
     },
     {
@@ -3388,7 +3389,7 @@
       "description": "Network Manager Applet",
       "category": "Networking",
       "priority": "medium",
-      "entries": 0,
+      "entries": 996,
       "sourcePackage": "network-manager-applet"
     },
     {
@@ -3397,7 +3398,7 @@
       "description": "Nm Applet",
       "category": "Other",
       "priority": "medium",
-      "entries": 0,
+      "entries": 877,
       "sourcePackage": "network-manager-applet"
     },
     {
@@ -3406,7 +3407,7 @@
       "description": "Networkmanager Openvpn",
       "category": "Networking",
       "priority": "high",
-      "entries": 0,
+      "entries": 310,
       "sourcePackage": "network-manager-openvpn"
     },
     {
@@ -3415,7 +3416,7 @@
       "description": "Networkmanager Pptp",
       "category": "Networking",
       "priority": "high",
-      "entries": 0,
+      "entries": 94,
       "sourcePackage": "network-manager-pptp"
     },
     {
@@ -3424,7 +3425,7 @@
       "description": "Newt",
       "category": "Other",
       "priority": "medium",
-      "entries": 0,
+      "entries": 4,
       "sourcePackage": "newt"
     },
     {
@@ -3433,7 +3434,7 @@
       "description": "Zenmap",
       "category": "Other",
       "priority": "medium",
-      "entries": 0,
+      "entries": 503,
       "sourcePackage": "nmap"
     },
     {
@@ -3442,7 +3443,7 @@
       "description": "Notification Daemon",
       "category": "Other",
       "priority": "medium",
-      "entries": 0,
+      "entries": 11,
       "sourcePackage": "notification-daemon"
     },
     {
@@ -3451,7 +3452,7 @@
       "description": "Nova",
       "category": "Other",
       "priority": "medium",
-      "entries": 0,
+      "entries": 1313,
       "sourcePackage": "nova"
     },
     {
@@ -3460,7 +3461,7 @@
       "description": "Orca",
       "category": "Other",
       "priority": "medium",
-      "entries": 0,
+      "entries": 1878,
       "sourcePackage": "orca"
     },
     {
@@ -3469,7 +3470,7 @@
       "description": "P11 Kit",
       "category": "Other",
       "priority": "medium",
-      "entries": 0,
+      "entries": 395,
       "sourcePackage": "p11-kit"
     },
     {
@@ -3478,7 +3479,7 @@
       "description": "Packagekit",
       "category": "Package Management",
       "priority": "medium",
-      "entries": 0,
+      "entries": 497,
       "sourcePackage": "packagekit"
     },
     {
@@ -3487,7 +3488,7 @@
       "description": "Linux Pam",
       "category": "System",
       "priority": "medium",
-      "entries": 0,
+      "entries": 101,
       "sourcePackage": "pam"
     },
     {
@@ -3496,7 +3497,7 @@
       "description": "Pam P11",
       "category": "System",
       "priority": "medium",
-      "entries": 0,
+      "entries": 22,
       "sourcePackage": "pam-p11"
     },
     {
@@ -3505,7 +3506,7 @@
       "description": "Papers",
       "category": "GNOME",
       "priority": "medium",
-      "entries": 0,
+      "entries": 440,
       "sourcePackage": "papers"
     },
     {
@@ -3514,7 +3515,7 @@
       "description": "Parted",
       "category": "Other",
       "priority": "medium",
-      "entries": 0,
+      "entries": 577,
       "sourcePackage": "parted"
     },
     {
@@ -3523,7 +3524,7 @@
       "description": "Pastebin",
       "category": "Other",
       "priority": "medium",
-      "entries": 0,
+      "entries": 32,
       "sourcePackage": "pastebinit"
     },
     {
@@ -3532,7 +3533,7 @@
       "description": "Pemmican",
       "category": "Other",
       "priority": "medium",
-      "entries": 0,
+      "entries": 10,
       "sourcePackage": "pemmican"
     },
     {
@@ -3541,7 +3542,7 @@
       "description": "Phonon Gstreamer",
       "category": "KDE",
       "priority": "medium",
-      "entries": 0,
+      "entries": 14,
       "sourcePackage": "phonon-backend-gstreamer"
     },
     {
@@ -3550,7 +3551,7 @@
       "description": "Pipewire",
       "category": "Multimedia",
       "priority": "medium",
-      "entries": 0,
+      "entries": 120,
       "sourcePackage": "pipewire"
     },
     {
@@ -3559,7 +3560,7 @@
       "description": "Plainbox",
       "category": "Other",
       "priority": "medium",
-      "entries": 0,
+      "entries": 808,
       "sourcePackage": "plainbox"
     },
     {
@@ -3568,7 +3569,7 @@
       "description": "Stubbox",
       "category": "Other",
       "priority": "medium",
-      "entries": 0,
+      "entries": 40,
       "sourcePackage": "plainbox"
     },
     {
@@ -3577,7 +3578,7 @@
       "description": "Plymouth",
       "category": "System",
       "priority": "high",
-      "entries": 0,
+      "entries": 8,
       "sourcePackage": "plymouth"
     },
     {
@@ -3586,7 +3587,7 @@
       "description": "Polkit 1",
       "category": "System",
       "priority": "medium",
-      "entries": 0,
+      "entries": 12,
       "sourcePackage": "policykit-1"
     },
     {
@@ -3595,7 +3596,7 @@
       "description": "Policykit 1 Gnome",
       "category": "Other",
       "priority": "medium",
-      "entries": 0,
+      "entries": 16,
       "sourcePackage": "policykit-1-gnome"
     },
     {
@@ -3604,7 +3605,7 @@
       "description": "Pdfsig",
       "category": "Other",
       "priority": "medium",
-      "entries": 0,
+      "entries": 2,
       "sourcePackage": "poppler"
     },
     {
@@ -3613,7 +3614,7 @@
       "description": "Popt",
       "category": "Library",
       "priority": "medium",
-      "entries": 0,
+      "entries": 32,
       "sourcePackage": "popt"
     },
     {
@@ -3622,7 +3623,7 @@
       "description": "Powertop",
       "category": "Other",
       "priority": "medium",
-      "entries": 0,
+      "entries": 204,
       "sourcePackage": "powertop"
     },
     {
@@ -3631,7 +3632,7 @@
       "description": "Pppconfig",
       "category": "Networking",
       "priority": "medium",
-      "entries": 0,
+      "entries": 137,
       "sourcePackage": "pppconfig"
     },
     {
@@ -3640,7 +3641,7 @@
       "description": "Pppoeconf",
       "category": "Networking",
       "priority": "medium",
-      "entries": 0,
+      "entries": 32,
       "sourcePackage": "pppoeconf"
     },
     {
@@ -3649,7 +3650,7 @@
       "description": "Procps Ng",
       "category": "Other",
       "priority": "medium",
-      "entries": 0,
+      "entries": 951,
       "sourcePackage": "procps"
     },
     {
@@ -3658,7 +3659,7 @@
       "description": "Psmisc",
       "category": "Other",
       "priority": "medium",
-      "entries": 0,
+      "entries": 94,
       "sourcePackage": "psmisc"
     },
     {
@@ -3667,7 +3668,7 @@
       "description": "Ptyxis",
       "category": "GNOME",
       "priority": "medium",
-      "entries": 0,
+      "entries": 462,
       "sourcePackage": "ptyxis"
     },
     {
@@ -3676,7 +3677,7 @@
       "description": "Pulseaudio",
       "category": "Multimedia",
       "priority": "medium",
-      "entries": 0,
+      "entries": 572,
       "sourcePackage": "pulseaudio"
     },
     {
@@ -3685,7 +3686,7 @@
       "description": "Pv",
       "category": "Other",
       "priority": "medium",
-      "entries": 0,
+      "entries": 140,
       "sourcePackage": "pv"
     },
     {
@@ -3694,7 +3695,7 @@
       "description": "Python Apt",
       "category": "Package Management",
       "priority": "high",
-      "entries": 0,
+      "entries": 67,
       "sourcePackage": "python-apt"
     },
     {
@@ -3712,7 +3713,7 @@
       "description": "Quota",
       "category": "Other",
       "priority": "medium",
-      "entries": 0,
+      "entries": 573,
       "sourcePackage": "quota"
     },
     {
@@ -3721,7 +3722,7 @@
       "description": "Realmd",
       "category": "Other",
       "priority": "medium",
-      "entries": 0,
+      "entries": 134,
       "sourcePackage": "realmd"
     },
     {
@@ -3730,7 +3731,7 @@
       "description": "Recode",
       "category": "Other",
       "priority": "medium",
-      "entries": 0,
+      "entries": 79,
       "sourcePackage": "recode"
     },
     {
@@ -3739,7 +3740,7 @@
       "description": "Remmina",
       "category": "Other",
       "priority": "medium",
-      "entries": 0,
+      "entries": 1065,
       "sourcePackage": "remmina"
     },
     {
@@ -3748,7 +3749,7 @@
       "description": "Resources",
       "category": "GNOME",
       "priority": "medium",
-      "entries": 0,
+      "entries": 389,
       "sourcePackage": "resources"
     },
     {
@@ -3757,7 +3758,7 @@
       "description": "Rhash",
       "category": "Other",
       "priority": "medium",
-      "entries": 0,
+      "entries": 96,
       "sourcePackage": "rhash"
     },
     {
@@ -3766,7 +3767,7 @@
       "description": "Rhythmbox",
       "category": "Multimedia",
       "priority": "medium",
-      "entries": 0,
+      "entries": 952,
       "sourcePackage": "rhythmbox"
     },
     {
@@ -3775,7 +3776,7 @@
       "description": "Alternative Toolbar",
       "category": "Other",
       "priority": "medium",
-      "entries": 0,
+      "entries": 57,
       "sourcePackage": "rhythmbox-plugin-alternative-toolbar"
     },
     {
@@ -3784,7 +3785,7 @@
       "description": "Rrdtool",
       "category": "Other",
       "priority": "medium",
-      "entries": 0,
+      "entries": 32,
       "sourcePackage": "rrdtool"
     },
     {
@@ -3793,7 +3794,7 @@
       "description": "Rygel",
       "category": "Other",
       "priority": "medium",
-      "entries": 0,
+      "entries": 298,
       "sourcePackage": "rygel"
     },
     {
@@ -3802,7 +3803,7 @@
       "description": "Sane Backends",
       "category": "Other",
       "priority": "medium",
-      "entries": 0,
+      "entries": 1282,
       "sourcePackage": "sane-backends"
     },
     {
@@ -3811,7 +3812,7 @@
       "description": "Schroot",
       "category": "Other",
       "priority": "medium",
-      "entries": 0,
+      "entries": 358,
       "sourcePackage": "schroot"
     },
     {
@@ -3820,7 +3821,7 @@
       "description": "Screen Resolution Extra",
       "category": "Other",
       "priority": "medium",
-      "entries": 0,
+      "entries": 11,
       "sourcePackage": "screen-resolution-extra"
     },
     {
@@ -3829,7 +3830,7 @@
       "description": "Seahorse",
       "category": "Other",
       "priority": "medium",
-      "entries": 0,
+      "entries": 540,
       "sourcePackage": "seahorse"
     },
     {
@@ -3838,7 +3839,7 @@
       "description": "Sed",
       "category": "System",
       "priority": "medium",
-      "entries": 0,
+      "entries": 146,
       "sourcePackage": "sed"
     },
     {
@@ -3847,7 +3848,7 @@
       "description": "Debianutils",
       "category": "Other",
       "priority": "medium",
-      "entries": 0,
+      "entries": 13,
       "sourcePackage": "sensible-utils"
     },
     {
@@ -3856,7 +3857,7 @@
       "description": "Shadow",
       "category": "System",
       "priority": "medium",
-      "entries": 0,
+      "entries": 678,
       "sourcePackage": "shadow"
     },
     {
@@ -3865,7 +3866,7 @@
       "description": "Shared Mime Info",
       "category": "Other",
       "priority": "medium",
-      "entries": 0,
+      "entries": 773,
       "sourcePackage": "shared-mime-info"
     },
     {
@@ -3874,7 +3875,7 @@
       "description": "Sharutils",
       "category": "Other",
       "priority": "medium",
-      "entries": 0,
+      "entries": 304,
       "sourcePackage": "sharutils"
     },
     {
@@ -3883,7 +3884,7 @@
       "description": "Shotwell",
       "category": "Multimedia",
       "priority": "medium",
-      "entries": 0,
+      "entries": 1244,
       "sourcePackage": "shotwell"
     },
     {
@@ -3892,7 +3893,7 @@
       "description": "Showtime",
       "category": "GNOME",
       "priority": "medium",
-      "entries": 0,
+      "entries": 77,
       "sourcePackage": "showtime"
     },
     {
@@ -3901,7 +3902,7 @@
       "description": "Simple Scan",
       "category": "Multimedia",
       "priority": "medium",
-      "entries": 0,
+      "entries": 220,
       "sourcePackage": "simple-scan"
     },
     {
@@ -3910,7 +3911,7 @@
       "description": "Snappy",
       "category": "Package Management",
       "priority": "medium",
-      "entries": 0,
+      "entries": 1107,
       "sourcePackage": "snapd"
     },
     {
@@ -3919,7 +3920,7 @@
       "description": "Snapd Glib",
       "category": "Package Management",
       "priority": "medium",
-      "entries": 0,
+      "entries": 55,
       "sourcePackage": "snapd-glib"
     },
     {
@@ -3928,7 +3929,7 @@
       "description": "Software Properties",
       "category": "Ubuntu",
       "priority": "high",
-      "entries": 0,
+      "entries": 316,
       "sourcePackage": "software-properties"
     },
     {
@@ -3955,7 +3956,7 @@
       "description": "Sound Theme Freedesktop",
       "category": "Multimedia",
       "priority": "medium",
-      "entries": 0,
+      "entries": 1,
       "sourcePackage": "sound-theme-freedesktop"
     },
     {
@@ -3964,7 +3965,7 @@
       "description": "Speech Dispatcher",
       "category": "Multimedia",
       "priority": "medium",
-      "entries": 0,
+      "entries": 164,
       "sourcePackage": "speech-dispatcher"
     },
     {
@@ -3973,7 +3974,7 @@
       "description": "Sssd",
       "category": "Other",
       "priority": "medium",
-      "entries": 0,
+      "entries": 735,
       "sourcePackage": "sssd"
     },
     {
@@ -3982,7 +3983,7 @@
       "description": "Sssd Docs",
       "category": "Other",
       "priority": "medium",
-      "entries": 0,
+      "entries": 2838,
       "sourcePackage": "sssd"
     },
     {
@@ -3991,7 +3992,7 @@
       "description": "Subiquity",
       "category": "Ubuntu",
       "priority": "high",
-      "entries": 0,
+      "entries": 483,
       "sourcePackage": "subiquity"
     },
     {
@@ -4000,7 +4001,7 @@
       "description": "Subversion",
       "category": "Development",
       "priority": "medium",
-      "entries": 0,
+      "entries": 2956,
       "sourcePackage": "subversion"
     },
     {
@@ -4009,7 +4010,7 @@
       "description": "Sudo",
       "category": "System",
       "priority": "high",
-      "entries": 0,
+      "entries": 241,
       "sourcePackage": "sudo"
     },
     {
@@ -4018,7 +4019,7 @@
       "description": "Sudoers",
       "category": "System",
       "priority": "high",
-      "entries": 0,
+      "entries": 709,
       "sourcePackage": "sudo"
     },
     {
@@ -4027,7 +4028,7 @@
       "description": "Swift",
       "category": "Other",
       "priority": "medium",
-      "entries": 0,
+      "entries": 196,
       "sourcePackage": "swift"
     },
     {
@@ -4036,7 +4037,7 @@
       "description": "Synaptic",
       "category": "Package Management",
       "priority": "high",
-      "entries": 0,
+      "entries": 729,
       "sourcePackage": "synaptic"
     },
     {
@@ -4045,7 +4046,7 @@
       "description": "Synaptic Manual",
       "category": "Package Management",
       "priority": "high",
-      "entries": 0,
+      "entries": 360,
       "sourcePackage": "synaptic"
     },
     {
@@ -4054,7 +4055,7 @@
       "description": "Sysprof",
       "category": "Other",
       "priority": "medium",
-      "entries": 0,
+      "entries": 188,
       "sourcePackage": "sysprof"
     },
     {
@@ -4063,7 +4064,7 @@
       "description": "Sysstat",
       "category": "Other",
       "priority": "medium",
-      "entries": 0,
+      "entries": 88,
       "sourcePackage": "sysstat"
     },
     {
@@ -4072,7 +4073,7 @@
       "description": "System Config Printer",
       "category": "System",
       "priority": "medium",
-      "entries": 0,
+      "entries": 930,
       "sourcePackage": "system-config-printer"
     },
     {
@@ -4081,7 +4082,7 @@
       "description": "Systemd",
       "category": "System",
       "priority": "high",
-      "entries": 0,
+      "entries": 285,
       "sourcePackage": "systemd"
     },
     {
@@ -4090,7 +4091,7 @@
       "description": "Tar",
       "category": "System",
       "priority": "medium",
-      "entries": 0,
+      "entries": 598,
       "sourcePackage": "tar"
     },
     {
@@ -4099,7 +4100,7 @@
       "description": "Debian Tasks",
       "category": "Other",
       "priority": "medium",
-      "entries": 0,
+      "entries": 2,
       "sourcePackage": "tasksel"
     },
     {
@@ -4108,7 +4109,7 @@
       "description": "Tasksel",
       "category": "Other",
       "priority": "medium",
-      "entries": 0,
+      "entries": 2,
       "sourcePackage": "tasksel"
     },
     {
@@ -4117,7 +4118,7 @@
       "description": "Tecla",
       "category": "Other",
       "priority": "medium",
-      "entries": 0,
+      "entries": 8,
       "sourcePackage": "tecla"
     },
     {
@@ -4126,7 +4127,7 @@
       "description": "Texinfo Document",
       "category": "Other",
       "priority": "low",
-      "entries": 0,
+      "entries": 244,
       "sourcePackage": "texinfo"
     },
     {
@@ -4135,7 +4136,7 @@
       "description": "Texinfo",
       "category": "Other",
       "priority": "medium",
-      "entries": 0,
+      "entries": 870,
       "sourcePackage": "texinfo"
     },
     {
@@ -4153,7 +4154,7 @@
       "description": "Tmispell Voikko",
       "category": "Other",
       "priority": "medium",
-      "entries": 0,
+      "entries": 28,
       "sourcePackage": "tmispell-voikko"
     },
     {
@@ -4162,7 +4163,7 @@
       "description": "Totem Pl Parser",
       "category": "Multimedia",
       "priority": "medium",
-      "entries": 0,
+      "entries": 8,
       "sourcePackage": "totem-pl-parser"
     },
     {
@@ -4171,7 +4172,7 @@
       "description": "Tracker3",
       "category": "Other",
       "priority": "medium",
-      "entries": 0,
+      "entries": 116,
       "sourcePackage": "tracker"
     },
     {
@@ -4180,7 +4181,7 @@
       "description": "Tracker",
       "category": "Other",
       "priority": "medium",
-      "entries": 0,
+      "entries": 372,
       "sourcePackage": "tracker"
     },
     {
@@ -4189,7 +4190,7 @@
       "description": "Tracker Miners",
       "category": "Other",
       "priority": "medium",
-      "entries": 0,
+      "entries": 98,
       "sourcePackage": "tracker-miners"
     },
     {
@@ -4198,7 +4199,7 @@
       "description": "Tracker3 Miners",
       "category": "Other",
       "priority": "medium",
-      "entries": 0,
+      "entries": 294,
       "sourcePackage": "tracker-miners"
     },
     {
@@ -4207,7 +4208,7 @@
       "description": "Transmission",
       "category": "Other",
       "priority": "medium",
-      "entries": 0,
+      "entries": 515,
       "sourcePackage": "transmission"
     },
     {
@@ -4225,7 +4226,7 @@
       "description": "Ubiquity Desktop",
       "category": "Ubuntu",
       "priority": "high",
-      "entries": 0,
+      "entries": 6,
       "sourcePackage": "ubiquity"
     },
     {
@@ -4234,7 +4235,7 @@
       "description": "Ubiquity Debconf",
       "category": "Ubuntu",
       "priority": "high",
-      "entries": 0,
+      "entries": 335,
       "sourcePackage": "ubiquity"
     },
     {
@@ -4243,7 +4244,7 @@
       "description": "Slideshow Oem Config Ubuntu Budgie",
       "category": "Ubuntu",
       "priority": "medium",
-      "entries": 0,
+      "entries": 26,
       "sourcePackage": "ubiquity-slideshow-ubuntu"
     },
     {
@@ -4252,7 +4253,7 @@
       "description": "Slideshow Ubuntu Budgie",
       "category": "Ubuntu",
       "priority": "medium",
-      "entries": 0,
+      "entries": 26,
       "sourcePackage": "ubiquity-slideshow-ubuntu"
     },
     {
@@ -4261,7 +4262,7 @@
       "description": "Slideshow Oem Config Ubuntu Mate",
       "category": "Ubuntu",
       "priority": "medium",
-      "entries": 0,
+      "entries": 59,
       "sourcePackage": "ubiquity-slideshow-ubuntu"
     },
     {
@@ -4270,7 +4271,7 @@
       "description": "Slideshow Ubuntu Mate",
       "category": "Ubuntu",
       "priority": "medium",
-      "entries": 0,
+      "entries": 59,
       "sourcePackage": "ubiquity-slideshow-ubuntu"
     },
     {
@@ -4279,7 +4280,7 @@
       "description": "Slideshow Ubuntukylin",
       "category": "Installer",
       "priority": "medium",
-      "entries": 0,
+      "entries": 16,
       "sourcePackage": "ubiquity-slideshow-ubuntu"
     },
     {
@@ -4288,7 +4289,7 @@
       "description": "Ubiquity Slideshow Ubuntustudio",
       "category": "Ubuntu",
       "priority": "high",
-      "entries": 0,
+      "entries": 31,
       "sourcePackage": "ubiquity-slideshow-ubuntu"
     },
     {
@@ -4297,7 +4298,7 @@
       "description": "Ubiquity Slideshow Kubuntu",
       "category": "KDE",
       "priority": "high",
-      "entries": 0,
+      "entries": 71,
       "sourcePackage": "ubiquity-slideshow-ubuntu"
     },
     {
@@ -4306,7 +4307,7 @@
       "description": "Ubiquity Slideshow Xubuntu",
       "category": "Ubuntu",
       "priority": "high",
-      "entries": 0,
+      "entries": 15,
       "sourcePackage": "ubiquity-slideshow-ubuntu"
     },
     {
@@ -4315,7 +4316,7 @@
       "description": "Ubiquity Slideshow Oem Config Ubuntu",
       "category": "Ubuntu",
       "priority": "high",
-      "entries": 0,
+      "entries": 37,
       "sourcePackage": "ubiquity-slideshow-ubuntu"
     },
     {
@@ -4324,7 +4325,7 @@
       "description": "Ubiquity Slideshow Ubuntu",
       "category": "Ubuntu",
       "priority": "high",
-      "entries": 0,
+      "entries": 37,
       "sourcePackage": "ubiquity-slideshow-ubuntu"
     },
     {
@@ -4333,7 +4334,7 @@
       "description": "Ubuntu Advantage Desktop Daemon",
       "category": "Ubuntu",
       "priority": "medium",
-      "entries": 0,
+      "entries": 11,
       "sourcePackage": "ubuntu-advantage-desktop-daemon"
     },
     {
@@ -4342,7 +4343,7 @@
       "description": "Ubuntu Advantage",
       "category": "Ubuntu",
       "priority": "medium",
-      "entries": 0,
+      "entries": 6,
       "sourcePackage": "ubuntu-advantage-tools"
     },
     {
@@ -4351,7 +4352,7 @@
       "description": "Ubuntu Help",
       "category": "Ubuntu",
       "priority": "medium",
-      "entries": 0,
+      "entries": 167,
       "sourcePackage": "ubuntu-docs"
     },
     {
@@ -4360,7 +4361,7 @@
       "description": "Ubuntu Release Upgrader",
       "category": "Ubuntu",
       "priority": "medium",
-      "entries": 0,
+      "entries": 318,
       "sourcePackage": "ubuntu-release-upgrader"
     },
     {
@@ -4369,7 +4370,7 @@
       "description": "Ubuntu Default Launchers",
       "category": "Ubuntu",
       "priority": "medium",
-      "entries": 0,
+      "entries": 1,
       "sourcePackage": "ubuntu-settings"
     },
     {
@@ -4378,7 +4379,7 @@
       "description": "System Service",
       "category": "Other",
       "priority": "medium",
-      "entries": 0,
+      "entries": 12,
       "sourcePackage": "ubuntu-system-service"
     },
     {
@@ -4387,7 +4388,7 @@
       "description": "Ubuntu Wallpapers",
       "category": "GNOME",
       "priority": "medium",
-      "entries": 0,
+      "entries": 377,
       "sourcePackage": "ubuntu-wallpapers"
     },
     {
@@ -4396,7 +4397,7 @@
       "description": "Udisks2",
       "category": "System",
       "priority": "medium",
-      "entries": 0,
+      "entries": 638,
       "sourcePackage": "udisks2"
     },
     {
@@ -4405,7 +4406,7 @@
       "description": "Ufw",
       "category": "Other",
       "priority": "medium",
-      "entries": 0,
+      "entries": 186,
       "sourcePackage": "ufw"
     },
     {
@@ -4414,7 +4415,7 @@
       "description": "Unattended Upgrades",
       "category": "Other",
       "priority": "medium",
-      "entries": 0,
+      "entries": 92,
       "sourcePackage": "unattended-upgrades"
     },
     {
@@ -4423,7 +4424,7 @@
       "description": "Unity Doc",
       "category": "Unity",
       "priority": "medium",
-      "entries": 0,
+      "entries": 27,
       "sourcePackage": "unity"
     },
     {
@@ -4432,7 +4433,7 @@
       "description": "Unity",
       "category": "Unity",
       "priority": "medium",
-      "entries": 0,
+      "entries": 302,
       "sourcePackage": "unity"
     },
     {
@@ -4441,7 +4442,7 @@
       "description": "Unity Control Center",
       "category": "Unity",
       "priority": "medium",
-      "entries": 0,
+      "entries": 1266,
       "sourcePackage": "unity-control-center"
     },
     {
@@ -4450,7 +4451,7 @@
       "description": "Unity Greeter",
       "category": "Unity",
       "priority": "medium",
-      "entries": 0,
+      "entries": 44,
       "sourcePackage": "unity-greeter"
     },
     {
@@ -4459,7 +4460,7 @@
       "description": "Unity Lens Applications",
       "category": "Unity",
       "priority": "medium",
-      "entries": 0,
+      "entries": 55,
       "sourcePackage": "unity-lens-applications"
     },
     {
@@ -4468,7 +4469,7 @@
       "description": "Unity Lens Files",
       "category": "Unity",
       "priority": "medium",
-      "entries": 0,
+      "entries": 66,
       "sourcePackage": "unity-lens-files"
     },
     {
@@ -4477,7 +4478,7 @@
       "description": "Unity Lens Music",
       "category": "Unity",
       "priority": "medium",
-      "entries": 0,
+      "entries": 41,
       "sourcePackage": "unity-lens-music"
     },
     {
@@ -4486,7 +4487,7 @@
       "description": "Unity Lens Photos",
       "category": "Unity",
       "priority": "medium",
-      "entries": 0,
+      "entries": 48,
       "sourcePackage": "unity-lens-photos"
     },
     {
@@ -4495,7 +4496,7 @@
       "description": "Unity Lens Video",
       "category": "Unity",
       "priority": "medium",
-      "entries": 0,
+      "entries": 20,
       "sourcePackage": "unity-lens-video"
     },
     {
@@ -4504,7 +4505,7 @@
       "description": "Unity Scope Calculator",
       "category": "Unity",
       "priority": "medium",
-      "entries": 0,
+      "entries": 7,
       "sourcePackage": "unity-scope-calculator"
     },
     {
@@ -4513,7 +4514,7 @@
       "description": "Unity Scope Devhelp",
       "category": "Unity",
       "priority": "medium",
-      "entries": 0,
+      "entries": 7,
       "sourcePackage": "unity-scope-devhelp"
     },
     {
@@ -4522,7 +4523,7 @@
       "description": "Unity Scope Home",
       "category": "Unity",
       "priority": "medium",
-      "entries": 0,
+      "entries": 97,
       "sourcePackage": "unity-scope-home"
     },
     {
@@ -4531,7 +4532,7 @@
       "description": "Unity Scope Manpages",
       "category": "Unity",
       "priority": "medium",
-      "entries": 0,
+      "entries": 8,
       "sourcePackage": "unity-scope-manpages"
     },
     {
@@ -4540,7 +4541,7 @@
       "description": "Unity Settings Daemon",
       "category": "Unity",
       "priority": "medium",
-      "entries": 0,
+      "entries": 400,
       "sourcePackage": "unity-settings-daemon"
     },
     {
@@ -4549,7 +4550,7 @@
       "description": "Godbcconfig",
       "category": "Other",
       "priority": "medium",
-      "entries": 0,
+      "entries": 69,
       "sourcePackage": "unixodbc"
     },
     {
@@ -4558,7 +4559,7 @@
       "description": "Update Manager",
       "category": "Ubuntu",
       "priority": "high",
-      "entries": 0,
+      "entries": 122,
       "sourcePackage": "update-manager"
     },
     {
@@ -4567,7 +4568,7 @@
       "description": "Update Motd",
       "category": "Other",
       "priority": "medium",
-      "entries": 0,
+      "entries": 2,
       "sourcePackage": "update-motd"
     },
     {
@@ -4576,7 +4577,7 @@
       "description": "Update Notifier",
       "category": "Ubuntu",
       "priority": "medium",
-      "entries": 0,
+      "entries": 86,
       "sourcePackage": "update-notifier"
     },
     {
@@ -4585,7 +4586,7 @@
       "description": "Upower",
       "category": "System",
       "priority": "medium",
-      "entries": 0,
+      "entries": 10,
       "sourcePackage": "upower"
     },
     {
@@ -4594,7 +4595,7 @@
       "description": "Ureadahead",
       "category": "Other",
       "priority": "medium",
-      "entries": 0,
+      "entries": 25,
       "sourcePackage": "ureadahead"
     },
     {
@@ -4603,7 +4604,7 @@
       "description": "Usbcreator",
       "category": "Ubuntu",
       "priority": "medium",
-      "entries": 0,
+      "entries": 47,
       "sourcePackage": "usb-creator"
     },
     {
@@ -4612,7 +4613,7 @@
       "description": "Util Linux",
       "category": "System",
       "priority": "medium",
-      "entries": 0,
+      "entries": 5713,
       "sourcePackage": "util-linux"
     },
     {
@@ -4621,7 +4622,7 @@
       "description": "Libdvbv5",
       "category": "Library",
       "priority": "medium",
-      "entries": 0,
+      "entries": 173,
       "sourcePackage": "v4l-utils"
     },
     {
@@ -4630,7 +4631,7 @@
       "description": "V4L Utils",
       "category": "Other",
       "priority": "medium",
-      "entries": 0,
+      "entries": 414,
       "sourcePackage": "v4l-utils"
     },
     {
@@ -4639,7 +4640,7 @@
       "description": "Vim",
       "category": "Other",
       "priority": "medium",
-      "entries": 0,
+      "entries": 3113,
       "sourcePackage": "vim"
     },
     {
@@ -4648,7 +4649,7 @@
       "description": "Vino",
       "category": "Other",
       "priority": "medium",
-      "entries": 0,
+      "entries": 94,
       "sourcePackage": "vino"
     },
     {
@@ -4657,7 +4658,7 @@
       "description": "Volume Key",
       "category": "Other",
       "priority": "medium",
-      "entries": 0,
+      "entries": 154,
       "sourcePackage": "volume-key"
     },
     {
@@ -4666,7 +4667,7 @@
       "description": "Vte 2.91",
       "category": "Library",
       "priority": "medium",
-      "entries": 0,
+      "entries": 9,
       "sourcePackage": "vte2.91"
     },
     {
@@ -4675,7 +4676,7 @@
       "description": "W3M",
       "category": "Other",
       "priority": "medium",
-      "entries": 0,
+      "entries": 237,
       "sourcePackage": "w3m"
     },
     {
@@ -4684,7 +4685,7 @@
       "description": "Wdiff",
       "category": "Other",
       "priority": "medium",
-      "entries": 0,
+      "entries": 119,
       "sourcePackage": "wdiff"
     },
     {
@@ -4693,7 +4694,7 @@
       "description": "Wdiff Gnulib",
       "category": "Other",
       "priority": "low",
-      "entries": 0,
+      "entries": 31,
       "sourcePackage": "wdiff"
     },
     {
@@ -4702,7 +4703,7 @@
       "description": "Webkitgtk 4.1",
       "category": "Other",
       "priority": "medium",
-      "entries": 0,
+      "entries": 531,
       "sourcePackage": "webkit2gtk"
     },
     {
@@ -4711,7 +4712,7 @@
       "description": "Webkitgtk 6.0",
       "category": "Other",
       "priority": "medium",
-      "entries": 0,
+      "entries": 531,
       "sourcePackage": "webkit2gtk"
     },
     {
@@ -4720,7 +4721,7 @@
       "description": "Wget",
       "category": "Other",
       "priority": "medium",
-      "entries": 0,
+      "entries": 600,
       "sourcePackage": "wget"
     },
     {
@@ -4729,7 +4730,7 @@
       "description": "Whois",
       "category": "Other",
       "priority": "medium",
-      "entries": 0,
+      "entries": 40,
       "sourcePackage": "whois"
     },
     {
@@ -4738,7 +4739,7 @@
       "description": "Whoopsie Preferences",
       "category": "Other",
       "priority": "medium",
-      "entries": 0,
+      "entries": 2,
       "sourcePackage": "whoopsie-preferences"
     },
     {
@@ -4756,7 +4757,7 @@
       "description": "Wireplumber",
       "category": "Other",
       "priority": "medium",
-      "entries": 0,
+      "entries": 57,
       "sourcePackage": "wireplumber"
     },
     {
@@ -4765,7 +4766,7 @@
       "description": "Ubuntu Pro",
       "category": "Ubuntu",
       "priority": "medium",
-      "entries": 0,
+      "entries": 25,
       "sourcePackage": "wsl-pro-service"
     },
     {
@@ -4774,7 +4775,7 @@
       "description": "Xdg Desktop Portal",
       "category": "Other",
       "priority": "medium",
-      "entries": 0,
+      "entries": 50,
       "sourcePackage": "xdg-desktop-portal"
     },
     {
@@ -4783,7 +4784,7 @@
       "description": "Xdg Desktop Portal Gnome",
       "category": "Other",
       "priority": "medium",
-      "entries": 0,
+      "entries": 78,
       "sourcePackage": "xdg-desktop-portal-gnome"
     },
     {
@@ -4792,7 +4793,7 @@
       "description": "Xdg Desktop Portal Gtk",
       "category": "Other",
       "priority": "medium",
-      "entries": 0,
+      "entries": 64,
       "sourcePackage": "xdg-desktop-portal-gtk"
     },
     {
@@ -4801,7 +4802,7 @@
       "description": "Xdg User Dirs",
       "category": "Other",
       "priority": "medium",
-      "entries": 0,
+      "entries": 28,
       "sourcePackage": "xdg-user-dirs"
     },
     {
@@ -4810,7 +4811,7 @@
       "description": "Xdg User Dirs Gtk",
       "category": "Other",
       "priority": "medium",
-      "entries": 0,
+      "entries": 11,
       "sourcePackage": "xdg-user-dirs-gtk"
     },
     {
@@ -4819,7 +4820,7 @@
       "description": "Xdiagnose",
       "category": "Other",
       "priority": "medium",
-      "entries": 0,
+      "entries": 27,
       "sourcePackage": "xdiagnose"
     },
     {
@@ -4828,7 +4829,7 @@
       "description": "Xen Xm",
       "category": "Other",
       "priority": "medium",
-      "entries": 0,
+      "entries": 10,
       "sourcePackage": "xen"
     },
     {
@@ -4837,7 +4838,7 @@
       "description": "Xfsdump",
       "category": "System",
       "priority": "medium",
-      "entries": 0,
+      "entries": 768,
       "sourcePackage": "xfsdump"
     },
     {
@@ -4846,7 +4847,7 @@
       "description": "Xfsprogs",
       "category": "System",
       "priority": "medium",
-      "entries": 0,
+      "entries": 3717,
       "sourcePackage": "xfsprogs"
     },
     {
@@ -4855,7 +4856,7 @@
       "description": "Xkeyboard Config",
       "category": "Other",
       "priority": "medium",
-      "entries": 0,
+      "entries": 1303,
       "sourcePackage": "xkeyboard-config"
     },
     {
@@ -4864,7 +4865,7 @@
       "description": "Xz Man",
       "category": "Other",
       "priority": "low",
-      "entries": 0,
+      "entries": 708,
       "sourcePackage": "xz-utils"
     },
     {
@@ -4873,7 +4874,7 @@
       "description": "Xz",
       "category": "Other",
       "priority": "medium",
-      "entries": 0,
+      "entries": 260,
       "sourcePackage": "xz-utils"
     },
     {
@@ -4882,7 +4883,7 @@
       "description": "Yelp",
       "category": "Other",
       "priority": "medium",
-      "entries": 0,
+      "entries": 1,
       "sourcePackage": "yelp"
     },
     {
@@ -4891,7 +4892,7 @@
       "description": "Yelp Xsl",
       "category": "Other",
       "priority": "medium",
-      "entries": 0,
+      "entries": 64,
       "sourcePackage": "yelp-xsl"
     },
     {
@@ -4900,7 +4901,7 @@
       "description": "Zeitgeist",
       "category": "Other",
       "priority": "medium",
-      "entries": 0,
+      "entries": 2,
       "sourcePackage": "zeitgeist"
     },
     {
@@ -4909,7 +4910,7 @@
       "description": "Zenity",
       "category": "Other",
       "priority": "medium",
-      "entries": 0,
+      "entries": 200,
       "sourcePackage": "zenity"
     },
     {
@@ -4918,7 +4919,7 @@
       "description": "Zsys",
       "category": "Other",
       "priority": "medium",
-      "entries": 0,
+      "entries": 377,
       "sourcePackage": "zsys"
     },
     {
@@ -4929,6 +4930,60 @@
       "priority": "high",
       "entries": 1245,
       "sourcePackage": "grub2"
+    },
+    {
+      "id": 548,
+      "name": "exclude",
+      "description": "Exclude",
+      "category": "Other",
+      "priority": "low",
+      "entries": 0,
+      "sourcePackage": "grub2"
+    },
+    {
+      "id": 549,
+      "name": "gnome-sushi",
+      "description": "Gnome Sushi",
+      "category": "Other",
+      "priority": "low",
+      "entries": 18,
+      "sourcePackage": "gnome-sushi"
+    },
+    {
+      "id": 550,
+      "name": "gst-plugins-bad",
+      "description": "Gst Plugins Bad",
+      "category": "Other",
+      "priority": "low",
+      "entries": 29,
+      "sourcePackage": "gst-plugins-bad1.0"
+    },
+    {
+      "id": 551,
+      "name": "libapt-pkg7.0",
+      "description": "Libapt Pkg7.0",
+      "category": "Other",
+      "priority": "low",
+      "entries": 303,
+      "sourcePackage": "apt"
+    },
+    {
+      "id": 552,
+      "name": "libnsl",
+      "description": "Libnsl",
+      "category": "Other",
+      "priority": "low",
+      "entries": 23,
+      "sourcePackage": "libnsl"
+    },
+    {
+      "id": 553,
+      "name": "sudo-rs",
+      "description": "Sudo Rs",
+      "category": "Other",
+      "priority": "low",
+      "entries": 98,
+      "sourcePackage": "rust-sudo-rs"
     }
   ]
 }

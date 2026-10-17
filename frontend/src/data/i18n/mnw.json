@@ -249,5 +249,12 @@
   "glossary_suggestion_note": "သင့်အကြံပြုချက်ကို စီမံခန့်ခွဲသူမှ ရမျှာၚ်ထည့်မည်မတိုင်မီ စစ်ဆေးပါမည်။",
   "glossary_note": "မှတ်ချက်",
   "glossary_note_placeholder": "ဤရမျှာၚ်အကြောင်း မှတ်ချက်",
-  "glossary_close": "ပိတ်ရန်"
+  "glossary_close": "ပိတ်ရန်",
+  "contributors_last_updated": "သ္လီၚ်နောက်ဆုံးမွမ်းမံသတ္တဳ",
+  "contributors_series": "စီးရီး",
+  "contributors_view_launchpad": "Launchpad ႁၚ်ကြည့်က္ဘာ",
+  "contributors_top_contributor": "ထိပ်တန်းပူဂဵုပံက်ပါ",
+  "contributors_error_title": "ပူဂဵုပံက်အချက်အလက် မရန်ကား",
+  "contributors_error_hint": "Launchpad အချက်အလက် တင်န်ကား။ သ္လီၚ်ကြည့်က္ဘာ။",
+  "contributors_reload": "ပြန်ဖွင့်က္ဘာ"
 }

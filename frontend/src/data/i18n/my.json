@@ -280,5 +280,12 @@
   "glossary_suggestion_note": "သင့်အကြံပြုချက်ကို စီမံခန့်ခွဲသူမှ ဝေါဟာရထည့်မည်မတိုင်မီ စစ်ဆေးပါမည်။",
   "glossary_note": "မှတ်ချက်",
   "glossary_note_placeholder": "ဤဝေါဟာရအကြောင်း မှတ်ချက် (ရွေးချယ်စရာ)",
-  "glossary_close": "ပိတ်ရန်"
+  "glossary_close": "ပိတ်ရန်",
+  "contributors_last_updated": "နောက်ဆုံးမွမ်းမံသည့်ရက်",
+  "contributors_series": "စီးရီး",
+  "contributors_view_launchpad": "Launchpad တွင်ကြည့်ရန်",
+  "contributors_top_contributor": "ထိပ်တန်းပံ့ပိုးသူ",
+  "contributors_error_title": "ပံ့ပိုးသူအချက်အလက် မရရှိနိုင်ပါ",
+  "contributors_error_hint": "Launchpad အချက်အလက်ကို တင်၍မရပါ။ နောက်မှ ထပ်ကြည့်ပါ။",
+  "contributors_reload": "ပြန်ဖွင့်ရန်"
 }

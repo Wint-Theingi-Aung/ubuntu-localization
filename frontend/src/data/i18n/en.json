@@ -299,5 +299,12 @@
   "glossary_note_placeholder": "Optional note about this term",
   "glossary_close": "Close",
   "translation_skipped_for_now": "not translated — skipped for now",
-  "translation_review_empty": "No translated strings in this batch yet. Go back to Edit and translate at least one string."
+  "translation_review_empty": "No translated strings in this batch yet. Go back to Edit and translate at least one string.",
+  "contributors_last_updated": "Last updated",
+  "contributors_series": "Series",
+  "contributors_view_launchpad": "View on Launchpad",
+  "contributors_top_contributor": "Top Contributor",
+  "contributors_error_title": "Contributor data unavailable",
+  "contributors_error_hint": "Launchpad data could not be loaded. Try again later.",
+  "contributors_reload": "Reload"
 }

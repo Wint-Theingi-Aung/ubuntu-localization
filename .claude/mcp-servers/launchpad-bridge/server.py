@@ -44,6 +44,9 @@ APP_NAME = "ubuntu-localization-tool"
 # Ubuntu distribution name on Launchpad
 UBUNTU_DISTRO = "ubuntu"
 
+# Distro series used for translation templates (must match frontend constants.ts)
+UBUNTU_SERIES = "stonking"
+
 # Well-known Ubuntu translation teams
 TRANSLATION_TEAMS = [
     "ubuntu-translators",
@@ -170,7 +173,34 @@ server = Server("launchpad-bridge")
 
 # ── Tool: check_auth_status ─────────────────────────────────────────────
 
+# ── Single dispatcher ───────────────────────────────────────────────────
+# The MCP Python SDK registers ONE call_tool handler. Multiple
+# @server.call_tool() decorators overwrite each other, so every tool
+# call was landing on the last registered function (get_translation_progress).
+# Register handlers in this dict and dispatch by tool name instead.
+
+_TOOL_HANDLERS: dict = {}
+
+
+def _tool(name: str):
+    def deco(fn):
+        _TOOL_HANDLERS[name] = fn
+        return fn
+    return deco
+
+
 @server.call_tool()
+async def dispatch_call_tool(name: str, arguments: dict) -> list[TextContent]:
+    handler = _TOOL_HANDLERS.get(name)
+    if handler is None:
+        return [TextContent(type="text", text=json.dumps(
+            {"error": f"Unknown tool: {name}", "known": sorted(_TOOL_HANDLERS)},
+            indent=2
+        ))]
+    return await handler(name, arguments or {})
+
+
+@_tool("launchpad_check_auth_status")
 async def check_auth_status(name: str, arguments: dict) -> list[TextContent]:
     """Check Launchpad authentication status."""
     status = _check_auth_available()
@@ -182,7 +212,7 @@ async def check_auth_status(name: str, arguments: dict) -> list[TextContent]:
 
 # ── Tool: get_profile ───────────────────────────────────────────────────
 
-@server.call_tool()
+@_tool("launchpad_get_profile")
 async def get_profile(name: str, arguments: dict) -> list[TextContent]:
     """Get a Launchpad user profile by username.
 
@@ -234,7 +264,7 @@ async def get_profile(name: str, arguments: dict) -> list[TextContent]:
 
 # ── Tool: get_karma ─────────────────────────────────────────────────────
 
-@server.call_tool()
+@_tool("launchpad_get_karma")
 async def get_karma(name: str, arguments: dict) -> list[TextContent]:
     """Get karma details for a Launchpad user.
 
@@ -296,7 +326,7 @@ async def get_karma(name: str, arguments: dict) -> list[TextContent]:
 
 # ── Tool: get_teams ─────────────────────────────────────────────────────
 
-@server.call_tool()
+@_tool("launchpad_get_teams")
 async def get_teams(name: str, arguments: dict) -> list[TextContent]:
     """Get team memberships for a Launchpad user.
 
@@ -369,7 +399,7 @@ async def get_teams(name: str, arguments: dict) -> list[TextContent]:
 
 # ── Tool: get_translation_groups ────────────────────────────────────────
 
-@server.call_tool()
+@_tool("launchpad_get_translation_groups")
 async def get_translation_groups(name: str, arguments: dict) -> list[TextContent]:
     """Get Ubuntu translation groups and their status.
 
@@ -439,14 +469,24 @@ async def get_translation_groups(name: str, arguments: dict) -> list[TextContent
 
 # ── Tool: get_top_contributors ──────────────────────────────────────────
 
-@server.call_tool()
-async def get_top_contributors(name: str, arguments: dict) -> list[TextContent]:
-    """Get top contributors to Ubuntu translations.
+# Per-language localization teams on Launchpad (verified live).
+LANGUAGE_TEAMS = {
+    "my":  ("ubuntu-l10n-my",  "Burmese Localization Team"),
+    "shn": ("ubuntu-l10n-shn", "Ubuntu Shan Localization"),
+    "mnw": ("ubuntu-l10n-mnw", "Ubuntu Mon Translation"),
+    # ksw: no dedicated Ubuntu l10n team on Launchpad (Linux Mint team only)
+}
 
+
+@_tool("launchpad_get_top_contributors")
+async def get_top_contributors(name: str, arguments: dict) -> list[TextContent]:
+    """Get top contributors to Ubuntu translations, ranked by Launchpad karma.
+
+    Sources language localization teams (ubuntu-l10n-*) for my/shn/mnw.
     Args:
         limit: Number of contributors to return (default: 20)
     """
-    limit = arguments.get("limit", 20)
+    limit = int(arguments.get("limit", 20) or 20)
 
     lp = _get_launchpad(anonymous=True)
     if lp is None:
@@ -455,50 +495,44 @@ async def get_top_contributors(name: str, arguments: dict) -> list[TextContent]:
         ))]
 
     try:
-        contributors = []
-        ubuntu = lp.distributions[UBUNTU_DISTRO]
+        seen: dict = {}  # username -> entry
 
-        # Try to get top contributors from the distribution
-        try:
-            for person_entry in ubuntu.top_contributors:
-                try:
-                    person = person_entry
-                    person.lp_refresh() if hasattr(person, 'lp_refresh') else None
-                    contributors.append({
-                        "username": _safe_get(person, "name", ""),
-                        "display_name": _safe_get(person, "display_name", ""),
-                        "karma": _safe_get(person, "karma", 0),
-                        "web_link": _safe_get(person, "web_link", ""),
-                    })
-                    if len(contributors) >= limit:
-                        break
-                except Exception:
-                    pass
-        except Exception:
-            # Alternative: scan known translation teams
+        for lang_code, (team_name, team_display) in LANGUAGE_TEAMS.items():
             try:
-                translators = lp.people["ubuntu-translators"]
-                translators.lp_refresh()
-                for member in translators.members:
-                    try:
-                        member.lp_refresh() if hasattr(member, 'lp_refresh') else None
-                        contributors.append({
-                            "username": _safe_get(member, "name", ""),
-                            "display_name": _safe_get(member, "display_name", ""),
-                            "karma": _safe_get(member, "karma", 0),
+                team = lp.people[team_name]
+                for member in team.members:
+                    uname = _safe_get(member, "name", "")
+                    if not uname or _safe_get(member, "is_team", False):
+                        continue
+                    entry = seen.get(uname)
+                    if entry is None:
+                        entry = {
+                            "username": uname,
+                            "display_name": _safe_get(member, "display_name", "") or uname,
+                            "karma": int(_safe_get(member, "karma", 0) or 0),
                             "web_link": _safe_get(member, "web_link", ""),
-                        })
-                        if len(contributors) >= limit:
-                            break
-                    except Exception:
-                        pass
-            except Exception:
-                pass
+                            "language_codes": [],
+                            "teams": [],
+                        }
+                        seen[uname] = entry
+                    if lang_code not in entry["language_codes"]:
+                        entry["language_codes"].append(lang_code)
+                    if team_display not in entry["teams"]:
+                        entry["teams"].append(team_display)
+            except Exception as e:
+                print(f"team scan failed for {team_name}: {e}", file=sys.stderr)
+
+        contributors = sorted(
+            seen.values(),
+            key=lambda c: (-c["karma"], c["username"]),
+        )[:limit]
 
         result = {
-            "source": "ubuntu",
+            "source": "launchpad-teams",
+            "series": UBUNTU_SERIES,
             "contributors": contributors,
             "count": len(contributors),
+            "total_scanned": len(seen),
         }
 
         return [TextContent(
@@ -513,7 +547,7 @@ async def get_top_contributors(name: str, arguments: dict) -> list[TextContent]:
 
 # ── Tool: get_my_profile ────────────────────────────────────────────────
 
-@server.call_tool()
+@_tool("launchpad_get_my_profile")
 async def get_my_profile(name: str, arguments: dict) -> list[TextContent]:
     """Get the authenticated user's own profile, karma, and teams summary.
 
@@ -590,7 +624,7 @@ async def get_my_profile(name: str, arguments: dict) -> list[TextContent]:
 
 # ── Tool: search_people ─────────────────────────────────────────────────
 
-@server.call_tool()
+@_tool("launchpad_search_people")
 async def search_people(name: str, arguments: dict) -> list[TextContent]:
     """Search for Launchpad users/teams by name.
 
@@ -654,12 +688,13 @@ async def search_people(name: str, arguments: dict) -> list[TextContent]:
 
 # ── Tool: get_translation_progress ──────────────────────────────────────
 
-@server.call_tool()
+@_tool("launchpad_get_translation_progress")
 async def get_translation_progress(name: str, arguments: dict) -> list[TextContent]:
     """Get Ubuntu translation progress for a specific language.
 
     Args:
         lang_code: Language code (my, shn, mnw, ksw)
+        with_po: If true, also fetch per-template .po stats (slow; default false)
     """
     lang_code = arguments.get("lang_code", "").strip().lower()
     if lang_code not in LANG_MAP:
@@ -678,48 +713,64 @@ async def get_translation_progress(name: str, arguments: dict) -> list[TextConte
     try:
         lang_name = LANG_MAP[lang_code]
         ubuntu = lp.distributions[UBUNTU_DISTRO]
+        series = ubuntu.getSeries(name_or_version=UBUNTU_SERIES)
+
+        # NOTE: Distribution has no translation_templates attribute.
+        # Templates live on the distro series via getTranslationTemplates().
+        templates = list(series.getTranslationTemplates())
 
         translation_stats = []
+        with_po = bool(arguments.get("with_po", False))
 
-        # Try to get translation templates with per-language stats
-        try:
-            for template in ubuntu.translation_templates:
-                try:
-                    template.lp_refresh() if hasattr(template, 'lp_refresh') else None
-                    name = _safe_get(template, "name", "")
-                    total = _safe_get(template, "message_count", 0)
+        for template in templates:
+            try:
+                tname = _safe_get(template, "name", "")
+                total = int(_safe_get(template, "message_count", 0) or 0)
+                web = _safe_get(template, "web_link", "")
+                source_package = ""
+                if "/+source/" in web:
+                    source_package = web.split("/+source/")[1].split("/")[0]
 
-                    # Get the .po file for this language
+                row = {
+                    "template": tname,
+                    "sourcePackage": source_package,
+                    "total": total,
+                    "translated": None,
+                    "untranslated": None,
+                    "completion_pct": None,
+                }
+
+                if with_po:
                     try:
                         pofile = template.getPOFileByLanguage(lang_code)
                         if pofile:
-                            pofile.lp_refresh() if hasattr(pofile, 'lp_refresh') else None
-                            translated = _safe_get(pofile, "translated_count", 0)
-                            untranslated = _safe_get(pofile, "untranslated_count", 0)
-                            pct = (int(translated) / int(total) * 100) if int(total) > 0 else 0
-
-                            translation_stats.append({
-                                "template": name,
-                                "total": int(total) if isinstance(total, str) and total.isdigit() else total,
-                                "translated": int(translated) if isinstance(translated, str) and translated.isdigit() else translated,
-                                "untranslated": int(untranslated) if isinstance(untranslated, str) and untranslated.isdigit() else untranslated,
-                                "completion_pct": round(pct, 1),
-                            })
+                            translated = int(_safe_get(pofile, "translated_count", 0) or 0)
+                            untranslated = int(_safe_get(pofile, "untranslated_count", 0) or 0)
+                            pct = (translated / total * 100) if total > 0 else 0
+                            row["translated"] = translated
+                            row["untranslated"] = untranslated
+                            row["completion_pct"] = round(pct, 1)
                     except Exception:
                         pass
 
-                    # No limit — fetch all templates
-                except Exception:
-                    pass
-        except Exception:
-            pass
+                translation_stats.append(row)
+            except Exception:
+                pass
 
         result = {
             "language": lang_name,
             "lang_code": lang_code,
+            "series": UBUNTU_SERIES,
+            "series_title": _safe_get(series, "title", ""),
             "templates": translation_stats,
             "template_count": len(translation_stats),
-            "note": "If empty, try directly on https://translations.launchpad.net/ubuntu",
+            "with_po": with_po,
+            "note": (
+                "template_count is the full Launchpad series template list. "
+                "Per-template completion requires with_po=true (slow). "
+                "Language totals: https://translations.launchpad.net/ubuntu/"
+                f"{UBUNTU_SERIES}/+lang/{lang_code}"
+            ),
         }
 
         return [TextContent(
