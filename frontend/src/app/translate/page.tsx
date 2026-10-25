@@ -92,7 +92,6 @@ export default function TranslatePage() {
 
   const statusCounts = useMemo(() => countByStatus(entries), [entries])
   const confirmedCount = statusCounts.confirmed
-  const aiDraftCount = statusCounts.reviewing
   const totalCount = statusCounts.total
 
   const batchReviewingCount = batchReviewEntries.filter(e => e.status === 'reviewing').length
@@ -550,19 +549,10 @@ export default function TranslatePage() {
                     .replace('{total}', String(totalCount))}
                 </span>
                 <span className="text-[var(--tx-muted)]">
-                  <span className="text-amber-400 font-semibold">{aiDraftCount}</span> {t('translation_ai_drafts', 'AI drafts')}
-                </span>
-                <span className="text-[var(--tx-muted)]">
                   <span className="text-emerald-400 font-semibold">{confirmedCount}</span> {t('translation_confirmed', 'confirmed')}
                 </span>
               </div>
               <div className="flex items-center gap-2">
-                <button
-                  onClick={handleStartNew}
-                  className="btn-ghost flex items-center gap-2 text-sm text-[var(--tx-muted)] hover:text-[var(--tx-primary)]"
-                >
-                  <Upload size={16} />{t('translation_new_file', 'Upload New File')}
-                </button>
                 <button
                   onClick={handleExport}
                   disabled={confirmedCount === 0 || confirmedCount <= initialConfirmedCount}
