@@ -1,6 +1,6 @@
  'use client'
 
-import { useState, useCallback, useMemo, useEffect } from 'react'
+import { useState, useCallback, useMemo, useEffect, useRef } from 'react'
 import {
   Upload, Languages, Download, FileText, Loader2, CheckCircle,
   AlertCircle, X, Play, Sparkles, Shield, Edit3, Eye, Check,
@@ -9,25 +9,16 @@ import {
 import { useI18n } from '@/lib/i18n'
 import { LANGUAGES, TRANSLATION_CONFIG } from '@/lib/constants'
 import { recordHistory } from '@/lib/history'
-import { compareFormatSpecifiers, validateBatchResponse, canReviewBatch, isReviewEligible } from '@/lib/translate'
+import {
+  validateBatchResponse, canReviewBatch, isReviewEligible,
+  describeTranslationIssues, collectTranslationIssues,
+} from '@/lib/translate'
+import {
+  BATCH_SIZE, type TranslationEntry, buildFreshSession, createInitialSessionState,
+  applyDraftTranslations, chunkIds, countByStatus, findBatchToAdvance,
+  pendingDraftIndexes, stripFilenameTimestamps,
+} from '@/lib/session'
 import { useAuth } from '@/lib/auth-context'
-
-const BATCH_SIZE = 10
-
-function stripTimestamps(name: string): string {
-  return name.replace(/-\d{4}-\d{2}-\d{2}-\d{6}/g, '')
-}
-
-interface TranslationEntry {
-  index: number
-  msgid: string
-  msgstr: string
-  msgctxt?: string
-  flags: string[]
-  occurrences: string[]
-  tcomment?: string
-  status: 'pending' | 'reviewing' | 'confirmed'
-}
 
 export default function TranslatePage() {
   const { t } = useI18n()
@@ -47,6 +38,12 @@ export default function TranslatePage() {
   const [originalBaseFilename, setOriginalBaseFilename] = useState<string>('')
   const [initialConfirmedCount, setInitialConfirmedCount] = useState<number>(0)
 
+  // Monotonic id for the active upload session. Any state transition bumps it,
+  // which cancels in-flight AI drafts from a previous upload so stale responses
+  // can never land in a newer session.
+  const sessionRunRef = useRef(0)
+  const translateInFlightRef = useRef(false)
+
   const languages = LANGUAGES
 
   // Record history to both localStorage and DB (when authenticated)
@@ -61,14 +58,18 @@ export default function TranslatePage() {
     }
   }, [user])
 
+  const storageKey = useMemo(() => {
+    if (!file || !initialUploadTimestamp) return null
+    return `ubuntu-translate-${initialUploadTimestamp}-${file.name}-${targetLang}`
+  }, [file, initialUploadTimestamp, targetLang])
+
   useEffect(() => {
-    if (!file || entries.length === 0) return
-    const key = `ubuntu-translate-${file.name}-${targetLang}`
+    if (!storageKey || entries.length === 0) return
     const timeout = setTimeout(() => {
-      localStorage.setItem(key, JSON.stringify(entries))
+      localStorage.setItem(storageKey, JSON.stringify(entries))
     }, 500)
     return () => clearTimeout(timeout)
-  }, [entries, file, targetLang])
+  }, [entries, storageKey])
 
   const totalBatches = Math.ceil(entries.length / BATCH_SIZE)
   const currentBatchEntries = useMemo(
@@ -89,13 +90,10 @@ export default function TranslatePage() {
   const batchSkippedCount = currentBatchEntries.length - batchReviewEntries.length
   const workPhase: 'translate' | 'review' = reviewMode ? 'review' : 'translate'
 
-  const translatedCount = entries.filter(e =>
-    e.status === 'reviewing' || e.status === 'confirmed'
-  ).length
-  const confirmedCount = entries.filter(e => e.status === 'confirmed').length
-  const hasConfirmedEntry = confirmedCount > 0
-  const untranslatedCount = entries.filter(e => e.status === 'pending').length
-  const totalCount = entries.length
+  const statusCounts = useMemo(() => countByStatus(entries), [entries])
+  const confirmedCount = statusCounts.confirmed
+  const aiDraftCount = statusCounts.reviewing
+  const totalCount = statusCounts.total
 
   const batchReviewingCount = batchReviewEntries.filter(e => e.status === 'reviewing').length
   const batchConfirmedCount = batchReviewEntries.filter(e => e.status === 'confirmed').length
@@ -118,14 +116,7 @@ export default function TranslatePage() {
     if (currentBatchEntries.length === 0) return
     if (!batchAllConfirmed) return
     const timer = setTimeout(() => {
-      let nextBatch = currentBatch + 1
-      while (nextBatch < totalBatches) {
-        const bStart = nextBatch * BATCH_SIZE
-        const bEnd = Math.min(bStart + BATCH_SIZE, entries.length)
-        const batch = entries.slice(bStart, bEnd)
-        if (batch.some(e => e.status !== 'confirmed')) break
-        nextBatch++
-      }
+      const nextBatch = findBatchToAdvance(entries, currentBatch, BATCH_SIZE)
       if (nextBatch < totalBatches) {
         setCurrentBatch(nextBatch)
         setReviewMode(false)
@@ -150,56 +141,68 @@ export default function TranslatePage() {
     setFile(f); setError(null)
   }, [t])
 
-  const handleUpload = useCallback(async () => {
-    if (!file) return
-    setIsTranslating(true); setError(null)
-    const fd = new FormData()
-    fd.append('file', file)
-    fd.append('target_lang', targetLang)
-    try {
-      const r = await fetch('/api/upload', { method: 'POST', body: fd })
-      if (!r.ok) { const d = await r.json(); throw new Error(d.error || 'Upload failed') }
-      const d = await r.json()
-      const merged: TranslationEntry[] = d.all_entries.map((e: any) => ({
-        ...e,
-        status: e.msgstr ? 'confirmed' as const : 'pending' as const,
-      }))
-      const confirmedOnUpload = merged.filter(e => e.status === 'confirmed').length
-      const baseName = stripTimestamps((d.filename || 'messages.po').replace(/\.po$/, ''))
-      const now = new Date()
-      const ts = `${now.getFullYear()}-${String(now.getMonth() + 1).padStart(2, '0')}-${String(now.getDate()).padStart(2, '0')}-${String(now.getHours()).padStart(2, '0')}${String(now.getMinutes()).padStart(2, '0')}${String(now.getSeconds()).padStart(2, '0')}`
-      setEntries(merged)
-      setPoHeaders(d.po_headers || {})
-      setInitialConfirmedCount(confirmedOnUpload)
-      setOriginalBaseFilename(baseName)
-      setInitialUploadTimestamp(ts)
-      setCurrentBatch(0)
-      setReviewMode(false)
-      setExpandedEntry(null)
-      setStep('work')
-    } catch (err: any) { setError(err.message) }
-    finally { setIsTranslating(false) }
-  }, [file, targetLang])
+  /** Indexes currently being sent to the AI, so a request is never duplicated. */
+  const inFlightRef = useRef<Set<number>>(new Set())
 
-  const handleTranslate = useCallback(async () => {
-    setIsTranslating(true)
+  /**
+   * Drop every upload-specific piece of state. Bumping the run id cancels any
+   * AI draft still in flight, so a response from a previous PO file can never
+   * land in the new session.
+   */
+  const clearSessionData = useCallback(() => {
+    sessionRunRef.current += 1
+    inFlightRef.current = new Set()
+    const initial = createInitialSessionState()
+    setEntries(initial.entries)
+    setCurrentBatch(initial.currentBatch)
+    setReviewMode(initial.reviewMode)
+    setExpandedEntry(initial.expandedEntry)
+    setFormatErrors(initial.formatErrors)
+    setInitialConfirmedCount(initial.initialConfirmedCount)
+    setInitialUploadTimestamp(initial.initialUploadTimestamp)
+    setOriginalBaseFilename(initial.originalBaseFilename)
+    setPoHeaders({})
+    setIsTranslating(false)
+  }, [])
+
+  /** Leave the work area and return to a clean upload step. */
+  const handleStartNew = useCallback(() => {
+    clearSessionData()
+    if (storageKey) localStorage.removeItem(storageKey)
     setError(null)
+    setFile(null)
+    setStep('upload')
+  }, [clearSessionData, storageKey])
 
-    const batch = currentBatchEntries.filter(e => e.status === 'pending')
-    if (batch.length === 0) {
-      setIsTranslating(false)
-      return
-    }
+  /**
+   * Ask the AI for drafts for `indexes` and apply whatever comes back.
+   * Returns an error message, or null on success. A failed request leaves its
+   * strings pending so they can be retried; successful strings are already
+   * saved and are never re-sent.
+   */
+  const requestDrafts = useCallback(async (
+    snapshot: TranslationEntry[],
+    indexes: number[],
+    runId: number,
+  ): Promise<string | null> => {
+    const wanted = new Set(indexes)
+    const batch = snapshot.filter(e =>
+      wanted.has(e.index) &&
+      e.status === 'pending' &&
+      e.msgid.trim().length > 0 &&
+      !inFlightRef.current.has(e.index),
+    )
+    if (batch.length === 0) return null
+
+    const requested = batch.map(e => e.index)
+    for (const i of requested) inFlightRef.current.add(i)
 
     try {
       const response = await fetch('/api/translate', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({
-          entries: batch.map(e => ({
-            index: e.index,
-            msgid: e.msgid,
-          })),
+          entries: batch.map(e => ({ index: e.index, msgid: e.msgid })),
           target_lang: targetLang,
         }),
       })
@@ -212,76 +215,113 @@ export default function TranslatePage() {
         } catch {
           message = `Translation failed with status ${response.status}`
         }
-        throw new Error(message)
+        return message
       }
 
       const data = await response.json()
-      const requestedIndexes = batch.map(e => e.index)
+      const validation = validateBatchResponse(data.translations, requested)
+      if (!validation.ok) return validation.error || 'Invalid translation response'
 
-      const validation = validateBatchResponse(
-        data.translations,
-        requestedIndexes,
-      )
-
-      if (!validation.ok) {
-        throw new Error(validation.error)
-      }
+      // A superseded session must not receive this response.
+      if (sessionRunRef.current !== runId) return null
 
       const translationMap = validation.translationMap!
-      const newErrors: Record<number, string> = {}
+      const issues = collectTranslationIssues(batch, translationMap)
 
-      for (const [index, translated] of translationMap) {
-        const entry = batch.find(e => e.index === index)
-        if (!entry) continue
+      // Apply the validated batch atomically. Drafts only ever land on
+      // `pending` entries, so human edits and confirmations survive.
+      setEntries(prev => applyDraftTranslations(prev, translationMap))
+      setFormatErrors(prev => ({ ...prev, ...issues }))
+      return null
+    } catch (err: any) {
+      return err?.message || 'Translation failed'
+    } finally {
+      for (const i of requested) inFlightRef.current.delete(i)
+    }
+  }, [targetLang])
 
-        const { missing, extra, orderMismatch } =
-          compareFormatSpecifiers(entry.msgid, translated)
-
-        if (missing.length > 0 || extra.length > 0 || orderMismatch) {
-          const parts: string[] = []
-
-          if (missing.length > 0) {
-            parts.push(`Missing: ${missing.join(', ')}`)
-          }
-          if (extra.length > 0) {
-            parts.push(`Extra: ${extra.join(', ')}`)
-          }
-          if (orderMismatch) {
-            parts.push('Placeholder order changed')
-          }
-
-          newErrors[index] = parts.join('; ')
+  /**
+   * Generate AI drafts for every eligible string in the session, batch by
+   * batch, so no manual "Translate Batch" click is needed first.
+   */
+  const generateAllDrafts = useCallback(async (
+    snapshot: TranslationEntry[],
+    runId: number,
+  ): Promise<void> => {
+    setIsTranslating(true)
+    try {
+      const chunks = chunkIds(pendingDraftIndexes(snapshot), BATCH_SIZE)
+      for (const chunk of chunks) {
+        if (sessionRunRef.current !== runId) return
+        const failure = await requestDrafts(snapshot, chunk, runId)
+        if (failure) {
+          // Keep what already succeeded; leave the rest for a manual retry.
+          if (sessionRunRef.current === runId) setError(failure)
+          return
         }
       }
-
-      // Apply the complete validated batch atomically.
-      // Format errors must not hide the non-empty translation.
-      setEntries(prev =>
-        prev.map(entry => {
-          const translated = translationMap.get(entry.index)
-
-          if (translated !== undefined) {
-            return {
-              ...entry,
-              msgstr: translated,
-              status: 'reviewing' as const,
-            }
-          }
-
-          return entry
-        }),
-      )
-
-      setFormatErrors(prev => ({
-        ...prev,
-        ...newErrors,
-      }))
-    } catch (err: any) {
-      setError(err?.message || 'Translation failed')
     } finally {
+      if (sessionRunRef.current === runId) setIsTranslating(false)
+    }
+  }, [requestDrafts])
+
+  const handleUpload = useCallback(async () => {
+    if (!file) return
+    // A new upload is always a new session: drop the previous one before the
+    // request so no batch number, translation, review state or confirmed count
+    // can leak into the file that follows.
+    clearSessionData()
+    setIsTranslating(true)
+    setError(null)
+
+    const fd = new FormData()
+    fd.append('file', file)
+    fd.append('target_lang', targetLang)
+
+    try {
+      const r = await fetch('/api/upload', { method: 'POST', body: fd })
+      if (!r.ok) { const d = await r.json(); throw new Error(d.error || 'Upload failed') }
+      const d = await r.json()
+
+      const session = buildFreshSession(d.all_entries, d.filename || 'messages.po')
+      setEntries(session.entries)
+      setPoHeaders(d.po_headers || {})
+      setInitialConfirmedCount(session.initialConfirmedCount)
+      setOriginalBaseFilename(session.originalBaseFilename)
+      setInitialUploadTimestamp(session.initialUploadTimestamp)
+      setCurrentBatch(session.currentBatch)
+      setReviewMode(session.reviewMode)
+      setExpandedEntry(session.expandedEntry)
+      setFormatErrors(session.formatErrors)
+      setStep('work')
+
+      void generateAllDrafts(session.entries, sessionRunRef.current)
+    } catch (err: any) {
+      setError(err?.message || 'Upload failed')
       setIsTranslating(false)
     }
-  }, [currentBatchEntries, targetLang])
+  }, [file, targetLang, clearSessionData, generateAllDrafts])
+
+  /** Manual retry path for the current batch's still-untranslated strings. */
+  const handleTranslate = useCallback(async () => {
+    setError(null)
+    const pending = currentBatchEntries.filter(
+      e => e.status === 'pending' && e.msgid.trim().length > 0,
+    )
+    if (pending.length === 0) return
+
+    setIsTranslating(true)
+    try {
+      const failure = await requestDrafts(
+        entries,
+        pending.map(e => e.index),
+        sessionRunRef.current,
+      )
+      if (failure) setError(failure)
+    } finally {
+      if (inFlightRef.current.size === 0) setIsTranslating(false)
+    }
+  }, [currentBatchEntries, entries, requestDrafts])
 
   const handleStartReview = useCallback(() => {
     if (!canReviewBatch(currentBatchEntries)) return
@@ -295,36 +335,19 @@ export default function TranslatePage() {
   }, [currentBatchEntries])
 
   const handleEditTranslation = useCallback((index: number, newMsgstr: string) => {
-    setEntries(prev => {
-      const updated = prev.map(e =>
-        e.index === index ? { ...e, msgstr: newMsgstr } : e
-      )
-      const entry = updated.find(e => e.index === index)
-      if (entry && entry.msgid && newMsgstr.trim().length > 0) {
-        const { missing, extra, orderMismatch } = compareFormatSpecifiers(entry.msgid, newMsgstr)
-        if (missing.length > 0 || extra.length > 0 || orderMismatch) {
-          const parts: string[] = []
-          if (missing.length) parts.push(`Missing: ${missing.join(', ')}`)
-          if (extra.length) parts.push(`Extra: ${extra.join(', ')}`)
-          if (orderMismatch) parts.push('Placeholder order changed')
-          setFormatErrors(prev => ({ ...prev, [index]: parts.join('; ') }))
-        } else {
-          setFormatErrors(prev => {
-            const next = { ...prev }
-            delete next[index]
-            return next
-          })
-        }
-      } else {
-        setFormatErrors(prev => {
-          const next = { ...prev }
-          delete next[index]
-          return next
-        })
-      }
-      return updated
+    const entry = entries.find(e => e.index === index)
+    const issue = entry ? describeTranslationIssues(entry.msgid, newMsgstr) : null
+
+    setEntries(prev => prev.map(e =>
+      e.index === index ? { ...e, msgstr: newMsgstr } : e
+    ))
+    setFormatErrors(prev => {
+      const next = { ...prev }
+      if (issue) next[index] = issue
+      else delete next[index]
+      return next
     })
-  }, [])
+  }, [entries])
 
   const handleConfirmEntry = useCallback((index: number) => {
     if (formatErrors[index]) return
@@ -342,8 +365,8 @@ export default function TranslatePage() {
   const handleConfirmAllBatch = useCallback(() => {
     const start = currentBatch * BATCH_SIZE
     const end = start + BATCH_SIZE
-    setEntries(prev => prev.map((e, i) =>
-      i >= start && i < end && e.status === 'reviewing' && !formatErrors[e.index]
+    setEntries(prev => prev.map(e =>
+      e.index >= start && e.index < end && e.status === 'reviewing' && !formatErrors[e.index]
         ? { ...e, status: 'confirmed' as const }
         : e
     ))
@@ -393,7 +416,7 @@ export default function TranslatePage() {
       a.href = url
       const now = new Date()
       const ts = `${now.getFullYear()}-${String(now.getMonth() + 1).padStart(2, '0')}-${String(now.getDate()).padStart(2, '0')}-${String(now.getHours()).padStart(2, '0')}${String(now.getMinutes()).padStart(2, '0')}${String(now.getSeconds()).padStart(2, '0')}`
-      const baseName = stripTimestamps(originalBaseFilename || (file?.name || 'messages.po').replace(/\.po$/, ''))
+      const baseName = stripFilenameTimestamps(originalBaseFilename || (file?.name || 'messages.po').replace(/\.po$/, ''))
       a.download = `${baseName}-${ts}.po`
       document.body.appendChild(a); a.click(); document.body.removeChild(a)
       URL.revokeObjectURL(url)
@@ -511,6 +534,10 @@ export default function TranslatePage() {
             <div className="text-center">
               <p className="text-sm text-[var(--tx-dim)] mb-2">{t('translation_no_file', 'No .po file handy?')}</p>
               <button onClick={() => {
+                // Demo is its own session too: cancel in-flight work and drop
+                // any format errors left over from a previous file.
+                sessionRunRef.current += 1
+                inFlightRef.current = new Set()
                 setEntries([
                   { index: 0, msgid: 'Power Off', msgstr: '', flags: [], occurrences: [], status: 'pending' },
                   { index: 1, msgid: 'Suspend', msgstr: '', flags: [], occurrences: [], status: 'pending' },
@@ -518,8 +545,10 @@ export default function TranslatePage() {
                   { index: 3, msgid: 'Power Off...', msgstr: '', flags: [], occurrences: [], status: 'pending' },
                   { index: 4, msgid: 'Log Out...', msgstr: '', flags: [], occurrences: [], status: 'pending' },
                 ])
+                setFormatErrors({})
                 setCurrentBatch(0)
                 setReviewMode(false)
+                setExpandedEntry(null)
                 setStep('work')
               }} className="btn-secondary flex items-center gap-2 mx-auto">
                 <Play size={16} />{t('translation_try_demo', 'Try Demo')}
@@ -547,16 +576,27 @@ export default function TranslatePage() {
                     .replace('{total}', String(totalCount))}
                 </span>
                 <span className="text-[var(--tx-muted)]">
+                  <span className="text-amber-400 font-semibold">{aiDraftCount}</span> {t('translation_ai_drafts', 'AI drafts')}
+                </span>
+                <span className="text-[var(--tx-muted)]">
                   <span className="text-emerald-400 font-semibold">{confirmedCount}</span> {t('translation_confirmed', 'confirmed')}
                 </span>
               </div>
-              <button
-                onClick={handleExport}
-                disabled={confirmedCount === 0 || confirmedCount <= initialConfirmedCount}
-                className="btn-secondary flex items-center gap-2 text-sm"
-              >
-                <Download size={16} />{t('translation_download_progress', 'Download Progress')}
-              </button>
+              <div className="flex items-center gap-2">
+                <button
+                  onClick={handleStartNew}
+                  className="btn-ghost flex items-center gap-2 text-sm text-[var(--tx-muted)] hover:text-[var(--tx-primary)]"
+                >
+                  <Upload size={16} />{t('translation_new_file', 'Upload New File')}
+                </button>
+                <button
+                  onClick={handleExport}
+                  disabled={confirmedCount === 0 || confirmedCount <= initialConfirmedCount}
+                  className="btn-secondary flex items-center gap-2 text-sm"
+                >
+                  <Download size={16} />{t('translation_download_progress', 'Download Progress')}
+                </button>
+              </div>
             </div>
             <div className="progress-bar mt-3">
               <div
@@ -849,11 +889,7 @@ export default function TranslatePage() {
             <button onClick={handleExport} disabled={entries.length === 0} className="btn-primary flex items-center justify-center gap-2">
               <Download size={18} />{t('translation_download_po', 'Download .po File')}
             </button>
-            <button onClick={() => {
-              if (file) localStorage.removeItem(`ubuntu-translate-${file.name}-${targetLang}`)
-              setStep('upload'); setFile(null); setEntries([]); setCurrentBatch(0); setReviewMode(false)
-              setInitialUploadTimestamp(''); setOriginalBaseFilename(''); setInitialConfirmedCount(0)
-            }} className="btn-secondary">
+            <button onClick={handleStartNew} className="btn-secondary">
               {t('translation_start_new', 'Start New')}
             </button>
           </div>

@@ -172,6 +172,8 @@ Rules:
   Kernel, GNOME, sudo, apt, repository, GRUB, X11, Wayland, ext4, Btrfs,
   LVM, DHCP, DNS, SSH, VPN, TCP, systemd, dbus, PulseAudio, PipeWire,
   AppArmor, Ubuntu, Canonical, Debian, Firefox, LibreOffice
+- CRITICAL: Preserve language codes, locale identifiers and technical identifiers EXACTLY: ar, my, en_US, en_GB, zh_CN, pt_BR, keyboard layout ids, country codes. Do NOT translate, transliterate, expand, change case, or replace them with the localized language name. If the whole source string is an identifier (e.g. "ar"), return that identifier unchanged.
+- CRITICAL: Preserve placeholders and escaped sequences exactly: %s %d %(name)s {name} \${variable} {{N}}, XML/HTML tags, Markdown code spans, and \\n. Do not modify Ubuntu or package names, keyboard layout names, or other protected technical terms unless the glossary gives an approved localized form.
 - Translate ONLY natural language text
 - Maintain the OS/software context — this is NOT general text
 - For menu items and button labels: use concise imperative form
@@ -366,6 +368,195 @@ export function compareFormatSpecifiers(
   }
 }
 
+// ── Protected technical tokens ────────────────────────────────────────
+//
+// Language codes, locale identifiers, markup and placeholders must survive
+// translation byte-for-byte. Prompt instructions alone are not enough, so
+// these extractors give us something concrete to validate against.
+
+/** printf specifiers including the literal `%%`. */
+// eslint-disable-next-line no-control-regex
+const PROTECTED_PRINTF_RE = /%(?:%\$|\d+\$|\(.*?\))?[+#-0 *]*(?:\d+|\*)?(?:\.(?:\d+|\*))?(?:hh?|ll?|[Lqjzt])?[diouxXeEfFgGaAcspn%]/g
+
+/** `{name}`, `${name}` and `{{N}}` style placeholders. */
+const BRACE_PLACEHOLDER_RE = /\$\{[^}]+\}|\{\{[^{}]+\}\}|\{[A-Za-z_][\w.]*\}/g
+
+/** HTML/XML tags with attributes, plus named and numeric entities. */
+const MARKUP_RE = /<\/?[A-Za-z][A-Za-z0-9-]*(?:\s[^<>]*?)?\/?>|&[A-Za-z][A-Za-z0-9]{1,31};|&#x?[0-9A-Fa-f]+;/g
+
+/** Markdown inline code spans and link targets. */
+const MARKDOWN_RE = /`[^`\n]+`|\[[^\]\n]+\]\([^)\s]+\)/g
+
+/**
+ * Locale identifiers: en_US, en-GB, zh_CN, pt_BR, sr_Latn_RS.
+ * The region/script segment must be capitalised, so ordinary snake_case words
+ * such as `pkg_name` are not mistaken for locales.
+ */
+const LOCALE_RE = /\b[A-Za-z]{2,3}(?:_[A-Z]{2}|-[A-Z]{2}|_[A-Z][a-z]{3}|-[A-Z][a-z]{3})+\b/g
+
+/** Standalone 2–3 letter tokens (candidate bare language codes). */
+const BARE_TOKEN_RE = /(?<![A-Za-z0-9_])[A-Za-z]{2,3}(?![A-Za-z0-9_])/g
+
+/** A source string that is nothing but a language/locale identifier, e.g. `ar`. */
+const IDENTIFIER_ONLY_RE = /^[a-z]{2,3}(?:[_-][A-Za-z]{2,4})*$/
+
+/** ISO 639-1 (two-letter) language codes. */
+const LANGUAGE_CODES_2 = new Set(
+  ('aa ab ae af ak am an ar as av ay az ba be bg bh bi bm bn bo br bs ca ce ch co cr cs cu cv cy ' +
+    'da de dv dz ee el en eo es et eu fa ff fi fj fo fr fy ga gd gl gn gu gv ha he hi ho hr ht hu ' +
+    'hy hz ia id ie ig ii ik io is it iu ja jv ka kg ki kj kk kl km kn ko kr ks ku kv kw ky la lb ' +
+    'lg li ln lo lt lu lv mg mh mi mk ml mn mr ms mt my na nb nd ne ng nl nn no nr nv ny oc oj om ' +
+    'or os pa pi pl ps pt qu rm rn ro ru rw sa sc sd se sg si sk sl sm sn so sq sr ss st su sv sw ' +
+    'ta te tg th ti tk tl tn to tr ts tt tw ty ug uk ur uz ve vi vo wa wo xh yi yo za zh zu').split(/\s+/),
+)
+
+/**
+ * Three-letter codes we protect as bare tokens: the languages this tool targets
+ * plus the codes that show up in Ubuntu PO metadata. An allowlist, not a
+ * blocklist — three-letter codes collide with far more English words
+ * (`the`, `cat`, `spa`, `fin`), so only codes we expect are ever matched.
+ */
+const LANGUAGE_CODES_3 = new Set([
+  'shn', 'mnw', 'ksw', 'mya', 'mon', 'eng', 'mul', 'und', 'zxx',
+  'ara', 'aze', 'bak', 'ben', 'ces', 'deu', 'ell', 'fas', 'fra', 'heb',
+  'hin', 'ind', 'ita', 'jpn', 'khm', 'kor', 'lao', 'nld', 'pol', 'por',
+  'pus', 'ron', 'rus', 'san', 'snd', 'swe', 'tam', 'tat', 'tel', 'tha',
+  'tur', 'ukr', 'vie', 'yid', 'zho', 'zul', 'kmr',
+])
+
+/**
+ * Language codes that are also everyday English words or abbreviations.
+ * Inside a sentence a bare `my`, `is`, `to` or `Mr.` is almost always English,
+ * so it is left to the translator. They are still protected when the whole
+ * source string is just the identifier (see `IDENTIFIER_ONLY_RE`).
+ *
+ * Skipping these is deliberate: a false "preserve this token" flag would block
+ * a human from confirming a perfectly good translation.
+ */
+const CODE_ENGLISH_COLLISIONS = new Set([
+  'am', 'an', 'as', 'be', 'ca', 'co', 'el', 'en', 'es', 'et', 'he', 'hi',
+  'id', 'ii', 'is', 'it', 'iv', 'la', 'md', 'me', 'mr', 'ms', 'mt', 'my',
+  'na', 'ne', 'no', 'or', 'pa', 'sa', 'so', 'st', 'ta', 'te', 'ti', 'to',
+  'us',
+])
+
+function matchAll(str: string, re: RegExp): string[] {
+  re.lastIndex = 0
+  return str.match(re) || []
+}
+
+/** True when a bare token is a language code we must preserve. */
+function isProtectableCode(token: string, identifierOnly: boolean): boolean {
+  const code = token.toLowerCase()
+  const isCode = code.length === 2 ? LANGUAGE_CODES_2.has(code) : LANGUAGE_CODES_3.has(code)
+  if (!isCode) return false
+  if (identifierOnly || code.length === 3) return true
+  return !CODE_ENGLISH_COLLISIONS.has(code)
+}
+
+/**
+ * Every token in `msgid` that must appear unchanged in the translation:
+ * printf specifiers, brace placeholders, HTML/XML markup, Markdown code and
+ * link targets, locale identifiers, and bare language codes.
+ */
+export function extractProtectedTokens(msgid: string): string[] {
+  if (!msgid) return []
+  const tokens: string[] = [
+    ...matchAll(msgid, PROTECTED_PRINTF_RE),
+    ...matchAll(msgid, BRACE_PLACEHOLDER_RE),
+    ...matchAll(msgid, MARKUP_RE),
+    ...matchAll(msgid, MARKDOWN_RE),
+    ...matchAll(msgid, LOCALE_RE),
+  ]
+
+  // Blank out locales so their parts are not also collected as bare codes.
+  let masked = msgid
+  for (const locale of matchAll(msgid, LOCALE_RE)) {
+    masked = masked.split(locale).join(' '.repeat(locale.length))
+  }
+
+  const identifierOnly = IDENTIFIER_ONLY_RE.test(msgid.trim())
+  for (const token of matchAll(masked, BARE_TOKEN_RE)) {
+    if (isProtectableCode(token, identifierOnly)) tokens.push(token)
+  }
+
+  return tokens
+}
+
+function countTokens(tokens: string[]): Map<string, number> {
+  const counts = new Map<string, number>()
+  for (const t of tokens) counts.set(t, (counts.get(t) || 0) + 1)
+  return counts
+}
+
+/**
+ * Compare protected tokens between source and translation.
+ * Returns tokens dropped by the translation and tokens invented by it.
+ */
+export function compareProtectedTokens(
+  msgid: string,
+  msgstr: string,
+): { missing: string[]; extra: string[] } {
+  const src = countTokens(extractProtectedTokens(msgid))
+  const tgt = countTokens(extractProtectedTokens(msgstr))
+
+  const missing: string[] = []
+  for (const [token, count] of src) {
+    const have = tgt.get(token) || 0
+    for (let i = 0; have + i < count; i++) missing.push(token)
+  }
+
+  const extra: string[] = []
+  for (const [token, count] of tgt) {
+    const have = src.get(token) || 0
+    for (let i = have; i < count; i++) extra.push(token)
+  }
+
+  return { missing, extra }
+}
+
+/**
+ * Single validation entry point used before a translation is accepted, edited
+ * or exported. Returns a human-readable reason the draft must be reviewed, or
+ * `null` when the translation is safe to keep.
+ *
+ * Format-specifier problems come first so existing messages stay stable;
+ * protected-token problems are appended.
+ */
+export function describeTranslationIssues(msgid: string, msgstr: string): string | null {
+  if (!msgstr || msgstr.trim().length === 0) return null
+
+  const parts: string[] = []
+  const fmt = compareFormatSpecifiers(msgid, msgstr)
+  if (fmt.missing.length > 0) parts.push(`Missing: ${fmt.missing.join(', ')}`)
+  if (fmt.extra.length > 0) parts.push(`Extra: ${fmt.extra.join(', ')}`)
+  if (fmt.orderMismatch) parts.push('Placeholder order changed')
+
+  const covered = new Set([...fmt.missing, ...fmt.extra])
+  const { missing, extra } = compareProtectedTokens(msgid, msgstr)
+  const missingOther = missing.filter(t => !covered.has(t))
+  const extraOther = extra.filter(t => !covered.has(t))
+  if (missingOther.length > 0) parts.push(`Preserve: ${missingOther.join(', ')}`)
+  if (extraOther.length > 0) parts.push(`Unexpected: ${extraOther.join(', ')}`)
+
+  return parts.length > 0 ? parts.join('; ') : null
+}
+
+/** Format errors for a whole applied batch, keyed by entry index. */
+export function collectTranslationIssues(
+  batch: Array<{ index: number; msgid: string }>,
+  translationMap: Map<number, string>,
+): Record<number, string> {
+  const errors: Record<number, string> = {}
+  for (const entry of batch) {
+    const translated = translationMap.get(entry.index)
+    if (translated === undefined) continue
+    const issue = describeTranslationIssues(entry.msgid, translated)
+    if (issue) errors[entry.index] = issue
+  }
+  return errors
+}
+
 export function verifyTranslation(
   msgid: string,
   translated: string,
@@ -404,6 +595,17 @@ export function verifyTranslation(
     name: 'Format Specifiers',
     passed: allMatch,
     detail: formatDetail,
+  })
+
+  // Check 1b: protected technical tokens (language codes, locales, markup)
+  const { missing: missingTokens, extra: extraTokens } = compareProtectedTokens(msgid, translated)
+  const tokenIssues: string[] = []
+  if (missingTokens.length > 0) tokenIssues.push(`Dropped: ${missingTokens.join(', ')}`)
+  if (extraTokens.length > 0) tokenIssues.push(`Added: ${extraTokens.join(', ')}`)
+  checks.push({
+    name: 'Protected Tokens',
+    passed: tokenIssues.length === 0,
+    detail: tokenIssues.length > 0 ? tokenIssues.join('; ') : 'OK',
   })
 
   // Check 2: Mnemonic underscore integrity

@@ -1,6 +1,6 @@
 import { NextRequest, NextResponse } from 'next/server'
 import { generatePoContent } from '@/lib/po-parser'
-import { compareFormatSpecifiers } from '@/lib/translate'
+import { describeTranslationIssues } from '@/lib/translate'
 
 export async function POST(request: NextRequest) {
   try {
@@ -14,20 +14,19 @@ export async function POST(request: NextRequest) {
       )
     }
 
-    // Validate format specifiers for all entries with translations
-    const mismatches: Array<{ index: number; msgid: string; missing: string[]; extra: string[]; orderMismatch: boolean }> = []
+    // Validate placeholders and protected technical tokens before writing.
+    // A translation that dropped %s, en_US or a tag is not exported as-is.
+    const mismatchIndices = new Set<number>()
     for (const entry of entries) {
       if (entry.msgstr && entry.msgid) {
-        const { missing, extra, orderMismatch } = compareFormatSpecifiers(entry.msgid, entry.msgstr)
-        if (missing.length > 0 || extra.length > 0 || orderMismatch) {
-          mismatches.push({ index: entry.index, msgid: entry.msgid, missing, extra, orderMismatch })
+        if (describeTranslationIssues(entry.msgid, entry.msgstr)) {
+          mismatchIndices.add(entry.index)
         }
       }
     }
 
-    // Clear msgstr on entries with format specifier mismatches so they remain untranslated
-    if (mismatches.length > 0) {
-      const mismatchIndices = new Set(mismatches.map(m => m.index))
+    // Clear msgstr on entries with mismatches so they remain untranslated
+    if (mismatchIndices.size > 0) {
       for (const entry of entries) {
         if (mismatchIndices.has(entry.index)) {
           entry.msgstr = ''

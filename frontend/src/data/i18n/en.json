@@ -102,6 +102,8 @@
   "translation_review_translations": "Review Translations",
   "translation_awaiting_review": "awaiting review",
   "translation_confirmed": "confirmed",
+  "translation_ai_drafts": "AI drafts",
+  "translation_new_file": "Upload New File",
   "translation_untranslated": "untranslated",
   "translation_total": "total",
   "translation_confirm_page": "Confirm Page ({count})",
