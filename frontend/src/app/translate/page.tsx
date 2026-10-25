@@ -15,8 +15,8 @@ import {
 } from '@/lib/translate'
 import {
   BATCH_SIZE, type TranslationEntry, buildFreshSession, createInitialSessionState,
-  applyDraftTranslations, chunkIds, countByStatus, findBatchToAdvance,
-  pendingDraftIndexes, stripFilenameTimestamps,
+  applyDraftTranslations, countByStatus, findBatchToAdvance,
+  stripFilenameTimestamps,
 } from '@/lib/session'
 import { useAuth } from '@/lib/auth-context'
 
@@ -240,31 +240,6 @@ export default function TranslatePage() {
     }
   }, [targetLang])
 
-  /**
-   * Generate AI drafts for every eligible string in the session, batch by
-   * batch, so no manual "Translate Batch" click is needed first.
-   */
-  const generateAllDrafts = useCallback(async (
-    snapshot: TranslationEntry[],
-    runId: number,
-  ): Promise<void> => {
-    setIsTranslating(true)
-    try {
-      const chunks = chunkIds(pendingDraftIndexes(snapshot), BATCH_SIZE)
-      for (const chunk of chunks) {
-        if (sessionRunRef.current !== runId) return
-        const failure = await requestDrafts(snapshot, chunk, runId)
-        if (failure) {
-          // Keep what already succeeded; leave the rest for a manual retry.
-          if (sessionRunRef.current === runId) setError(failure)
-          return
-        }
-      }
-    } finally {
-      if (sessionRunRef.current === runId) setIsTranslating(false)
-    }
-  }, [requestDrafts])
-
   const handleUpload = useCallback(async () => {
     if (!file) return
     // A new upload is always a new session: drop the previous one before the
@@ -294,13 +269,12 @@ export default function TranslatePage() {
       setExpandedEntry(session.expandedEntry)
       setFormatErrors(session.formatErrors)
       setStep('work')
-
-      void generateAllDrafts(session.entries, sessionRunRef.current)
+      setIsTranslating(false)
     } catch (err: any) {
       setError(err?.message || 'Upload failed')
       setIsTranslating(false)
     }
-  }, [file, targetLang, clearSessionData, generateAllDrafts])
+  }, [file, targetLang, clearSessionData])
 
   /** Manual retry path for the current batch's still-untranslated strings. */
   const handleTranslate = useCallback(async () => {

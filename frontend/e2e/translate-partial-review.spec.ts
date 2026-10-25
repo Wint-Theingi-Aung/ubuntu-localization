@@ -3,10 +3,9 @@ import { test, expect, type Page } from '@playwright/test';
 /**
  * Partial-batch review on /translate.
  *
- * Uploading a PO auto-generates AI drafts for every eligible string, so Review
- * Translations is available without clicking Translate Batch. Review lists only
- * translated strings, keeps reset strings pending for later, and never discards
- * translations that are already saved.
+ * Review Translations becomes available with 1+ translated strings, lists only
+ * translated strings, keeps skipped strings pending for later, and never
+ * discards translations that are already saved.
  */
 
 const PO_CONTENT = `msgid ""
@@ -87,12 +86,15 @@ test.describe('partial batch review', () => {
     await mockTranslateApi(page);
   });
 
-  test('uploading auto-drafts every string and opens review without a manual batch click', async ({ page }) => {
+  test('Review Translations is unavailable while all 10 strings are empty', async ({ page }) => {
     await uploadPo(page);
     await expect(page.getByText('Power Off', { exact: true })).toBeVisible();
+    await expect(page.getByRole('button', { name: 'Review Translations' })).toHaveCount(0);
+  });
 
-    // No manual Translate Batch click: the AI draft pass fills all 10 strings.
-    await expect(page.getByRole('button', { name: /Translate Batch \(0 strings\)/ })).toBeDisabled();
+  test('translating all 10 strings makes Review Translations available', async ({ page }) => {
+    await uploadPo(page);
+    await page.getByRole('button', { name: /Translate Batch \(10 strings\)/ }).click();
     await expect(page.getByRole('button', { name: 'Review Translations' })).toBeVisible();
 
     await page.getByRole('button', { name: 'Review Translations' }).click();
@@ -103,6 +105,7 @@ test.describe('partial batch review', () => {
 
   test('a partially translated batch opens review with only translated strings', async ({ page }) => {
     await uploadPo(page);
+    await page.getByRole('button', { name: /Translate Batch \(10 strings\)/ }).click();
     await page.getByRole('button', { name: 'Review Translations' }).click();
 
     // Reset the long string at index 4 — it returns to pending and empties.
@@ -118,6 +121,7 @@ test.describe('partial batch review', () => {
 
   test('confirming a partial batch keeps saved translations and leaves the skipped string pending', async ({ page }) => {
     await uploadPo(page);
+    await page.getByRole('button', { name: /Translate Batch \(10 strings\)/ }).click();
     await page.getByRole('button', { name: 'Review Translations' }).click();
 
     await resetString(page, 'D4 Install Updates');
@@ -140,6 +144,7 @@ test.describe('partial batch review', () => {
 
   test('review stays closed when the only "translation" was reset back to empty', async ({ page }) => {
     await uploadPo(page);
+    await page.getByRole('button', { name: /Translate Batch \(10 strings\)/ }).click();
     await page.getByRole('button', { name: 'Review Translations' }).click();
 
     for (const label of ['D0 Power Off', 'D1 Suspend']) {
