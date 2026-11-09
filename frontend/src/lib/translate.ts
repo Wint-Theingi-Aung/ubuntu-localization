@@ -33,6 +33,26 @@ export interface BatchValidationResult {
   ok: boolean
   error?: string
   translationMap?: Map<number, string>
+  /**
+   * Requested indexes whose result could not be used (partial mode only):
+   * the model returned an empty translation for them, or did not return them
+   * at all. They are never applied — they stay pending for a retry.
+   */
+  failedIndexes?: number[]
+}
+
+export interface BatchValidationOptions {
+  /**
+   * Accept a response that only covers part of the request. Every well-formed
+   * result is still applied (results carry their own index, so there is no
+   * ambiguity), while missing or empty ones are reported through
+   * `failedIndexes` instead of discarding the whole batch.
+   *
+   * Structural problems — malformed objects, duplicate indexes, indexes that
+   * were never requested — are rejected in both modes: those cannot be mapped
+   * back onto entries safely.
+   */
+  allowPartial?: boolean
 }
 
 /** Minimal entry shape needed to decide review eligibility. */
@@ -64,21 +84,29 @@ export function canReviewBatch(entries: ReviewEligibleEntry[]): boolean {
 /**
  * Validate a batch translation response from the API.
  *
- * Rejects the entire batch if:
+ * Always rejects (in both modes) when:
  * - response is not an array
  * - any result object is malformed (missing numeric index or string translated)
- * - count doesn't match requested count
  * - duplicate indexes
- * - missing indexes (requested but not in response)
  * - unexpected indexes (in response but not requested)
+ *
+ * Strict mode (default) additionally rejects the whole batch when:
+ * - count doesn't match the requested count
+ * - any requested index is missing from the response
  * - any translated value is empty or whitespace-only
+ *
+ * Partial mode (`allowPartial`) keeps every usable result and reports the rest
+ * through `failedIndexes`, so one bad string can no longer wipe out a batch.
  *
  * On success, returns a Map of index → translated string.
  */
 export function validateBatchResponse(
   response: unknown,
   requestedIndexes: number[],
+  options: BatchValidationOptions = {},
 ): BatchValidationResult {
+  const allowPartial = options.allowPartial === true
+
   if (!response || !Array.isArray(response)) {
     return { ok: false, error: 'Invalid translation response: expected an array' }
   }
@@ -89,7 +117,7 @@ export function validateBatchResponse(
     }
   }
 
-  if (response.length !== requestedIndexes.length) {
+  if (!allowPartial && response.length !== requestedIndexes.length) {
     return {
       ok: false,
       error: `Incomplete batch response: expected ${requestedIndexes.length} results, got ${response.length}. No translations applied.`,
@@ -109,11 +137,14 @@ export function validateBatchResponse(
   }
 
   const requestedSet = new Set(requestedIndexes)
-  for (const idx of requestedIndexes) {
-    if (!responseSet.has(idx)) {
-      return {
-        ok: false,
-        error: `Missing index ${idx} in batch response. No translations applied.`,
+
+  if (!allowPartial) {
+    for (const idx of requestedIndexes) {
+      if (!responseSet.has(idx)) {
+        return {
+          ok: false,
+          error: `Missing index ${idx} in batch response. No translations applied.`,
+        }
       }
     }
   }
@@ -127,18 +158,38 @@ export function validateBatchResponse(
     }
   }
 
+  const translationMap = new Map<number, string>()
+  const failedIndexes: number[] = []
+
   for (const t of response) {
     if (!t.translated || t.translated.trim().length === 0) {
-      return {
-        ok: false,
-        error: `Empty translation for index ${t.index}. No translations applied.`,
+      if (!allowPartial) {
+        return {
+          ok: false,
+          error: `Empty translation for index ${t.index}. No translations applied.`,
+        }
       }
+      failedIndexes.push(t.index)
+      continue
     }
+    translationMap.set(t.index, t.translated)
   }
 
-  const translationMap = new Map<number, string>()
-  for (const t of response) {
-    translationMap.set(t.index, t.translated)
+  if (allowPartial) {
+    for (const idx of requestedIndexes) {
+      if (!responseSet.has(idx)) failedIndexes.push(idx)
+    }
+    if (translationMap.size === 0) {
+      return {
+        ok: false,
+        failedIndexes,
+        error:
+          failedIndexes.length > 0
+            ? `No usable translations returned for indexes [${failedIndexes.join(', ')}]. Nothing was applied.`
+            : 'Invalid translation response: no usable translations.',
+      }
+    }
+    return { ok: true, translationMap, failedIndexes }
   }
 
   return { ok: true, translationMap }
@@ -201,12 +252,25 @@ Input is a JSON array of msgid strings to translate.`
   return prompt
 }
 
+/**
+ * Translate `texts` with Gemini.
+ *
+ * Returns one slot per input string, positionally aligned with `texts`, so a
+ * result is never mapped onto the wrong source string. A slot is `null` when
+ * the model returned nothing usable for that position (empty or whitespace);
+ * those strings stay untranslated instead of failing the whole request.
+ *
+ * Throws only when nothing can be mapped safely: transport/API errors,
+ * unparseable output, or a response whose length does not match the input
+ * (there the positional guarantee no longer holds, so the caller is asked to
+ * retry rather than risk attaching a translation to the wrong msgid).
+ */
 export async function translateBatch(
   texts: string[],
   targetLang: string,
   langCode: string,
   glossaryTerms?: GlossaryTerm[],
-): Promise<string[]> {
+): Promise<(string | null)[]> {
   const apiKey = process.env.GOOGLE_API_KEY
   if (!apiKey) {
     throw new Error('Google API key not configured. Set GOOGLE_API_KEY in environment.')
@@ -214,31 +278,47 @@ export async function translateBatch(
 
   const prompt = buildSystemPrompt(targetLang, langCode, glossaryTerms)
 
-  const response = await fetch(
-    `https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash:generateContent?key=${apiKey}`,
-    {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({
-        contents: [{
-          parts: [{
-            text: `${prompt}\n\nInput:\n${JSON.stringify(texts)}`
-          }]
-        }],
-        generationConfig: {
-          temperature: 0.2,
-          maxOutputTokens: 8192,
-          responseMimeType: 'application/json',
-          responseSchema: {
-            type: 'ARRAY',
-            minItems: texts.length,
-            maxItems: texts.length,
-            items: { type: 'STRING' }
+  // No silent hangs: a stuck upstream call must surface as an error the UI can
+  // show, not as a spinner that never resolves.
+  const controller = new AbortController()
+  const timeout = setTimeout(() => controller.abort(), 60_000)
+
+  let response: Response
+  try {
+    response = await fetch(
+      `https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash:generateContent?key=${apiKey}`,
+      {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        signal: controller.signal,
+        body: JSON.stringify({
+          contents: [{
+            parts: [{
+              text: `${prompt}\n\nInput:\n${JSON.stringify(texts)}`
+            }]
+          }],
+          generationConfig: {
+            temperature: 0.2,
+            maxOutputTokens: 8192,
+            responseMimeType: 'application/json',
+            responseSchema: {
+              type: 'ARRAY',
+              minItems: texts.length,
+              maxItems: texts.length,
+              items: { type: 'STRING' }
+            }
           }
-        }
-      })
+        })
+      }
+    )
+  } catch (err) {
+    if (controller.signal.aborted) {
+      throw new Error('Gemini API timed out after 60s. Please try this batch again.')
     }
-  )
+    throw err instanceof Error ? err : new Error('Gemini API request failed')
+  } finally {
+    clearTimeout(timeout)
+  }
 
   if (!response.ok) {
     const error = await response.json().catch(() => ({}))
@@ -252,31 +332,33 @@ export async function translateBatch(
     throw new Error('Empty response from Gemini API')
   }
 
-  const parsed = JSON.parse(result)
+  let parsed: unknown
+  try {
+    parsed = JSON.parse(result)
+  } catch {
+    throw new Error('Gemini returned malformed output. Please try this batch again.')
+  }
 
   if (!Array.isArray(parsed)) {
     throw new Error('Invalid response format from Gemini API')
   }
 
-  // Never silently accept a partial/empty batch. The UI must receive
-  // all 10 translations from this single API request so it can show
-  // the complete batch before Review.
+  // A response of a different length has no trustworthy positional mapping:
+  // items may have been merged, split or skipped, so attaching them to inputs
+  // would risk putting a translation in the wrong field. Fail the request and
+  // let the caller retry instead.
   if (parsed.length !== texts.length) {
     throw new Error(
       `Gemini returned ${parsed.length} of ${texts.length} translations. Please try this batch again.`
     )
   }
 
-  const invalid = parsed.findIndex(
-    (value) => typeof value !== 'string' || value.trim().length === 0
-  )
-  if (invalid !== -1) {
-    throw new Error(
-      `Gemini returned an empty translation for item ${invalid + 1} of ${texts.length}. Please try this batch again.`
-    )
-  }
-
-  return parsed
+  // Empty slots stay null — they are reported as untranslated instead of
+  // throwing away the translations that did succeed.
+  return texts.map((_, i) => {
+    const value = parsed[i]
+    return typeof value === 'string' && value.trim().length > 0 ? value : null
+  })
 }
 
 export interface QACheck {

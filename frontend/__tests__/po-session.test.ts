@@ -12,7 +12,9 @@ import {
   buildFreshSession,
   buildSessionEntries,
   chunkIds,
+  confirmableCount,
   countByStatus,
+  countUntranslated,
   createInitialSessionState,
   findBatchToAdvance,
   pendingDraftIndexes,
@@ -245,5 +247,81 @@ describe('chunkIds', () => {
 
   it('returns nothing for an empty list', () => {
     expect(chunkIds([], BATCH_SIZE)).toEqual([])
+  })
+})
+
+describe('countUntranslated — the only progress figure the header shows', () => {
+  it('counts every string of a fresh upload', () => {
+    expect(countUntranslated(buildSessionEntries(poFile(1303)))).toBe(1303)
+  })
+
+  it('drops by exactly the strings a completed batch produced', () => {
+    const entries = buildSessionEntries(poFile(25))
+    const drafted = applyDraftTranslations(entries, new Map(
+      Array.from({ length: 10 }, (_, i) => [i, `draft ${i}`]) as Array<[number, string]>
+    ))
+    expect(countUntranslated(entries)).toBe(25)
+    expect(countUntranslated(drafted)).toBe(15)
+  })
+
+  it('never counts a translation that is already in the file', () => {
+    const entries = buildSessionEntries(poFile(5, i => (i < 3 ? `T${i}` : '')))
+    expect(countUntranslated(entries)).toBe(2)
+  })
+
+  it('counts a translation the user emptied by hand as remaining', () => {
+    const entries = buildSessionEntries(poFile(3, () => 'T'))
+    entries[1] = { ...entries[1], msgstr: '   ', status: 'reviewing' as const }
+    expect(countUntranslated(entries)).toBe(1)
+  })
+
+  it('ignores strings that only hold a draft awaiting review', () => {
+    const entries = buildSessionEntries(poFile(10))
+    const drafted = applyDraftTranslations(entries, new Map([[0, 'draft 0']]))
+    expect(countUntranslated(drafted)).toBe(9)
+  })
+})
+
+describe('confirmableCount — keeps a zero count off the screen', () => {
+  const batch = (statuses: Array<[string, string]>) =>
+    statuses.map(([status, msgstr], i) => ({
+      ...entry(i, msgstr),
+      status: status as 'pending' | 'reviewing' | 'confirmed',
+    }))
+
+  it('is zero when the batch still holds only untranslated strings', () => {
+    expect(confirmableCount(batch(Array.from({ length: 10 }, () => ['pending', ''])), {})).toBe(0)
+  })
+
+  it('is zero for a batch that is already confirmed apart from pending strings', () => {
+    // 7 confirmed + 3 not translated: nothing to confirm, so no button at all.
+    const statuses = [
+      ...Array.from({ length: 7 }, () => ['confirmed', 'T'] as [string, string]),
+      ...Array.from({ length: 3 }, () => ['pending', ''] as [string, string]),
+    ]
+    expect(confirmableCount(batch(statuses), {})).toBe(0)
+  })
+
+  it('counts only the entries awaiting review', () => {
+    const statuses = [
+      ...Array.from({ length: 7 }, () => ['confirmed', 'T'] as [string, string]),
+      ...Array.from({ length: 3 }, () => ['reviewing', 'T'] as [string, string]),
+    ]
+    expect(confirmableCount(batch(statuses), {})).toBe(3)
+  })
+
+  it('excludes entries whose format specifiers do not match', () => {
+    const statuses = Array.from({ length: 4 }, () => ['reviewing', 'T'] as [string, string])
+    expect(confirmableCount(batch(statuses), { 1: 'Missing: %d' })).toBe(3)
+  })
+
+  it('excludes a confirmed entry that still carries a format error', () => {
+    const statuses: Array<[string, string]> = [['confirmed', 'T'], ['reviewing', 'T']]
+    expect(confirmableCount(batch(statuses), { 0: 'Missing: %s' })).toBe(1)
+  })
+
+  it('is zero when every entry awaiting review needs a format fix', () => {
+    const statuses = Array.from({ length: 3 }, () => ['reviewing', 'T'] as [string, string])
+    expect(confirmableCount(batch(statuses), { 0: 'x', 1: 'x', 2: 'x' })).toBe(0)
   })
 })

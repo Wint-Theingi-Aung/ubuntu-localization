@@ -36,33 +36,55 @@ export async function POST(request: NextRequest) {
     // Extract msgids
     const msgids = entries.map((e: { msgid: string }) => e.msgid)
 
-    // Translate batch (with glossary context)
+    // Translate batch (with glossary context). `translations[i]` lines up with
+    // `entries[i]`; a null slot means the model returned nothing for that
+    // string, which is reported instead of failing the other results.
     const translations = await translateBatch(msgids, langName, langCode, glossaryTerms)
 
-    // QA verify
-    const results = entries.map((entry: { index: number; msgid: string }, i: number) => {
-      const translated = translations[i]
-      const qa = verifyTranslation(entry.msgid, translated, entry.index)
+    const results: Array<{
+      index: number
+      msgid: string
+      translated: string
+      qa_passed: boolean
+      qa_checks: ReturnType<typeof verifyTranslation>['checks']
+    }> = []
+    const failed: number[] = []
 
-      return {
+    entries.forEach((entry: { index: number; msgid: string }, i: number) => {
+      const translated = translations[i]
+      if (typeof translated !== 'string' || translated.trim().length === 0) {
+        failed.push(entry.index)
+        return
+      }
+      const qa = verifyTranslation(entry.msgid, translated, entry.index)
+      results.push({
         index: entry.index,
         msgid: entry.msgid,
         translated,
         qa_passed: qa.passed,
         qa_checks: qa.checks,
-      }
+      })
     })
 
+    // Nothing usable came back — surface it as an error the UI can show.
+    if (results.length === 0) {
+      return NextResponse.json(
+        { error: 'Gemini returned no usable translations for this batch. Please try again.' },
+        { status: 502 }
+      )
+    }
+
     const passed = results.filter((r: { qa_passed: boolean }) => r.qa_passed).length
-    const failed = results.length - passed
 
     return NextResponse.json({
       translations: results,
       summary: {
         total: results.length,
         passed,
-        failed,
+        failed: results.length - passed,
+        untranslated: failed.length,
       },
+      failed_indexes: failed,
     })
   } catch (error) {
     console.error('Translation error:', error)

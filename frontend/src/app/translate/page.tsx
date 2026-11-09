@@ -15,8 +15,8 @@ import {
 } from '@/lib/translate'
 import {
   BATCH_SIZE, type TranslationEntry, buildFreshSession, createInitialSessionState,
-  applyDraftTranslations, countByStatus, findBatchToAdvance,
-  stripFilenameTimestamps,
+  applyDraftTranslations, countByStatus, countUntranslated, confirmableCount,
+  findBatchToAdvance, stripFilenameTimestamps,
 } from '@/lib/session'
 import { useAuth } from '@/lib/auth-context'
 
@@ -42,7 +42,12 @@ export default function TranslatePage() {
   // which cancels in-flight AI drafts from a previous upload so stale responses
   // can never land in a newer session.
   const sessionRunRef = useRef(0)
-  const translateInFlightRef = useRef(false)
+  /**
+   * Run id that owns the "translation in flight" lock, or null when idle.
+   * Holding the run id means a request from an abandoned session can neither
+   * keep the new session's button disabled nor clear its spinner.
+   */
+  const translateInFlightRef = useRef<number | null>(null)
 
   const languages = LANGUAGES
 
@@ -87,17 +92,20 @@ export default function TranslatePage() {
     () => currentBatchEntries.filter(isReviewEligible),
     [currentBatchEntries]
   )
-  const batchSkippedCount = currentBatchEntries.length - batchReviewEntries.length
   const workPhase: 'translate' | 'review' = reviewMode ? 'review' : 'translate'
 
   const statusCounts = useMemo(() => countByStatus(entries), [entries])
   const confirmedCount = statusCounts.confirmed
   const totalCount = statusCounts.total
+  // The only progress figure shown: strings that still have no translation.
+  const untranslatedCount = useMemo(() => countUntranslated(entries), [entries])
 
-  const batchReviewingCount = batchReviewEntries.filter(e => e.status === 'reviewing').length
-  const batchConfirmedCount = batchReviewEntries.filter(e => e.status === 'confirmed').length
-  const batchFormatErrorCount = batchReviewEntries.filter(e => formatErrors[e.index]).length
-  const totalFormatErrorCount = Object.keys(formatErrors).length
+  // Entries the Confirm action would really confirm — the count behind the
+  // button label, and the guard that keeps a zero count off the screen.
+  const batchConfirmableCount = useMemo(
+    () => confirmableCount(currentBatchEntries, formatErrors),
+    [currentBatchEntries, formatErrors]
+  )
   // True when clicking Confirm All would confirm every entry in the batch,
   // which is what triggers the auto-advance to the next batch.
   const batchWillBeFullyConfirmed = currentBatchEntries.length > 0 &&
@@ -151,6 +159,7 @@ export default function TranslatePage() {
   const clearSessionData = useCallback(() => {
     sessionRunRef.current += 1
     inFlightRef.current = new Set()
+    translateInFlightRef.current = null
     const initial = createInitialSessionState()
     setEntries(initial.entries)
     setCurrentBatch(initial.currentBatch)
@@ -175,9 +184,11 @@ export default function TranslatePage() {
 
   /**
    * Ask the AI for drafts for `indexes` and apply whatever comes back.
-   * Returns an error message, or null on success. A failed request leaves its
-   * strings pending so they can be retried; successful strings are already
-   * saved and are never re-sent.
+   *
+   * Results are applied first, message second: every string the API answered
+   * for lands in its own field before anything else happens, and whatever it
+   * could not answer for stays pending for a retry. Returns a message to show
+   * the user, or null when the whole request succeeded.
    */
   const requestDrafts = useCallback(async (
     snapshot: TranslationEntry[],
@@ -194,12 +205,17 @@ export default function TranslatePage() {
     if (batch.length === 0) return null
 
     const requested = batch.map(e => e.index)
-    for (const i of requested) inFlightRef.current.add(i)
+    for (const i of requested) { inFlightRef.current.add(i) }
+
+    // Never leave the UI spinning: a hung request aborts with a message.
+    const controller = new AbortController()
+    const timeout = setTimeout(() => controller.abort(), 90_000)
 
     try {
       const response = await fetch('/api/translate', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
+        signal: controller.signal,
         body: JSON.stringify({
           entries: batch.map(e => ({ index: e.index, msgid: e.msgid })),
           target_lang: targetLang,
@@ -218,7 +234,10 @@ export default function TranslatePage() {
       }
 
       const data = await response.json()
-      const validation = validateBatchResponse(data.translations, requested)
+      // Partial responses are accepted: each result carries its own index, so
+      // a string the model skipped simply stays pending instead of wiping out
+      // the translations that did arrive.
+      const validation = validateBatchResponse(data.translations, requested, { allowPartial: true })
       if (!validation.ok) return validation.error || 'Invalid translation response'
 
       // A superseded session must not receive this response.
@@ -226,18 +245,35 @@ export default function TranslatePage() {
 
       const translationMap = validation.translationMap!
       const issues = collectTranslationIssues(batch, translationMap)
+      const failed = validation.failedIndexes || []
 
       // Apply the validated batch atomically. Drafts only ever land on
-      // `pending` entries, so human edits and confirmations survive.
+      // `pending` entries, so human edits and confirmations survive, and the
+      // UI renders them in the same update.
       setEntries(prev => applyDraftTranslations(prev, translationMap))
-      setFormatErrors(prev => ({ ...prev, ...issues }))
+      setFormatErrors(prev => {
+        const next = { ...prev }
+        // Fresh results replace any issue recorded for those strings earlier.
+        for (const i of requested) delete next[i]
+        return { ...next, ...issues }
+      })
+
+      if (failed.length > 0) {
+        return t('translation_partial_failed', '{failed} of {total} strings were not translated. They remain pending — click Translate to retry.')
+          .replace('{failed}', String(failed.length))
+          .replace('{total}', String(requested.length))
+      }
       return null
     } catch (err: any) {
+      if (err?.name === 'AbortError') {
+        return t('translation_timeout', 'The translation request timed out. Please try again.')
+      }
       return err?.message || 'Translation failed'
     } finally {
+      clearTimeout(timeout)
       for (const i of requested) inFlightRef.current.delete(i)
     }
-  }, [targetLang])
+  }, [targetLang, t])
 
   const handleUpload = useCallback(async () => {
     if (!file) return
@@ -275,29 +311,51 @@ export default function TranslatePage() {
     }
   }, [file, targetLang, clearSessionData])
 
-  /** Manual retry path for the current batch's still-untranslated strings. */
+  /**
+   * Translate every still-untranslated string of the current batch (at most
+   * BATCH_SIZE). The batch only counts as translated once `requestDrafts` has
+   * applied the response, so the spinner, the fields and the Review button all
+   * move together on the update that carries the results.
+   */
   const handleTranslate = useCallback(async () => {
+    const runId = sessionRunRef.current
+    // A second click while one request is open is a no-op, not a second
+    // request: without this the first response could clear the second
+    // request's spinner and re-enable Review while results were still
+    // in flight.
+    if (translateInFlightRef.current !== null) return
     setError(null)
+
     const pending = currentBatchEntries.filter(
       e => e.status === 'pending' && e.msgid.trim().length > 0,
     )
     if (pending.length === 0) return
 
+    translateInFlightRef.current = runId
     setIsTranslating(true)
     try {
       const failure = await requestDrafts(
         entries,
         pending.map(e => e.index),
-        sessionRunRef.current,
+        runId,
       )
-      if (failure) setError(failure)
+      if (failure && sessionRunRef.current === runId) setError(failure)
+    } catch (err: any) {
+      if (sessionRunRef.current === runId) {
+        setError(err?.message || 'Translation failed')
+      }
     } finally {
-      if (inFlightRef.current.size === 0) setIsTranslating(false)
+      if (translateInFlightRef.current === runId) translateInFlightRef.current = null
+      // Always release the button — a stuck spinner is what makes the page
+      // look like it silently dropped the results.
+      if (sessionRunRef.current === runId) setIsTranslating(false)
     }
   }, [currentBatchEntries, entries, requestDrafts])
 
   const handleStartReview = useCallback(() => {
-    if (!canReviewBatch(currentBatchEntries)) return
+    // Review opens only on results that are already in the fields: never
+    // while a request is still running, never from an empty batch.
+    if (isTranslating || !canReviewBatch(currentBatchEntries)) return
     setEntries(prev => prev.map(e => {
       if (currentBatchEntries.some(be => be.index === e.index) && e.msgstr.trim().length > 0 && e.status !== 'confirmed') {
         return { ...e, status: 'reviewing' as const }
@@ -305,7 +363,7 @@ export default function TranslatePage() {
       return e
     }))
     setReviewMode(true)
-  }, [currentBatchEntries])
+  }, [currentBatchEntries, isTranslating])
 
   const handleEditTranslation = useCallback((index: number, newMsgstr: string) => {
     const entry = entries.find(e => e.index === index)
@@ -511,6 +569,8 @@ export default function TranslatePage() {
                 // any format errors left over from a previous file.
                 sessionRunRef.current += 1
                 inFlightRef.current = new Set()
+                translateInFlightRef.current = null
+                setIsTranslating(false)
                 setEntries([
                   { index: 0, msgid: 'Power Off', msgstr: '', flags: [], occurrences: [], status: 'pending' },
                   { index: 1, msgid: 'Suspend', msgstr: '', flags: [], occurrences: [], status: 'pending' },
@@ -537,19 +597,11 @@ export default function TranslatePage() {
             <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-3">
               <div className="flex items-center gap-4 text-sm flex-wrap">
                 <span className="text-[var(--tx-muted)]">
-                  <span className="text-[var(--tx-primary)] font-semibold">
-                    {t('translation_batch_info', 'Batch {current} of {total}')
-                      .replace('{current}', String(currentBatch + 1))
-                      .replace('{total}', String(totalBatches))}
-                  </span>
-                  {' \u2014 '}
-                  {t('translation_strings_range', '{from}\u2013{to} of {total}')
-                    .replace('{from}', String(currentBatch * BATCH_SIZE + 1))
-                    .replace('{to}', String(Math.min((currentBatch + 1) * BATCH_SIZE, totalCount)))
-                    .replace('{total}', String(totalCount))}
-                </span>
-                <span className="text-[var(--tx-muted)]">
-                  <span className="text-emerald-400 font-semibold">{confirmedCount}</span> {t('translation_confirmed', 'confirmed')}
+                  <span className="text-ubuntu-orange font-semibold">{untranslatedCount}</span>{' '}
+                  {untranslatedCount === 1
+                    ? t('translation_string', 'string')
+                    : t('translation_strings', 'strings')}{' '}
+                  {t('translation_remaining', 'remaining')}
                 </span>
               </div>
               <div className="flex items-center gap-2">
@@ -579,12 +631,13 @@ export default function TranslatePage() {
                   className="btn-primary flex items-center gap-2"
                 >
                   {isTranslating
-                    ? <><Loader2 size={18} className="animate-spin" />{t('translation_translating_n', 'Translating {count} strings...').replace('{count}', String(currentBatchEntries.filter(e => e.status === 'pending').length))}</>
-                    : <><Sparkles size={18} />{t('translation_translate_batch', 'Translate Batch ({count} strings)').replace('{count}', String(currentBatchEntries.filter(e => e.status === 'pending').length))}</>}
+                    ? <><Loader2 size={18} className="animate-spin" />{t('translation_translating', 'Translating...')}</>
+                    : <><Sparkles size={18} />{t('translation_translate', 'Translate')}</>}
                 </button>
                 {canReview && (
                   <button
                     onClick={handleStartReview}
+                    disabled={isTranslating}
                     className="btn-secondary flex items-center gap-2"
                   >
                     <Eye size={18} />{t('translation_review_translations', 'Review Translations')}
@@ -610,11 +663,13 @@ export default function TranslatePage() {
                         <div className="flex flex-col">
                           <p className="text-xs text-[var(--tx-dim)] mb-1 flex items-center gap-1">
                             <Languages size={10} />
-                            {entry.status === 'reviewing'
-                              ? t('translation_preview', 'AI Translation \u2014 edit to refine')
+                            {entry.msgstr.trim().length > 0
+                              ? entry.status === 'reviewing'
+                                ? t('translation_preview', 'AI Translation \u2014 edit to refine')
+                                : t('translation_translation', 'Translation')
                               : t('translation_pending', 'Pending translation')}
                           </p>
-                          {entry.status === 'reviewing'
+                          {entry.msgstr.trim().length > 0
                             ? (
                               <textarea
                                 value={entry.msgstr}
@@ -624,7 +679,7 @@ export default function TranslatePage() {
                                 placeholder={t('translation_enter_translation', 'Enter or edit translation...')}
                               />
                             )
-                            : <p className="text-[var(--tx-faint)] italic text-sm p-2.5 min-h-[4rem] flex items-center">{t('translation_pending_hint', 'Click Translate Batch to generate')}</p>}
+                            : <p className="text-[var(--tx-faint)] italic text-sm p-2.5 min-h-[4rem] flex items-center">{t('translation_pending_hint', 'Click Translate to generate')}</p>}
                         </div>
                       </div>
                       {entry.status === 'reviewing' && (
@@ -650,50 +705,24 @@ export default function TranslatePage() {
           {workPhase === 'review' && (
             <>
               <div className="glass-card p-4">
-                <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-3">
-                  <div className="flex items-center gap-4 text-sm flex-wrap">
-                    <span className="text-[var(--tx-muted)]">
-                      <span className="text-amber-400 font-semibold">{batchReviewingCount}</span> {t('translation_awaiting_review', 'awaiting review')}
-                    </span>
-                    <span className="text-[var(--tx-muted)]">
-                      <span className="text-emerald-400 font-semibold">{batchConfirmedCount}</span> {t('translation_confirmed_in_batch', 'confirmed in batch')}
-                    </span>
-                    {batchSkippedCount > 0 && (
-                      <span className="text-[var(--tx-muted)]">
-                        <span className="text-[var(--tx-dim)] font-semibold">{batchSkippedCount}</span> {t('translation_skipped_for_now', 'not translated \u2014 skipped for now')}
-                      </span>
-                    )}
-                    {batchFormatErrorCount > 0 && (
-                      <span className="text-[var(--tx-muted)]">
-                        <span className="text-red-400 font-semibold">{batchFormatErrorCount}</span> {t('translation_format_errors', 'format mismatch')}
-                      </span>
-                    )}
-                  </div>
-                  <div className="flex gap-2">
-                    <button
-                      onClick={() => setReviewMode(false)}
-                      className="btn-ghost flex items-center gap-2 text-sm text-[var(--tx-muted)] hover:text-[var(--tx-primary)]"
-                    >
-                      <Edit3 size={16} />{t('translation_back_to_edit', 'Back to Edit')}
-                    </button>
+                <div className="flex flex-wrap items-center justify-end gap-2">
+                  <button
+                    onClick={() => setReviewMode(false)}
+                    className="btn-ghost flex items-center gap-2 text-sm text-[var(--tx-muted)] hover:text-[var(--tx-primary)]"
+                  >
+                    <Edit3 size={16} />{t('translation_back_to_edit', 'Back to Edit')}
+                  </button>
+                  {batchConfirmableCount > 0 && (
                     <button
                       onClick={handleConfirmAllBatch}
-                      disabled={batchReviewingCount === batchFormatErrorCount}
                       className="btn-primary flex items-center gap-2 text-sm"
                     >
                       <Check size={16} />{batchWillBeFullyConfirmed
-                        ? t('translation_confirm_all_next', 'Confirm All & Next Batch ({count})').replace('{count}', String(batchReviewingCount))
-                        : t('translation_confirm_all_fix', 'Confirm Valid ({count})').replace('{count}', String(batchReviewingCount - batchFormatErrorCount))}
+                        ? t('translation_confirm_all_next', 'Confirm All & Next Batch ({count})').replace('{count}', String(batchConfirmableCount))
+                        : t('translation_confirm_all_fix', 'Confirm Valid ({count})').replace('{count}', String(batchConfirmableCount))}
                     </button>
-                  </div>
+                  )}
                 </div>
-                {batchFormatErrorCount > 0 && (
-                  <div className="mt-3 p-3 rounded-lg bg-red-500/10 border border-red-500/20">
-                    <p className="text-sm text-red-400">
-                      {t('translation_format_error_batch', '{count} entry(s) have format specifier mismatches ({fmtErrors} total). These will be exported as untranslated.').replace('{count}', String(batchFormatErrorCount)).replace('{fmtErrors}', String(totalFormatErrorCount))}
-                    </p>
-                  </div>
-                )}
               </div>
 
               {batchReviewEntries.length === 0 && (
@@ -716,7 +745,9 @@ export default function TranslatePage() {
                         isConfirmed
                           ? 'border-l-4 border-l-emerald-500/50'
                           : isReviewing
-                            ? 'border-l-4 border-l-amber-400/50'
+                            // Yellow marks every string still waiting for a human check,
+                            // so attention lands on the field itself, not on a counter.
+                            ? 'border-l-4 border-l-amber-400/50 bg-amber-400/[0.06]'
                             : 'border-l-4 border-l-[var(--border-theme)]'
                       }`}
                     >
@@ -773,7 +804,7 @@ export default function TranslatePage() {
                                 onChange={(e) => handleEditTranslation(entry.index, e.target.value)}
                                 className={`input-field w-full font-myanmar text-sm min-h-[5rem] resize-y ${
                                   isReviewing
-                                    ? 'bg-[rgba(233,84,32,0.05)] border-[rgba(233,84,32,0.3)] focus:border-[rgba(233,84,32,0.6)]'
+                                    ? 'bg-amber-400/10 border-amber-400/40 focus:border-amber-400/70'
                                     : ''
                                 }`}
                                 rows={3}

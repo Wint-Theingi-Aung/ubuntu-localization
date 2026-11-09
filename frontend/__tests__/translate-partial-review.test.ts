@@ -125,3 +125,97 @@ describe('validateBatchResponse with partial batches', () => {
     expect(result.error).toContain('Empty translation')
   })
 })
+
+describe('validateBatchResponse in partial mode (allowPartial)', () => {
+  const opts = { allowPartial: true }
+
+  it('keeps the results that arrived and reports the ones that did not', () => {
+    const requested = [0, 1, 2]
+    const response = [
+      { index: 0, translated: 'T0' },
+      { index: 2, translated: 'T2' },
+    ]
+    const result = validateBatchResponse(response, requested, opts)
+    expect(result.ok).toBe(true)
+    expect(result.translationMap!.size).toBe(2)
+    expect(result.translationMap!.get(0)).toBe('T0')
+    expect(result.translationMap!.get(2)).toBe('T2')
+    expect(result.failedIndexes).toEqual([1])
+  })
+
+  it('drops an empty translation without discarding its neighbours', () => {
+    const requested = [0, 1, 2]
+    const response = [
+      { index: 0, translated: 'T0' },
+      { index: 1, translated: '   ' },
+      { index: 2, translated: 'T2' },
+    ]
+    const result = validateBatchResponse(response, requested, opts)
+    expect(result.ok).toBe(true)
+    expect([...result.translationMap!.keys()]).toEqual([0, 2])
+    expect(result.failedIndexes).toEqual([1])
+  })
+
+  it('reports a shorter response as partial instead of rejecting it', () => {
+    const requested = [0, 1, 2, 3, 4]
+    const response = [
+      { index: 0, translated: 'T0' },
+      { index: 1, translated: 'T1' },
+      { index: 2, translated: 'T2' },
+      { index: 3, translated: 'T3' },
+      { index: 4, translated: 'T4' },
+    ]
+    // Only four answers for five requests: the fifth stays pending.
+    const result = validateBatchResponse(response.slice(0, 4), requested, opts)
+    expect(result.ok).toBe(true)
+    expect(result.translationMap!.size).toBe(4)
+    expect(result.failedIndexes).toEqual([4])
+  })
+
+  it('still rejects an index that was never requested', () => {
+    const requested = [0, 1]
+    const response = [
+      { index: 0, translated: 'T0' },
+      { index: 99, translated: 'Wrong entry' },
+    ]
+    const result = validateBatchResponse(response, requested, opts)
+    expect(result.ok).toBe(false)
+    expect(result.error).toContain('Unexpected index 99')
+  })
+
+  it('still rejects duplicate indexes', () => {
+    const requested = [0, 1]
+    const response = [
+      { index: 0, translated: 'T0' },
+      { index: 0, translated: 'Duplicate' },
+    ]
+    const result = validateBatchResponse(response, requested, opts)
+    expect(result.ok).toBe(false)
+    expect(result.error).toContain('Duplicate indexes')
+  })
+
+  it('still rejects a malformed result object', () => {
+    const result = validateBatchResponse([{ index: 0 }], [0], opts)
+    expect(result.ok).toBe(false)
+    expect(result.error).toContain('Invalid translation result object')
+  })
+
+  it('applies nothing when no usable translation came back', () => {
+    const requested = [0, 1]
+    const response = [
+      { index: 0, translated: '' },
+      { index: 1, translated: '' },
+    ]
+    const result = validateBatchResponse(response, requested, opts)
+    expect(result.ok).toBe(false)
+    expect(result.translationMap).toBeUndefined()
+    expect(result.failedIndexes).toEqual([0, 1])
+  })
+
+  it('stays strict by default so an incomplete batch is still rejected', () => {
+    const requested = [0, 1, 2]
+    const response = [{ index: 0, translated: 'T0' }]
+    expect(validateBatchResponse(response, requested).ok).toBe(false)
+    expect(validateBatchResponse(response, requested, opts).ok).toBe(true)
+  })
+})

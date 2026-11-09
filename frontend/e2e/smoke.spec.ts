@@ -28,7 +28,11 @@ test.describe('Ubuntu Localization — Smoke Test', () => {
   test('navigate to Glossary page', async ({ page }) => {
     await page.goto(`${BASE}/glossary`);
     await expect(page.getByRole('heading', { name: 'Glossary' })).toBeVisible();
-    await expect(page.getByText('terms')).toBeVisible();
+    // The count label; scoped so the empty-state copy ("No terms match…") does not collide.
+    const termsCount = page.getByText(/^\d+ terms$/);
+    await expect(termsCount).toBeVisible();
+    // Entries arrive from /api/glossary on the client — wait for the real count.
+    await expect(termsCount).not.toHaveText('0 terms', { timeout: 15000 });
   });
 
   test('navigate to Guide page and see default chapter', async ({ page }) => {
@@ -55,7 +59,7 @@ test.describe('Ubuntu Localization — Smoke Test', () => {
     await page.getByText('Try Demo').click();
     // Should see translate step with entries
     await expect(page.getByText('Power Off', { exact: true })).toBeVisible();
-    await expect(page.getByRole('button', { name: /To Translate/ })).toBeVisible();
+    await expect(page.getByRole('button', { name: 'Translate', exact: true })).toBeVisible();
   });
 
   test('no console errors across all pages', async ({ page }) => {

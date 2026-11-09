@@ -159,6 +159,33 @@ export function countByStatus(entries: TranslationEntry[]): StatusCounts {
 }
 
 /**
+ * How many strings still have no translation at all. This is the only number
+ * the progress header shows: a string counts as remaining until a translation
+ * (draft or human) is sitting in its field.
+ */
+export function countUntranslated(entries: TranslationEntry[]): number {
+  let remaining = 0
+  for (const e of entries) {
+    if (e.status === 'pending' || e.msgstr.trim().length === 0) remaining++
+  }
+  return remaining
+}
+
+/**
+ * How many entries of a batch the Confirm action would actually confirm:
+ * awaiting review and free of format-specifier problems.
+ *
+ * Confirmed entries and entries that still need a format fix are excluded, so
+ * a count of 0 always means "nothing to confirm" and the action is not shown.
+ */
+export function confirmableCount(
+  entries: TranslationEntry[],
+  formatErrors: Record<number, string>,
+): number {
+  return entries.filter(e => e.status === 'reviewing' && !formatErrors[e.index]).length
+}
+
+/**
  * After a batch is fully confirmed, find the next batch that still holds a
  * non-confirmed entry. Returns `totalBatches` when every batch is done.
  */
