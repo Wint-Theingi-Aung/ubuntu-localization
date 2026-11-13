@@ -17,6 +17,7 @@ import {
   countUntranslated,
   createInitialSessionState,
   findBatchToAdvance,
+  isBatchResolved,
   pendingDraftIndexes,
   type UploadedPoEntry,
 } from '../src/lib/session'
@@ -323,5 +324,57 @@ describe('confirmableCount — keeps a zero count off the screen', () => {
   it('is zero when every entry awaiting review needs a format fix', () => {
     const statuses = Array.from({ length: 3 }, () => ['reviewing', 'T'] as [string, string])
     expect(confirmableCount(batch(statuses), { 0: 'x', 1: 'x', 2: 'x' })).toBe(0)
+  })
+
+  it('never counts an emptied translation, so nothing missing gets confirmed', () => {
+    const statuses: Array<[string, string]> = [
+      ['reviewing', 'T'],
+      ['reviewing', ''],
+      ['reviewing', '   '],
+    ]
+    expect(confirmableCount(batch(statuses), {})).toBe(1)
+  })
+})
+
+describe('isBatchResolved — when a batch may move on', () => {
+  const batch = (statuses: Array<[string, string]>) =>
+    statuses.map(([status, msgstr], i) => ({
+      ...entry(i, msgstr),
+      status: status as 'pending' | 'reviewing' | 'confirmed',
+    }))
+
+  it('is unresolved while a translated string still awaits review', () => {
+    expect(isBatchResolved(batch([
+      ['reviewing', 'T0'],
+      ...Array.from({ length: 9 }, () => ['pending', ''] as [string, string]),
+    ]))).toBe(false)
+  })
+
+  it('is resolved once every translated string is confirmed, even with 3 untranslated', () => {
+    // 7 confirmed + 3 the AI never answered for: the batch is reviewed and
+    // may move on — the missing strings must not strand it.
+    const statuses = [
+      ...Array.from({ length: 7 }, () => ['confirmed', 'T'] as [string, string]),
+      ...Array.from({ length: 3 }, () => ['pending', ''] as [string, string]),
+    ]
+    expect(isBatchResolved(batch(statuses))).toBe(true)
+  })
+
+  it('is resolved for a batch that is fully confirmed', () => {
+    expect(isBatchResolved(batch(
+      Array.from({ length: 10 }, () => ['confirmed', 'T'] as [string, string])
+    ))).toBe(true)
+  })
+
+  it('is unresolved when a format-blocked translation still needs a decision', () => {
+    expect(isBatchResolved(batch([
+      ['confirmed', 'T'],
+      ['reviewing', 'T'],
+      ['pending', ''],
+    ]))).toBe(false)
+  })
+
+  it('is never resolved for an empty batch', () => {
+    expect(isBatchResolved([])).toBe(false)
   })
 })

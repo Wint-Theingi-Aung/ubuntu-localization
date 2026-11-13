@@ -3,9 +3,11 @@ import { test, expect, type Page } from '@playwright/test';
 /**
  * Partial-batch review on /translate.
  *
- * Review Translations becomes available with 1+ translated strings, lists only
- * translated strings, keeps skipped strings pending for later, and never
- * discards translations that are already saved.
+ * Review Translations becomes available with 1+ translated strings and always
+ * lists every string of the batch: translated ones in their own field,
+ * untranslated ones still visible as pending. Skipped strings stay pending for
+ * later, never discards translations that are already saved, and a reviewed
+ * batch can always move on with Next Batch.
  */
 
 const PO_CONTENT = `msgid ""
@@ -112,7 +114,7 @@ test.describe('partial batch review', () => {
     await expect(page.locator('.badge-yellow', { hasText: 'Needs Review' })).toHaveCount(10);
   });
 
-  test('a partially translated batch opens review with only translated strings', async ({ page }) => {
+  test('a partially translated batch opens review with all 10 strings', async ({ page }) => {
     await uploadPo(page);
     await page.getByRole('button', { name: 'Translate', exact: true }).click();
     await page.getByRole('button', { name: 'Review Translations' }).click();
@@ -120,14 +122,19 @@ test.describe('partial batch review', () => {
     // Reset the long string at index 4 — it returns to pending and empties.
     await resetString(page, 'D4 Install Updates');
 
-    // Only the 9 remaining translated strings stay in review.
+    // Every source string stays in review: the 9 translated ones keep their
+    // text, the reset one stays visible as untranslated instead of vanishing.
     await expect(page.getByText('D3 Log Out...')).toBeVisible();
     await expect(page.getByText('D5 Remove Package')).toBeVisible();
-    await expect(page.getByText('D4 Install Updates')).toHaveCount(0);
+    // .first(): the card is expanded by the reset, so the source text also
+    // sits in the read-only editor.
+    await expect(page.getByText('Install Updates', { exact: true }).first()).toBeVisible();
+    await expect(page.getByText('Not translated yet')).toHaveCount(1);
+    await expect(page.locator('.badge-yellow', { hasText: 'Needs Review' })).toHaveCount(9);
+    await expect(page.locator('.badge-orange', { hasText: 'Pending' })).toHaveCount(1);
     // The skipped string is not hidden: it comes back as the remaining count,
     // which is the only summary the page keeps.
     await expect(page.getByText('1 string remaining')).toBeVisible();
-    await expect(page.getByText('not translated — skipped for now')).toHaveCount(0);
     await expect(page.getByText('Confirm Valid (0)')).toHaveCount(0);
   });
 
@@ -170,7 +177,13 @@ test.describe('partial batch review', () => {
     for (let i = 2; i < 10; i++) {
       await resetString(page, `D${i} `);
     }
-    await expect(page.getByText('No translated strings in this batch yet. Go back to Edit and translate at least one string.')).toBeVisible();
+    // Nothing is translated any more, but no string is dropped from the list:
+    // all 10 are still on screen, flagged as untranslated, with nothing to
+    // confirm.
+    await expect(page.getByText('Not translated yet')).toHaveCount(10);
+    await expect(page.locator('.badge-orange', { hasText: 'Pending' })).toHaveCount(10);
+    await expect(page.getByRole('button', { name: /Confirm Valid/ })).toHaveCount(0);
+    await expect(page.getByRole('button', { name: /Confirm All/ })).toHaveCount(0);
     await page.getByRole('button', { name: 'Back to Edit' }).click();
     await expect(page.getByRole('button', { name: 'Review Translations' })).toHaveCount(0);
   });
@@ -358,5 +371,141 @@ test.describe('batch-to-batch progress', () => {
 
     await expect(page.getByText('Translation Complete!')).toBeVisible();
     await expect(page.getByText('12 strings confirmed and ready to export')).toBeVisible();
+  });
+});
+
+/** Upload a PO file with `n` untranslated strings. */
+async function uploadPoOf(page: Page, n: number) {
+  await page.goto('/translate');
+  await page.locator('input[type="file"]').setInputFiles({
+    name: 'messages.po',
+    mimeType: 'text/x-gettext-translation',
+    buffer: Buffer.from(poOf(n)),
+  });
+  await page.getByRole('button', { name: 'Upload & Parse' }).click();
+}
+
+/** Answer every requested string except the indexes in `skipped`. */
+async function mockPartialTranslate(page: Page, skipped: number[]) {
+  await page.route('**/api/translate', async route => {
+    const body = route.request().postDataJSON();
+    const entries: Array<{ index: number; msgid: string }> = body.entries;
+    const answered = entries.filter(e => !skipped.includes(e.index));
+    await route.fulfill({
+      json: {
+        translations: answered.map(e => ({
+          index: e.index,
+          msgid: e.msgid,
+          translated: `D${e.index} ${e.msgid}`,
+          qa_passed: true,
+          qa_checks: [],
+        })),
+        summary: { total: answered.length, passed: answered.length, failed: 0 },
+        failed_indexes: entries.filter(e => skipped.includes(e.index)).map(e => e.index),
+      },
+    });
+  });
+}
+
+test.describe('a batch the AI only partly answers', () => {
+  test('keeps all 10 strings, reviews them, and still reaches the next batch', async ({ page }) => {
+    await mockPartialTranslate(page, [7, 8, 9]);
+    await uploadPoOf(page, 20);
+    await expect(page.getByText('20 strings remaining')).toBeVisible();
+
+    await page.getByRole('button', { name: 'Translate', exact: true }).click();
+    await expect(page.getByText('3 of 10 strings were not translated')).toBeVisible();
+
+    // Review accounts for all 10 source strings: 7 translated, 3 pending.
+    await page.getByRole('button', { name: 'Review Translations' }).click();
+    await expect(page.getByText('String 0', { exact: true })).toBeVisible();
+    await expect(page.getByText('String 9', { exact: true })).toBeVisible();
+    await expect(page.locator('.badge-yellow', { hasText: 'Needs Review' })).toHaveCount(7);
+    await expect(page.locator('.badge-orange', { hasText: 'Pending' })).toHaveCount(3);
+    await expect(page.getByText('Not translated yet')).toHaveCount(3);
+    // Nothing has been reviewed yet, so there is nothing to move on from.
+    await expect(page.getByRole('button', { name: 'Next Batch' })).toHaveCount(0);
+
+    await page.getByRole('button', { name: /Confirm Valid \(7\)/ }).click();
+    await expect(page.locator('.badge-green', { hasText: 'Confirmed' })).toHaveCount(7);
+
+    // Reviewed and resolved — Next Batch appears even though 3 strings never
+    // got an AI translation.
+    await expect(page.getByRole('button', { name: 'Next Batch' })).toBeVisible();
+    await page.getByRole('button', { name: 'Next Batch' }).click();
+
+    // The next batch holds the next 10 strings, with no confirmed or
+    // already-translated string carried over.
+    await expect(page.getByRole('button', { name: 'Review Translations' })).toHaveCount(0);
+    await expect(page.getByText('String 10', { exact: true })).toBeVisible();
+    await expect(page.getByText('String 19', { exact: true })).toBeVisible();
+    await expect(page.getByText('String 7', { exact: true })).toHaveCount(0);
+    await expect(page.getByText(/^D\d+ /)).toHaveCount(0);
+    // The 3 skipped strings are still outstanding in the session.
+    await expect(page.getByText('13 strings remaining')).toBeVisible();
+  });
+
+  test('retrying the skipped strings fills their own fields', async ({ page }) => {
+    let call = 0;
+    await page.route('**/api/translate', async route => {
+      const body = route.request().postDataJSON();
+      const entries: Array<{ index: number; msgid: string }> = body.entries;
+      call += 1;
+      const answered = call === 1
+        ? entries.filter(e => e.index !== 7 && e.index !== 8 && e.index !== 9)
+        : entries;
+      await route.fulfill({
+        json: {
+          translations: answered.map(e => ({
+            index: e.index,
+            msgid: e.msgid,
+            translated: `D${e.index} ${e.msgid}`,
+            qa_passed: true,
+            qa_checks: [],
+          })),
+          summary: { total: answered.length, passed: answered.length, failed: 0 },
+        },
+      });
+    });
+
+    await uploadPoOf(page, 10);
+    await page.getByRole('button', { name: 'Translate', exact: true }).click();
+    await expect(page.getByText('3 of 10 strings were not translated')).toBeVisible();
+    await expect(page.getByText('Click Translate to generate')).toHaveCount(3);
+
+    // Retry: only the 3 missing strings are sent, and each lands in its own
+    // field — no result shifts onto a different source string.
+    await page.getByRole('button', { name: 'Translate', exact: true }).click();
+    await expect(page.getByText('0 strings remaining')).toBeVisible();
+    const fields = page.locator('textarea:not([readonly])');
+    await expect(fields).toHaveCount(10);
+    await expect(fields.nth(7)).toHaveValue('D7 String 7');
+    await expect(fields.nth(8)).toHaveValue('D8 String 8');
+    await expect(fields.nth(9)).toHaveValue('D9 String 9');
+    await expect(page.getByText('Click Translate to generate')).toHaveCount(0);
+  });
+
+  test('does not block the final, smaller batch from completing', async ({ page }) => {
+    await mockPartialTranslate(page, [7, 8, 9]);
+    await uploadPoOf(page, 12);
+    await expect(page.getByText('12 strings remaining')).toBeVisible();
+
+    await page.getByRole('button', { name: 'Translate', exact: true }).click();
+    await page.getByRole('button', { name: 'Review Translations' }).click();
+    await page.getByRole('button', { name: /Confirm Valid \(7\)/ }).click();
+    await page.getByRole('button', { name: 'Next Batch' }).click();
+
+    // The final batch holds the last 2 strings — fewer than the batch size.
+    await expect(page.getByText('String 10', { exact: true })).toBeVisible();
+    await expect(page.getByText('String 11', { exact: true })).toBeVisible();
+    await expect(page.getByText('String 9', { exact: true })).toHaveCount(0);
+    await expect(page.getByText('5 strings remaining')).toBeVisible();
+
+    await page.getByRole('button', { name: 'Translate', exact: true }).click();
+    await page.getByRole('button', { name: 'Review Translations' }).click();
+    await page.getByRole('button', { name: /Confirm All & Next Batch \(2\)/ }).click();
+
+    await expect(page.getByText('Translation Complete!')).toBeVisible();
+    await expect(page.getByText('9 strings confirmed and ready to export')).toBeVisible();
   });
 });

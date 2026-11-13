@@ -173,16 +173,33 @@ export function countUntranslated(entries: TranslationEntry[]): number {
 
 /**
  * How many entries of a batch the Confirm action would actually confirm:
- * awaiting review and free of format-specifier problems.
+ * awaiting review, holding a translation, and free of format-specifier
+ * problems.
  *
- * Confirmed entries and entries that still need a format fix are excluded, so
- * a count of 0 always means "nothing to confirm" and the action is not shown.
+ * Confirmed entries, empty translations and entries that still need a format
+ * fix are excluded, so a count of 0 always means "nothing to confirm" and the
+ * action is not shown — an emptied field can never be confirmed by the batch
+ * action.
  */
 export function confirmableCount(
   entries: TranslationEntry[],
   formatErrors: Record<number, string>,
 ): number {
-  return entries.filter(e => e.status === 'reviewing' && !formatErrors[e.index]).length
+  return entries.filter(e =>
+    e.status === 'reviewing' && e.msgstr.trim().length > 0 && !formatErrors[e.index]
+  ).length
+}
+
+/**
+ * True when nothing in the batch is still waiting for a human decision.
+ *
+ * Strings the AI did not answer for stay `pending` and do NOT hold the batch
+ * back: they remain visible in review as untranslated, and the batch can move
+ * on once every translated string has been checked. Only `reviewing` entries —
+ * a translation that still needs a look — keep the batch from progressing.
+ */
+export function isBatchResolved(entries: TranslationEntry[]): boolean {
+  return entries.length > 0 && entries.every(e => e.status !== 'reviewing')
 }
 
 /**

@@ -4,19 +4,19 @@ import { useState, useCallback, useMemo, useEffect, useRef } from 'react'
 import {
   Upload, Languages, Download, FileText, Loader2, CheckCircle,
   AlertCircle, X, Play, Sparkles, Shield, Edit3, Eye, Check,
-  ChevronDown, ChevronUp, RotateCcw, Info,
+  ChevronDown, ChevronUp, ChevronRight, RotateCcw, Info,
 } from 'lucide-react'
 import { useI18n } from '@/lib/i18n'
 import { LANGUAGES, TRANSLATION_CONFIG } from '@/lib/constants'
 import { recordHistory } from '@/lib/history'
 import {
-  validateBatchResponse, canReviewBatch, isReviewEligible,
+  validateBatchResponse, canReviewBatch,
   describeTranslationIssues, collectTranslationIssues,
 } from '@/lib/translate'
 import {
   BATCH_SIZE, type TranslationEntry, buildFreshSession, createInitialSessionState,
   applyDraftTranslations, countByStatus, countUntranslated, confirmableCount,
-  findBatchToAdvance, stripFilenameTimestamps,
+  isBatchResolved, findBatchToAdvance, stripFilenameTimestamps,
 } from '@/lib/session'
 import { useAuth } from '@/lib/auth-context'
 
@@ -86,12 +86,9 @@ export default function TranslatePage() {
   const batchHasPending = currentBatchEntries.some(e => e.status === 'pending')
   // Partial batches are reviewable: at least one non-empty translation is enough.
   const canReview = canReviewBatch(currentBatchEntries)
-  // Review lists only translated strings; empty/skipped entries stay in the
-  // translate phase and are never treated as completed translations.
-  const batchReviewEntries = useMemo(
-    () => currentBatchEntries.filter(isReviewEligible),
-    [currentBatchEntries]
-  )
+  // Review always lists every string of the batch — translated ones in their
+  // own field, untranslated ones still visible as pending — so a string the AI
+  // skipped can never disappear from the workflow.
   const workPhase: 'translate' | 'review' = reviewMode ? 'review' : 'translate'
 
   const statusCounts = useMemo(() => countByStatus(entries), [entries])
@@ -107,33 +104,49 @@ export default function TranslatePage() {
     [currentBatchEntries, formatErrors]
   )
   // True when clicking Confirm All would confirm every entry in the batch,
-  // which is what triggers the auto-advance to the next batch.
+  // which is what triggers the auto-advance to the next batch. An entry only
+  // counts when it really holds a translation — an emptied field is not a
+  // confirmation.
   const batchWillBeFullyConfirmed = currentBatchEntries.length > 0 &&
     currentBatchEntries.every(e =>
-      e.status === 'confirmed' || (e.status === 'reviewing' && !formatErrors[e.index])
+      e.status === 'confirmed' ||
+      (e.status === 'reviewing' && e.msgstr.trim().length > 0 && !formatErrors[e.index])
     )
+  // Next Batch opens once every translated string of the batch has been dealt
+  // with. Strings the AI never answered for stay pending and do not block it:
+  // they remain on screen as untranslated and can be retried from the
+  // translate phase instead of stranding the whole batch.
+  const canGoNextBatch = reviewMode && isBatchResolved(currentBatchEntries) && !batchAllConfirmed
 
   const activeStepKey = step === 'upload' ? 'upload'
     : step === 'complete' ? 'complete'
     : workPhase === 'translate' ? 'translate'
     : 'review'
 
+  /**
+   * Move to the next batch that still holds work, or finish the session when
+   * every later batch is already confirmed. Shared by the auto-advance that
+   * fires after a full confirmation and by the explicit Next Batch action, so
+   * both paths advance identically.
+   */
+  const advanceBatch = useCallback(() => {
+    const nextBatch = findBatchToAdvance(entries, currentBatch, BATCH_SIZE)
+    if (nextBatch < totalBatches) {
+      setCurrentBatch(nextBatch)
+      setReviewMode(false)
+      setExpandedEntry(null)
+    } else {
+      setStep('complete')
+    }
+  }, [entries, currentBatch, totalBatches])
+
   useEffect(() => {
     if (step !== 'work') return
     if (currentBatchEntries.length === 0) return
     if (!batchAllConfirmed) return
-    const timer = setTimeout(() => {
-      const nextBatch = findBatchToAdvance(entries, currentBatch, BATCH_SIZE)
-      if (nextBatch < totalBatches) {
-        setCurrentBatch(nextBatch)
-        setReviewMode(false)
-        setExpandedEntry(null)
-      } else {
-        setStep('complete')
-      }
-    }, 400)
+    const timer = setTimeout(() => advanceBatch(), 400)
     return () => clearTimeout(timer)
-  }, [step, batchAllConfirmed, currentBatch, totalBatches, currentBatchEntries.length, entries])
+  }, [step, batchAllConfirmed, currentBatchEntries.length, advanceBatch])
 
   const handleFileSelect = useCallback((e: React.ChangeEvent<HTMLInputElement>) => {
     const f = e.target.files?.[0]
@@ -368,10 +381,20 @@ export default function TranslatePage() {
   const handleEditTranslation = useCallback((index: number, newMsgstr: string) => {
     const entry = entries.find(e => e.index === index)
     const issue = entry ? describeTranslationIssues(entry.msgid, newMsgstr) : null
+    const hasText = newMsgstr.trim().length > 0
 
-    setEntries(prev => prev.map(e =>
-      e.index === index ? { ...e, msgstr: newMsgstr } : e
-    ))
+    // Status always follows the text: typing into an untranslated field turns
+    // it into a translation awaiting review (so the AI never overwrites a
+    // human draft and Confirm All can pick it up), while emptying a field sends
+    // it back to pending so Translate can refill it. An empty string can never
+    // be left looking confirmed.
+    setEntries(prev => prev.map(e => {
+      if (e.index !== index) return e
+      const status = hasText
+        ? (e.status === 'confirmed' ? 'confirmed' : 'reviewing')
+        : 'pending'
+      return { ...e, msgstr: newMsgstr, status }
+    }))
     setFormatErrors(prev => {
       const next = { ...prev }
       if (issue) next[index] = issue
@@ -381,11 +404,13 @@ export default function TranslatePage() {
   }, [entries])
 
   const handleConfirmEntry = useCallback((index: number) => {
-    if (formatErrors[index]) return
+    const entry = entries.find(e => e.index === index)
+    // Never confirm a string that holds no translation.
+    if (!entry || !entry.msgstr.trim() || formatErrors[index]) return
     setEntries(prev => prev.map(e =>
       e.index === index ? { ...e, status: 'confirmed' as const } : e
     ))
-  }, [formatErrors])
+  }, [entries, formatErrors])
 
   const handleUnconfirmEntry = useCallback((index: number) => {
     setEntries(prev => prev.map(e =>
@@ -397,7 +422,8 @@ export default function TranslatePage() {
     const start = currentBatch * BATCH_SIZE
     const end = start + BATCH_SIZE
     setEntries(prev => prev.map(e =>
-      e.index >= start && e.index < end && e.status === 'reviewing' && !formatErrors[e.index]
+      e.index >= start && e.index < end && e.status === 'reviewing' &&
+      e.msgstr.trim().length > 0 && !formatErrors[e.index]
         ? { ...e, status: 'confirmed' as const }
         : e
     ))
@@ -722,18 +748,23 @@ export default function TranslatePage() {
                         : t('translation_confirm_all_fix', 'Confirm Valid ({count})').replace('{count}', String(batchConfirmableCount))}
                     </button>
                   )}
+                  {/* Only ever shown alongside a fully reviewed batch, so a
+                      partially translated batch can move on without waiting
+                      for strings the AI never answered for. */}
+                  {canGoNextBatch && (
+                    <button
+                      onClick={advanceBatch}
+                      disabled={isTranslating}
+                      className="btn-primary flex items-center gap-2 text-sm"
+                    >
+                      <ChevronRight size={16} />{t('translation_next_batch', 'Next Batch')}
+                    </button>
+                  )}
                 </div>
               </div>
 
-              {batchReviewEntries.length === 0 && (
-                <div className="glass-card p-6 text-center">
-                  <p className="text-sm text-[var(--tx-muted)]">
-                    {t('translation_review_empty', 'No translated strings in this batch yet. Go back to Edit and translate at least one string.')}
-                  </p>
-                </div>
-              )}
               <div className="space-y-3">
-                {batchReviewEntries.map(entry => {
+                {currentBatchEntries.map(entry => {
                   const isExpanded = expandedEntry === entry.index
                   const isConfirmed = entry.status === 'confirmed'
                   const isReviewing = entry.status === 'reviewing'
@@ -766,10 +797,19 @@ export default function TranslatePage() {
                         </div>
                         <div className="flex-1 min-w-0">
                           <p className="text-sm font-mono text-[var(--tx-secondary)] truncate">{entry.msgid}</p>
-                          <p className={`text-sm font-myanmar truncate mt-0.5 ${
-                            isConfirmed ? 'text-emerald-400' : 'text-amber-300'
+                          {/* Untranslated strings keep their place in the list
+                              with an explicit label instead of being dropped,
+                              so the ones the AI skipped stay identifiable. */}
+                          <p className={`text-sm truncate mt-0.5 ${
+                            isConfirmed
+                              ? 'text-emerald-400 font-myanmar'
+                              : isReviewing
+                                ? 'text-amber-300 font-myanmar'
+                                : 'text-[var(--tx-faint)] italic'
                           }`}>
-                            {entry.msgstr || t('translation_empty', '(empty)')}
+                            {entry.msgstr.trim()
+                              ? entry.msgstr
+                              : t('translation_not_translated', 'Not translated yet')}
                           </p>
                         </div>
                         <span className={`badge flex-shrink-0 ${
@@ -833,7 +873,7 @@ export default function TranslatePage() {
                             ) : (
                               <button
                                 onClick={() => handleConfirmEntry(entry.index)}
-                                disabled={!entry.msgstr || !!formatErrors[entry.index]}
+                                disabled={!entry.msgstr.trim() || !!formatErrors[entry.index]}
                                 className={`flex items-center gap-1.5 text-sm ${
                                   formatErrors[entry.index]
                                     ? 'btn-ghost text-red-400 cursor-not-allowed opacity-50'
