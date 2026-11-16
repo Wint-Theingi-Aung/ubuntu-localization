@@ -26,7 +26,7 @@ from pathlib import Path
 
 from mcp.server import Server
 from mcp.server.stdio import stdio_server
-from mcp.types import Tool, TextContent
+from mcp.types import Tool, TextContent, ListToolsResult, CallToolResult
 
 from launchpadlib.launchpad import Launchpad
 from launchpadlib.credentials import Credentials
@@ -169,7 +169,6 @@ def _person_to_dict(person) -> dict:
 # MCP Server Setup
 # ---------------------------------------------------------------------------
 
-server = Server("launchpad-bridge")
 
 # ── Tool: check_auth_status ─────────────────────────────────────────────
 
@@ -189,7 +188,6 @@ def _tool(name: str):
     return deco
 
 
-@server.call_tool()
 async def dispatch_call_tool(name: str, arguments: dict) -> list[TextContent]:
     handler = _TOOL_HANDLERS.get(name)
     if handler is None:
@@ -787,7 +785,6 @@ async def get_translation_progress(name: str, arguments: dict) -> list[TextConte
 # Tool listing
 # ---------------------------------------------------------------------------
 
-@server.list_tools()
 async def list_tools() -> list[Tool]:
     return [
         Tool(
@@ -915,6 +912,25 @@ async def list_tools() -> list[Tool]:
             },
         ),
     ]
+
+
+async def _handle_list_tools(context, params=None):
+    return ListToolsResult(tools=await list_tools())
+
+
+async def _handle_call_tool(context, params):
+    content = await dispatch_call_tool(
+        params.name,
+        params.arguments or {}
+    )
+    return CallToolResult(content=content)
+
+
+server = Server(
+    "launchpad-bridge",
+    on_list_tools=_handle_list_tools,
+    on_call_tool=_handle_call_tool,
+)
 
 
 # ---------------------------------------------------------------------------
